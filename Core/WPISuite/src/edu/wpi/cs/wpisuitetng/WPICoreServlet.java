@@ -12,6 +12,7 @@
  *    Sean Halloran
  *    Ben McMorran
  *    Zachary Richards
+ *    Fangming Ning
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng;
