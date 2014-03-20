@@ -9,6 +9,7 @@
  * Contributors:
  *    mpdelladonna
  *    Alex Bragdon
+ *    Sean Halloran
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng;
