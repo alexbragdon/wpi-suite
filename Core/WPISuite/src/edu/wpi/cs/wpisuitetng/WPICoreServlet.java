@@ -13,6 +13,7 @@
  *    Ben McMorran
  *    Zachary Richards
  *    Fangming Ning
+ *    Hai Nguyen
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng;
