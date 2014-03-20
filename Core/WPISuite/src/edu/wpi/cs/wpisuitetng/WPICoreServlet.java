@@ -8,6 +8,7 @@
  *
  * Contributors:
  *    mpdelladonna
+ *    Alex Bragdon
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng;
