@@ -11,6 +11,7 @@
  *    Alex Bragdon
  *    Sean Halloran
  *    Ben McMorran
+ *    Zachary Richards
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng;
