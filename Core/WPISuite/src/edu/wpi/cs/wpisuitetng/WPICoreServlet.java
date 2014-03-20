@@ -10,6 +10,7 @@
  *    mpdelladonna
  *    Alex Bragdon
  *    Sean Halloran
+ *    Ben McMorran
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng;
