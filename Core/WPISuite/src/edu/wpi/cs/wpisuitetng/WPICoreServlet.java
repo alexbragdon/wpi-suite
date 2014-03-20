@@ -17,6 +17,7 @@
  *    Rafael Angelo
  *    Xiaosong Wen
  *    Stephen Long
+ *    Mike Racine
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng;
