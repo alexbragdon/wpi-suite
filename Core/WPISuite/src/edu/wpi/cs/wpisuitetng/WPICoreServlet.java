@@ -16,6 +16,7 @@
  *    Hai Nguyen
  *    Rafael Angelo
  *    Xiaosong Wen
+ *    Stephen Long
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng;
