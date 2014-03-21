@@ -14,6 +14,7 @@
  *    Zachary Richards
  *    Fangming Ning
  *    Hai Nguyen
+ *    Rafael Angelo
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng;
