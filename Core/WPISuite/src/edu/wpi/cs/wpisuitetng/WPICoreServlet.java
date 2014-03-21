@@ -15,6 +15,7 @@
  *    Fangming Ning
  *    Hai Nguyen
  *    Rafael Angelo
+ *    Xiaosong Wen
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng;
