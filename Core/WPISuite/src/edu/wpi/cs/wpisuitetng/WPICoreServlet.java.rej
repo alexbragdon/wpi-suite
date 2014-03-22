@@ -1,9 +1,0 @@
-diff a/Core/WPISuite/src/edu/wpi/cs/wpisuitetng/WPICoreServlet.java b/Core/WPISuite/src/edu/wpi/cs/wpisuitetng/WPICoreServlet.java	(rejected hunks)
-@@ -9,6 +9,7 @@
-  * Contributors:
-  *    mpdelladonna
-  *    Alex Bragdon
-+ *    Sean Halloran
-  *******************************************************************************/
- 
- package edu.wpi.cs.wpisuitetng;
