@@ -19,6 +19,11 @@ import java.util.HashMap;
  */
 public class RequirementEstimate {
     /**
+     * The corresponding Requirement id in the Requirement Manager.
+     */
+    private final int id;
+
+    /**
      * A mapping of usernames to that users estimate.
      */
     private final HashMap<String, Integer> votes;
@@ -33,12 +38,17 @@ public class RequirementEstimate {
      */
     private boolean isExported;
 
-    public RequirementEstimate(int finalEstimate, boolean isExported) {
+    public RequirementEstimate(int id, int finalEstimate, boolean isExported) {
         votes = new HashMap<String, Integer>();
+        this.id = id;
         this.finalEstimate = finalEstimate;
         this.isExported = isExported;
     }
 
+    public int getId() {
+        return id;
+    }
+    
     public int getFinalEstimate() {
         return finalEstimate;
     }
