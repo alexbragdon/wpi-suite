@@ -43,7 +43,7 @@ public class JanewayModule implements IJanewayModule {
     	
         tabs = new ArrayList<JanewayTabModel>();
 
-        ToolbarView toolbarView = new ToolbarView(boardModel);
+        ToolbarView toolbarView = new ToolbarView();
 
         JPanel mainPanel = new MainView(boardModel);
 
