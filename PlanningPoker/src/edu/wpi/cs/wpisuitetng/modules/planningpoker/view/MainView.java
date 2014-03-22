@@ -27,8 +27,8 @@ public class MainView extends JPanel {
     /**
      * Construct the panel.
      */
-    public MainView() {
-        boardPanel = new BoardPanel(new PostBoardModel());
+    public MainView(PostBoardModel boardModel) {
+        boardPanel = new BoardPanel(boardModel);
         add(boardPanel);
     }
 }

@@ -14,6 +14,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import javax.swing.JToolBar;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardModel;
+
 /**
  * @author Ben
  *
@@ -25,9 +27,9 @@ public class ToolbarView extends JToolBar {
     /**
      * Construct this view and all components in it.
      */
-    public ToolbarView() {
+    public ToolbarView(PostBoardModel boardModel) {
         setFloatable(false);
-        toolbarPanel = new ToolbarPanel();
+        toolbarPanel = new ToolbarPanel(boardModel);
         add(toolbarPanel);
     }
 }

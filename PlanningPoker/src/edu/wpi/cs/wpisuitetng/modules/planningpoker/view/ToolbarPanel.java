@@ -15,6 +15,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetMessagesController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardModel;
+
 /**
  * @author Ben
  *
@@ -26,9 +29,10 @@ public class ToolbarPanel extends JPanel {
     /**
      * Construct the panel.
      */
-    public ToolbarPanel() {
+    public ToolbarPanel(PostBoardModel boardModel) {
         this.setOpaque(false);
         btnRefresh = new JButton("Refresh");
+        btnRefresh.addActionListener(new GetMessagesController(boardModel));
         add(btnRefresh);
     }
 }

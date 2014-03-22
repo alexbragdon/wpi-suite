@@ -22,6 +22,7 @@ import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardModel;
 
 /**
  * @author Ben
@@ -38,11 +39,13 @@ public class JanewayModule implements IJanewayModule {
      * Builds a new JanewayModule for Planning Poker.
      */
     public JanewayModule() {
+    	PostBoardModel boardModel = new PostBoardModel();
+    	
         tabs = new ArrayList<JanewayTabModel>();
 
-        ToolbarView toolbarView = new ToolbarView();
+        ToolbarView toolbarView = new ToolbarView(boardModel);
 
-        JPanel mainPanel = new MainView();
+        JPanel mainPanel = new MainView(boardModel);
 
         JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView,
                         mainPanel);
