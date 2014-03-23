@@ -8,9 +8,18 @@
 	<path id="classpath">
 		<pathelement path="../Janeway/build"/>
 		<pathelement path="../Network/build"/>
+		<pathelement path="../Janeway/lib"/>
 		<pathelement path="../Core/WPISuite-Interfaces/build"/>
 		<fileset dir="${core-lib}">
 			<include name="gson-*.jar"/>
+		</fileset>
+		<fileset dir="${janeway-lib}">
+			<include name="jfreechart-1.0.14.jar"/>
+			<include name="jcommon-1.0.17.jar"/>
+			<include name="gnujaxp.jar"/>
+			<include name="iText-2.1.5.jar"/>
+			<include name="miglayout-4.0-swing.jar"/>
+			<include name="swingx-all-1.6.4.jar"/>
 		</fileset>
 		<pathelement path="build"/>
 	</path>
@@ -27,6 +36,9 @@
 				debuglevel="lines,vars,source" includeantruntime="false">
 			<classpath refid="classpath"/>
 		</javac>
+		<copy todir="build">
+		    <fileset dir="src" includes="**/*.png" />
+		</copy>
 	</target>
 
 	<!-- Janeway and the Core need to load jars containing our module -->
