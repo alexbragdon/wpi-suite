@@ -25,7 +25,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.AcceptanceTest;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.TestStatus;
 
@@ -41,7 +41,7 @@ public class SingleAcceptanceTestPanel extends JPanel
 {
 	
 	private AcceptanceTest test;
-	private Requirement requirement;
+	private PlanningPokerSession requirement;
 	JComboBox<TestStatus> dropdownStatus;
 
 	/**
@@ -49,7 +49,7 @@ public class SingleAcceptanceTestPanel extends JPanel
 	 * @param test current test
 	 * @param req current requirement
 	 */
-	public SingleAcceptanceTestPanel(Requirement req, AcceptanceTest test)
+	public SingleAcceptanceTestPanel(PlanningPokerSession req, AcceptanceTest test)
 	{
 		this.requirement = req;
 		this.test = test;
@@ -132,7 +132,7 @@ public class SingleAcceptanceTestPanel extends JPanel
 	 * @param req requirement used to create panel
 	
 	 * @return Panel containing all of the notes given to the method */
-	public static JPanel createList(Requirement req)
+	public static JPanel createList(PlanningPokerSession req)
 	{
 		// Create a panel to hold all of the notes
 		JPanel panel = new JPanel();

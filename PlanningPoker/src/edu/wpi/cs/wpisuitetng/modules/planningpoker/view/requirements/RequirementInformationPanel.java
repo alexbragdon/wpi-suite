@@ -36,7 +36,7 @@ import javax.swing.border.Border;
 
 import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.RequirementPriority;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.RequirementStatus;
@@ -52,7 +52,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 public class RequirementInformationPanel extends JScrollPane implements KeyListener,
 ItemListener
 {
-	private Requirement currentRequirement;
+	private PlanningPokerSession currentRequirement;
 	private ViewMode viewMode;
 	private SessionPanel parentPanel;
 
@@ -96,7 +96,7 @@ ItemListener
 	 * @param curr the requirement being edited/created.
 	 */
 	public RequirementInformationPanel(SessionPanel parentPanel,
-			ViewMode mode, Requirement curr) {
+			ViewMode mode, PlanningPokerSession curr) {
 		this.currentRequirement = curr;
 		this.parentPanel = parentPanel;
 		this.viewMode = mode;
@@ -207,7 +207,7 @@ ItemListener
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Requirement oldParent = currentRequirement.getParent();
+				PlanningPokerSession oldParent = currentRequirement.getParent();
 				try {
 					currentRequirement.setParentID(-1);
 				} catch (Exception e1) {
@@ -598,7 +598,7 @@ ItemListener
 		boolean isCreating = viewMode == ViewMode.CREATING;
 		
 		boolean allChildrenDeleted = true;
-		for(Requirement child : currentRequirement.getChildren())
+		for(PlanningPokerSession child : currentRequirement.getChildren())
 		{
 			allChildrenDeleted &= child.getStatus() == RequirementStatus.DELETED;
 		}
@@ -731,7 +731,7 @@ ItemListener
 		{
 			boolean allChildrenCompleted = true;
 			boolean allChildrenDeleted = true;
-			for (Requirement Child: currentRequirement.getChildren()){
+			for (PlanningPokerSession Child: currentRequirement.getChildren()){
 				allChildrenCompleted &= Child.getStatus() == RequirementStatus.COMPLETE;
 				allChildrenDeleted &= Child.getStatus() == RequirementStatus.DELETED;
 			}

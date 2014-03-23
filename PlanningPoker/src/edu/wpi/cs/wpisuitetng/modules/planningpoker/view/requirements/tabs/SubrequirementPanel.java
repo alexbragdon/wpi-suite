@@ -27,7 +27,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.ViewMode;
 
@@ -38,7 +38,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.ViewMode;
 public class SubrequirementPanel extends JPanel
 {
 	private ViewMode viewMode;
-	private Requirement activeRequirement;
+	private PlanningPokerSession activeRequirement;
 	private JTable subRequirementTable;
 	private JButton addNewButton;
 	private JButton removeButton;
@@ -50,7 +50,7 @@ public class SubrequirementPanel extends JPanel
 	 * @param vm viewmode
 	 * @param requirementBeingEdited the current requirement being edited.
 	 */
-	public SubrequirementPanel(RequirementTabsPanel parentPanel, ViewMode vm, Requirement requirementBeingEdited)
+	public SubrequirementPanel(RequirementTabsPanel parentPanel, ViewMode vm, PlanningPokerSession requirementBeingEdited)
 	{
 		this.setLayout(new BorderLayout());
 		this.viewMode = vm;
@@ -77,7 +77,7 @@ public class SubrequirementPanel extends JPanel
 				
 				for(int i = 0; i < selectedObjects.length; i++)
 				{
-					Requirement toBeRemoved = (Requirement)subRequirementTable.getValueAt(selectedObjects[i], 0);
+					PlanningPokerSession toBeRemoved = (PlanningPokerSession)subRequirementTable.getValueAt(selectedObjects[i], 0);
 					try {
 						toBeRemoved.setParentID(-1);
 					} catch (Exception e1) {
@@ -162,7 +162,7 @@ public class SubrequirementPanel extends JPanel
 					int[] selection = subRequirementTable.getSelectedRows();
 
 					if(selection.length != 1) return;
-					Requirement toEdit = (Requirement)subRequirementTable.getValueAt(selection[0], 0);
+					PlanningPokerSession toEdit = (PlanningPokerSession)subRequirementTable.getValueAt(selection[0], 0);
 					ViewEventController.getInstance().editRequirement(toEdit);
 				}
 			}
@@ -186,10 +186,10 @@ public class SubrequirementPanel extends JPanel
 	{
 		tableModel.setRowCount(0); //clear the table
 
-		List<Requirement> subRequirements = activeRequirement.getChildren();
+		List<PlanningPokerSession> subRequirements = activeRequirement.getChildren();
 
 		for (int i = 0; i < subRequirements.size(); i++) {
-			Requirement req = subRequirements.get(i);
+			PlanningPokerSession req = subRequirements.get(i);
 			if (!req.isDeleted()) {
 				tableModel.addRow(new Object[]{ req,
 						req.getDescription(),

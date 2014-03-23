@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.iterationcontroller.UpdateIterationController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.IterationDate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.RequirementStatus;
@@ -139,9 +139,9 @@ public class Iteration extends AbstractModel {
 	public void setName(String name) {
 		if(!(this.name.equals("Backlog") || this.name.equals("")))
 		{
-			List<Requirement> forIter = RequirementModel.getInstance().getRequirementsForIteration(this.name);
+			List<PlanningPokerSession> forIter = RequirementModel.getInstance().getRequirementsForIteration(this.name);
 		
-			for(Requirement req : forIter)
+			for(PlanningPokerSession req : forIter)
 			{
 				req.setIteration(name);
 				UpdateRequirementController.getInstance().updateRequirement(req);
@@ -169,7 +169,7 @@ public class Iteration extends AbstractModel {
 	 * Getter for the requirements 
 	
 	 * @return list of requirements */
-	public List<Requirement> getRequirements() {
+	public List<PlanningPokerSession> getRequirements() {
 		return RequirementModel.getInstance().getRequirementsForIteration(name);
 	}
 	
@@ -178,11 +178,11 @@ public class Iteration extends AbstractModel {
 	 * 
 	
 	 * @return list model of requirements */
-	public ListModel<Requirement> getRequirementModel() {
-		DefaultListModel<Requirement> reqModel = new DefaultListModel<Requirement>();
-		List<Requirement> requirements = this.getRequirements();
+	public ListModel<PlanningPokerSession> getRequirementModel() {
+		DefaultListModel<PlanningPokerSession> reqModel = new DefaultListModel<PlanningPokerSession>();
+		List<PlanningPokerSession> requirements = this.getRequirements();
 		
-		for(Requirement req : requirements)
+		for(PlanningPokerSession req : requirements)
 		{
 			reqModel.addElement(req);
 		}

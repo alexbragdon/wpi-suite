@@ -9,7 +9,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -45,7 +45,7 @@ public class UpdateRequirementRequestObserver implements RequestObserver {
 		final ResponseModel response = iReq.getResponse();
 		
 		// Parse the requirement out of the response body
-		final Requirement requirement = Requirement.fromJson(response.getBody());		
+		final PlanningPokerSession requirement = PlanningPokerSession.fromJson(response.getBody());		
 	}
 	
 	/**

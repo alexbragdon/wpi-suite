@@ -11,7 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.tabs;
 
 import javax.swing.JScrollPane;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.ViewMode;
 
 /**
@@ -21,7 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.ViewMode;
 public class RequirementHistoryPanel extends JScrollPane 
 {
 
-	private final Requirement currentRequirement;
+	private final PlanningPokerSession currentRequirement;
 	
 	/**
 	 * Constructor for the requirement history panel.
@@ -29,7 +29,7 @@ public class RequirementHistoryPanel extends JScrollPane
 	 * @param vm the view mode
 	 * @param currentRequirement
 	 */
-	public RequirementHistoryPanel(RequirementTabsPanel parentPanel, ViewMode vm, Requirement currentRequirement)
+	public RequirementHistoryPanel(RequirementTabsPanel parentPanel, ViewMode vm, PlanningPokerSession currentRequirement)
 	{
 		this.currentRequirement = currentRequirement;
 		// Create scroll pane for window, set scroll bar to always be on

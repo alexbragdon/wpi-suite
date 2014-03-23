@@ -29,7 +29,7 @@ import javax.swing.table.TableCellRenderer;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.iterationcontroller.GetIterationController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.RequirementStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
@@ -85,7 +85,7 @@ public class OverviewTable extends JTable
     	String rowIDstr = this.getValueAt(row, 0).toString();
     	int rowID = Integer.parseInt(rowIDstr);
     	// retrieve the requirement with ID rowID and the requirement's estimate 
-    	Requirement req = RequirementModel.getInstance().getRequirement(rowID);
+    	PlanningPokerSession req = RequirementModel.getInstance().getRequirement(rowID);
     	   	
 		// if the column contains the estimate, the requirement is not deleted, in progress or completed,
     	// and the table is in Multiple Requirement Editing mode, make the cell editable

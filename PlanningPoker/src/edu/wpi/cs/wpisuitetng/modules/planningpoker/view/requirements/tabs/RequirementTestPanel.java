@@ -27,7 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.AcceptanceTest;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.ViewMode;
 
@@ -38,7 +38,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.ViewMode;
 public class RequirementTestPanel extends JPanel 
 {
 
-	private Requirement currentRequirement;
+	private PlanningPokerSession currentRequirement;
 	private RequirementTabsPanel parentPanel;
 	private ViewMode viewMode;
 	private int testsAdded;
@@ -60,7 +60,7 @@ public class RequirementTestPanel extends JPanel
 	 * @param vm RequirementViewMode
 	 * @param current Requirement
 	 */
-	public RequirementTestPanel(RequirementTabsPanel parent, ViewMode vm, Requirement current) {
+	public RequirementTestPanel(RequirementTabsPanel parent, ViewMode vm, PlanningPokerSession current) {
 		currentRequirement = current;
 		viewMode = vm;
 		testsAdded = 0;

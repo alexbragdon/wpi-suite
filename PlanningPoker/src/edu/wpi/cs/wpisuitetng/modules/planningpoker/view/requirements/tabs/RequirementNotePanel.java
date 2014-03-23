@@ -30,7 +30,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.ViewMode;
 
 /**
@@ -40,7 +40,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.ViewMode;
 public class RequirementNotePanel extends JPanel 
 {
 	private final ViewMode viewMode;
-	private final Requirement currentRequirement;
+	private final PlanningPokerSession currentRequirement;
 	private int notesAdded;
 	private final JTextArea noteMessage = new JTextArea();
 	private final JScrollPane noteScroll;
@@ -54,7 +54,7 @@ public class RequirementNotePanel extends JPanel
 	 * @param vm view mode
 	 * @param current current requirement
 	 */
-	public RequirementNotePanel(RequirementTabsPanel parent, ViewMode vm, Requirement current) {
+	public RequirementNotePanel(RequirementTabsPanel parent, ViewMode vm, PlanningPokerSession current) {
 		currentRequirement = current;
 		viewMode = vm;
 		notesAdded = 0;
@@ -224,7 +224,7 @@ public class RequirementNotePanel extends JPanel
 	/**
 	
 	 * @return the requirement this note panel is in */
-	public Requirement getRequirement() {
+	public PlanningPokerSession getRequirement() {
 		return currentRequirement;
 	}
 	

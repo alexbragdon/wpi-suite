@@ -27,7 +27,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 
 /**
  * @author justinhess
@@ -50,7 +50,7 @@ public class RequirementButtonPanel extends JPanel
 	 * @param mode viewmode for the panel
 	 * @param curr current requirement
 	 */
-	public RequirementButtonPanel(SessionPanel parentPanel, ViewMode mode, Requirement curr)
+	public RequirementButtonPanel(SessionPanel parentPanel, ViewMode mode, PlanningPokerSession curr)
 	{
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		this.parentPanel = parentPanel;

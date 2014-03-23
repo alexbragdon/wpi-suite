@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.RequirementStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.tabs.RequirementTabsPanel;
@@ -32,7 +32,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.tabs.Requi
  */
 public class SessionPanel extends JPanel
 {
-	private Requirement displayRequirement;
+	private PlanningPokerSession displaySession;
 	private ViewMode viewMode;
 	
 	/**
@@ -59,13 +59,13 @@ public class SessionPanel extends JPanel
 
 	/**
 	 * Constructor for editing a requirement
-	 * @param editingRequirement requirement to edit
+	 * @param editingSession requirement to edit
 	 */
-	public SessionPanel(Requirement editingRequirement)
+	public SessionPanel(PlanningPokerSession editingSession)
 	{
 		viewMode = (ViewMode.EDITING);
 		
-		displayRequirement = editingRequirement;
+		displaySession = editingSession;
 		this.buildLayout();
 	}
 	
@@ -77,12 +77,12 @@ public class SessionPanel extends JPanel
 	{
 		viewMode = (ViewMode.CREATING);
 		
-		displayRequirement = new Requirement();
-		displayRequirement.setId(-2);
+		displaySession = new PlanningPokerSession();
+		displaySession.setId(-2);
 		
 		try 
 		{
-			displayRequirement.setParentID(parentID);
+			displaySession.setParentID(parentID);
 		} 
 		catch (Exception e) 
 		{
@@ -117,11 +117,11 @@ public class SessionPanel extends JPanel
 	 */
 	public void deletePressed() 
 	{
-		if (this.displayRequirement.getStatus() == RequirementStatus.INPROGRESS)
+		if (this.displaySession.getStatus() == RequirementStatus.INPROGRESS)
 			return;
-		displayRequirement.setStatus(RequirementStatus.DELETED);
+		displaySession.setStatus(RequirementStatus.DELETED);
 
-		UpdateRequirementController.getInstance().updateRequirement(displayRequirement);
+		UpdateRequirementController.getInstance().updateRequirement(displaySession);
 		
 		ViewEventController.getInstance().removeTab(this);	
 	}	
@@ -146,8 +146,8 @@ public class SessionPanel extends JPanel
 	/**
 	
 	 * @return the display requirement. */
-	public Requirement getDisplayRequirement() {
-		return displayRequirement;
+	public PlanningPokerSession getDisplayRequirement() {
+		return displaySession;
 	}
 
 	/**

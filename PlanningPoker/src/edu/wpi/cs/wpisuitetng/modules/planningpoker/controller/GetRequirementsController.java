@@ -12,7 +12,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -81,7 +81,7 @@ public class GetRequirementsController implements ActionListener {
 	 * 
 	 * @param requirements array of requirements received from the server
 	 */
-	public void receivedRequirements(Requirement[] requirements) {
+	public void receivedRequirements(PlanningPokerSession[] requirements) {
 		// Empty the local model to eliminate duplications
 		RequirementModel.getInstance().emptyModel();
 		

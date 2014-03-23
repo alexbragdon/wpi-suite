@@ -10,7 +10,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -54,7 +54,7 @@ public class UpdateRequirementController{
 	 * This method updates a requirement to the server.
 	 * @param newRequirement is the requirement to be updated to the server.
 	 */
-	public void updateRequirement(Requirement newRequirement) 
+	public void updateRequirement(PlanningPokerSession newRequirement) 
 	{
 		Request request = Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.POST); // POST == update
 		request.setBody(newRequirement.toJSON()); // put the new requirement in the body of the request

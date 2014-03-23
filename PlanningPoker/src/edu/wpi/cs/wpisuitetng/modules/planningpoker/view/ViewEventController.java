@@ -16,7 +16,8 @@ import javax.swing.JComponent;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.iterations.Iteration;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.iterations.IterationModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewPanel;
@@ -95,7 +96,7 @@ public class ViewEventController {
 	 * Opens a new tab for the editing of a session
 	 * @param toEdit the session to edit (not there right now)
 	 */
-	public void editSession()
+	public void editSession(PlanningPokerSession toEdit)
 	{
 		SessionPanel exists = null;
 		
@@ -186,7 +187,7 @@ public class ViewEventController {
 
 		for(int i = 0; i < selection.length; i++)
 		{
-			Requirement toSendToBacklog = (Requirement)opensessionTable.getValueAt(selection[i], 1);
+			PlanningPokerSession toSendToBacklog = (PlanningPokerSession)opensessionTable.getValueAt(selection[i], 1);
 			toSendToBacklog.setIteration("Backlog");
 			UpdateRequirementController.getInstance().updateRequirement(toSendToBacklog);
 		}
@@ -202,7 +203,7 @@ public class ViewEventController {
 
 		if(selection.length != 1) return;
 
-		Requirement toEdit = (Requirement)opensessionTable.getValueAt(selection[0],1);
+		PlanningPokerSession toEdit = (PlanningPokerSession)opensessionTable.getValueAt(selection[0],1);
 		
 		editSession(toEdit);
 	}
@@ -267,7 +268,7 @@ public class ViewEventController {
 	 * 
 	 * @param newChild req that is being created
 	 */
-	public void refreshEditRequirementPanel(Requirement newChild) {
+	public void refreshEditRequirementPanel(PlanningPokerSession newChild) {
 		for(SessionPanel newEditPanel : listOfEditingPanels)
 		{
 			if(newEditPanel.getDisplayRequirement() == newChild)
