@@ -23,6 +23,59 @@ public class PlanningPokerSession extends AbstractModel {
 	boolean isComplete;
 	
 	/**
+	 * Generated getters and setters via Eclipse
+	 */
+	public int getID() 
+	{
+		return ID;
+	}
+
+	public void setID(int iD) 
+	{
+		ID = iD;
+	}
+
+	public String getName() 
+	{
+		return Name;
+	}
+
+	public void setName(String name) 
+	{
+		Name = name;
+	}
+
+	public sessionType getType() 
+	{
+		return Type;
+	}
+
+	public void setType(sessionType type) 
+	{
+		Type = type;
+	}
+
+	public boolean isActive() 
+	{
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) 
+	{
+		this.isActive = isActive;
+	}
+
+	public boolean isComplete() 
+	{
+		return isComplete;
+	}
+
+	public void setComplete(boolean isComplete) 
+	{
+		this.isComplete = isComplete;
+	}
+	
+	/**
 	 * Default constructor for a planning Poker session
 	 */
 	public PlanningPokerSession() 
@@ -35,7 +88,7 @@ public class PlanningPokerSession extends AbstractModel {
 		isActive = false;
 		isComplete = false;
 	}
-	
+
 	/**
 	 * constructor for a planning poker Session
 	 */
@@ -55,6 +108,11 @@ public class PlanningPokerSession extends AbstractModel {
 		} else {
 			isComplete = complete;
 		}
+	}
+	
+	public static PlanningPokerSession fromJson(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, PlanningPokerSession.class);
 	}
 	
 	public void addRequirement (Requirement r) 
@@ -77,6 +135,14 @@ public class PlanningPokerSession extends AbstractModel {
 		// TODO throw an exception
 	}
 	
+	public List<RequirementEstimate> getRequirements() 
+	{
+		return RequirementEstimates;
+	}
+	
+	/**
+	 * Default Model methods: not required
+	 */
 	@Override
 	public void delete() {
 		// TODO Auto-generated method stub
