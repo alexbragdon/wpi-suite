@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characterstics.*;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 public class PlanningPokerSession extends AbstractModel {
 	/**
