@@ -17,7 +17,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.iterations.Iteration;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.iterations.IterationModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewPanel;
@@ -188,8 +188,6 @@ public class ViewEventController {
 		for(int i = 0; i < selection.length; i++)
 		{
 			PlanningPokerSession toSendToBacklog = (PlanningPokerSession)opensessionTable.getValueAt(selection[i], 1);
-			toSendToBacklog.setIteration("Backlog");
-			UpdateRequirementController.getInstance().updateRequirement(toSendToBacklog);
 		}
 
 	}

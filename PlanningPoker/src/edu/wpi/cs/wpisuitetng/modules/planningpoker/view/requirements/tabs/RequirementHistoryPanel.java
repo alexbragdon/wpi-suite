@@ -11,7 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.tabs;
 
 import javax.swing.JScrollPane;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.ViewMode;
 
 /**

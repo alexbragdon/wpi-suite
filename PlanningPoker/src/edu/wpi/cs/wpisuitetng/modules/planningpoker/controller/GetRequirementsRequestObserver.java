@@ -9,7 +9,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -39,7 +39,7 @@ public class GetRequirementsRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		// Convert the JSON array of requirements to a Requirement object array
-		PlanningPokerSession[] requirements = PlanningPokerSession.fromJsonArray(iReq.getResponse().getBody());
+		//PlanningPokerSession[] requirements = PlanningPokerSession.fromJsonArray(iReq.getResponse().getBody());
 		
 		// Pass these Requirements to the controller
 		controller.receivedRequirements(requirements);

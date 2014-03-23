@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.RequirementStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.tabs.RequirementTabsPanel;
@@ -78,16 +78,8 @@ public class SessionPanel extends JPanel
 		viewMode = (ViewMode.CREATING);
 		
 		displaySession = new PlanningPokerSession();
-		displaySession.setId(-2);
+		displaySession.setID(-2);
 		
-		try 
-		{
-			displaySession.setParentID(parentID);
-		} 
-		catch (Exception e) 
-		{
-			System.out.println(e.getMessage());
-		}
 		this.buildLayout();
 	}
 	
@@ -117,11 +109,6 @@ public class SessionPanel extends JPanel
 	 */
 	public void deletePressed() 
 	{
-		if (this.displaySession.getStatus() == RequirementStatus.INPROGRESS)
-			return;
-		displaySession.setStatus(RequirementStatus.DELETED);
-
-		UpdateRequirementController.getInstance().updateRequirement(displaySession);
 		
 		ViewEventController.getInstance().removeTab(this);	
 	}	
