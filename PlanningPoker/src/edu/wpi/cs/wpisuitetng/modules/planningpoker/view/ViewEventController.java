@@ -18,8 +18,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.iterations.Iteration;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.iterations.IterationModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.SessionPanel;

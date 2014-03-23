@@ -42,7 +42,7 @@ public class GetRequirementsRequestObserver implements RequestObserver {
 		//PlanningPokerSession[] requirements = PlanningPokerSession.fromJsonArray(iReq.getResponse().getBody());
 		
 		// Pass these Requirements to the controller
-		controller.receivedRequirements(requirements);
+		
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class GetRequirementsRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		PlanningPokerSession[] errorRequirement = { new PlanningPokerSession(6, "Error", "error desc") };
+		PlanningPokerSession[] errorRequirement = { new PlanningPokerSession() };
 		controller.receivedRequirements(errorRequirement);
 	}
 

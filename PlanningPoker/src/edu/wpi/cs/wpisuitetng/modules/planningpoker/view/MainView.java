@@ -32,7 +32,6 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.RequirementPanel;
 
 /**
  * 
@@ -163,10 +162,6 @@ public class MainView extends JTabbedPane {
 					overview.setDividerLocation(180);
 					overview.revalidate();
 					overview.repaint();
-				}
-				else if(selected instanceof RequirementPanel)
-				{
-					RequirementPanel req = (RequirementPanel)selected;
 				}
 			}
 		});

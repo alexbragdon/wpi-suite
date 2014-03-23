@@ -24,7 +24,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirement
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.RequirementStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.tabs.RequirementTabsPanel;
 
 /**
  * @version $Revision: 1.0 $
