@@ -21,7 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.iterations.Iteration;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.iterations.IterationModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewTable;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.RequirementPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.SessionPanel;
 
 
 /**
@@ -35,7 +35,7 @@ public class ViewEventController {
 	private MainView main = null;
 	private ToolbarView toolbar = null;
 	private OverviewTable opensessionTable = null;
-	private ArrayList<RequirementPanel> listOfEditingPanels = new ArrayList<RequirementPanel>();
+	private ArrayList<SessionPanel> listOfEditingPanels = new ArrayList<SessionPanel>();
 
 	
 	/**
@@ -81,85 +81,31 @@ public class ViewEventController {
 	}
 
 	/**
-	 * Opens a new tab for the creation of a requirement.
+	 * Opens a new tab for the creation of a session.
 	 */
-	public void createRequirement() {
-		RequirementPanel newReq = new RequirementPanel(-1);
-		main.addTab("New Req.", null, newReq, "New Requirement");
+	public void createSession() {
+		SessionPanel newSession = new SessionPanel(-1);
+		main.addTab("New Session", null, newSession, "Create a new session");
 		main.invalidate(); //force the tabbedpane to redraw.
 		main.repaint();
-		main.setSelectedComponent(newReq);
-	}
-
-
-	/**
-	 * Opens a new tab for the creation of a pie chart.
-	 * @param title the title of the pie chart
-	 */
-	public void createPieChart(String title){
-		int i;
-		for (i = 0; i < main.getTabCount(); i++) {
-			if (main.getTitleAt(i).equals("Pie Chart")) {
-			}
-		}
-		main.invalidate();
-		main.repaint();
-		
+		main.setSelectedComponent(newSession);
 	}
 	
 	/**
-	 * Method createBarChart.
-	 * @param title String
+	 * Opens a new tab for the editing of a session
+	 * @param toEdit the session to edit (not there right now)
 	 */
-	public void createBarChart(String title){
-		for(int i = 0; i < main.getTabCount(); i++){
-			if(main.getTitleAt(i).equals("Bar Graph")){ 
-		}
-		}
-		main.invalidate();
-		main.repaint();
-	}
-	
-
-
-	/**
-	 * Opens a child requirement panel to create the child requirement for the given parent.
-	 * @param parentID
-	 */
-	public void createChildRequirement(int parentID) {
-		RequirementPanel newReq = new RequirementPanel(parentID);
-		main.addTab("Add Child Req.", null, newReq, "Add Child Requirement");
-		main.invalidate(); //force the tabbedpane to redraw.
-		main.repaint();
-		main.setSelectedComponent(newReq);
-	}
-	/**
-	 * Opens a new tab for the editing of a requirement
-	 * @param toEdit the req to edit
-	 */
-	public void editRequirement(Requirement toEdit)
+	public void editSession()
 	{
-		RequirementPanel exists = null;
+		SessionPanel exists = null;
 		
-		// set time stamp for transactions
-		toEdit.getHistory().setTimestamp(System.currentTimeMillis());
-		
-		for(RequirementPanel panel : listOfEditingPanels)
-		{
-			if(panel.getDisplayRequirement() == toEdit)
-			{
-				exists = panel;
-				break;
-			}
-		}	
+		// TODO check that the panel isn't already open, set exists
 		
 		if(exists == null)
 		{
-			RequirementPanel editPanel = new RequirementPanel(toEdit);
+			SessionPanel editPanel = new SessionPanel(toEdit);
 			
 			StringBuilder tabName = new StringBuilder();
-			tabName.append(toEdit.getId()); 
-			tabName.append(". ");
 			int subStringLength = toEdit.getName().length() > 6 ? 7 : toEdit.getName().length();
 			tabName.append(toEdit.getName().substring(0,subStringLength));
 			if(toEdit.getName().length() > 6) tabName.append("..");
@@ -202,7 +148,7 @@ public class ViewEventController {
 	 */
 	public void removeTab(JComponent comp)
 	{
-		if(comp instanceof RequirementPanel)
+		if(comp instanceof SessionPanel)
 		{
 
 		}
@@ -258,7 +204,7 @@ public class ViewEventController {
 
 		Requirement toEdit = (Requirement)opensessionTable.getValueAt(selection[0],1);
 		
-		editRequirement(toEdit);
+		editSession(toEdit);
 	}
 
 	/**
@@ -274,7 +220,7 @@ public class ViewEventController {
 
 			if(toBeRemoved instanceof OverviewPanel) continue;
 
-			if(toBeRemoved instanceof RequirementPanel)
+			if(toBeRemoved instanceof SessionPanel)
 			{
 			}
 			
@@ -304,7 +250,7 @@ public class ViewEventController {
 			if(toBeRemoved == selected){
 				continue;}
 
-			if(toBeRemoved instanceof RequirementPanel)
+			if(toBeRemoved instanceof SessionPanel)
 			{
 
 			}
@@ -322,7 +268,7 @@ public class ViewEventController {
 	 * @param newChild req that is being created
 	 */
 	public void refreshEditRequirementPanel(Requirement newChild) {
-		for(RequirementPanel newEditPanel : listOfEditingPanels)
+		for(SessionPanel newEditPanel : listOfEditingPanels)
 		{
 			if(newEditPanel.getDisplayRequirement() == newChild)
 			{
@@ -341,7 +287,7 @@ public class ViewEventController {
 	 * Method getListOfRequirementPanels.
 	 * @return ArrayList<RequirementPanel>
 	 */
-	public ArrayList<RequirementPanel> getListOfRequirementPanels() {
+	public ArrayList<SessionPanel> getListOfRequirementPanels() {
 		return listOfEditingPanels;
 	}
 }

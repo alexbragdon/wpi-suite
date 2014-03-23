@@ -68,7 +68,7 @@ public class ButtonsPanel extends ToolbarGroupView{
 			public void actionPerformed(ActionEvent e) {
 				// bring up a create requirement pane if not in Multiple Requirement Editing Mode
 				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
-					ViewEventController.getInstance().createRequirement();
+					ViewEventController.getInstance().createSession();
 			//	}
 			}
 		});		
@@ -78,7 +78,7 @@ public class ButtonsPanel extends ToolbarGroupView{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
-					ViewEventController.getInstance().createRequirement();
+					ViewEventController.getInstance().createSession();
 				}
 		//	}
 		});

@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.RequirementPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.SessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.ViewMode;
 
 /**
@@ -41,7 +41,7 @@ public class RequirementTabsPanel extends JTabbedPane
 	 * @param viewMode view mode
 	 * @param currentRequirement current requirement
 	 */
-	public RequirementTabsPanel(RequirementPanel parentPanel, ViewMode viewMode, Requirement currentRequirement) 
+	public RequirementTabsPanel(SessionPanel parentPanel, ViewMode viewMode, Requirement currentRequirement) 
 	{
 		this.viewMode = viewMode;
 		this.currentRequirement = currentRequirement;

@@ -35,7 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Requirement;
  */
 public class RequirementButtonPanel extends JPanel
 {
-	private final RequirementPanel parentPanel;
+	private final SessionPanel parentPanel;
 	private final ViewMode viewMode;
 	
 	
@@ -50,7 +50,7 @@ public class RequirementButtonPanel extends JPanel
 	 * @param mode viewmode for the panel
 	 * @param curr current requirement
 	 */
-	public RequirementButtonPanel(RequirementPanel parentPanel, ViewMode mode, Requirement curr)
+	public RequirementButtonPanel(SessionPanel parentPanel, ViewMode mode, Requirement curr)
 	{
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		this.parentPanel = parentPanel;

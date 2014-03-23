@@ -10,10 +10,12 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -28,16 +30,29 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.tabs.Requi
  * @version $Revision: 1.0 $
  * @author Rolling Thunder
  */
-public class RequirementPanel extends JPanel
+public class SessionPanel extends JPanel
 {
 	private Requirement displayRequirement;
 	private ViewMode viewMode;
 	
-	private RequirementInformationPanel infoPanel;
-	private RequirementTabsPanel tabsPanel;
-	private RequirementButtonPanel buttonPanel;
+	/**
+	 * Goes on left, holds basic info (name, time).
+	 */
+	// TODO replace JPanel with something real
+	private JPanel infoPanel;
 	
-	private boolean readyToClose = false;
+	/**
+	 * Goes on right, allows user to select requirements.
+	 */
+	// TODO replace JPanel with something real
+	private JPanel requirementsPanel;
+	
+	/**
+	 * Create, reset, cancel buttons at the bottom.
+	 */
+	// TODO replace JPanel with something real
+	private JPanel buttonPanel;
+	
 	private boolean readyToRemove = true;
 	
 	
@@ -46,7 +61,7 @@ public class RequirementPanel extends JPanel
 	 * Constructor for editing a requirement
 	 * @param editingRequirement requirement to edit
 	 */
-	public RequirementPanel(Requirement editingRequirement)
+	public SessionPanel(Requirement editingRequirement)
 	{
 		viewMode = (ViewMode.EDITING);
 		
@@ -58,7 +73,7 @@ public class RequirementPanel extends JPanel
 	 * Constructor for creating a requirement
 	 * @param parentID the parent id, or -1 if no parent.
 	 */
-	public RequirementPanel(int parentID)
+	public SessionPanel(int parentID)
 	{
 		viewMode = (ViewMode.CREATING);
 		
@@ -81,11 +96,14 @@ public class RequirementPanel extends JPanel
 	 */
 	private void buildLayout()
 	{
-		buttonPanel = new RequirementButtonPanel(this, viewMode, displayRequirement);
-		tabsPanel = new RequirementTabsPanel(this, viewMode, displayRequirement);
-		infoPanel = new RequirementInformationPanel(this, viewMode, displayRequirement);
+		buttonPanel = new JPanel();
+		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.green, 3));
+		requirementsPanel = new JPanel();
+		requirementsPanel.setBorder(BorderFactory.createLineBorder(Color.green, 3));
+		infoPanel = new JPanel();
+		infoPanel.setBorder(BorderFactory.createLineBorder(Color.green, 3));
 		
-		JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, tabsPanel);
+		JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
 		
 		this.setLayout(new BorderLayout());
 		this.add(contentPanel, BorderLayout.CENTER); // Add scroll pane to panel
@@ -101,7 +119,6 @@ public class RequirementPanel extends JPanel
 	{
 		if (this.displayRequirement.getStatus() == RequirementStatus.INPROGRESS)
 			return;
-		readyToClose = true;
 		displayRequirement.setStatus(RequirementStatus.DELETED);
 
 		UpdateRequirementController.getInstance().updateRequirement(displayRequirement);
@@ -113,7 +130,7 @@ public class RequirementPanel extends JPanel
 	/**
 	
 	 * @return the requirement information panel. */
-	public RequirementInformationPanel getInfoPanel()
+	public JPanel getInfoPanel()
 	{
 		return this.infoPanel;
 	}
@@ -121,7 +138,7 @@ public class RequirementPanel extends JPanel
 	/**
 	
 	 * @return the button panel */
-	public RequirementButtonPanel getButtonPanel()
+	public JPanel getButtonPanel()
 	{
 		return this.buttonPanel;
 	}
@@ -136,8 +153,8 @@ public class RequirementPanel extends JPanel
 	/**
 	
 	 * @return the tabs panel */
-	public RequirementTabsPanel getTabsPanel() {
-		return tabsPanel;
+	public JPanel getRequirementsPanel() {
+		return requirementsPanel;
 	}
 	
 	/**

@@ -54,7 +54,7 @@ ItemListener
 {
 	private Requirement currentRequirement;
 	private ViewMode viewMode;
-	private RequirementPanel parentPanel;
+	private SessionPanel parentPanel;
 
 	private int storedEstimate;
 	private Iteration storedIteration;
@@ -95,7 +95,7 @@ ItemListener
 	 * @param mode the current view mode.
 	 * @param curr the requirement being edited/created.
 	 */
-	public RequirementInformationPanel(RequirementPanel parentPanel,
+	public RequirementInformationPanel(SessionPanel parentPanel,
 			ViewMode mode, Requirement curr) {
 		this.currentRequirement = curr;
 		this.parentPanel = parentPanel;
