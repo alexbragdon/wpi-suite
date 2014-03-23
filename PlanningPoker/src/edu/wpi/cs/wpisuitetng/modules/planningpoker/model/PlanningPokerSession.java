@@ -1,0 +1,104 @@
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import com.google.gson.Gson;
+
+import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characterstics.*;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+
+public class PlanningPokerSession extends AbstractModel {
+	/**
+	 * Members of type PlanningPokerSession
+	 */
+	int ID;
+	String Name;
+	List<RequirementEstimate> RequirementEstimates;
+	sessionType Type;
+	// True if the game is active and ready to join
+	boolean isActive;
+	// True if the game is complete and cannot be played 
+	boolean isComplete;
+	
+	/**
+	 * Default constructor for a planning Poker session
+	 */
+	public PlanningPokerSession() 
+	{
+		super();
+		ID = 0;
+		Name = "Planning Poker Game " + ID;
+		RequirementEstimates = new ArrayList<RequirementEstimate>();
+		Type = sessionType.REALTIME;
+		isActive = false;
+		isComplete = false;
+	}
+	
+	/**
+	 * constructor for a planning poker Session
+	 */
+	public PlanningPokerSession(int id, String name, List<RequirementEstimate>
+			requirementestimates, sessionType type, boolean active, boolean complete) 
+	{
+		super();
+		ID = id;
+		Name = name;
+		RequirementEstimates = requirementestimates;
+		Type = type;
+		isActive = active;
+		
+		// Prevents from adding an active, closed session
+		if (isActive) {
+			isComplete = false;
+		} else {
+			isComplete = complete;
+		}
+	}
+	
+	public void addRequirement (Requirement r) 
+	{
+		// Check that we are allowed to add requirements
+		if (!isActive && !isComplete) {
+			// get the requirement ID and turn it all into a requirmentEstimate
+			RequirementEstimates.add(new RequirementEstimate(r.getId(), 0, false));
+		} 
+		// TODO throw an exception
+	}
+	
+	public void removeRequirement (Requirement r) 
+	{
+		// Check that we are allowed to add requirements
+		if (!isActive && !isComplete) {
+			// get the requirement ID and turn it all into a requirmentEstimate
+			RequirementEstimates.remove(new RequirementEstimate(r.getId(), 0, false));
+		}
+		// TODO throw an exception
+	}
+	
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Boolean identify(Object arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void save() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	/**
+	 * Converts object to JSON for going into the network and database
+	 */
+	public String toJSON() {
+		return new Gson().toJson(this, PlanningPokerSession.class);
+	}
+
+}
