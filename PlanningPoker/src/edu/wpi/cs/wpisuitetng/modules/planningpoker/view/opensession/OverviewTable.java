@@ -71,15 +71,15 @@ public class OverviewTable extends JTable
 	
 	/**
 	 * Overrides the isCellEditable method to ensure no cells are editable.
-	 * 
-	 * @param row	row of OverviewTable cell is located
-	 * @param col	column of OverviewTable cell is located
-	
 	 * @return boolean */
 	@Override
 	public boolean isCellEditable(int row, int col)
 	{
+<<<<<<< HEAD
 		
+=======
+		//TODO: Impliment function
+>>>>>>> Removes requirement manager code from our module
 		return false;
 	}
 
@@ -91,6 +91,7 @@ public class OverviewTable extends JTable
 	@Override
 	public void paintComponent(Graphics g)
 	{
+<<<<<<< HEAD
 		if(!initialized)
 		{
 			try 
@@ -104,6 +105,8 @@ public class OverviewTable extends JTable
 			}
 		}
 
+=======
+>>>>>>> Removes requirement manager code from our module
 		super.paintComponent(g);
 	}
 

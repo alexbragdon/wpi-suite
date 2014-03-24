@@ -13,6 +13,7 @@ import java.awt.Component;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
@@ -20,7 +21,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewTable;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.requirements.SessionPanel;
 
 
 /**
@@ -34,7 +34,7 @@ public class ViewEventController {
 	private MainView main = null;
 	private ToolbarView toolbar = null;
 	private OverviewTable opensessionTable = null;
-	private ArrayList<SessionPanel> listOfEditingPanels = new ArrayList<SessionPanel>();
+	private ArrayList<JPanel> listOfEditingPanels = new ArrayList<JPanel>();
 
 	
 	/**
@@ -83,7 +83,8 @@ public class ViewEventController {
 	 * Opens a new tab for the creation of a session.
 	 */
 	public void createSession() {
-		SessionPanel newSession = new SessionPanel(-1);
+		//TODO add the propper PlanningPokkerSession to new SessionPanel
+		SessionPanel newSession = new SessionPanel(new PlanningPokerSession());
 		main.addTab("New Session", null, newSession, "Create a new session");
 		main.invalidate(); //force the tabbedpane to redraw.
 		main.repaint();
@@ -96,20 +97,15 @@ public class ViewEventController {
 	 */
 	public void editSession(PlanningPokerSession toEdit)
 	{
-		SessionPanel exists = null;
+		JPanel exists = null;
 		
 		// TODO check that the panel isn't already open, set exists
 		
 		if(exists == null)
 		{
-			SessionPanel editPanel = new SessionPanel(toEdit);
+			JPanel editPanel = new JPanel();
 			
-			StringBuilder tabName = new StringBuilder();
-			int subStringLength = toEdit.getName().length() > 6 ? 7 : toEdit.getName().length();
-			tabName.append(toEdit.getName().substring(0,subStringLength));
-			if(toEdit.getName().length() > 6) tabName.append("..");
-			
-			main.addTab(tabName.toString(), null, editPanel, toEdit.getName());
+			main.addTab("Awesome", null, editPanel, "This tab is awesome");
 			this.listOfEditingPanels.add(editPanel);
 			main.invalidate();
 			main.repaint();
@@ -147,10 +143,6 @@ public class ViewEventController {
 	 */
 	public void removeTab(JComponent comp)
 	{
-		if(comp instanceof SessionPanel)
-		{
-
-		}
 
 		main.remove(comp);
 	}
@@ -217,10 +209,6 @@ public class ViewEventController {
 
 			if(toBeRemoved instanceof OverviewPanel) continue;
 
-			if(toBeRemoved instanceof SessionPanel)
-			{
-			}
-			
 
 
 			main.removeTabAt(i);
@@ -247,10 +235,7 @@ public class ViewEventController {
 			if(toBeRemoved == selected){
 				continue;}
 
-			if(toBeRemoved instanceof SessionPanel)
-			{
-
-			}
+		
 
 
 			main.removeTabAt(i);
@@ -265,26 +250,11 @@ public class ViewEventController {
 	 * @param newChild req that is being created
 	 */
 	public void refreshEditRequirementPanel(PlanningPokerSession newChild) {
-		for(SessionPanel newEditPanel : listOfEditingPanels)
-		{
-			if(newEditPanel.getDisplayRequirement() == newChild)
-			{
-//				newEditPanel.fireRefresh();
-				break;
-			}
-			
-		}
 		
 	}
 
 
 
 
-	/**
-	 * Method getListOfRequirementPanels.
-	 * @return ArrayList<RequirementPanel>
-	 */
-	public ArrayList<SessionPanel> getListOfRequirementPanels() {
-		return listOfEditingPanels;
-	}
+	
 }

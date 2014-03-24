@@ -114,26 +114,6 @@ public class PlanningPokerSession extends AbstractModel {
 		return parser.fromJson(json, PlanningPokerSession.class);
 	}
 	
-	public void addRequirement (Requirement r) 
-	{
-		// Check that we are allowed to add requirements
-		if (!isActive && !isComplete) {
-			// get the requirement ID and turn it all into a requirmentEstimate
-			RequirementEstimates.add(new RequirementEstimate(r.getId(), 0, false));
-		} 
-		// TODO throw an exception
-	}
-	
-	public void removeRequirement (Requirement r) 
-	{
-		// Check that we are allowed to add requirements
-		if (!isActive && !isComplete) {
-			// get the requirement ID and turn it all into a requirmentEstimate
-			RequirementEstimates.remove(new RequirementEstimate(r.getId(), 0, false));
-		}
-		// TODO throw an exception
-	}
-	
 	public List<RequirementEstimate> getRequirements() 
 	{
 		return RequirementEstimates;
