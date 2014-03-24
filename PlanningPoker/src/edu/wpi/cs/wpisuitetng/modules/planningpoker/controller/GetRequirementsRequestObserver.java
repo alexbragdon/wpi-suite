@@ -52,4 +52,11 @@ public class GetRequirementsRequestObserver implements RequestObserver {
 	}
 
 
+	@Override
+	public void responseSuccess(IRequest iReq) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }
