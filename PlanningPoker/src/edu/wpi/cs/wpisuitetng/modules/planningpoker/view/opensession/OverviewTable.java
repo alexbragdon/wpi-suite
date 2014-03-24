@@ -75,11 +75,6 @@ public class OverviewTable extends JTable
 	@Override
 	public boolean isCellEditable(int row, int col)
 	{
-<<<<<<< HEAD
-		
-=======
-		//TODO: Impliment function
->>>>>>> Removes requirement manager code from our module
 		return false;
 	}
 
@@ -91,22 +86,8 @@ public class OverviewTable extends JTable
 	@Override
 	public void paintComponent(Graphics g)
 	{
-<<<<<<< HEAD
-		if(!initialized)
-		{
-			try 
-			{
-				GetRequirementsController.getInstance().retrieveRequirements();
-				initialized = true;
-			}
-			catch (Exception e)
-			{
 
-			}
-		}
 
-=======
->>>>>>> Removes requirement manager code from our module
 		super.paintComponent(g);
 	}
 

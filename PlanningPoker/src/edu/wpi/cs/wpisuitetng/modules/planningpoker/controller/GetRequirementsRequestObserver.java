@@ -31,22 +31,6 @@ public class GetRequirementsRequestObserver implements RequestObserver {
 		this.controller = controller;
 	}
 
-<<<<<<< HEAD
-	/**
-	 * Parse the requirements out of the response body and pass them to the controller
-	 * 
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
-	 */
-	@Override
-	public void responseSuccess(IRequest iReq) {
-		// Convert the JSON array of requirements to a Requirement object array
-		//PlanningPokerSession[] requirements = PlanningPokerSession.fromJsonArray(iReq.getResponse().getBody());
-		
-		// Pass these Requirements to the controller
-		
-	}
-=======
->>>>>>> Removes requirement manager code from our module
 
 	/**
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
@@ -63,19 +47,9 @@ public class GetRequirementsRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-<<<<<<< HEAD
-		PlanningPokerSession[] errorRequirement = { new PlanningPokerSession() };
-		controller.receivedRequirements(errorRequirement);
-=======
+
 
 	}
 
-
-	@Override
-	public void responseSuccess(IRequest iReq) {
-		// TODO Auto-generated method stub
-		
->>>>>>> Removes requirement manager code from our module
-	}
 
 }

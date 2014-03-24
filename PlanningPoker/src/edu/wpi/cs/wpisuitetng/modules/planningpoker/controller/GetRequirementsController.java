@@ -74,16 +74,5 @@ public class GetRequirementsController implements ActionListener {
 		request.send(); // send the request
 	}
 
-<<<<<<< HEAD
-	/**
-	 * Add the given requirements to the local model (they were received from the core).
-	 * This method is called by the GetRequirementsRequestObserver
-	 * 
-	 * @param requirements array of requirements received from the server
-	 */
-	public void receivedRequirements(PlanningPokerSession[] requirements) {
-	}
-=======
-	
->>>>>>> Removes requirement manager code from our module
+
 }
