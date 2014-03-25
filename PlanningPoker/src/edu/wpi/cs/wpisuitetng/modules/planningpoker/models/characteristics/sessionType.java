@@ -1,4 +1,4 @@
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characterstics;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics;
 
 /**
  * Defines the sessionType to be used for a PlanningPokerSession

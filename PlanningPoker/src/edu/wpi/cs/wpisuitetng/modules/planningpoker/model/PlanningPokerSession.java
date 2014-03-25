@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characterstics.*;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
+
 
 public class PlanningPokerSession extends AbstractModel {
 	/**
