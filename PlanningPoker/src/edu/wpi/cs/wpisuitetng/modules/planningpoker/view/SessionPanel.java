@@ -11,14 +11,17 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.RequirementStatus;
@@ -88,7 +91,12 @@ public class SessionPanel extends JPanel
 		infoPanel = new JPanel();
 
 		JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
-
+		final JButton saveButton = new JButton("Save");
+		final JTextField nameField = new JTextField();
+		nameField.setPreferredSize(new Dimension (300, 30));
+		
+		infoPanel.add(nameField);
+		infoPanel.add(saveButton);
 		this.setLayout(new BorderLayout());
 		this.add(contentPanel, BorderLayout.CENTER); // Add scroll pane to panel
 		this.add(buttonPanel, BorderLayout.SOUTH);
