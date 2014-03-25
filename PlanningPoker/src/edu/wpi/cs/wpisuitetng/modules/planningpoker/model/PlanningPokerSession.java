@@ -115,6 +115,11 @@ public class PlanningPokerSession extends AbstractModel {
 		return parser.fromJson(json, PlanningPokerSession.class);
 	}
 	
+	public static PlanningPokerSession[] fromJsonArray(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, PlanningPokerSession[].class);
+	}
+	
 	public List<RequirementEstimate> getRequirements() 
 	{
 		return RequirementEstimates;
@@ -145,6 +150,16 @@ public class PlanningPokerSession extends AbstractModel {
 	 */
 	public String toJSON() {
 		return new Gson().toJson(this, PlanningPokerSession.class);
+	}
+
+	public void copyFrom(PlanningPokerSession updatedSession) {
+		ID = 0;
+		Name = "Planning Poker Game " + ID;
+		RequirementEstimates = new ArrayList<RequirementEstimate>();
+		Type = sessionType.REALTIME;
+		isActive = false;
+		isComplete = false;
+		
 	}
 
 }

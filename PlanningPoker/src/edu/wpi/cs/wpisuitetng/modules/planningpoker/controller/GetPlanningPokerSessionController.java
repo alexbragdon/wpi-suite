@@ -15,6 +15,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardMessage;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -26,22 +27,22 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * from the server. This controller is called when the user
  * clicks the refresh button.
  * 
- * @author Chris Casola
+ * @author Team Romulus
  *
  */
-public class GetMessagesController implements ActionListener {
+public class GetPlanningPokerSessionController implements ActionListener {
 
-	private final PostBoardModel model;
+	//private final PostBoardModel model;
 
-	public GetMessagesController(PostBoardModel model) {
-		this.model = model;
+	public GetPlanningPokerSessionController() {
+		//this.model = model;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Send a request to the core to save this message
-		final Request request = Network.getInstance().makeRequest("postboard/postboardmessage", HttpMethod.GET); // GET == read
-		request.addObserver(new GetMessagesRequestObserver(this)); // add an observer to process the response
+		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokersession", HttpMethod.GET); // GET == read
+		request.addObserver(new GetPlanningPokerSessionRequestObserver(this)); // add an observer to process the response
 		request.send(); // send the request
 	}
 	
@@ -51,15 +52,15 @@ public class GetMessagesController implements ActionListener {
 	 * 
 	 * @param messages an array of messages received from the server
 	 */
-	public void receivedMessages(PostBoardMessage[] messages) {
+	public void receivedMessages(PlanningPokerSession[] sessions) {
 		// Empty the local model to eliminate duplications
-		model.emptyModel();
+		//model.emptyModel();
 		
 		// Make sure the response was not null
-		if (messages != null) {
+		if (sessions != null) {
 			
 			// add the messages to the local model
-			model.addMessages(messages);
+			//model.addMessages(messages);
 		}
 	}
 }

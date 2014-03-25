@@ -12,6 +12,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardMessage;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
@@ -23,11 +24,11 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * @author Chris Casola
  *
  */
-public class GetMessagesRequestObserver implements RequestObserver {
+public class GetPlanningPokerSessionRequestObserver implements RequestObserver {
 	
-	public GetMessagesController controller;
+	public GetPlanningPokerSessionController controller;
 	
-	public GetMessagesRequestObserver(GetMessagesController controller) {
+	public GetPlanningPokerSessionRequestObserver(GetPlanningPokerSessionController controller) {
 		this.controller = controller;
 	}
 
@@ -38,8 +39,9 @@ public class GetMessagesRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
-		PostBoardMessage[] messages = PostBoardMessage.fromJsonArray(iReq.getResponse().getBody());
-		controller.receivedMessages(messages);
+		PlanningPokerSession[] messages = PlanningPokerSession.fromJsonArray(iReq.getResponse().getBody());
+		System.out.println("Get success: "  + iReq.getResponse().getBody());
+		//controller.receivedMessages(messages);
 	}
 
 	/*
@@ -58,7 +60,8 @@ public class GetMessagesRequestObserver implements RequestObserver {
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
 		PostBoardMessage[] errorMessage = {new PostBoardMessage("Error retrieving messages.")};
-		controller.receivedMessages(errorMessage);
+		System.out.println("Get fail: " + iReq.getResponse().getBody());
+		//controller.receivedMessages(errorMessage);
 	}
 
 }

@@ -20,14 +20,14 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * @author Ben
  * 
  */
-public class AddMessageRequestObserver implements RequestObserver {
-    private final AddMessageController controller;
+public class AddPlanningPokerSessionRequestObserver implements RequestObserver {
+    private final AddPlanningPokerSessionController controller;
 
     /**
      * Makes the thing.
      */
-    public AddMessageRequestObserver(AddMessageController controller) {
-        this.controller = controller;
+    public AddPlanningPokerSessionRequestObserver(AddPlanningPokerSessionController addSessionController) {
+        this.controller = addSessionController;
     }
 
     /* (non-Javadoc)
@@ -35,7 +35,8 @@ public class AddMessageRequestObserver implements RequestObserver {
      */
     @Override
     public void responseSuccess(IRequest iReq) {
-        controller.addMessageToModel(PostBoardMessage.fromJSON(iReq.getResponse().getBody()));
+    	System.out.println("Request succeeded: " + iReq.getResponse().getBody());
+        //controller.addMessageToModel(PostBoardMessage.fromJSON(iReq.getResponse().getBody()));
     }
 
     /* (non-Javadoc)
@@ -43,7 +44,8 @@ public class AddMessageRequestObserver implements RequestObserver {
      */
     @Override
     public void responseError(IRequest iReq) {
-        controller.addMessageToModel(new PostBoardMessage("The request to add a message failed."));
+    	System.out.println("Request error: " + iReq.getResponse().getBody());
+        //controller.addMessageToModel(new PostBoardMessage("The request to add a message failed."));
     }
 
     /* (non-Javadoc)
@@ -51,7 +53,8 @@ public class AddMessageRequestObserver implements RequestObserver {
      */
     @Override
     public void fail(IRequest iReq, Exception exception) {
-        controller.addMessageToModel(new PostBoardMessage("The request to add a message failed."));
+    	System.out.println("Request fail: " + iReq.getResponse().getBody());
+        //controller.addMessageToModel(new PostBoardMessage("The request to add a message failed."));
     }
 
 }

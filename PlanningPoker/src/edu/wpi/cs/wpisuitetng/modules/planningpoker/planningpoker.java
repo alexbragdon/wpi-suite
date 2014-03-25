@@ -16,6 +16,8 @@ import javax.swing.ImageIcon;
 
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
@@ -34,6 +36,7 @@ public class planningpoker implements IJanewayModule {
 	 *  toolbar on the top for each sub-tab. 
 	 */
 	public planningpoker() {
+		
 		tabs = new ArrayList<JanewayTabModel>();
 
 		MainView mainPanel = new MainView();

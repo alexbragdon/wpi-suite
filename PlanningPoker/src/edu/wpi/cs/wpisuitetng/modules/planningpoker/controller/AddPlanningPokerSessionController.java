@@ -20,44 +20,44 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * adding the contents of the requirement text fields to the model as a new
  * requirement.
  * @version $Revision: 1.0 $
- * @author justinhess
+ * @author Team Romulus
  */
-public class UpdateRequirementController{
+public class AddPlanningPokerSessionController{
 	
-	private static UpdateRequirementController instance;
-	private UpdateRequirementRequestObserver observer;
+	private static AddPlanningPokerSessionController instance;
+	private AddPlanningPokerSessionRequestObserver observer;
 	
 	/**
-	 * Construct an UpdateRequirementController for the given model, view pair
+	 * Construct an AddRequirementController for the given model, view pair
 	
 	
 	 */
-	private UpdateRequirementController() {
-		observer = new UpdateRequirementRequestObserver(this);
+	private AddPlanningPokerSessionController() {
+		observer = new AddPlanningPokerSessionRequestObserver(this);
 	}
 	
 	/**
 	
-	 * @return the instance of the UpdateRequirementController or creates one if it does not
+	 * @return the instance of the AddRequirementController or creates one if it does not
 	 * exist. */
-	public static UpdateRequirementController getInstance()
+	public static AddPlanningPokerSessionController getInstance()
 	{
 		if(instance == null)
 		{
-			instance = new UpdateRequirementController();
+			instance = new AddPlanningPokerSessionController();
 		}
 		
 		return instance;
 	}
 
 	/**
-	 * This method updates a requirement to the server.
-	 * @param newRequirement is the requirement to be updated to the server.
+	 * This method adds a requirement to the server.
+	 * @param newSession is the requirement to be added to the server.
 	 */
-	public void updateRequirement(PlanningPokerSession newRequirement) 
+	public void addPlanningPokerSession(PlanningPokerSession newSession) 
 	{
-		Request request = Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.POST); // POST == update
-		request.setBody(newRequirement.toJSON()); // put the new requirement in the body of the request
+		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokersession", HttpMethod.PUT); // PUT == create
+		request.setBody(newSession.toJSON()); // put the new requirement in the body of the request
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); 
 	}

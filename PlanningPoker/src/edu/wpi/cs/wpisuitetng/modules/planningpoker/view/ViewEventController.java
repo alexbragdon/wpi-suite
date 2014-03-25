@@ -16,7 +16,6 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewPanel;
