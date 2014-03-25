@@ -15,7 +15,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -109,6 +111,8 @@ public class SessionPanel extends JPanel
 			}
 		});
 		nameField.setPreferredSize(new Dimension (300, 30));
+		
+		nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date()) + " Planning Poker");
 		
 		infoPanel.add(nameField);
 		infoPanel.add(saveButton);
