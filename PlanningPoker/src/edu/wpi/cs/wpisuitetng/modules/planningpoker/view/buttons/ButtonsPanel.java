@@ -47,7 +47,8 @@ public class ButtonsPanel extends ToolbarGroupView{
 		super("");
 		
 		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-		this.setPreferredWidth(450);
+		//change this to 450 when we have three buttons
+		this.setPreferredWidth(200);
 
 		this.createButton.setHorizontalAlignment(SwingConstants.CENTER);
 		try {
@@ -87,7 +88,8 @@ public class ButtonsPanel extends ToolbarGroupView{
 		contentPanel.add(createButton1);
 		contentPanel.add(createButton2);
 		contentPanel.setOpaque(false);
-		
+		createButton1.setVisible(false);
+		createButton2.setVisible(false);
 
 		this.add(contentPanel);
 	}
