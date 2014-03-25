@@ -85,11 +85,8 @@ public class SessionPanel extends JPanel
 	private void buildLayout()
 	{
 		buttonPanel = new JPanel();
-		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.green, 3));
 		requirementsPanel = new JPanel();
-		requirementsPanel.setBorder(BorderFactory.createLineBorder(Color.green, 3));
 		infoPanel = new JPanel();
-		infoPanel.setBorder(BorderFactory.createLineBorder(Color.green, 3));
 
 		JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
 
