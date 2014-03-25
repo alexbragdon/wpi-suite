@@ -107,5 +107,19 @@ public class OverviewTable extends JTable
 
     }
 
+	public void clear() {
+		for (int i = tableModel.getRowCount() - 1; i >= 0; i--) {
+			tableModel.removeRow(i);
+		}
+	}
+
+
+
+	public void addSessions(PlanningPokerSession[] sessions) {
+		for (PlanningPokerSession session : sessions) {
+			tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName() });
+		}
+		
+	}
 	
 }

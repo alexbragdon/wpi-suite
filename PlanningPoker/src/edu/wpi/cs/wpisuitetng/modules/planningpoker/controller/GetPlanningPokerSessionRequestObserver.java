@@ -41,7 +41,7 @@ public class GetPlanningPokerSessionRequestObserver implements RequestObserver {
 	public void responseSuccess(IRequest iReq) {
 		PlanningPokerSession[] messages = PlanningPokerSession.fromJsonArray(iReq.getResponse().getBody());
 		System.out.println("Get success: "  + iReq.getResponse().getBody());
-		//controller.receivedMessages(messages);
+		controller.receivedMessages(messages);
 	}
 
 	/*

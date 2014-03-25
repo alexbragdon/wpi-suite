@@ -11,9 +11,12 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession;
 
 import java.awt.Dimension;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
 
 /**
  * 
@@ -22,26 +25,27 @@ import javax.swing.JSplitPane;
  */
 public class OverviewPanel extends JPanel {
 	
+	OverviewTable table;
+	
 	/**
 	 * Sets up directory table of requirements in system
 	 */
 	public OverviewPanel()
 	{
 		
-		String[] columnNames = {"Name", "Type", "End Time"};
+		String[] columnNames = {"ID", "Name"};
 				
 		Object[][] data = {};
 		
-		OverviewTable table = new OverviewTable(data, columnNames);
+		table = new OverviewTable(data, columnNames);
 		
 		JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel.setPreferredSize(new Dimension(1000, 800));
 				
-		table.getColumnModel().getColumn(0).setMinWidth(450);
+		table.getColumnModel().getColumn(0).setMinWidth(100);
 		
-		table.getColumnModel().getColumn(1).setMinWidth(125);
+		table.getColumnModel().getColumn(1).setMinWidth(500);
 
-		table.getColumnModel().getColumn(2).setMinWidth(250);
 /* sample max min		
 		table.getColumnModel().getColumn().setMinWidth(75); 
 		table.getColumnModel().getColumn().setMaxWidth(75); 
@@ -49,7 +53,10 @@ public class OverviewPanel extends JPanel {
 */
 		//this.setRightComponent(tablePanel);
 		//this.setDividerLocation(0);
+		JButton refresh = new JButton("Refresh");
+		refresh.addActionListener(new GetPlanningPokerSessionController(table));
 		this.add(tablePanel);
+		this.add(refresh);
 		
 		//TO DO: DISABLE DRAG?
 
