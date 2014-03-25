@@ -10,7 +10,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Component;
-
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -160,7 +159,7 @@ public class MainView extends JTabbedPane {
 
 				if(selected == overview)
 				{
-					//overview.setDividerLocation(0);
+					overview.setDividerLocation(180);
 					overview.revalidate();
 					overview.repaint();
 				}
