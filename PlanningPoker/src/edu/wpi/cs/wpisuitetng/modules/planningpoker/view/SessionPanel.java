@@ -13,6 +13,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +26,10 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
@@ -92,6 +98,14 @@ public class SessionPanel extends JPanel
 		JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
 		final JButton saveButton = new JButton("Save");
 		final JTextField nameField = new JTextField();
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PlanningPokerSession session = new PlanningPokerSession(0, nameField.getText(), new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
+				AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
+				nameField.setEnabled(false);
+				saveButton.setEnabled(false);
+			}
+		});
 		nameField.setPreferredSize(new Dimension (300, 30));
 		
 		infoPanel.add(nameField);
