@@ -13,19 +13,22 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
 
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
 
 
 /**
- * 
+ * This is the panel on the open session table.
  * @author Fangming Ning
- * @contributOr -
+ * @contributOr Team romulus
  */
+@SuppressWarnings("serial")
 public class OpensessionPanel extends JPanel {
 	
 	OpensessionTable table;
@@ -53,24 +56,14 @@ public class OpensessionPanel extends JPanel {
 		
 		
 
-/* sample max min		
-		table.getColumnModel().getColumn().setMinWidth(75); 
-		table.getColumnModel().getColumn().setMaxWidth(75); 
-		
-*/
-		//this.setRightComponent(tablePanel);
-		//this.setDividerLocation(0);
-		
+
 		JPanel refreshPanel = new JPanel();
 		JButton refresh = new JButton("Refresh");
 		refreshPanel.add(refresh);
 		refresh.addActionListener(new GetPlanningPokerSessionController(table));
 		this.add(tablePanel, BorderLayout.CENTER);
 		this.add(refreshPanel, BorderLayout.EAST);
-		
-		
-		
-		//TO DO: DISABLE DRAG?
+
 
 	}
 }

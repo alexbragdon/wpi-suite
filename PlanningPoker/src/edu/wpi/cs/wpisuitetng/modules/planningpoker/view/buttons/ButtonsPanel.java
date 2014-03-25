@@ -1,49 +1,31 @@
-/*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Team Rolling Thunder
- ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
-import java.awt.Dimension;
+
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
-import javax.swing.border.EtchedBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
- * 
+ * This is the code for the three buttons on the tool bar. Currently has only one button on it.
  * @author Fangming Ning
- * @contributOr -
+ * @contributOr Team romulus
  */
+@SuppressWarnings("serial")
 public class ButtonsPanel extends ToolbarGroupView{
-	
-	// initialize the main view toolbar buttons
 		private JButton createButton = new JButton("<html>Create<br />Session</html>");
-		
-		private final JButton createButton1 = new JButton("<html>Join<br />Session</html>");
-		private final JButton createButton2 = new JButton("<html>View Old<br />Session</html>");
+		private final JButton joinButton = new JButton("<html>Join<br />Session</html>");
+		private final JButton viewButton = new JButton("<html>View Old<br />Session</html>");
 		private final JPanel contentPanel = new JPanel();
 	
 	public ButtonsPanel(){
@@ -59,40 +41,33 @@ public class ButtonsPanel extends ToolbarGroupView{
 		    this.createButton.setIcon(new ImageIcon(img));
 		    
 		    img = ImageIO.read(getClass().getResource("joinSession.png"));
-		    this.createButton1.setIcon(new ImageIcon(img));
+		    this.joinButton.setIcon(new ImageIcon(img));
 		    
 		    img = ImageIO.read(getClass().getResource("viewSession.png"));
-		    this.createButton2.setIcon(new ImageIcon(img));
+		    this.viewButton.setIcon(new ImageIcon(img));
 		    
 		} catch (IOException ex) {}
 		
-		// the action listener for the Create Requirement Button
 		createButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// bring up a create requirement pane if not in Multiple Requirement Editing Mode
-				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
 					ViewEventController.getInstance().createSession();
-			//	}
 			}
 		});		
 		
-		//action listener for the Create Iteration Button
-		createButton1.addActionListener(new ActionListener() {
+		joinButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
 					ViewEventController.getInstance().createSession();
 				}
-		//	}
 		});
 			
 		contentPanel.add(createButton);
-		contentPanel.add(createButton1);
-		contentPanel.add(createButton2);
+		contentPanel.add(joinButton);
+		contentPanel.add(viewButton);
 		contentPanel.setOpaque(false);
-		createButton1.setVisible(false);
-		createButton2.setVisible(false);
+		joinButton.setVisible(false);
+		viewButton.setVisible(false);
 
 		this.add(contentPanel);
 	}

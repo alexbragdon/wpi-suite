@@ -16,8 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardMessage;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardModel;
+//import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardMessage;
+//import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionTable;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;

@@ -1,44 +1,29 @@
-/*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Team Rolling Thunder
- ******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession;
 
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
 import javax.swing.JComponent;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 /**
- * 
+ * This is the open session table.
  * @author Fangming Ning
  * @contributOr -
  */
+@SuppressWarnings("serial")
 public class OpensessionTable extends JTable
 {
 	private DefaultTableModel tableModel = null;
-	private boolean initialized;
-	private boolean isInEditMode;
-	private boolean changedByRefresh = false;	
+	
 	private Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
 	
 	/**
@@ -56,10 +41,6 @@ public class OpensessionTable extends JTable
 		this.getTableHeader().setReorderingAllowed(false);
 		this.setAutoCreateRowSorter(true);
 		setFillsViewportHeight(true);
-		isInEditMode = false;
-
-		//ViewEventController.getInstance().setOpensessionTable(this);
-		initialized = false;
 
 
 	}

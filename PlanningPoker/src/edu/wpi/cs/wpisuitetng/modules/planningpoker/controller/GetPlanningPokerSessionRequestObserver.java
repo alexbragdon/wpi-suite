@@ -13,7 +13,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardMessage;
+//import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardMessage;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -52,16 +52,22 @@ public class GetPlanningPokerSessionRequestObserver implements RequestObserver {
 		fail(iReq, null);
 	}
 
-	/*
-	 * Put an error message in the PostBoardPanel if the request fails.
-	 * 
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
-	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		PostBoardMessage[] errorMessage = {new PostBoardMessage("Error retrieving messages.")};
-		System.out.println("Get fail: " + iReq.getResponse().getBody());
-		//controller.receivedMessages(errorMessage);
+		// TODO Auto-generated method stub
+		
 	}
+
+//	/*
+//	 * Put an error message in the PostBoardPanel if the request fails.
+//	 * 
+//	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
+//	 */
+//	@Override
+//	public void fail(IRequest iReq, Exception exception) {
+//		PostBoardMessage[] errorMessage = {new PostBoardMessage("Error retrieving messages.")};
+//		System.out.println("Get fail: " + iReq.getResponse().getBody());
+//		//controller.receivedMessages(errorMessage);
+//	}
 
 }
