@@ -98,12 +98,14 @@ public class SessionPanel extends JPanel
 		JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
 		final JButton saveButton = new JButton("Save");
 		final JTextField nameField = new JTextField();
+		final JPanel self = this;
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PlanningPokerSession session = new PlanningPokerSession(0, nameField.getText(), new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
 				AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
 				nameField.setEnabled(false);
 				saveButton.setEnabled(false);
+				ViewEventController.getInstance().removeTab(self);
 			}
 		});
 		nameField.setPreferredSize(new Dimension (300, 30));
