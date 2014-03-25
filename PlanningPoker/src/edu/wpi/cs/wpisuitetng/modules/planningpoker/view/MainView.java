@@ -159,7 +159,7 @@ public class MainView extends JTabbedPane {
 
 				if(selected == overview)
 				{
-					overview.setDividerLocation(180);
+					//overview.setDividerLocation(180);
 					overview.revalidate();
 					overview.repaint();
 				}
