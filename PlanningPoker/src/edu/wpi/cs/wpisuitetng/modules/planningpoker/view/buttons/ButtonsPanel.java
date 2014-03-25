@@ -73,10 +73,9 @@ public class ButtonsPanel extends ToolbarGroupView{
 				// bring up a create requirement pane if not in Multiple Requirement Editing Mode
 				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
 					ViewEventController.getInstance().createSession();
-					// TODO REMOVE THESE THREE LINES!!! THIS IS A BAD HACK!!!
+					// TODO REMOVE TWO THREE LINES!!! THIS IS A BAD HACK!!!
 					PlanningPokerSession session = new PlanningPokerSession();
 					AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
-					new GetPlanningPokerSessionController().actionPerformed(null);
 			//	}
 			}
 		});		
