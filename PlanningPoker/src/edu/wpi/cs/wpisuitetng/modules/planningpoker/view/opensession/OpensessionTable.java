@@ -33,7 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  * @author Fangming Ning
  * @contributOr -
  */
-public class OverviewTable extends JTable
+public class OpensessionTable extends JTable
 {
 	private DefaultTableModel tableModel = null;
 	private boolean initialized;
@@ -47,7 +47,7 @@ public class OverviewTable extends JTable
 	 * @param data	Initial data to fill OverviewTable
 	 * @param columnNames	Column headers of OverviewTable
 	 */
-	public OverviewTable(Object[][] data, String[] columnNames)
+	public OpensessionTable(Object[][] data, String[] columnNames)
 	{
 		this.tableModel = new DefaultTableModel(data, columnNames);
 		this.setModel(tableModel);
@@ -58,7 +58,7 @@ public class OverviewTable extends JTable
 		setFillsViewportHeight(true);
 		isInEditMode = false;
 
-		ViewEventController.getInstance().setOpensessionTable(this);
+		//ViewEventController.getInstance().setOpensessionTable(this);
 		initialized = false;
 
 

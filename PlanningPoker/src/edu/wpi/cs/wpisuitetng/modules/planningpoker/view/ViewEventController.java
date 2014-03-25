@@ -18,8 +18,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewTable;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionTable;
 
 
 /**
@@ -32,7 +32,7 @@ public class ViewEventController {
 	private static ViewEventController instance = null;
 	private MainView main = null;
 	private ToolbarView toolbar = null;
-	private OverviewTable opensessionTable = null;
+	private OpensessionTable opensessionTable = null;
 	private ArrayList<JPanel> listOfEditingPanels = new ArrayList<JPanel>();
 
 	
@@ -40,7 +40,7 @@ public class ViewEventController {
 	 * Sets the OverviewTable for the controller
 	 * @param opensessionTable a given OverviewTable
 	 */
-	public void setOpensessionTable(OverviewTable opensessionTable) {
+	public void setOpensessionTable(OpensessionTable opensessionTable) {
 		this.opensessionTable = opensessionTable;
 	}
 
@@ -124,7 +124,7 @@ public class ViewEventController {
 	/** 
 	
 	 * @return opensessionTable */
-	public OverviewTable getOverviewTable(){
+	public OpensessionTable getOpensessionTable(){
 		return opensessionTable;
 
 	}
@@ -206,7 +206,7 @@ public class ViewEventController {
 		{
 			Component toBeRemoved = main.getComponentAt(i);
 
-			if(toBeRemoved instanceof OverviewPanel) continue;
+			if(toBeRemoved instanceof OpensessionPanel) continue;
 
 
 
@@ -228,7 +228,7 @@ public class ViewEventController {
 		{
 			Component toBeRemoved = main.getComponentAt(i);
 
-			if(toBeRemoved instanceof OverviewPanel){
+			if(toBeRemoved instanceof OpensessionPanel){
 				continue;}
 
 			if(toBeRemoved == selected){
