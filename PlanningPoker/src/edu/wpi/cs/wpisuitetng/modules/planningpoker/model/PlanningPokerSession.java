@@ -115,6 +115,11 @@ public class PlanningPokerSession extends AbstractModel {
 		return parser.fromJson(json, PlanningPokerSession.class);
 	}
 	
+	public static PlanningPokerSession[] fromJsonArray(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, PlanningPokerSession[].class);
+	}
+	
 	public List<RequirementEstimate> getRequirements() 
 	{
 		return RequirementEstimates;

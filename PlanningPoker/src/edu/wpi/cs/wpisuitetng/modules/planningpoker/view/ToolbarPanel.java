@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetMessagesController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardModel;
 
 /**
