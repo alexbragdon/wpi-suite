@@ -9,14 +9,17 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
+
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
+
 
 /**
  * 
@@ -45,6 +48,10 @@ public class OpensessionPanel extends JPanel {
 		table.getColumnModel().getColumn(0).setMinWidth(100);
 		
 		table.getColumnModel().getColumn(1).setMinWidth(500);
+		
+		this.setLayout(new BorderLayout());
+		
+		
 
 /* sample max min		
 		table.getColumnModel().getColumn().setMinWidth(75); 
@@ -53,10 +60,15 @@ public class OpensessionPanel extends JPanel {
 */
 		//this.setRightComponent(tablePanel);
 		//this.setDividerLocation(0);
+		
+		JPanel refreshPanel = new JPanel();
 		JButton refresh = new JButton("Refresh");
+		refreshPanel.add(refresh);
 		refresh.addActionListener(new GetPlanningPokerSessionController(table));
-		this.add(tablePanel);
-		this.add(refresh);
+		this.add(tablePanel, BorderLayout.CENTER);
+		this.add(refreshPanel, BorderLayout.EAST);
+		
+		
 		
 		//TO DO: DISABLE DRAG?
 
