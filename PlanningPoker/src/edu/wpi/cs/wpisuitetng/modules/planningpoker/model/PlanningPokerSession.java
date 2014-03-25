@@ -146,4 +146,14 @@ public class PlanningPokerSession extends AbstractModel {
 		return new Gson().toJson(this, PlanningPokerSession.class);
 	}
 
+	public void copyFrom(PlanningPokerSession updatedSession) {
+		ID = 0;
+		Name = "Planning Poker Game " + ID;
+		RequirementEstimates = new ArrayList<RequirementEstimate>();
+		Type = sessionType.REALTIME;
+		isActive = false;
+		isComplete = false;
+		
+	}
+
 }

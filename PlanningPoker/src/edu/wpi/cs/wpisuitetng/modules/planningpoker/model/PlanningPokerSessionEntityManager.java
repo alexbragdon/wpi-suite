@@ -19,6 +19,7 @@ import edu.wpi.cs.wpisuitetng.database.Data;
 import edu.wpi.cs.wpisuitetng.exceptions.BadRequestException;
 import edu.wpi.cs.wpisuitetng.exceptions.ConflictException;
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
+import edu.wpi.cs.wpisuitetng.exceptions.NotImplementedException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
@@ -134,9 +135,9 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
     public PlanningPokerSession makeEntity(Session s, String content) throws BadRequestException,
                     ConflictException, WPISuiteException {
         // Parse from JSON
-        // TODO uncomment the line below once fromJson exists
-        final PlanningPokerSession session = null; //PlanningPokerSession.fromJson(content);
+        final PlanningPokerSession session = PlanningPokerSession.fromJson(content);
 
+        session.setID(Count()+1);
         // Save the session in the database if possible, otherwise throw an exception
         // We want the message to be associated with the project the user logged in to
         if (!db.save(session, s.getProject())) {
@@ -162,13 +163,14 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
      */
     @Override
     public PlanningPokerSession update(Session s, String content) throws WPISuiteException {
+    	throw new NotImplementedException();
         // Parse from JSON
         // TODO uncomment the line below once fromJson exists
-        final PlanningPokerSession updatedSession = null;//PlanningPokerSession.fromJson(content);
+        /*final PlanningPokerSession updatedSession = PlanningPokerSession.fromJson(content);
 
         /*
          * We have to get the original session from db4o, copy properties, then save.
-         */
+         
         List<Model> oldSessions = db.retrieve(PlanningPokerSession.class, "ID", updatedSession.ID,
                         s.getProject());
         if (oldSessions.size() < 1 || oldSessions.get(0) == null) {
@@ -177,13 +179,14 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
 
         PlanningPokerSession existingSession = (PlanningPokerSession) oldSessions.get(0);
         // TODO uncomment line below once copyFrom exists
-        // existingSession.copyFrom(updatedSession);
+        existingSession.copyFrom(updatedSession);
 
         if (!db.save(existingSession, s.getProject())) {
             throw new WPISuiteException();
         }
 
         return existingSession;
+        */
     }
 
 }
