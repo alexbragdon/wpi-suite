@@ -22,13 +22,13 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  */
 public class AddRequirementRequestObserver implements RequestObserver {
 		
-	private AddRequirementController controller;
+	private AddPlanningPokerSessionController controller;
 	
 	/**
 	 * Constructs the observer given an AddRequirementController
 	 * @param controller the controller used to add requirements
 	 */
-	public AddRequirementRequestObserver(AddRequirementController controller) {
+	public AddRequirementRequestObserver(AddPlanningPokerSessionController controller) {
 		this.controller = controller;
 	}
 	

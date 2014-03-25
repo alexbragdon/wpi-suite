@@ -140,7 +140,9 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
         session.setID(Count()+1);
         // Save the session in the database if possible, otherwise throw an exception
         // We want the message to be associated with the project the user logged in to
+        System.out.println("Trying to save...");
         if (!db.save(session, s.getProject())) {
+        	System.out.println("Didn't save");
             throw new WPISuiteException();
         }
 

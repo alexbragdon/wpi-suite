@@ -27,6 +27,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
@@ -70,6 +72,9 @@ public class ButtonsPanel extends ToolbarGroupView{
 				// bring up a create requirement pane if not in Multiple Requirement Editing Mode
 				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
 					ViewEventController.getInstance().createSession();
+					// TODO REMOVE THESE TWO LINES!!! THIS IS A BAD HACK!!!
+					PlanningPokerSession session = new PlanningPokerSession();
+					AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
 			//	}
 			}
 		});		

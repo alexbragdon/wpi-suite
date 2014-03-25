@@ -20,31 +20,31 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * adding the contents of the requirement text fields to the model as a new
  * requirement.
  * @version $Revision: 1.0 $
- * @author justinhess
+ * @author Team Romulus
  */
-public class AddRequirementController{
+public class AddPlanningPokerSessionController{
 	
-	private static AddRequirementController instance;
-	private AddRequirementRequestObserver observer;
+	private static AddPlanningPokerSessionController instance;
+	private AddPlanningPokerSessionRequestObserver observer;
 	
 	/**
 	 * Construct an AddRequirementController for the given model, view pair
 	
 	
 	 */
-	private AddRequirementController() {
-		observer = new AddRequirementRequestObserver(this);
+	private AddPlanningPokerSessionController() {
+		observer = new AddPlanningPokerSessionRequestObserver(this);
 	}
 	
 	/**
 	
 	 * @return the instance of the AddRequirementController or creates one if it does not
 	 * exist. */
-	public static AddRequirementController getInstance()
+	public static AddPlanningPokerSessionController getInstance()
 	{
 		if(instance == null)
 		{
-			instance = new AddRequirementController();
+			instance = new AddPlanningPokerSessionController();
 		}
 		
 		return instance;
@@ -52,12 +52,12 @@ public class AddRequirementController{
 
 	/**
 	 * This method adds a requirement to the server.
-	 * @param newRequirement is the requirement to be added to the server.
+	 * @param newSession is the requirement to be added to the server.
 	 */
-	public void addRequirement(PlanningPokerSession newRequirement) 
+	public void addPlanningPokerSession(PlanningPokerSession newSession) 
 	{
-		final Request request = Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.PUT); // PUT == create
-		request.setBody(newRequirement.toJSON()); // put the new requirement in the body of the request
+		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokersession", HttpMethod.PUT); // PUT == create
+		request.setBody(newSession.toJSON()); // put the new requirement in the body of the request
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); 
 	}

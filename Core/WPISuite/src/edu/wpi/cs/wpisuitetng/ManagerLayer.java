@@ -76,11 +76,10 @@ public class ManagerLayer {
 		map.put("postboardpostboardmessage", new PostBoardEntityManager(data));
 		map.put("requirementmanager" + "requirement", new RequirementEntityManager(data));
 		map.put("requirementmanager" + "iteration", new IterationEntityManager(data));
-		map.put("planningpoker" + "postboardmessage", new PostBoardEntityManager(data));
-		map.put("planningpoker" + "pokerplanningsession", new PlanningPokerSessionEntityManager(data));
+		map.put("planningpoker" + "planningpokersession", new PlanningPokerSessionEntityManager(data));
 
 		//add just your module to this list
-		String[] fullModuleList = {"core","defecttracker","postboard","requirementmanager"};
+		String[] fullModuleList = {"core","defecttracker","postboard","requirementmanager","planningpoker"};
 		((ProjectManager)map.get("coreproject")).setAllModules(fullModuleList);
 		String ssid = null;
 		
