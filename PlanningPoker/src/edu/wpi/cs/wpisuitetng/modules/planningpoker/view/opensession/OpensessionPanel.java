@@ -23,21 +23,21 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerS
  * @author Fangming Ning
  * @contributOr -
  */
-public class OverviewPanel extends JPanel {
+public class OpensessionPanel extends JPanel {
 	
-	OverviewTable table;
+	OpensessionTable table;
 	
 	/**
 	 * Sets up directory table of requirements in system
 	 */
-	public OverviewPanel()
+	public OpensessionPanel()
 	{
 		
 		String[] columnNames = {"ID", "Name"};
 				
 		Object[][] data = {};
 		
-		table = new OverviewTable(data, columnNames);
+		table = new OpensessionTable(data, columnNames);
 		
 		JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel.setPreferredSize(new Dimension(1000, 800));

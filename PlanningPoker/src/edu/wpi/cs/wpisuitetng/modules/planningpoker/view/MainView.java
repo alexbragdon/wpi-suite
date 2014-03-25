@@ -31,7 +31,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionPanel;
 
 /**
  * 
@@ -44,7 +44,7 @@ public class MainView extends JTabbedPane {
 	private Image tabImage = null;
 	private Point currentMouseLocation = null;
 	private int draggedTabIndex = 0;
-	private OverviewPanel overview = new OverviewPanel();
+	private OpensessionPanel opensession = new OpensessionPanel();
 	private Component lastTab = null;
 	private final JPopupMenu popup = new JPopupMenu();
 	private JMenuItem closeAll = new JMenuItem("Close All Tabs");
@@ -57,7 +57,7 @@ public class MainView extends JTabbedPane {
 	 */
 	public MainView() {
 		this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		this.addTab("Open Sessions", overview);
+		this.addTab("Open Sessions", opensession);
 
 		
 		closeAll.addActionListener(new ActionListener()
@@ -138,7 +138,7 @@ public class MainView extends JTabbedPane {
 					if(tabNumber >= 0) {
 						Component comp = getComponentAt(draggedTabIndex);
 						String title = getTitleAt(draggedTabIndex);
-						if (!title.equals("Overview")) {
+						if (!title.equals("Opensession")) {
 							removeTabAt(draggedTabIndex);
 							insertTab(title, null, comp, null, tabNumber);
 							setSelectedIndex(tabNumber);
@@ -157,11 +157,11 @@ public class MainView extends JTabbedPane {
 				
 				//ViewEventController.getInstance().getToolbar().getEditButton().getEditButton().setEnabled(false);
 
-				if(selected == overview)
+				if(selected == opensession)
 				{
-					//overview.setDividerLocation(180);
-					overview.revalidate();
-					overview.repaint();
+					//opensession.setDividerLocation(180);
+					opensession.revalidate();
+					opensession.repaint();
 				}
 			}
 		});
@@ -196,17 +196,17 @@ public class MainView extends JTabbedPane {
 	public void insertTab(String title, Icon icon, Component component,
 			String tip, int index) {
 		super.insertTab(title, icon, component, tip, index);
-		if (!(component instanceof OverviewPanel) ) {
+		if (!(component instanceof OpensessionPanel) ) {
 			setTabComponentAt(index, new ClosableTabComponent(this));
 		}
 	}
 	
 	/**
-	 * Method getOverview.
+	 * Method getOpensession.
 	
-	 * @return OverviewPanel */
-	public OverviewPanel getOverview() {
-		return overview;
+	 * @return OpensessionPanel */
+	public OpensessionPanel getOpensession() {
+		return opensession;
 	}
 	
 	/**

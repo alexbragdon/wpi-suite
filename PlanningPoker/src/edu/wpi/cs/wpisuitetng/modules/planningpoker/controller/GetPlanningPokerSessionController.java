@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardMessage;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OverviewTable;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionTable;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -33,9 +33,9 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class GetPlanningPokerSessionController implements ActionListener {
 
-	private final OverviewTable model;
+	private final OpensessionTable model;
 
-	public GetPlanningPokerSessionController(OverviewTable model) {
+	public GetPlanningPokerSessionController(OpensessionTable model) {
 		this.model = model;
 	}
 	
