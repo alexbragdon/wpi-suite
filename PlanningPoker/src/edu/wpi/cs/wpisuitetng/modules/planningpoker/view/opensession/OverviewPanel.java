@@ -9,17 +9,22 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * 
  * @author Fangming Ning
  * @contributOr -
  */
-public class OverviewPanel extends JSplitPane {
+public class OverviewPanel extends JPanel {
 	
 	/**
 	 * Sets up directory table of requirements in system
@@ -34,6 +39,8 @@ public class OverviewPanel extends JSplitPane {
 		OverviewTable table = new OverviewTable(data, columnNames);
 		
 		JScrollPane tablePanel = new JScrollPane(table);
+
+		tablePanel.setPreferredSize(new Dimension(1000, 800));
 				
 		table.getColumnModel().getColumn(0).setMinWidth(450);
 		
@@ -45,8 +52,11 @@ public class OverviewPanel extends JSplitPane {
 		table.getColumnModel().getColumn().setMaxWidth(75); 
 		
 */
-		this.setRightComponent(tablePanel);
-		this.setDividerLocation(0);
+		//tablePanel.setLayout(new GridLayout(4, 2));
+		this.add(tablePanel);
+
+		
+		//this.setDividerLocation(0);
 		
 		//TO DO: DISABLE DRAG?
 
