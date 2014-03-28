@@ -23,7 +23,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 /**
  * This is session panel for the sessions of palnning poker game.
  * @author Rolling Thunder
- * @contributer Team romulus
+ * @contributer Team Romulus 
  */
 @SuppressWarnings("serial")
 public class SessionPanel extends JPanel
