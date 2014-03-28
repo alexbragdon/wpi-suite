@@ -4,7 +4,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import java.awt.Component;
 
 import javax.swing.Icon;
+import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionPanel;
 
@@ -29,6 +32,16 @@ public class MainView extends JTabbedPane {
 		this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		this.addTab("Open Sessions", opensession);
 
+		// Listen for tab changes to invoke auto refresh
+		final MainView self = this;
+		this.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent arg0) {
+                JComponent selected = (JComponent) self.getSelectedComponent();
+                if (selected == opensession)
+                    opensession.refresh();
+            }
+		});
 
 	}
 

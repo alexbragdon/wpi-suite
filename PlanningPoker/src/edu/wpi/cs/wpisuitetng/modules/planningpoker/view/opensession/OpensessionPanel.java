@@ -66,4 +66,12 @@ public class OpensessionPanel extends JPanel {
 
 
 	}
+
+    /**
+     * Refreshes the table associated with this panel.
+     */
+    public void refresh() {
+        // Feels a little hacky
+        new GetPlanningPokerSessionController(table).actionPerformed(null);
+    }
 }
