@@ -19,6 +19,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.requirements.ErrorPanel;
 
 /**
  * This is session panel for the sessions of palnning poker game.
@@ -28,6 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 @SuppressWarnings("serial")
 public class SessionPanel extends JPanel
 {
+	
 	private PlanningPokerSession displaySession;
 	//private ViewMode viewMode;
 
@@ -49,15 +51,16 @@ public class SessionPanel extends JPanel
 	// TODO replace JPanel with something real
 	private JPanel buttonPanel;
 
-
+	final JButton saveButton = new JButton("Save");
+	final JTextField nameField = new JTextField();
+	final JPanel self = this;
 
 	/**
 	 * Constructor for editing a requirement
 	 * @param editingSession requirement to edit
 	 */
 	public SessionPanel(PlanningPokerSession session)
-	{
-
+	{ 
 		displaySession = session;
 		this.buildLayout();
 	}
@@ -68,11 +71,27 @@ public class SessionPanel extends JPanel
 	 */
 	public SessionPanel(int parentID)
 	{
-
 		displaySession = new PlanningPokerSession();
 		displaySession.setID(-2);
 
 		this.buildLayout();
+	}
+	
+	public boolean validateFields(boolean display) {
+		boolean isNameValid;
+		int charLimit = 1000000;
+		
+		if (nameField.toString().length() > charLimit || nameField.toString().length() == 0) {
+			isNameValid = false;
+		} else {
+			isNameValid = true;
+		}
+		
+		return isNameValid;
+	}
+	
+	public boolean changed() {
+		return true;
 	}
 
 	/**
@@ -85,9 +104,6 @@ public class SessionPanel extends JPanel
 		infoPanel = new JPanel();
 
 		JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
-		final JButton saveButton = new JButton("Save");
-		final JTextField nameField = new JTextField();
-		final JPanel self = this;
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PlanningPokerSession session = new PlanningPokerSession(0, nameField.getText(), new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
@@ -103,6 +119,7 @@ public class SessionPanel extends JPanel
 		
 		infoPanel.add(nameField);
 		infoPanel.add(saveButton);
+		
 		this.setLayout(new BorderLayout());
 		this.add(contentPanel, BorderLayout.CENTER); // Add scroll pane to panel
 		this.add(buttonPanel, BorderLayout.SOUTH);
