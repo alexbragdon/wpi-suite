@@ -99,6 +99,7 @@ public class SessionPanel extends JPanel
 	    final JTextField field2 = new JTextField(3);
 	    JButton add = new JButton("Select");
 
+	    // to do  clean. maybe create a new function to do all these set up things
 	    table.setRowSelectionAllowed(true);
 	    table.setColumnSelectionAllowed(false);
 	    TableColumn tc = table.getColumnModel().getColumn(0);
@@ -123,6 +124,7 @@ public class SessionPanel extends JPanel
 
 	   
 
+	    // To do: change name, more readable
 	    JPanel command = new JPanel(new FlowLayout());
 	    command.add(field2);
 	    command.add(field2);
