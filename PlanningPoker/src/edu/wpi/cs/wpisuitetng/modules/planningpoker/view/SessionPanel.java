@@ -31,7 +31,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 {
 	private JTextField nameField = new JTextField();
     private JTextArea desField = new JTextArea();
-    private JLabel infoLabel = new JLabel("");
+    private final JLabel infoLabel = new JLabel("");
+    private final JTable requirementsTable = new JTable(new CheckBoxTable());
     private PlanningPokerSession displaySession;
     private final Border defaultBorder = (new JTextField()).getBorder();
 
@@ -125,9 +126,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 	public boolean changed() {
 		return true;
 	}
-
-    
-    final JTable requirementsTable = new JTable(new CheckBoxTable());
 
     private void initializePanel() {
         setLayout(new BorderLayout());
