@@ -2,20 +2,12 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,14 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.CheckBoxTable;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonListener;
 
 /**
  * This is session panel for the sessions of planning poker game.
