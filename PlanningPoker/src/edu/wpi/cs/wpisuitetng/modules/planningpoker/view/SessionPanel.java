@@ -2,6 +2,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -22,6 +24,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
@@ -213,6 +216,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 
         nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date()) + " Planning Poker");
         desField.setPreferredSize(new Dimension(300, 120));
+        Border border = BorderFactory.createLineBorder(Color.BLACK);
+        desField.setBorder(BorderFactory.createCompoundBorder(border, 
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        
 
         initializePanel();
         infoPanel.add(nameLabel);
