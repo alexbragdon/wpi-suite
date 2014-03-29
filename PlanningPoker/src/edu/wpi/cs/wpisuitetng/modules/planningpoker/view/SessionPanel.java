@@ -48,7 +48,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
     private JTextArea desField = new JTextArea();
     private JLabel infoLabel = new JLabel("");
     private PlanningPokerSession displaySession;
-    //private ViewMode viewMode;
+    private final Border defaultBorder = (new JTextField()).getBorder();
 
     /**
      * Goes on left, holds basic info (name, time).
@@ -213,13 +213,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         final JLabel desLabel = new JLabel( "Description *                                  ");
 
         nameField.setPreferredSize(new Dimension (300, 30));
-
         nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date()) + " Planning Poker");
-        desField.setPreferredSize(new Dimension(300, 120));
-        Border border = BorderFactory.createLineBorder(Color.BLACK);
-        desField.setBorder(BorderFactory.createCompoundBorder(border, 
+        desField.setPreferredSize(new Dimension(300, 240));
+        desField.setBorder(BorderFactory.createCompoundBorder(defaultBorder, 
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        
+        desField.setLineWrap(true);
 
         initializePanel();
         infoPanel.add(nameLabel);
