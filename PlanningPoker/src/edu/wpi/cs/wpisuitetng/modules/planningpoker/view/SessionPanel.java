@@ -127,41 +127,40 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 	}
 
     
-    final JTable table = new JTable(new CheckBoxTable());
+    final JTable requirementsTable = new JTable(new CheckBoxTable());
 
     private void initializePanel() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(300,150 ));
 
-
-        table.setFillsViewportHeight(true);
-        JScrollPane pane = new JScrollPane(table);
+        requirementsTable.setFillsViewportHeight(true);
+        JScrollPane pane = new JScrollPane(requirementsTable);
 
         JLabel label2 = new JLabel("Row: ");
         final JTextField field2 = new JTextField(3);
         JButton add = new JButton("Select");
 
         // to do  clean. maybe create a new function to do all these set up things
-        table.setRowSelectionAllowed(true);
-        table.setColumnSelectionAllowed(false);
-        TableColumn tc = table.getColumnModel().getColumn(0);
+        requirementsTable.setRowSelectionAllowed(true);
+        requirementsTable.setColumnSelectionAllowed(false);
+        TableColumn tc = requirementsTable.getColumnModel().getColumn(0);
         tc.setPreferredWidth(30);
-        tc = table.getColumnModel().getColumn(1);
+        tc = requirementsTable.getColumnModel().getColumn(1);
         tc.setPreferredWidth(350);
-        tc = table.getColumnModel().getColumn(2);
+        tc = requirementsTable.getColumnModel().getColumn(2);
         tc.setPreferredWidth(60);
-        tc = table.getColumnModel().getColumn(3);
+        tc = requirementsTable.getColumnModel().getColumn(3);
         tc.setPreferredWidth(120);
-        tc = table.getColumnModel().getColumn(4);
+        tc = requirementsTable.getColumnModel().getColumn(4);
         tc.setPreferredWidth(60);
-        tc = table.getColumnModel().getColumn(5);
+        tc = requirementsTable.getColumnModel().getColumn(5);
         tc.setPreferredWidth(60);
-        tc = table.getColumnModel().getColumn(6);
+        tc = requirementsTable.getColumnModel().getColumn(6);
         tc.setPreferredWidth(30);
-        tc = table.getColumnModel().getColumn(7);
+        tc = requirementsTable.getColumnModel().getColumn(7);
         tc.setPreferredWidth(30);
-        tc.setCellEditor(table.getDefaultEditor(Boolean.class));
-        tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
+        tc.setCellEditor(requirementsTable.getDefaultEditor(Boolean.class));
+        tc.setCellRenderer(requirementsTable.getDefaultRenderer(Boolean.class));
         // ((JComponent) table.getDefaultRenderer(Boolean.class)).setOpaque(true);
 
 
@@ -211,7 +210,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         infoPanel.add(desField);
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         buttonPanel.add(infoLabel);
-        requirementsPanel.add(table);
+        requirementsPanel.add(requirementsTable);
         this.setLayout(new BorderLayout());
         contentPanel.setDividerLocation(350);
         contentPanel.revalidate();
