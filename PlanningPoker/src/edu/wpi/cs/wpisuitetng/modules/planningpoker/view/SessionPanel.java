@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.TableColumn;
 
@@ -41,7 +42,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonListener;
 public class SessionPanel extends JPanel implements SessionButtonListener
 {
 	private JTextField nameField = new JTextField();
-    private JTextField desField = new JTextField();
+    private JTextArea desField = new JTextArea();
     private JLabel infoLabel = new JLabel("");
     private PlanningPokerSession displaySession;
     //private ViewMode viewMode;
