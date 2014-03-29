@@ -40,6 +40,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonListener;
 @SuppressWarnings("serial")
 public class SessionPanel extends JPanel implements SessionButtonListener
 {
+	private JTextField nameField = new JTextField();
+    private JTextField desField = new JTextField();
     private PlanningPokerSession displaySession;
     //private ViewMode viewMode;
 
@@ -84,6 +86,24 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         this.buildLayout();
     }
 
+	public boolean validateFields(boolean display) {
+		boolean isNameValid;
+		int charLimit = 1000000;
+		
+		if (nameField.toString().length() > charLimit || nameField.toString().length() == 0) {
+			isNameValid = false;
+		} else {
+			isNameValid = true;
+		}
+		
+		return isNameValid;
+	}
+	
+	public boolean changed() {
+		return true;
+	}
+
+    
     final JTable table = new JTable(new CheckBoxTable());
 
     private void initializePanel() {
@@ -149,8 +169,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         String info = "";
 
         JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
-        final JTextField nameField = new JTextField();
-        final JTextField desField = new JTextField();
         final JPanel self = this;
         // Change the info string to add info. Delete the second string
         final JLabel infoLabel = new JLabel("  " + "HaredCodedInfo" + info);
