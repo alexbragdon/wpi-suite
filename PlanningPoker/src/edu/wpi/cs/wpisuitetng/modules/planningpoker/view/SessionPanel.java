@@ -42,6 +42,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 {
 	private JTextField nameField = new JTextField();
     private JTextField desField = new JTextField();
+    private JLabel infoLabel = new JLabel("");
     private PlanningPokerSession displaySession;
     //private ViewMode viewMode;
 
@@ -86,17 +87,50 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         this.buildLayout();
     }
 
+    /**
+     * Validates the name and description fields and sets the error message accordingly.
+     */
 	public boolean validateFields(boolean display) {
 		boolean isNameValid;
-		int charLimit = 1000000;
+		boolean isDescriptionValid;
+		int nameCharLimit = 1000000;
+		int desCharLimit = 1000000;
 		
-		if (nameField.toString().length() > charLimit || nameField.toString().length() == 0) {
+		if (nameField.toString().length() > nameCharLimit) {
+			if (display) {
+				infoLabel.setText("The name has to be less than one million charechters!");	
+			}
+			isNameValid = false;
+		} else if (nameField.toString().length() == 0) {
+			if (display) {
+				infoLabel.setText("Please enter a name!");
+			}
 			isNameValid = false;
 		} else {
+			if (display) {
+				infoLabel.setText("");
+			}
 			isNameValid = true;
 		}
 		
-		return isNameValid;
+		if (desField.toString().length() > desCharLimit) {
+			if (display){
+				infoLabel.setText("The description has to be less than one million charechters!");
+			}
+			isDescriptionValid = false;
+		} else if (desField.toString().length() == 0) {
+			if (display){
+				infoLabel.setText("Please enter a description!");
+			}
+			isDescriptionValid = false;
+		} else {
+			if (display){
+				infoLabel.setText("");
+			}
+			isDescriptionValid = true;
+		}
+		
+		return isNameValid && isDescriptionValid;
 	}
 	
 	public boolean changed() {
@@ -171,7 +205,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
         final JPanel self = this;
         // Change the info string to add info. Delete the second string
-        final JLabel infoLabel = new JLabel("  " + "HaredCodedInfo" + info);
         final JLabel nameLabel = new JLabel("Name *                                         ");
         final JLabel desLabel = new JLabel( "Description *                                  ");
 
