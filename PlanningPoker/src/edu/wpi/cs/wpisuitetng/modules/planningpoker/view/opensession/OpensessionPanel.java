@@ -14,11 +14,17 @@ import java.awt.Dimension;
 
 
 
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 
+
+import javax.swing.Timer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
 
@@ -32,6 +38,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerS
 public class OpensessionPanel extends JPanel {
 	
 	OpensessionTable table;
+	
+	/**
+	 * Timer used to poll the database for changes.
+	 */
+	Timer timer;
 	
 	/**
 	 * Sets up directory table of requirements in system
@@ -64,7 +75,9 @@ public class OpensessionPanel extends JPanel {
 		this.add(tablePanel, BorderLayout.CENTER);
 		this.add(refreshPanel, BorderLayout.EAST);
 
-
+		timer = new Timer(2000, new GetPlanningPokerSessionController(table));
+		timer.setInitialDelay(5000);
+		timer.start();
 	}
 
     /**
