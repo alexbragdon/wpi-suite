@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
+import com.toedter.calendar.JCalendar;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
@@ -82,7 +84,7 @@ public class SessionPanel extends JPanel
 	{
 		buttonPanel = new JPanel();
 		requirementsPanel = new JPanel();
-		infoPanel = new JPanel();
+		infoPanel = new JPanel(new BorderLayout());
 
 		JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
 		final JButton saveButton = new JButton("Save");
@@ -99,10 +101,18 @@ public class SessionPanel extends JPanel
 		});
 		nameField.setPreferredSize(new Dimension (300, 30));
 		
-		nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date()) + " Planning Poker");
+		nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date()) + " Planning Poker 3");
 		
-		infoPanel.add(nameField);
-		infoPanel.add(saveButton);
+		JPanel buttonNamePanel = new JPanel();
+		buttonNamePanel.add(nameField);
+		buttonNamePanel.add(saveButton);
+		
+		JCalendar dateChooser = new JCalendar(new Date()); //Create new JCalendar with now default selected
+		dateChooser.setPreferredSize(new Dimension(400, 400));
+		
+		infoPanel.add(buttonNamePanel, BorderLayout.NORTH);
+		infoPanel.add(dateChooser, BorderLayout.CENTER);
+		
 		this.setLayout(new BorderLayout());
 		this.add(contentPanel, BorderLayout.CENTER); // Add scroll pane to panel
 		this.add(buttonPanel, BorderLayout.SOUTH);
