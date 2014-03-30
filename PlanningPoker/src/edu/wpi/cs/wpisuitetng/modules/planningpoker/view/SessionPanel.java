@@ -19,7 +19,9 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 
+import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 
 /**
  * This is session panel for the sessions of planning poker game.
@@ -38,9 +40,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 
     /**
      * Goes on left, holds basic info (name, time).
+     * changed to scrollable panel
      */
-    // TODO replace JPanel with something real
-    private JPanel infoPanel;
+    private ScrollablePanel infoPanel;
 
     /**
      * Goes on right, allows user to select requirements.
@@ -134,47 +136,46 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         requirementsTable.setFillsViewportHeight(true);
         JScrollPane pane = new JScrollPane(requirementsTable);
 
-        JLabel label2 = new JLabel("Row: ");
-        final JTextField field2 = new JTextField(3);
+        final JTextField listTextField = new JTextField(3);
         JButton add = new JButton("Select");
 
         // to do  clean. maybe create a new function to do all these set up things
         requirementsTable.setRowSelectionAllowed(true);
         requirementsTable.setColumnSelectionAllowed(false);
-        TableColumn tc = requirementsTable.getColumnModel().getColumn(0);
-        tc.setPreferredWidth(30);
-        tc = requirementsTable.getColumnModel().getColumn(1);
-        tc.setPreferredWidth(350);
-        tc = requirementsTable.getColumnModel().getColumn(2);
-        tc.setPreferredWidth(60);
-        tc = requirementsTable.getColumnModel().getColumn(3);
-        tc.setPreferredWidth(120);
-        tc = requirementsTable.getColumnModel().getColumn(4);
-        tc.setPreferredWidth(60);
-        tc = requirementsTable.getColumnModel().getColumn(5);
-        tc.setPreferredWidth(60);
-        tc = requirementsTable.getColumnModel().getColumn(6);
-        tc.setPreferredWidth(30);
-        tc = requirementsTable.getColumnModel().getColumn(7);
-        tc.setPreferredWidth(30);
-        tc.setCellEditor(requirementsTable.getDefaultEditor(Boolean.class));
-        tc.setCellRenderer(requirementsTable.getDefaultRenderer(Boolean.class));
+        TableColumn column = requirementsTable.getColumnModel().getColumn(0);
+        column.setPreferredWidth(30);
+        column = requirementsTable.getColumnModel().getColumn(1);
+        column.setPreferredWidth(350);
+        column = requirementsTable.getColumnModel().getColumn(2);
+        column.setPreferredWidth(60);
+        column = requirementsTable.getColumnModel().getColumn(3);
+        column.setPreferredWidth(120);
+        column = requirementsTable.getColumnModel().getColumn(4);
+        column.setPreferredWidth(60);
+        column = requirementsTable.getColumnModel().getColumn(5);
+        column.setPreferredWidth(60);
+        column = requirementsTable.getColumnModel().getColumn(6);
+        column.setPreferredWidth(30);
+        column = requirementsTable.getColumnModel().getColumn(7);
+        column.setPreferredWidth(30);
+        column.setCellEditor(requirementsTable.getDefaultEditor(Boolean.class));
+        column.setCellRenderer(requirementsTable.getDefaultRenderer(Boolean.class));
         // ((JComponent) table.getDefaultRenderer(Boolean.class)).setOpaque(true);
 
 
 
         // To do: change name, more readable
-        JPanel command = new JPanel(new FlowLayout());
-        command.add(field2);
-        command.add(field2);
-        command.add(field2);
-        command.add(field2);
-        command.add(field2);
-        command.add(field2);
-        command.add(add);
+        JPanel listPanel = new JPanel(new FlowLayout());
+        listPanel.add(listTextField);
+        listPanel.add(listTextField);
+        listPanel.add(listTextField);
+        listPanel.add(listTextField);
+        listPanel.add(listTextField);
+        listPanel.add(listTextField);
+        listPanel.add(add);
 
         add(pane, BorderLayout.WEST);
-        add(command, BorderLayout.SOUTH);
+        add(listPanel, BorderLayout.SOUTH);
     }
 
     /**
@@ -184,15 +185,15 @@ public class SessionPanel extends JPanel implements SessionButtonListener
     {
         buttonPanel = new SessionButtonPanel(this);
         requirementsPanel = new JPanel();
-        infoPanel = new JPanel();
+        infoPanel = new ScrollablePanel();
+        infoPanel.setLayout(new MigLayout("","","shrink"));
 
-        String info = "";
 
         JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
         final JPanel self = this;
         // Change the info string to add info. Delete the second string
-        final JLabel nameLabel = new JLabel("Name *                                         ");
-        final JLabel desLabel = new JLabel( "Description *                                  ");
+        final JLabel nameLabel = new JLabel("Name*");
+        final JLabel desLabel = new JLabel( "Description *");
 
         nameField.setPreferredSize(new Dimension (300, 30));
         nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date()) + " Planning Poker");
@@ -202,10 +203,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         desField.setLineWrap(true);
 
         initializePanel();
-        infoPanel.add(nameLabel);
-        infoPanel.add(nameField);
-        infoPanel.add(desLabel);
-        infoPanel.add(desField);
+        infoPanel.add(nameLabel, "wrap");
+        infoPanel.add(nameField, "growx, pushx, shrinkx, span, wrap");
+        infoPanel.add(desLabel, "wrap");
+        infoPanel.add(desField, "growx, pushx, shrinkx, span, height 200px, wmin 10, wrap");
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         buttonPanel.add(infoLabel);
         requirementsPanel.add(requirementsTable);
