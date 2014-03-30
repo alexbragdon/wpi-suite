@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
  * @author justinhess
  * @version $Revision: 1.0 $
  */
+@SuppressWarnings("serial")
 public class ScrollablePanel extends JPanel implements Scrollable {
 
 	/**

@@ -9,6 +9,7 @@ import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -147,7 +148,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         column = requirementsTable.getColumnModel().getColumn(1);
         column.setPreferredWidth(350);
         column = requirementsTable.getColumnModel().getColumn(2);
-        column.setPreferredWidth(60);
+        column.setPreferredWidth(80);
         column = requirementsTable.getColumnModel().getColumn(3);
         column.setPreferredWidth(120);
         column = requirementsTable.getColumnModel().getColumn(4);
@@ -155,12 +156,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         column = requirementsTable.getColumnModel().getColumn(5);
         column.setPreferredWidth(60);
         column = requirementsTable.getColumnModel().getColumn(6);
-        column.setPreferredWidth(30);
+        column.setPreferredWidth(100);
         column = requirementsTable.getColumnModel().getColumn(7);
         column.setPreferredWidth(30);
         column.setCellEditor(requirementsTable.getDefaultEditor(Boolean.class));
         column.setCellRenderer(requirementsTable.getDefaultRenderer(Boolean.class));
-        // ((JComponent) table.getDefaultRenderer(Boolean.class)).setOpaque(true);
+        ((JComponent) requirementsTable.getDefaultRenderer(Boolean.class)).setOpaque(true);
 
 
 
@@ -190,7 +191,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 
 
         JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
-        final JPanel self = this;
         // Change the info string to add info. Delete the second string
         final JLabel nameLabel = new JLabel("Name*");
         final JLabel desLabel = new JLabel( "Description *");

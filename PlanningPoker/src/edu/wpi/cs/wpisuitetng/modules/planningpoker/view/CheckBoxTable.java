@@ -10,8 +10,9 @@ public class CheckBoxTable extends AbstractTableModel{
     // TO find a way to display columns
 	// Suggestion: add a JTable on top of this table model.Make them have same width in each column.
 	// Check box in JTable is hard to implement
-	private String[] columns = {"BOX", "ID", "NAME", "ITERATION","TYPE","STATUS","PRIORITY","ESTIMATE"};
+	private String[] columns = { "ID", "NAME", "ITERATION","TYPE","STATUS","PRIORITY","ESTIMATE","BOX"};
     private Object[][] data = {
+    		{"ID", "Name", "Iteration","Type","Status","Priority","Estimate", new Boolean(false)},
         {1, "Create a planning poker session", "Backlog", "User Story","New","None",0, new Boolean(false)},
         {2, "Estimate a requirement", "Backlog","Theme","New","None",0, new Boolean(false)},
         {3, "Two types of planning poker games","Backlog", "Theme","New","None",0, new Boolean(false)}

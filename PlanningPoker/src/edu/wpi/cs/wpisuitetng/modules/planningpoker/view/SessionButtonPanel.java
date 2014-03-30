@@ -16,23 +16,17 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonListener;
-
 /**
  * @author Team Romulus
  *
  */
+@SuppressWarnings("serial")
 public class SessionButtonPanel extends JPanel implements SessionPanelListener {
     final private SessionPanel parent;
     final private JButton saveButton;
