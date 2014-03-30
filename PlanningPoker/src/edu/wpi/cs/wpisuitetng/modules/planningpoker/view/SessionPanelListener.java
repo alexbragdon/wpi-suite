@@ -17,9 +17,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
  *
  */
 public interface SessionPanelListener {
-    public void executeSave(boolean b);
+    public void fireValid(boolean b);
 
-    public void executeClear(boolean b);
+    public void fireChanges(boolean b);
 
-    public void executeCancel(boolean b);
+    public void fireRefresh(boolean b);
 }

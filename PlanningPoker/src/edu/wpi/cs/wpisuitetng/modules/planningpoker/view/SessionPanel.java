@@ -8,6 +8,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.EventListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,12 +24,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
-
-
-
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import net.miginfocom.swing.MigLayout;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 
 /**
@@ -37,12 +42,15 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 @SuppressWarnings("serial")
 public class SessionPanel extends JPanel implements SessionButtonListener
 {
+    private List<SessionPanelListener> listeners = new ArrayList<SessionPanelListener>();
 	private JTextField nameField = new JTextField();
     private JTextArea desField = new JTextArea();
     private final JLabel infoLabel = new JLabel("");
     private final JTable requirementsTable = new JTable(new CheckBoxTable());
     private PlanningPokerSession displaySession;
     private final Border defaultBorder = (new JTextField()).getBorder();
+    private String tempName;
+    private String tempDescription;
 
     /**
      * Goes on left, holds basic info (name, time).
@@ -95,12 +103,14 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 		int desCharLimit = 1000000;
 		infoLabel.setForeground(Color.red);
 		
-		if (nameField.toString().length() > nameCharLimit) {
+		infoLabel.setText("");
+		
+		if (nameField.getText().length() > nameCharLimit) {
 			if (display) {
-				infoLabel.setText("The name has to be less than one million charechters!");	
+				infoLabel.setText("The name has to be less than one million characters!");	
 			}
 			isNameValid = false;
-		} else if (nameField.toString().length() == 0) {
+		} else if (nameField.getText().length() == 0) {
 			if (display) {
 				infoLabel.setText("Please enter a name!");
 			}
@@ -112,19 +122,19 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 			isNameValid = true;
 		}
 		
-		if (desField.toString().length() > desCharLimit) {
+		if (desField.getText().length() > desCharLimit) {
 			if (display){
-				infoLabel.setText("The description has to be less than one million charechters!");
+				infoLabel.setText(infoLabel.getText() + "The description has to be less than one million characters!");
 			}
 			isDescriptionValid = false;
-		} else if (desField.toString().length() == 0) {
+		} else if (desField.getText().length() == 0) {
 			if (display){
-				infoLabel.setText("Please enter a description!");
+				infoLabel.setText(infoLabel.getText() + "Please enter a description!");
 			}
 			isDescriptionValid = false;
 		} else {
 			if (display){
-				infoLabel.setText("");
+				infoLabel.setText(infoLabel.getText() + "");
 			}
 			isDescriptionValid = true;
 		}
@@ -220,6 +230,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         infoLabel.setFont(boardFont);
         buttonPanel.add(infoLabel);
         requirementsPanel.add(requirementsTable);
+        
+        setupListeners();
+        buttonPanel.getButtonSave().setEnabled(false);
+        
         this.setLayout(new BorderLayout());
         contentPanel.setDividerLocation(350);
         contentPanel.revalidate();
@@ -227,24 +241,88 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         this.add(contentPanel, BorderLayout.CENTER); // Add scroll pane to panel
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
+    
+    // Listeners for the text boxes
+    private void setupListeners(){
+        nameField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                // TODO Auto-generated method stub
+                textChanged();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                // TODO Auto-generated method stub
+                textChanged();
+            }
+        });
+        
+        desField.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void changedUpdate(DocumentEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent arg0) {
+                // TODO Auto-generated method stub
+                textChanged();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent arg0) {
+                // TODO Auto-generated method stub
+                textChanged();
+            }
+        });
+    }
 
     public void OKPressed(){
-        /*
-        public void actionPerformed(ActionEvent e) {
+        if(validateFields(true)){
             PlanningPokerSession session = new PlanningPokerSession(0, nameField.getText(), new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
             AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
-            nameField.setEnabled(false);
-            saveButton.setEnabled(false);
-            ViewEventController.getInstance().removeTab(self);
+            
+            tempName = nameField.getText();
+            tempDescription = desField.getText();
+            
+            buttonPanel.getButtonSave().setEnabled(false);
+            buttonPanel.getButtonClear().setEnabled(true);
         }
-        */
     }
 
     public void clearPressed(){
-
+        nameField.setText("");
+        desField.setText("");
+        buttonPanel.getButtonSave().setEnabled(false);
+        buttonPanel.getButtonClear().setEnabled(false);
     }
 
     public void cancelPressed(){
-
+        ViewEventController.getInstance().removeTab(this);
+    }
+    
+    public void textChanged(){        
+        if(validateFields(true)){
+            buttonPanel.getButtonSave().setEnabled(true);
+            buttonPanel.getButtonClear().setEnabled(true);
+        }
+        
+        else{
+            buttonPanel.getButtonSave().setEnabled(false);
+            
+            if(nameField.getText().length() == 0 && desField.getText().length() == 0){
+                buttonPanel.getButtonClear().setEnabled(false);
+            }
+            
+            else{
+                buttonPanel.getButtonClear().setEnabled(true);
+            }
+        }
     }
 }

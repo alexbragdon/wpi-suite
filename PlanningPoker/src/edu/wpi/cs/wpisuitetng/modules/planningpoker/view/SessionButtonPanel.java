@@ -48,9 +48,6 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
             cancelButton.setIcon(new ImageIcon(img3));
         }catch(IOException ex){}
 
-        saveButton.setEnabled(false);
-        clearButton.setEnabled(false);
-
         this.add(saveButton);
         this.add(clearButton);
         this.add(cancelButton);
@@ -81,17 +78,11 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
     }
     
     
-    public void executeSave(boolean b){
-        //
-    }
+    public void fireValid(boolean b){}
     
-    public void executeClear(boolean b){
-        //
-    }
+    public void fireChanges(boolean b){}
     
-    public void executeCancel(boolean b){
-        //
-    }
+    public void fireRefresh(boolean b){}
     
 
     /**
