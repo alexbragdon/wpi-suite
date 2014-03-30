@@ -99,9 +99,15 @@ public class SessionPanel extends JPanel
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				//TODO: Get add date to new session, just print it out for now to test that it works
+				/* TODO: Right now, when the save button is clicked, the selected date is just
+				 * printed out in mm-dd-yy format. Once validation is introduced, the date can be 
+				 * passed into the createSession constructor by doing dateChooser.getDate(). 
+				 * 
+				 * As of now, selecting the date does nothing but print to the console.
+				 */
 				System.out.println("Seleted Date: " + new SimpleDateFormat("MM-dd-yy").
 						format(dateChooser.getDate()));
+				
 				PlanningPokerSession session = new PlanningPokerSession(0, nameField.getText(), new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
 				AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
 				nameField.setEnabled(false);
