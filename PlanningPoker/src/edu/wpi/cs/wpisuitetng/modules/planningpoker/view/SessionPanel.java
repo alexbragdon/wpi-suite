@@ -2,8 +2,10 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,6 +21,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
+
+
+
 
 import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
@@ -88,6 +93,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 		boolean isDescriptionValid;
 		int nameCharLimit = 1000000;
 		int desCharLimit = 1000000;
+		infoLabel.setForeground(Color.red);
 		
 		if (nameField.toString().length() > nameCharLimit) {
 			if (display) {
@@ -194,20 +200,24 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         // Change the info string to add info. Delete the second string
         final JLabel nameLabel = new JLabel("Name*");
         final JLabel desLabel = new JLabel( "Description *");
+        Font boardFont=new Font(infoLabel.getFont().getName(),Font.BOLD,infoLabel.getFont().getSize());
 
         nameField.setPreferredSize(new Dimension (300, 30));
         nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date()) + " Planning Poker");
-        desField.setPreferredSize(new Dimension(300, 240));
-        desField.setBorder(BorderFactory.createCompoundBorder(defaultBorder, 
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        JScrollPane desFieldContainer = new JScrollPane();
+        desField.setBorder(defaultBorder);
         desField.setLineWrap(true);
+        desFieldContainer.setViewportView(desField);
 
         initializePanel();
         infoPanel.add(nameLabel, "wrap");
         infoPanel.add(nameField, "growx, pushx, shrinkx, span, wrap");
         infoPanel.add(desLabel, "wrap");
-        infoPanel.add(desField, "growx, pushx, shrinkx, span, height 200px, wmin 10, wrap");
+        infoPanel.add(desFieldContainer, "growx, pushx, shrinkx, span, height 200px, wmin 10, wrap");
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        infoLabel.setText("Red & Board Hard-Coded Text");//Delete this line only.
+        infoLabel.setForeground(Color.red);
+        infoLabel.setFont(boardFont);
         buttonPanel.add(infoLabel);
         requirementsPanel.add(requirementsTable);
         this.setLayout(new BorderLayout());

@@ -18,6 +18,7 @@ public class CheckBoxTable extends AbstractTableModel{
         {3, "Two types of planning poker games","Backlog", "Theme","New","None",0, new Boolean(false)}
     };
 
+    
     /*
      * All of changing, refreshing method of this list.
      */

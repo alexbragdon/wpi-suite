@@ -7,7 +7,7 @@
  * 
  * Contributors: Team Rolling Thunder
  ******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
+package edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.requirements;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
