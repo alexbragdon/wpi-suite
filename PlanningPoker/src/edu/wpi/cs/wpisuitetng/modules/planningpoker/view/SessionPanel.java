@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
@@ -101,17 +102,20 @@ public class SessionPanel extends JPanel
 		});
 		nameField.setPreferredSize(new Dimension (300, 30));
 		
-		nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date()) + " Planning Poker 3");
+		nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date()) + " Planning Poker");
 		
 		JPanel buttonNamePanel = new JPanel();
 		buttonNamePanel.add(nameField);
 		buttonNamePanel.add(saveButton);
 		
 		JCalendar dateChooser = new JCalendar(new Date()); //Create new JCalendar with now default selected
-		dateChooser.setPreferredSize(new Dimension(400, 400));
+		dateChooser.setPreferredSize(new Dimension(300, 300));
+		JPanel calendarPanel = new JPanel(new BorderLayout());
+		calendarPanel.add(dateChooser, BorderLayout.CENTER);
+		calendarPanel.add(new JLabel("Choose Ending Date:"), BorderLayout.NORTH);
 		
 		infoPanel.add(buttonNamePanel, BorderLayout.NORTH);
-		infoPanel.add(dateChooser, BorderLayout.CENTER);
+		infoPanel.add(calendarPanel, BorderLayout.CENTER);
 		
 		this.setLayout(new BorderLayout());
 		this.add(contentPanel, BorderLayout.CENTER); // Add scroll pane to panel
