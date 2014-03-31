@@ -107,15 +107,20 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 		
 		if (nameField.getText().length() > nameCharLimit) {
 			if (display) {
-				infoLabel.setText("The name has to be less than one million characters!");	
+				infoLabel.setText("The name has to be less than one million characters.");	
 			}
 			isNameValid = false;
 		} else if (nameField.getText().length() == 0) {
 			if (display) {
-				infoLabel.setText("Please enter a name!");
+				infoLabel.setText("Please enter a name.");
 			}
 			isNameValid = false;
-		} else {
+		} else if (nameField.getText().startsWith(" ")) {
+			if (display) {
+				infoLabel.setText("Name cannot start with a space.");
+			}
+			isNameValid = false;
+		}else {
 			if (display) {
 				infoLabel.setText("");
 			}
@@ -123,17 +128,22 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 		}
 		
 		if (desField.getText().length() > desCharLimit) {
-			if (display){
-				infoLabel.setText(infoLabel.getText() + "The description has to be less than one million characters!");
+			if (display && isNameValid){
+				infoLabel.setText(infoLabel.getText() + "The description has to be less than one million characters.");
 			}
 			isDescriptionValid = false;
 		} else if (desField.getText().length() == 0) {
-			if (display){
-				infoLabel.setText(infoLabel.getText() + "Please enter a description!");
+			if (display && isNameValid){
+				infoLabel.setText(infoLabel.getText() + "Please enter a description.");
 			}
 			isDescriptionValid = false;
-		} else {
-			if (display){
+		} else if (desField.getText().startsWith(" ")) {
+			if (display && isNameValid) {
+				infoLabel.setText("Description cannot start with a space.");
+			}
+			isDescriptionValid = false;
+		}else {
+			if (display && isNameValid){
 				infoLabel.setText(infoLabel.getText() + "");
 			}
 			isDescriptionValid = true;
@@ -225,7 +235,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         infoPanel.add(desLabel, "wrap");
         infoPanel.add(desFieldContainer, "growx, pushx, shrinkx, span, height 200px, wmin 10, wrap");
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        infoLabel.setText("Red & Board Hard-Coded Text");//Delete this line only.
+        infoLabel.setText("");
         infoLabel.setForeground(Color.red);
         infoLabel.setFont(boardFont);
         buttonPanel.add(infoLabel);
@@ -240,6 +250,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         contentPanel.repaint();
         this.add(contentPanel, BorderLayout.CENTER); // Add scroll pane to panel
         this.add(buttonPanel, BorderLayout.SOUTH);
+        validateFields(true);
     }
     
     // Listeners for the text boxes
@@ -324,5 +335,17 @@ public class SessionPanel extends JPanel implements SessionButtonListener
                 buttonPanel.getButtonClear().setEnabled(true);
             }
         }
+    }
+    
+    public void setNameField(String text) {
+    	nameField.setText(text);
+    }
+    
+    public void setDesField(String text){
+    	desField.setText(text);
+    }
+    
+    public String getInfoLabel(){
+    	return infoLabel.getText();
     }
 }
