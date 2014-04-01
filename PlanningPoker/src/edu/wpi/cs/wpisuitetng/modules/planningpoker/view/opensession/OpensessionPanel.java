@@ -76,7 +76,7 @@ public class OpensessionPanel extends JPanel {
 		this.add(tablePanel, BorderLayout.CENTER);
 		this.add(refreshPanel, BorderLayout.EAST);
 
-		timer = new Timer(2000, new GetPlanningPokerSessionController(table));
+		timer = new Timer(1000, new GetPlanningPokerSessionController(table));
 		timer.setInitialDelay(10000);
 		timer.start();
 	}
