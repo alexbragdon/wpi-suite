@@ -10,9 +10,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JCalendar;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
@@ -42,6 +45,11 @@ public class SessionPanel extends JPanel
 	 */
 	// TODO replace JPanel with something real
 	private JPanel requirementsPanel;
+
+	/**
+	 * Date chooser to select when session ends
+	 */
+	JCalendar dateChooser;
 
 	/**
 	 * Create, reset, cancel buttons at the bottom.
@@ -82,7 +90,7 @@ public class SessionPanel extends JPanel
 	{
 		buttonPanel = new JPanel();
 		requirementsPanel = new JPanel();
-		infoPanel = new JPanel();
+		infoPanel = new JPanel(new BorderLayout());
 
 		JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
 		final JButton saveButton = new JButton("Save");
@@ -90,6 +98,16 @@ public class SessionPanel extends JPanel
 		final JPanel self = this;
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				/* TODO: Right now, when the save button is clicked, the selected date is just
+				 * printed out in mm-dd-yy format. Once validation is introduced, the date can be 
+				 * passed into the createSession constructor by doing dateChooser.getDate(). 
+				 * 
+				 * As of now, selecting the date does nothing but print to the console.
+				 */
+				System.out.println("Seleted Date: " + new SimpleDateFormat("MM-dd-yy").
+						format(dateChooser.getDate()));
+				
 				PlanningPokerSession session = new PlanningPokerSession(0, nameField.getText(), new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
 				AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
 				nameField.setEnabled(false);
@@ -98,14 +116,24 @@ public class SessionPanel extends JPanel
 			}
 		});
 		nameField.setPreferredSize(new Dimension (300, 30));
-		
+
 		nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date()) + " Planning Poker");
-		
-		infoPanel.add(nameField);
-		infoPanel.add(saveButton);
+
+		JPanel buttonNamePanel = new JPanel();
+		buttonNamePanel.add(nameField);
+		buttonNamePanel.add(saveButton);
+
+		dateChooser = new JCalendar(new Date()); //Create new JCalendar with now default selected
+		dateChooser.setPreferredSize(new Dimension(300, 300));
+		JPanel calendarPanel = new JPanel(new BorderLayout());
+		calendarPanel.add(dateChooser, BorderLayout.CENTER);
+		calendarPanel.add(new JLabel("Choose Ending Date:"), BorderLayout.NORTH);
+
+		infoPanel.add(buttonNamePanel, BorderLayout.NORTH);
+		infoPanel.add(calendarPanel, BorderLayout.CENTER);
+
 		this.setLayout(new BorderLayout());
 		this.add(contentPanel, BorderLayout.CENTER); // Add scroll pane to panel
 		this.add(buttonPanel, BorderLayout.SOUTH);
 	}
-
 }
