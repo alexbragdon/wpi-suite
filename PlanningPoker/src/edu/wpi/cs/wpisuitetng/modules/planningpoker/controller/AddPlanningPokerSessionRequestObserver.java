@@ -21,7 +21,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * 
  */
 public class AddPlanningPokerSessionRequestObserver implements RequestObserver {
-    private final AddPlanningPokerSessionController controller;
+	private final AddPlanningPokerSessionController controller;
 
     /**
      * Makes the thing.

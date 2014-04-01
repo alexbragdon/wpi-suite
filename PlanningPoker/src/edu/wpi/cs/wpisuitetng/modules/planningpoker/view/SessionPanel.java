@@ -2,52 +2,63 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-
-import javax.swing.JButton;
+import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import com.toedter.calendar.JCalendar;
 
+import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonListener;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
- * This is session panel for the sessions of palnning poker game.
+ * This is session panel for the sessions of planning poker game.
  * @author Rolling Thunder
- * @contributer Team Romulus 
+ * @contributor Team Romulus 
  */
 @SuppressWarnings("serial")
-public class SessionPanel extends JPanel
+public class SessionPanel extends JPanel implements SessionButtonListener
 {
-	private PlanningPokerSession displaySession;
-	//private ViewMode viewMode;
+    private JTextField nameField = new JTextField();
+    private JTextArea desField = new JTextArea();
+    private final JLabel infoLabel = new JLabel("");
+    //private final JTable requirementsTable = new JTable(new CheckBoxTable());
+    private PlanningPokerSession displaySession;
+    private final Border defaultBorder = (new JTextField()).getBorder();
+    /**
+     * Goes on left, holds basic info (name, time).
+     * changed to scrollable panel
+     */
+    private ScrollablePanel infoPanel;
 
-	/**
-	 * Goes on left, holds basic info (name, time).
-	 */
-	// TODO replace JPanel with something real
-	private JPanel infoPanel;
-
-	/**
-	 * Goes on right, allows user to select requirements.
-	 */
-	// TODO replace JPanel with something real
-	private JPanel requirementsPanel;
+    /**
+     * Goes on right, allows user to select requirements.
+     */
+    // TODO replace JPanel with something real
+    private JPanel requirementsPanel;
 
 	/**
 	 * Date chooser to select when session ends
@@ -58,74 +69,130 @@ public class SessionPanel extends JPanel
 	 * Create, reset, cancel buttons at the bottom.
 	 */
 	// TODO replace JPanel with something real
-	private JPanel buttonPanel;
+	private SessionButtonPanel buttonPanel;
 
 
 
-	/**
-	 * Constructor for editing a requirement
-	 * @param editingSession requirement to edit
-	 */
-	public SessionPanel(PlanningPokerSession session)
-	{
+    /**
+     * Constructor for editing a requirement
+     * @param editingSession requirement to edit
+     */
+    public SessionPanel(PlanningPokerSession session)
+    {
+        displaySession = session;
+        this.buildLayout();
+    }
 
-		displaySession = session;
-		this.buildLayout();
-	}
+    /**
+     * Constructor for creating a requirement
+     * @param parentID the parent id, or -1 if no parent.
+     */
+    public SessionPanel(int parentID)
+    {
+        displaySession = new PlanningPokerSession();
+        displaySession.setID(-2);
 
-	/**
-	 * Constructor for creating a requirement
-	 * @param parentID the parent id, or -1 if no parent.
-	 */
-	public SessionPanel(int parentID)
-	{
+        this.buildLayout();
+    }
 
-		displaySession = new PlanningPokerSession();
-		displaySession.setID(-2);
-
-		this.buildLayout();
-	}
-
-	/**
-	 * Builds the layout of the panel.
-	 */
-	private void buildLayout()
-	{
-		buttonPanel = new JPanel();
-		requirementsPanel = new JPanel();
-		infoPanel = new JPanel(new BorderLayout());
-
-		JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
-		final JButton saveButton = new JButton("Save");
-		final JTextField nameField = new JTextField();
-		final JPanel self = this;
-		saveButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				/* TODO: Right now, when the save button is clicked, the selected date is just
-				 * printed out in mm-dd-yy format. Once validation is introduced, the date can be 
-				 * passed into the createSession constructor by doing dateChooser.getDate(). 
-				 * 
-				 * As of now, selecting the date does nothing but print to the console.
-				 */
-				System.out.println("Seleted Date: " + new SimpleDateFormat("MM-dd-yy").
-						format(dateChooser.getDate()));
-				
-				PlanningPokerSession session = new PlanningPokerSession(0, nameField.getText(), new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
-				AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
-				nameField.setEnabled(false);
-				saveButton.setEnabled(false);
-				ViewEventController.getInstance().removeTab(self);
+    /**
+     * Validates the name and description fields and sets the error message accordingly.
+     */
+	public boolean validateFields(boolean display) {
+		boolean isNameValid;
+		boolean isDescriptionValid;
+		int nameCharLimit = 1000000;
+		int desCharLimit = 1000000;
+		infoLabel.setForeground(Color.red);
+		
+		infoLabel.setText("");
+		
+		if (nameField.getText().length() > nameCharLimit) {
+			if (display) {
+				infoLabel.setText("The name has to be less than one million characters.");	
 			}
-		});
-		nameField.setPreferredSize(new Dimension (300, 30));
+			isNameValid = false;
+		} else if (nameField.getText().length() == 0) {
+			if (display) {
+				infoLabel.setText("Please enter a name.");
+			}
+			isNameValid = false;
+		} else if (nameField.getText().startsWith(" ")) {
+			if (display) {
+				infoLabel.setText("Name cannot start with a space.");
+			}
+			isNameValid = false;
+		}else {
+			if (display) {
+				infoLabel.setText("");
+			}
+			isNameValid = true;
+		}
+		
+		if (desField.getText().length() > desCharLimit) {
+			if (display && isNameValid){
+				infoLabel.setText(infoLabel.getText() + "The description has to be less than one million characters.");
+			}
+			isDescriptionValid = false;
+		} else if (desField.getText().length() == 0) {
+			if (display && isNameValid){
+				infoLabel.setText(infoLabel.getText() + "Please enter a description.");
+			}
+			isDescriptionValid = false;
+		} else if (desField.getText().startsWith(" ")) {
+			if (display && isNameValid) {
+				infoLabel.setText("Description cannot start with a space.");
+			}
+			isDescriptionValid = false;
+		}else {
+			if (display && isNameValid){
+				infoLabel.setText(infoLabel.getText() + "");
+			}
+			isDescriptionValid = true;
+		}
+		
+		return isNameValid && isDescriptionValid;
+	}
+	
+	public boolean changed() {
+		return true;
+	}
 
-		nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date()) + " Planning Poker");
+    /**
+     * Builds the layout of the panel.
+     */
+    private void buildLayout()
+    {
+        buttonPanel = new SessionButtonPanel(this);
+        requirementsPanel = new SessionRequirementPanel();
+        infoPanel = new ScrollablePanel();
+        infoPanel.setLayout(new MigLayout("","","shrink"));
 
-		JPanel buttonNamePanel = new JPanel();
-		buttonNamePanel.add(nameField);
-		buttonNamePanel.add(saveButton);
+        JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
+        // Change the info string to add info. Delete the second string
+        final JLabel nameLabel = new JLabel("Name*");
+        final JLabel desLabel = new JLabel( "Description *");
+        Font boardFont=new Font(infoLabel.getFont().getName(),Font.BOLD,infoLabel.getFont().getSize());
 
+        nameField.setPreferredSize(new Dimension (300, 30));
+        nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date()) + " Planning Poker");
+        JScrollPane desFieldContainer = new JScrollPane();
+        desField.setBorder(defaultBorder);
+        desField.setLineWrap(true);
+        desFieldContainer.setViewportView(desField);
+
+//        initializePanel();
+        infoPanel.add(nameLabel, "wrap");
+        infoPanel.add(nameField, "growx, pushx, shrinkx, span, wrap");
+        infoPanel.add(desLabel, "wrap");
+        infoPanel.add(desFieldContainer, "growx, pushx, shrinkx, span, height 200px, wmin 10, wrap");
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        infoLabel.setText("");
+        infoLabel.setForeground(Color.red);
+        infoLabel.setFont(boardFont);
+        buttonPanel.add(infoLabel);
+        setupListeners();
+        buttonPanel.getButtonSave().setEnabled(false);
 		dateChooser = new JCalendar(new Date()); //Create new JCalendar with now default selected
 		dateChooser.setPreferredSize(new Dimension(300, 300));
 		JPanel calendarPanel = new JPanel(new BorderLayout());
@@ -148,11 +215,106 @@ public class SessionPanel extends JPanel
         timePanel.add(minutePanel, BorderLayout.EAST);
         calendarPanel.add(timePanel, BorderLayout.SOUTH);
         
-		infoPanel.add(buttonNamePanel, BorderLayout.NORTH);
 		infoPanel.add(calendarPanel, BorderLayout.CENTER);
 
 		this.setLayout(new BorderLayout());
 		this.add(contentPanel, BorderLayout.CENTER); // Add scroll pane to panel
 		this.add(buttonPanel, BorderLayout.SOUTH);
+                validateFields(true);
 	}
+// Listeners for the text boxes
+    private void setupListeners(){
+        nameField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                // TODO Auto-generated method stub
+                textChanged();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                // TODO Auto-generated method stub
+                textChanged();
+            }
+        });
+        
+        desField.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void changedUpdate(DocumentEvent arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent arg0) {
+                // TODO Auto-generated method stub
+                textChanged();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent arg0) {
+                // TODO Auto-generated method stub
+                textChanged();
+            }
+        });
+    }
+
+    public void OKPressed(){
+        if(validateFields(true)){
+            PlanningPokerSession session = new PlanningPokerSession(0, nameField.getText(), new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
+            AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
+            
+            nameField.getText();
+            desField.getText();
+            
+            buttonPanel.getButtonSave().setEnabled(false);
+            buttonPanel.getButtonClear().setEnabled(true);
+        }
+    }
+
+    public void clearPressed(){
+        nameField.setText("");
+        desField.setText("");
+        buttonPanel.getButtonSave().setEnabled(false);
+        buttonPanel.getButtonClear().setEnabled(false);
+    }
+
+    public void cancelPressed(){
+        ViewEventController.getInstance().removeTab(this);
+    }
+    
+    public void textChanged(){        
+        if(validateFields(true)){
+            buttonPanel.getButtonSave().setEnabled(true);
+            buttonPanel.getButtonClear().setEnabled(true);
+        }
+        
+        else{
+            buttonPanel.getButtonSave().setEnabled(false);
+            
+            if(nameField.getText().length() == 0 && desField.getText().length() == 0){
+                buttonPanel.getButtonClear().setEnabled(false);
+            }
+            
+            else{
+                buttonPanel.getButtonClear().setEnabled(true);
+            }
+        }
+    }
+    
+    public void setNameField(String text) {
+    	nameField.setText(text);
+    }
+    
+    public void setDesField(String text){
+    	desField.setText(text);
+    }
+    
+    public String getInfoLabel(){
+    	return infoLabel.getText();
+    }
 }
