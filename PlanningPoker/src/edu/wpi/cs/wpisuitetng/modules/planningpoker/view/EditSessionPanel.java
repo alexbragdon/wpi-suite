@@ -13,12 +13,20 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.border.Border;
+
+import com.toedter.calendar.JCalendar;
 
 import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
@@ -39,9 +47,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 @SuppressWarnings("serial")
 public class EditSessionPanel extends JPanel{
 
+	private final Border defaultBorder = (new JTextField()).getBorder();
     private final JTextField newNamefield = new JTextField();
     private final JButton SaveButton = new JButton("Save");
     private PlanningPokerSession displaySession;
+    private JTextArea desField = new JTextArea();
     //private ViewMode viewMode;
 
     /**
@@ -49,12 +59,20 @@ public class EditSessionPanel extends JPanel{
      */
     // TODO replace JPanel with something real
     private ScrollablePanel searchPanel;
+    private ScrollablePanel infoPanel;
+    private SessionRequirementPanel requirementsPanel;
+    
+    
+    JSpinner hourSpin;
+	JSpinner minuteSpin;
+	JCalendar dateChooser;
 
     /**
      * Goes on right, allows user to select requirements.
      */
     // TODO replace JPanel with something real
-    private JPanel editPanel;
+    //private JPanel infoPanel;
+    
 
     private EditSessionPanel thisPanel;
 
@@ -90,28 +108,67 @@ public class EditSessionPanel extends JPanel{
      */
     private void buildLayout()
     {
-        editPanel = new JPanel();
+        //infoPanel = new JPanel();
         searchPanel = new ScrollablePanel();
+        infoPanel = new ScrollablePanel();
         searchPanel.setLayout(new MigLayout("","","shrink"));
+        infoPanel.setLayout(new MigLayout("","","shrink"));
+        
+        requirementsPanel = new SessionRequirementPanel();
+        JSplitPane changeContentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, requirementsPanel);
 
-        JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, searchPanel, editPanel);
+        JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, searchPanel, changeContentPanel);
         contentPanel.setDividerLocation(180);
+        changeContentPanel.setDividerLocation(250);
         final JButton FindButton = new JButton("Find");
         final JTextField IDfield = new JTextField();
-        final JLabel infoLabel = new JLabel("<html>Give the ID of the PlanningPorkerSession you want to edit</html>");
+        final JLabel infoLabel = new JLabel("<html>Enter the ID of the PlanningPokerSession you want to edit</html>");
         final JPanel self = this;
        
         
         IDfield.setPreferredSize(new Dimension (160, 30));
+        
         searchPanel.add(infoLabel, "wrap");
         searchPanel.add(IDfield, "growx, pushx, shrinkx, span, wrap");
         searchPanel.add(FindButton,  "wrap");
+        searchPanel.add(new JLabel("<html>Find out the session successfully, you can now "
+        		+ "edit the session informations on the right side.</html>"),  "wrap");
+        searchPanel.add(SaveButton, "wrap");
+        JScrollPane desFieldContainer = new JScrollPane();
+		desField.setBorder(defaultBorder);
+		desField.setFont(null);
+		desField.setLineWrap(true);
+		desFieldContainer.setViewportView(desField);
         
         newNamefield.setPreferredSize(new Dimension (300, 30));
-        editPanel.add(newNamefield);
-        editPanel.add(SaveButton);
+        infoPanel.add(newNamefield, "growx, pushx, shrinkx, span, wrap");
+        
+        infoPanel.add(desFieldContainer, "growx, pushx, shrinkx, span, height 200px, wmin 10, wrap");
         newNamefield.setVisible(false);
         SaveButton.setVisible(false);
+        
+        dateChooser = new JCalendar(new Date()); //Create new JCalendar with now default selected
+        JPanel calendarPanel = new JPanel(new BorderLayout());
+		calendarPanel.add(dateChooser, BorderLayout.CENTER);
+		calendarPanel.add(new JLabel("Choose Ending Date:"), BorderLayout.NORTH);
+        
+        JPanel timePanel = new JPanel(); //holds the time spinners
+
+		JPanel hourPanel = new JPanel(new BorderLayout());
+		JPanel minutePanel = new JPanel(new BorderLayout());
+		hourSpin = new JSpinner(new SpinnerNumberModel(0,0,23,1));
+		minuteSpin = new JSpinner(new SpinnerNumberModel (0,0,59,1));
+
+		hourPanel.add(hourSpin, BorderLayout.CENTER);
+		hourPanel.add(new JLabel("Choose the ending Hour:"), BorderLayout.NORTH);
+		minutePanel.add(minuteSpin, BorderLayout.CENTER);
+		minutePanel.add(new JLabel("Choose the ending minute."), BorderLayout.NORTH);
+
+		timePanel.add(hourPanel, BorderLayout.WEST);
+		timePanel.add(minutePanel, BorderLayout.EAST);
+		calendarPanel.add(timePanel, BorderLayout.SOUTH);
+
+		infoPanel.add(calendarPanel,"wrap");
         
         
         FindButton.addActionListener(new ActionListener() {
@@ -138,7 +195,7 @@ public class EditSessionPanel extends JPanel{
         
     
         this.setLayout(new BorderLayout());
-        this.add(contentPanel, BorderLayout.CENTER); // Add scroll pane to panel
+        this.add(contentPanel, BorderLayout.CENTER); // Add split pane to panel
     }
 
 
