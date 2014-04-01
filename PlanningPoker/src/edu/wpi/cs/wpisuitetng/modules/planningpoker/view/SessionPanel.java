@@ -14,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 
 import com.toedter.calendar.JCalendar;
 
@@ -129,6 +132,22 @@ public class SessionPanel extends JPanel
 		calendarPanel.add(dateChooser, BorderLayout.CENTER);
 		calendarPanel.add(new JLabel("Choose Ending Date:"), BorderLayout.NORTH);
 
+		JPanel timePanel = new JPanel(); //holds the time spinners
+		
+		JPanel hourPanel = new JPanel(new BorderLayout());
+		JPanel minutePanel = new JPanel(new BorderLayout());
+		JSpinner hourSpin = new JSpinner(new SpinnerNumberModel(0,0,23,1));
+		JSpinner minuteSpin = new JSpinner(new SpinnerNumberModel (0,0,59,1));
+		
+        hourPanel.add(hourSpin, BorderLayout.CENTER);
+        hourPanel.add(new JLabel("Choose the ending Hour:"), BorderLayout.NORTH);
+        minutePanel.add(minuteSpin, BorderLayout.CENTER);
+        minutePanel.add(new JLabel("Choose the ending minute."), BorderLayout.NORTH);
+
+        timePanel.add(hourPanel, BorderLayout.WEST);
+        timePanel.add(minutePanel, BorderLayout.EAST);
+        calendarPanel.add(timePanel, BorderLayout.SOUTH);
+        
 		infoPanel.add(buttonNamePanel, BorderLayout.NORTH);
 		infoPanel.add(calendarPanel, BorderLayout.CENTER);
 
