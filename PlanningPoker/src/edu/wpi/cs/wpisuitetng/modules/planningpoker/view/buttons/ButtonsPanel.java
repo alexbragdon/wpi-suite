@@ -65,6 +65,13 @@ public class ButtonsPanel extends ToolbarGroupView{
 					ViewEventController.getInstance().createSession();
 				}
 		});
+		
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    ViewEventController.getInstance().editSession();
+                }
+        });
 			
 		contentPanel.add(createButton);
 		contentPanel.add(joinButton);

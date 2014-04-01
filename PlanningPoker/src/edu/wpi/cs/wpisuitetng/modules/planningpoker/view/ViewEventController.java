@@ -64,6 +64,13 @@ public class ViewEventController {
 		main.setSelectedComponent(newSession);
 	}
 	
+	public void editSession() {
+	    EditSessionPanel editSession = new EditSessionPanel();
+	    main.addTab("Edit Session", null, editSession, "Edit this session");
+	    main.invalidate();
+	    main.repaint();
+	    main.setSelectedComponent(editSession);
+	}
 
 	/**
 	 * Removes the tab for the given JComponent

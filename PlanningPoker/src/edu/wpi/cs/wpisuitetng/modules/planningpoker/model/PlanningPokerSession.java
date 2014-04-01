@@ -153,12 +153,12 @@ public class PlanningPokerSession extends AbstractModel {
 	}
 
 	public void copyFrom(PlanningPokerSession updatedSession) {
-		ID = 0;
-		Name = "Planning Poker Game " + ID;
-		RequirementEstimates = new ArrayList<RequirementEstimate>();
-		Type = sessionType.REALTIME;
-		isActive = false;
-		isComplete = false;
+        this.ID = updatedSession.ID;
+        this.Name = updatedSession.Name;
+        this.RequirementEstimates = updatedSession.RequirementEstimates;
+        this.Type = updatedSession.Type;
+        this.isActive = updatedSession.isActive;
+        this.isComplete = updatedSession.isActive;
 		
 	}
 

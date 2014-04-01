@@ -123,9 +123,23 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
     @Override
     public PlanningPokerSession[] getEntity(Session s, String id) throws NotFoundException,
                     WPISuiteException {
+        final int intId = Integer.parseInt(id);
+        if(intId < 1) {
+            throw new NotFoundException();
+        }
         PlanningPokerSession[] sessions = new PlanningPokerSession[1];
-        return db.retrieve(PlanningPokerSession.class, "ID", id).toArray(sessions);
+        try {
+            sessions = db.retrieve(PlanningPokerSession.class, "id", intId, s.getProject()).toArray(new PlanningPokerSession[0]);
+        } catch (WPISuiteException e) {
+            e.printStackTrace();
+        }
+        if(sessions.length < 1 || sessions[0] == null) {
+            throw new NotFoundException();
+        }
+      
+        return sessions;
     }
+    
 
     /* 
      * Saves a PlanningPokerSession when it is received.
@@ -165,7 +179,29 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
      */
     @Override
     public PlanningPokerSession update(Session s, String content) throws WPISuiteException {
-    	throw new NotImplementedException();
+    	
+        final PlanningPokerSession updatedSession = PlanningPokerSession.fromJson(content);
+
+        // We have to get the original session from db4o, copy properties, then save.
+        
+        List<Model> oldSessions = db.retrieve(PlanningPokerSession.class, "ID", updatedSession.ID,
+                        s.getProject());
+        if (oldSessions.size() < 1 || oldSessions.get(0) == null) {
+            throw new BadRequestException("PlanningPokerSession with ID does not exist.");
+        }
+
+        PlanningPokerSession existingSession = (PlanningPokerSession) oldSessions.get(0);
+        
+        existingSession.copyFrom(updatedSession);
+
+        if (!db.save(existingSession, s.getProject())) {
+            throw new WPISuiteException();
+        }
+
+        return existingSession;
+    	
+    	
+    	
         // Parse from JSON
         // TODO uncomment the line below once fromJson exists
         /*final PlanningPokerSession updatedSession = PlanningPokerSession.fromJson(content);
