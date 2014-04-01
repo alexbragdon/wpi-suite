@@ -54,7 +54,12 @@ public class GetPlanningPokerSessionController implements ActionListener {
 	 * @param messages an array of messages received from the server
 	 */
 	public void receivedMessages(PlanningPokerSession[] sessions) {
-	    // Make sure the selection doesn't change
+	    
+		if (sessions.length == model.getRowCount()) {
+			return;
+		}
+		
+		// Make sure the selection doesn't change
 	    int row = model.getSelectedRow();
 	    
 		// Empty the local model to eliminate duplications
