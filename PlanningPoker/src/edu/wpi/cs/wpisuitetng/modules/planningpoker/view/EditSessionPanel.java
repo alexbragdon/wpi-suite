@@ -121,7 +121,7 @@ public class EditSessionPanel extends JPanel{
        
         
         IDfield.setPreferredSize(new Dimension (300, 30));
-        IDfield.setText("Give the ID of the PlanningPorkerSession you want to edit");
+        IDfield.setText("Give the ID of the PlanningPokerSession you want to edit");
         infoPanel.add(IDfield);
         infoPanel.add(FindButton);
         
