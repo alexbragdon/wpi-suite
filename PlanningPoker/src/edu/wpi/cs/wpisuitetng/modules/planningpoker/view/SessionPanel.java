@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,6 +40,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonListener;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+
 
 /**
  * This is session panel for the sessions of planning poker game.
@@ -55,6 +58,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 	private PlanningPokerSession displaySession;
 	private final Border defaultBorder = (new JTextField()).getBorder();
 
+	
 	JSpinner hourSpin;
 	JSpinner minuteSpin;
 
@@ -68,7 +72,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 	 * Goes on right, allows user to select requirements.
 	 */
 	// TODO replace JPanel with something real
-	private JPanel requirementsPanel;
+    private SessionRequirementPanel requirementsPanel;
 
 	/**
 	 * Date chooser to select when session ends
@@ -360,6 +364,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 			PlanningPokerSession session = new PlanningPokerSession(0, nameField.getText(), new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
 			AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
 
+            //get selected requirements
+            List<Requirement> selectedRequirements = requirementsPanel.getSelectedRequirements();
+            System.out.println("You selected: " + selectedRequirements.size() + " requirements!");
+            
 			nameField.getText();
 			desField.getText();
 
