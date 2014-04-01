@@ -25,6 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 public class ButtonsPanel extends ToolbarGroupView{
 		private JButton createButton = new JButton("<html>Create<br />Session</html>");
 		private final JButton joinButton = new JButton("<html>Join<br />Session</html>");
+		private final JButton editButton = new JButton("<html>Edit<br />Session</html>");
 		private final JButton viewButton = new JButton("<html>View Old<br />Session</html>");
 		private final JPanel contentPanel = new JPanel();
 	
@@ -33,7 +34,7 @@ public class ButtonsPanel extends ToolbarGroupView{
 		
 		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		//change this to 450 when we have three buttons
-		this.setPreferredWidth(200);
+		this.setPreferredWidth(300);
 
 		this.createButton.setHorizontalAlignment(SwingConstants.CENTER);
 		try {
@@ -45,6 +46,9 @@ public class ButtonsPanel extends ToolbarGroupView{
 		    
 		    img = ImageIO.read(getClass().getResource("viewSession.png"));
 		    this.viewButton.setIcon(new ImageIcon(img));
+		    
+		    img = ImageIO.read(getClass().getResource("createSession.png"));
+		    this.editButton.setIcon(new ImageIcon(img));
 		    
 		} catch (IOException ex) {}
 		
@@ -65,6 +69,7 @@ public class ButtonsPanel extends ToolbarGroupView{
 		contentPanel.add(createButton);
 		contentPanel.add(joinButton);
 		contentPanel.add(viewButton);
+		contentPanel.add(editButton);
 		contentPanel.setOpaque(false);
 		joinButton.setVisible(false);
 		viewButton.setVisible(false);
