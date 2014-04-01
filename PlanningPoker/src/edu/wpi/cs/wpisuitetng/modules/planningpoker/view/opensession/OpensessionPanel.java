@@ -71,6 +71,7 @@ public class OpensessionPanel extends JPanel {
 		JPanel refreshPanel = new JPanel();
 		JButton refresh = new JButton("Refresh");
 		refreshPanel.add(refresh);
+		refresh.setVisible(false);
 		refresh.addActionListener(new GetPlanningPokerSessionController(table));
 		this.add(tablePanel, BorderLayout.CENTER);
 		this.add(refreshPanel, BorderLayout.EAST);
