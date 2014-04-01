@@ -10,23 +10,16 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
-import java.awt.Checkbox;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-//import edu.wpi.cs.wpisuitetng.database.DataStore;
 
 /**
  * This is the panel on the open session table.
@@ -37,12 +30,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 public class SessionRequirementPanel extends JPanel {
 	
 	JTable table;
-//	String[] columns = {"ID", "NAME", "ITERATION","TYPE","STATUS","PRIORITY","ESTIMATE", "BOX"};
-//	Object[][] data = {
-//		{1, "Create a planning poker session", "Backlog", "User Story","New","None",0, new Boolean(false)},
-//		{2, "Estimate a requirement", "Backlog","Theme","New","None",0, false},
-//		{3, "Two types of planning poker games","Backlog", "Theme","New","None",0, false}
-//	};
 	
 	/**
 	 * Sets up directory table of requirements in system
@@ -53,19 +40,11 @@ public class SessionRequirementPanel extends JPanel {
 		Object[] [] data = {} ;
 		String[] columns = {"ID", "NAME", "RELEASE", "ITERATION","TYPE","STATUS","PRIORITY","ESTIMATE", "BOX"};
 		Requirement[] requirementList = {};  
-//		GetRequirementsController.getInstance().retrieveRequirements();
-//		GetRequirementsController.getInstance().receivedRequirements(requirementList);
-		//GetRequirementsRequestObserver.getInstance()
-		
-		//ViewEventController.getInstance().refreshTable();
 		List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
 		
-		//DataStore.getDataStore().retrieveAll(new Requirement());
 		
 		System.out.print(requirements.size());
 		DefaultTableModel model = new DefaultTableModel(data, columns);
-		// clear the table
-		//model.setRowCount(0);		
 		
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);			
@@ -111,12 +90,8 @@ public class SessionRequirementPanel extends JPanel {
 		table.getColumnModel().getColumn(7).setMinWidth(75);
 		
 		this.setLayout(new BorderLayout());
-		//this.setLayout(new GridLayout(3,8));
 
 		JPanel refreshPanel = new JPanel();
-		//JButton refresh = new JButton("Refresh");
-		//refreshPanel.add(refresh);
-		//refresh.addActionListener(new GetPlanningPokerSessionController(table));
 		this.add(tablePanel, BorderLayout.CENTER);
 		this.add(refreshPanel, BorderLayout.EAST);
 	}
