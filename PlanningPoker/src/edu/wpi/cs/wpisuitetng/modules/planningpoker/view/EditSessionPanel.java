@@ -15,39 +15,25 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 
-
-
-
-
-
-
-
-
-
-
-import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
-//import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
+import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.FindPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSessionEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.network.Network;
-import edu.wpi.cs.wpisuitetng.network.Request;
-import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 
 /**
- *  This is edit session panel for the sessions of palnning poker game.
+ *  This is edit session panel for the sessions of planning poker game.
  *
  * @author Xiaosong
+ * @contributor Team Romulus
  * @version Mar 30, 2014
  */
 @SuppressWarnings("serial")
@@ -62,19 +48,13 @@ public class EditSessionPanel extends JPanel{
      * Goes on left, holds basic info (name, time).
      */
     // TODO replace JPanel with something real
-    private JPanel infoPanel;
+    private ScrollablePanel searchPanel;
 
     /**
      * Goes on right, allows user to select requirements.
      */
     // TODO replace JPanel with something real
     private JPanel editPanel;
-
-    /**
-     * Create, reset, cancel buttons at the bottom.
-     */
-    // TODO replace JPanel with something real
-    private JPanel buttonPanel;
 
     private EditSessionPanel thisPanel;
 
@@ -110,20 +90,22 @@ public class EditSessionPanel extends JPanel{
      */
     private void buildLayout()
     {
-        buttonPanel = new JPanel();
         editPanel = new JPanel();
-        infoPanel = new JPanel();
+        searchPanel = new ScrollablePanel();
+        searchPanel.setLayout(new MigLayout("","","shrink"));
 
-        JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel, editPanel);
+        JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, searchPanel, editPanel);
+        contentPanel.setDividerLocation(180);
         final JButton FindButton = new JButton("Find");
         final JTextField IDfield = new JTextField();
+        final JLabel infoLabel = new JLabel("<html>Give the ID of the PlanningPorkerSession you want to edit</html>");
         final JPanel self = this;
        
         
-        IDfield.setPreferredSize(new Dimension (300, 30));
-        IDfield.setText("Give the ID of the PlanningPokerSession you want to edit");
-        infoPanel.add(IDfield);
-        infoPanel.add(FindButton);
+        IDfield.setPreferredSize(new Dimension (160, 30));
+        searchPanel.add(infoLabel, "wrap");
+        searchPanel.add(IDfield, "growx, pushx, shrinkx, span, wrap");
+        searchPanel.add(FindButton,  "wrap");
         
         newNamefield.setPreferredSize(new Dimension (300, 30));
         editPanel.add(newNamefield);
@@ -157,7 +139,6 @@ public class EditSessionPanel extends JPanel{
     
         this.setLayout(new BorderLayout());
         this.add(contentPanel, BorderLayout.CENTER); // Add scroll pane to panel
-        this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
 
