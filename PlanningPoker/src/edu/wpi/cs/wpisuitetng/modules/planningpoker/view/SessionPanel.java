@@ -46,7 +46,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 	private JTextField nameField = new JTextField();
     private JTextArea desField = new JTextArea();
     private final JLabel infoLabel = new JLabel("");
-    private final JTable requirementsTable = new JTable(new CheckBoxTable());
+    //private final JTable requirementsTable = new JTable(new CheckBoxTable());
     private PlanningPokerSession displaySession;
     private final Border defaultBorder = (new JTextField()).getBorder();
     private String tempName;
@@ -156,54 +156,55 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 		return true;
 	}
 
-    private void initializePanel() {
-        setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(300,150 ));
-
-        requirementsTable.setFillsViewportHeight(true);
-        JScrollPane pane = new JScrollPane(requirementsTable);
-
-        final JTextField listTextField = new JTextField(3);
-        JButton add = new JButton("Select");
-
-        // to do  clean. maybe create a new function to do all these set up things
-        requirementsTable.setRowSelectionAllowed(true);
-        requirementsTable.setColumnSelectionAllowed(false);
-        TableColumn column = requirementsTable.getColumnModel().getColumn(0);
-        column.setPreferredWidth(30);
-        column = requirementsTable.getColumnModel().getColumn(1);
-        column.setPreferredWidth(350);
-        column = requirementsTable.getColumnModel().getColumn(2);
-        column.setPreferredWidth(80);
-        column = requirementsTable.getColumnModel().getColumn(3);
-        column.setPreferredWidth(120);
-        column = requirementsTable.getColumnModel().getColumn(4);
-        column.setPreferredWidth(60);
-        column = requirementsTable.getColumnModel().getColumn(5);
-        column.setPreferredWidth(60);
-        column = requirementsTable.getColumnModel().getColumn(6);
-        column.setPreferredWidth(100);
-        column = requirementsTable.getColumnModel().getColumn(7);
-        column.setPreferredWidth(30);
-        column.setCellEditor(requirementsTable.getDefaultEditor(Boolean.class));
-        column.setCellRenderer(requirementsTable.getDefaultRenderer(Boolean.class));
-        ((JComponent) requirementsTable.getDefaultRenderer(Boolean.class)).setOpaque(true);
-
-
-
-        // To do: change name, more readable
-        JPanel listPanel = new JPanel(new FlowLayout());
-        listPanel.add(listTextField);
-        listPanel.add(listTextField);
-        listPanel.add(listTextField);
-        listPanel.add(listTextField);
-        listPanel.add(listTextField);
-        listPanel.add(listTextField);
-        listPanel.add(add);
-
-        add(pane, BorderLayout.WEST);
-        add(listPanel, BorderLayout.SOUTH);
-    }
+	
+//    private void initializePanel() {
+//        setLayout(new BorderLayout());
+//        setPreferredSize(new Dimension(300,150 ));
+//
+//        requirementsTable.setFillsViewportHeight(true);
+//        JScrollPane pane = new JScrollPane(requirementsTable);
+//
+//        final JTextField listTextField = new JTextField(3);
+//        JButton add = new JButton("Select");
+//
+//        // to do  clean. maybe create a new function to do all these set up things
+//        requirementsTable.setRowSelectionAllowed(true);
+//        requirementsTable.setColumnSelectionAllowed(false);
+//        TableColumn column = requirementsTable.getColumnModel().getColumn(0);
+//        column.setPreferredWidth(30);
+//        column = requirementsTable.getColumnModel().getColumn(1);
+//        column.setPreferredWidth(350);
+//        column = requirementsTable.getColumnModel().getColumn(2);
+//        column.setPreferredWidth(80);
+//        column = requirementsTable.getColumnModel().getColumn(3);
+//        column.setPreferredWidth(120);
+//        column = requirementsTable.getColumnModel().getColumn(4);
+//        column.setPreferredWidth(60);
+//        column = requirementsTable.getColumnModel().getColumn(5);
+//        column.setPreferredWidth(60);
+//        column = requirementsTable.getColumnModel().getColumn(6);
+//        column.setPreferredWidth(100);
+//        column = requirementsTable.getColumnModel().getColumn(7);
+//        column.setPreferredWidth(30);
+//        column.setCellEditor(requirementsTable.getDefaultEditor(Boolean.class));
+//        column.setCellRenderer(requirementsTable.getDefaultRenderer(Boolean.class));
+//        ((JComponent) requirementsTable.getDefaultRenderer(Boolean.class)).setOpaque(true);
+//
+//
+//
+//        // To do: change name, more readable
+//        JPanel listPanel = new JPanel(new FlowLayout());
+//        listPanel.add(listTextField);
+//        listPanel.add(listTextField);
+//        listPanel.add(listTextField);
+//        listPanel.add(listTextField);
+//        listPanel.add(listTextField);
+//        listPanel.add(listTextField);
+//        listPanel.add(add);
+//
+//        add(pane, BorderLayout.WEST);
+//        add(listPanel, BorderLayout.SOUTH);
+//    }
 
     /**
      * Builds the layout of the panel.
@@ -211,7 +212,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
     private void buildLayout()
     {
         buttonPanel = new SessionButtonPanel(this);
-        requirementsPanel = new JPanel();
+        requirementsPanel = new SessionRequirementPanel();
         infoPanel = new ScrollablePanel();
         infoPanel.setLayout(new MigLayout("","","shrink"));
 
@@ -229,7 +230,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         desField.setLineWrap(true);
         desFieldContainer.setViewportView(desField);
 
-        initializePanel();
+//        initializePanel();
         infoPanel.add(nameLabel, "wrap");
         infoPanel.add(nameField, "growx, pushx, shrinkx, span, wrap");
         infoPanel.add(desLabel, "wrap");
@@ -239,7 +240,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener
         infoLabel.setForeground(Color.red);
         infoLabel.setFont(boardFont);
         buttonPanel.add(infoLabel);
-        requirementsPanel.add(requirementsTable);
+        //requirementsPanel.add(requirementsTable);
         
         setupListeners();
         buttonPanel.getButtonSave().setEnabled(false);
