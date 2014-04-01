@@ -97,7 +97,7 @@ public class SessionRequirementPanel extends JPanel {
 		table.getColumnModel().getColumn(5).setMinWidth(75);
 		table.getColumnModel().getColumn(6).setMinWidth(75);
 		table.getColumnModel().getColumn(7).setMinWidth(75);
-		table.getColumnModel().getColumn(7).setMinWidth(75);
+		table.getColumnModel().getColumn(8).setMinWidth(75);
 		
 		this.setLayout(new BorderLayout());
 
@@ -106,11 +106,10 @@ public class SessionRequirementPanel extends JPanel {
 		this.add(refreshPanel, BorderLayout.EAST);
 	}
 	
-	/*
+	/**
 	 * Return the requirements with selected checkboxes
 	 * @return A List containing the selected requirements
 	 */
-	
 	public List<Requirement> getSelectedRequirements()
 	{
 	    List<Requirement> selected = new LinkedList<Requirement>();
