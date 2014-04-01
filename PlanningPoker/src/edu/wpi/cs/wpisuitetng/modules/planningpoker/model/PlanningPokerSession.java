@@ -129,8 +129,8 @@ public class PlanningPokerSession extends AbstractModel {
 	{
 		super();
 		ID = 0;
-		Name = "Planning Poker Game " + ID;
-		Discription = "Hallo the World";
+		Name = "";
+		Discription = "";
 		date = new Date();
 		Hour = 0;
 		Min = 0;

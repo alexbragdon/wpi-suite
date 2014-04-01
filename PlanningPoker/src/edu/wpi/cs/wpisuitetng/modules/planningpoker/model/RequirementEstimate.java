@@ -24,6 +24,11 @@ public class RequirementEstimate {
     private final int id;
 
     /**
+     * The name of this requirement.
+     */
+    private final String name;
+    
+    /**
      * A mapping of usernames to that users estimate.
      */
     private final HashMap<String, Integer> votes;
@@ -38,15 +43,20 @@ public class RequirementEstimate {
      */
     private boolean isExported;
 
-    public RequirementEstimate(int id, int finalEstimate, boolean isExported) {
+    public RequirementEstimate(int id, String name, int finalEstimate, boolean isExported) {
         votes = new HashMap<String, Integer>();
         this.id = id;
+        this.name = name;
         this.finalEstimate = finalEstimate;
         this.isExported = isExported;
     }
 
     public int getId() {
         return id;
+    }
+    
+    public String getName() {
+        return name;
     }
     
     public int getFinalEstimate() {
