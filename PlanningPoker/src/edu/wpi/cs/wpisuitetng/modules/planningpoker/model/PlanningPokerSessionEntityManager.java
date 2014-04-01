@@ -199,32 +199,6 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
         }
 
         return existingSession;
-    	
-    	
-    	
-        // Parse from JSON
-        // TODO uncomment the line below once fromJson exists
-        /*final PlanningPokerSession updatedSession = PlanningPokerSession.fromJson(content);
-
-        /*
-         * We have to get the original session from db4o, copy properties, then save.
-         
-        List<Model> oldSessions = db.retrieve(PlanningPokerSession.class, "ID", updatedSession.ID,
-                        s.getProject());
-        if (oldSessions.size() < 1 || oldSessions.get(0) == null) {
-            throw new BadRequestException("PlanningPokerSession with ID does not exist.");
-        }
-
-        PlanningPokerSession existingSession = (PlanningPokerSession) oldSessions.get(0);
-        // TODO uncomment line below once copyFrom exists
-        existingSession.copyFrom(updatedSession);
-
-        if (!db.save(existingSession, s.getProject())) {
-            throw new WPISuiteException();
-        }
-
-        return existingSession;
-        */
     }
 
 }

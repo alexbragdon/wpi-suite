@@ -361,7 +361,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 
 	public void OKPressed(){
 		if(validateFields(true)){
-			PlanningPokerSession session = new PlanningPokerSession(0, nameField.getText(), new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
+			PlanningPokerSession session = 
+			                new PlanningPokerSession(0, nameField.getText(), desField.getText(), dateChooser.getDate(), 
+			                                Integer.parseInt(hourSpin.getValue().toString()), Integer.parseInt(minuteSpin.getValue().toString()), 
+			                                new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
+		 
+
 			AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
 
             //get selected requirements

@@ -6,6 +6,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +33,7 @@ public class SessionPanelTest {
 	 **/
 	@Before
 	public void setUp() throws Exception {
-		ses = new PlanningPokerSession(0, "Test Session", new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
+		ses = new PlanningPokerSession(0, "Test Session", "Hello The World", new Date(), 12, 0, new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
 		sesPan = new SessionPanel(ses);
 	}
 

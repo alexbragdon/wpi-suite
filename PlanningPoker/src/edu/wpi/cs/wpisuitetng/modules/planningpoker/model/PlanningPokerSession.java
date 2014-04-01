@@ -1,5 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -15,6 +16,11 @@ public class PlanningPokerSession extends AbstractModel {
 	 */
 	int ID;
 	String Name;
+	String Discription;
+	Date date;
+	
+	int Hour, Min;
+	
 	List<RequirementEstimate> RequirementEstimates;
 	sessionType Type;
 	// True if the game is active and ready to join
@@ -34,12 +40,53 @@ public class PlanningPokerSession extends AbstractModel {
 	{
 		ID = iD;
 	}
+	
+	public int getHour() 
+	{
+	    return Hour;
+	}
+
+	public void setHour(int hour) 
+	{
+        Hour = hour;
+	}
+	    
+	public int getMin() 
+	{
+        return Min;
+    }
+
+    public void setMin(int min) 
+    {
+        Min = min;
+    }
+	    
+	public void setDiscription(String discription) 
+    {
+       Discription = discription;
+    }
 
 	public String getName() 
 	{
 		return Name;
 	}
 
+
+    public String getDiscription() 
+    {
+        return Discription;
+    }
+    
+    public Date getDate() 
+    {
+        return date;
+    }
+    
+    public void setDate(Date date) 
+    {
+        this.date = date;
+    }
+    
 	public void setName(String name) 
 	{
 		Name = name;
@@ -83,6 +130,10 @@ public class PlanningPokerSession extends AbstractModel {
 		super();
 		ID = 0;
 		Name = "Planning Poker Game " + ID;
+		Discription = "Hallo the World";
+		date = new Date();
+		Hour = 0;
+		Min = 0;
 		RequirementEstimates = new ArrayList<RequirementEstimate>();
 		Type = sessionType.REALTIME;
 		isActive = false;
@@ -92,11 +143,15 @@ public class PlanningPokerSession extends AbstractModel {
 	/**
 	 * constructor for a planning poker Session
 	 */
-	public PlanningPokerSession(int id, String name, List<RequirementEstimate>
+	public PlanningPokerSession(int id, String name, String discription, Date date,int hour, int min, List<RequirementEstimate>
 			requirementestimates, sessionType type, boolean active, boolean complete) 
 	{
 		super();
 		ID = id;
+		Discription = discription;
+		this.date = date;
+		Hour = hour;
+		Min = min;
 		Name = name;
 		RequirementEstimates = requirementestimates;
 		Type = type;
@@ -155,6 +210,10 @@ public class PlanningPokerSession extends AbstractModel {
 	public void copyFrom(PlanningPokerSession updatedSession) {
         this.ID = updatedSession.ID;
         this.Name = updatedSession.Name;
+        this.Discription = updatedSession.Discription;
+        this.date = updatedSession.date;
+        this.Hour = updatedSession.Hour;
+        this.Min = updatedSession.Min;
         this.RequirementEstimates = updatedSession.RequirementEstimates;
         this.Type = updatedSession.Type;
         this.isActive = updatedSession.isActive;

@@ -97,9 +97,14 @@ public class EditSessionPanel extends JPanel{
     public void addDisplaySession(PlanningPokerSession session) {
         this.displaySession = session;
         if (displaySession != null){
-            newNamefield.setVisible(true);
-            SaveButton.setVisible(true);
+//            newNamefield.setVisible(true);
+//            SaveButton.setVisible(true);
+            //show the information about the session found by ID
             newNamefield.setText(displaySession.getName());
+            desField.setText(displaySession.getDiscription());
+            dateChooser.setDate(displaySession.getDate());
+            hourSpin.setValue(displaySession.getHour());
+            minuteSpin.setValue(displaySession.getMin());
         }
     }
 
@@ -144,8 +149,8 @@ public class EditSessionPanel extends JPanel{
         infoPanel.add(newNamefield, "growx, pushx, shrinkx, span, wrap");
         
         infoPanel.add(desFieldContainer, "growx, pushx, shrinkx, span, height 200px, wmin 10, wrap");
-        newNamefield.setVisible(false);
-        SaveButton.setVisible(false);
+//        newNamefield.setVisible(false);
+//        SaveButton.setVisible(false);
         
         dateChooser = new JCalendar(new Date()); //Create new JCalendar with now default selected
         JPanel calendarPanel = new JPanel(new BorderLayout());
@@ -175,18 +180,19 @@ public class EditSessionPanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 
                 new FindPlanningPokerSessionController(thisPanel).findPlanningPokerSessionbyID(IDfield.getText());
-                //ViewEventController.getInstance().removeTab(self);
             }
         });
         
         SaveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                PlanningPokerSession updatedSession = new PlanningPokerSession(Integer.parseInt( IDfield.getText()), newNamefield.getText(),new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
+                PlanningPokerSession updatedSession =
+                                new PlanningPokerSession(Integer.parseInt( IDfield.getText()), newNamefield.getText(), desField.getText(), dateChooser.getDate(),
+                                                Integer.parseInt(hourSpin.getValue().toString()), Integer.parseInt(minuteSpin.getValue().toString()), 
+                                                new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
                 EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(updatedSession);
                 //newNamefield.setEnabled(false);
                 //xSaveButton.setEnabled(false);
-                
-                // AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(updatedSession);
+               
                 newNamefield.setText("");
                 ViewEventController.getInstance().removeTab(self);
                 
