@@ -10,8 +10,10 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.util.List;
+import java.util.LinkedList;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,6 +30,13 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  */
 @SuppressWarnings("serial")
 public class SessionRequirementPanel extends JPanel {
+    
+    /*
+     * Rows in the table
+     */
+	DefaultTableModel model = null;
+	
+	List<Requirement> requirements = null;
 	
 	JTable table;
 	
@@ -39,12 +48,13 @@ public class SessionRequirementPanel extends JPanel {
 
 		Object[] [] data = {} ;
 		String[] columns = {"ID", "NAME", "RELEASE", "ITERATION","TYPE","STATUS","PRIORITY","ESTIMATE", "BOX"};
-		Requirement[] requirementList = {};  
-		List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
+
+		requirements = RequirementModel.getInstance().getRequirements();
 		
 		
 		System.out.print(requirements.size());
-		DefaultTableModel model = new DefaultTableModel(data, columns);
+
+		model = new DefaultTableModel(data, columns);
 		
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);			
@@ -94,5 +104,23 @@ public class SessionRequirementPanel extends JPanel {
 		JPanel refreshPanel = new JPanel();
 		this.add(tablePanel, BorderLayout.CENTER);
 		this.add(refreshPanel, BorderLayout.EAST);
+	}
+	
+	/*
+	 * Return the requirements with selected checkboxes
+	 * @return A List containing the selected requirements
+	 */
+	
+	public List<Requirement> getSelectedRequirements()
+	{
+	    List<Requirement> selected = new LinkedList<Requirement>();
+	    for (int i = 0; i < requirements.size(); i++)
+	    {
+	        if ((Boolean) model.getValueAt(i,  8))
+	        {
+	            selected.add(requirements.get(i));
+	        }
+	    }
+	    return selected;
 	}
 }
