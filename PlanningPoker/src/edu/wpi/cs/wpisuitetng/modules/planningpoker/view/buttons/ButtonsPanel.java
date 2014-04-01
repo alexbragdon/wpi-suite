@@ -80,7 +80,7 @@ public class ButtonsPanel extends ToolbarGroupView{
 		contentPanel.setOpaque(false);
 		joinButton.setVisible(false);
 		viewButton.setVisible(false);
-
+        editButton.setVisible(false);
 		this.add(contentPanel);
 	}
 	/**
@@ -99,5 +99,7 @@ public class ButtonsPanel extends ToolbarGroupView{
 		return createButton;
 	}
 
-	
+    public JButton getEditButton(){
+        return editButton;
+    }
 }

@@ -20,16 +20,19 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.Opensession
 public class MainView extends JTabbedPane {
 
 
-	private OpensessionPanel opensession = new OpensessionPanel();
+	private OpensessionPanel opensession = new OpensessionPanel(this);
 	private Component lastTab = null;
+	private ToolbarView toolbarView;
 
 
 
 	/**
 	 * Adds main subtab when user goes to planningpoker
 	 */
-	public MainView() {
-		this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+	public MainView(ToolbarView toolbarView) {
+		this.toolbarView = toolbarView;
+	    
+	    this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		this.addTab("Open Sessions", opensession);
 
 		// Listen for tab changes to invoke auto refresh
@@ -88,5 +91,7 @@ public class MainView extends JTabbedPane {
 		} catch (IllegalArgumentException e){}
 	}
 
-
+	public ToolbarView getToolbarView(){
+	    return toolbarView;
+	}
 }
