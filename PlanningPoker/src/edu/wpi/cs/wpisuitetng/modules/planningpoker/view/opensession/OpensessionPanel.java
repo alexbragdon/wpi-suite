@@ -160,4 +160,8 @@ public class OpensessionPanel extends JPanel {
     public MainView getParent(){
         return parent;
     }
+    
+    public ListSelectionModel getListSelectionModel(){
+        return this.listSelectionModel;
+    }
 }
