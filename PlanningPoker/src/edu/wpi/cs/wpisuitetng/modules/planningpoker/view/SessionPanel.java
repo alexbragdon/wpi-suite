@@ -405,6 +405,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                             + " Planning Poker");
             break;
         }
+        
+        updateButtonsIfChanges();
     }
     
     // Listeners for the text boxes
@@ -423,7 +425,15 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 					hourSpin.setEnabled(false);
     				minuteSpin.setEnabled(false);
 				}
-				updateButtonsIfChanges();
+            	if (hasChanges())
+            		buttonPanel.getButtonClear().setEnabled(true);
+            	else
+            		buttonPanel.getButtonClear().setEnabled(false);
+            	
+            	if (hasChanges() && validateFields(true))
+            		buttonPanel.getButtonSave().setEnabled(true);
+            	else
+            		buttonPanel.getButtonSave().setEnabled(false);
 			}
         	
         });
@@ -432,14 +442,15 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
             @Override
             public void stateChanged(ChangeEvent e) {
-                if (validateFields(true)) {
-                    buttonPanel.getButtonSave().setEnabled(true);
-                }
-
-                else {
-                    buttonPanel.getButtonSave().setEnabled(false);
-                }
-                updateButtonsIfChanges();
+            	if (hasChanges())
+            		buttonPanel.getButtonClear().setEnabled(true);
+            	else
+            		buttonPanel.getButtonClear().setEnabled(false);
+            	
+            	if (hasChanges() && validateFields(true))
+            		buttonPanel.getButtonSave().setEnabled(true);
+            	else
+            		buttonPanel.getButtonSave().setEnabled(false);
             }
 
         });
@@ -448,14 +459,15 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
             @Override
             public void stateChanged(ChangeEvent e) {
-                if (validateFields(true)) {
-                    buttonPanel.getButtonSave().setEnabled(true);
-                }
-
-                else {
-                    buttonPanel.getButtonSave().setEnabled(false);
-                }
-                updateButtonsIfChanges();
+            	if (hasChanges())
+            		buttonPanel.getButtonClear().setEnabled(true);
+            	else
+            		buttonPanel.getButtonClear().setEnabled(false);
+            	
+            	if (hasChanges() && validateFields(true))
+            		buttonPanel.getButtonSave().setEnabled(true);
+            	else
+            		buttonPanel.getButtonSave().setEnabled(false);
             }
 
         });
@@ -464,14 +476,15 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if (validateFields(true)) {
-                    buttonPanel.getButtonSave().setEnabled(true);
-                }
-
-                else {
-                    buttonPanel.getButtonSave().setEnabled(false);
-                }
-                updateButtonsIfChanges();
+            	if (hasChanges())
+            		buttonPanel.getButtonClear().setEnabled(true);
+            	else
+            		buttonPanel.getButtonClear().setEnabled(false);
+            	
+            	if (hasChanges() && validateFields(true))
+            		buttonPanel.getButtonSave().setEnabled(true);
+            	else
+            		buttonPanel.getButtonSave().setEnabled(false);
             }
 
         });
@@ -479,42 +492,88 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         nameField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
+            	if (hasChanges())
+            		buttonPanel.getButtonClear().setEnabled(true);
+            	else
+            		buttonPanel.getButtonClear().setEnabled(false);
+            	
+            	if (hasChanges() && validateFields(true))
+            		buttonPanel.getButtonSave().setEnabled(true);
+            	else
+            		buttonPanel.getButtonSave().setEnabled(false);
             }
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                textChanged();
-                updateButtonsIfChanges();
+            	if (hasChanges())
+            		buttonPanel.getButtonClear().setEnabled(true);
+            	else
+            		buttonPanel.getButtonClear().setEnabled(false);
+            	
+            	if (hasChanges() && validateFields(true))
+            		buttonPanel.getButtonSave().setEnabled(true);
+            	else
+            		buttonPanel.getButtonSave().setEnabled(false);
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                // TODO Auto-generated method stub
-                textChanged();
-                updateButtonsIfChanges();
+            	if (hasChanges())
+            		buttonPanel.getButtonClear().setEnabled(true);
+            	else
+            		buttonPanel.getButtonClear().setEnabled(false);
+            	
+            	if (hasChanges() && validateFields(true))
+            		buttonPanel.getButtonSave().setEnabled(true);
+            	else
+            		buttonPanel.getButtonSave().setEnabled(false);
             }
         });
 
         desField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent arg0) {
-                // TODO Auto-generated method stub
+            	if (hasChanges())
+            		buttonPanel.getButtonClear().setEnabled(true);
+            	else
+            		buttonPanel.getButtonClear().setEnabled(false);
+            	
+            	if (hasChanges() && validateFields(true))
+            		buttonPanel.getButtonSave().setEnabled(true);
+            	else
+            		buttonPanel.getButtonSave().setEnabled(false);
             }
 
             @Override
             public void insertUpdate(DocumentEvent arg0) {
                 // TODO Auto-generated method stub
-                textChanged();
-                updateButtonsIfChanges();
+                //updateButtonsIfChanges();
+                //textChanged();
+            	if (hasChanges())
+            		buttonPanel.getButtonClear().setEnabled(true);
+            	else
+            		buttonPanel.getButtonClear().setEnabled(false);
+            	
+            	if (hasChanges() && validateFields(true))
+            		buttonPanel.getButtonSave().setEnabled(true);
+            	else
+            		buttonPanel.getButtonSave().setEnabled(false);
             }
 
             @Override
             public void removeUpdate(DocumentEvent arg0) {
                 // TODO Auto-generated method stub
-                textChanged();
-                updateButtonsIfChanges();
+                //updateButtonsIfChanges();
+                //textChanged();
+            	if (hasChanges())
+            		buttonPanel.getButtonClear().setEnabled(true);
+            	else
+            		buttonPanel.getButtonClear().setEnabled(false);
+            	
+            	if (hasChanges() && validateFields(true))
+            		buttonPanel.getButtonSave().setEnabled(true);
+            	else
+            		buttonPanel.getButtonSave().setEnabled(false);
             }
         });
         
@@ -522,17 +581,21 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
 			@Override
 			public void tableChanged(TableModelEvent e) {
-				if (validateFields(true)) {
-			        buttonPanel.getButtonSave().setEnabled(true);
-			        buttonPanel.getButtonClear().setEnabled(true);
-				}
-				updateButtonsIfChanges();
+            	if (hasChanges())
+            		buttonPanel.getButtonClear().setEnabled(true);
+            	else
+            		buttonPanel.getButtonClear().setEnabled(false);
+            	
+            	if (hasChanges() && validateFields(true))
+            		buttonPanel.getButtonSave().setEnabled(true);
+            	else
+            		buttonPanel.getButtonSave().setEnabled(false);
 				
 			}
         	
         });
     }
-
+    
     private void updateButtonsIfChanges() {
     	if (hasChanges()) {
     		buttonPanel.getButtonSave().setEnabled(true);
@@ -545,6 +608,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     
     private boolean hasChanges() {
     	PlanningPokerSession session = createSessionFromFields();
+    	PlanningPokerSession otherSession = displaySession;
     	return !session.equals(displaySession);
     }
     
@@ -586,7 +650,21 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     public void clearPressed() {
         nameField.setText(displaySession.getName());
         desField.setText(displaySession.getDiscription());
+    	dateChooser.setDate(displaySession.getDate());
+    	hourSpin.setValue(displaySession.getHour());
+    	minuteSpin.setValue(displaySession.getMin());
         requirementsPanel.refreshRequirementSelection();
+        if (displaySession.getType() == sessionType.DISTRIBUTED) {
+        	timeEnable.setSelected(true);
+        	dateChooser.setEnabled(true);
+        	hourSpin.setEnabled(true);
+        	minuteSpin.setEnabled(true);
+        } else {
+        	timeEnable.setSelected(false);
+        	dateChooser.setEnabled(false);
+        	hourSpin.setEnabled(false);
+        	minuteSpin.setEnabled(false);
+        }
         buttonPanel.getButtonSave().setEnabled(false);
         buttonPanel.getButtonClear().setEnabled(false);
     }
@@ -596,7 +674,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     }
 
     public void textChanged() {
-        if (validateFields(true)) {
+        if (validateFields(true) && hasChanges()) {
             buttonPanel.getButtonSave().setEnabled(true);
             buttonPanel.getButtonClear().setEnabled(true);
         }
