@@ -233,4 +233,92 @@ public class PlanningPokerSession extends AbstractModel {
 		this.moderator = updatedSession.moderator;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((Discription == null) ? 0 : Discription.hashCode());
+		result = prime * result + Hour;
+		result = prime * result + ID;
+		result = prime * result + Min;
+		result = prime * result + ((Name == null) ? 0 : Name.hashCode());
+		result = prime
+				* result
+				+ ((RequirementEstimates == null) ? 0 : RequirementEstimates
+						.hashCode());
+		result = prime * result + ((Type == null) ? 0 : Type.hashCode());
+		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + (isActive ? 1231 : 1237);
+		result = prime * result + (isComplete ? 1231 : 1237);
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof PlanningPokerSession)) {
+			return false;
+		}
+		PlanningPokerSession other = (PlanningPokerSession) obj;
+		if (Discription == null) {
+			if (other.Discription != null) {
+				return false;
+			}
+		} else if (!Discription.equals(other.Discription)) {
+			return false;
+		}
+		if (Hour != other.Hour) {
+			return false;
+		}
+		if (ID != other.ID) {
+			return false;
+		}
+		if (Min != other.Min) {
+			return false;
+		}
+		if (Name == null) {
+			if (other.Name != null) {
+				return false;
+			}
+		} else if (!Name.equals(other.Name)) {
+			return false;
+		}
+		if (RequirementEstimates == null) {
+			if (other.RequirementEstimates != null) {
+				return false;
+			}
+		} else if (!RequirementEstimates.equals(other.RequirementEstimates)) {
+			return false;
+		}
+		if (Type != other.Type) {
+			return false;
+		}
+		if (date == null) {
+			if (other.date != null) {
+				return false;
+			}
+		} else if (!date.equals(other.date)) {
+			return false;
+		}
+		if (isActive != other.isActive) {
+			return false;
+		}
+		if (isComplete != other.isComplete) {
+			return false;
+		}
+		return true;
+	}
+
 }

@@ -47,8 +47,13 @@ public class OpensessionTable extends JTable
 
 	}
 	
-
-
+	public int getSelectedID() {
+	    if (getSelectedRow() == -1) {
+	        return -1;
+	    }
+	    
+	    return Integer.parseInt((String) tableModel.getValueAt(getSelectedRow(), 0));
+	}
 	
 	/**
 	 * Overrides the isCellEditable method to ensure no cells are editable.

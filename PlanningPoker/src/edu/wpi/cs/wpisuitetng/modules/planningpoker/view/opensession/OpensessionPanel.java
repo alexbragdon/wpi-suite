@@ -80,6 +80,42 @@ public class OpensessionPanel extends JPanel {
         this.setLayout(new BorderLayout());
 
         listSelectionModel = table.getSelectionModel();
+//=======
+//	
+////	OpensessionTable table;
+////	private MainView parent;
+////	private ListSelectionModel listSelectionModel;
+////	
+////	
+////	
+//	/**
+//	 * Timer used to poll the database for changes.
+//	 */
+////	Timer timer;
+//	
+//	/**
+//	 * Sets up directory table of requirements in system
+//	 */
+////	public OpensessionPanel(MainView mainView)
+////	{
+////		parent = mainView;
+////		String[] columnNames = {"ID", "Name"};
+////				
+////		Object[][] data = {};
+////		
+//		table = new OpensessionTable(data, columnNames);
+//		
+//		JScrollPane tablePanel = new JScrollPane(table);
+//		tablePanel.setPreferredSize(new Dimension(1000, 800));
+//				
+//		table.getColumnModel().getColumn(0).setMinWidth(100);
+//		
+//		table.getColumnModel().getColumn(1).setMinWidth(500);
+//		
+//		this.setLayout(new BorderLayout());
+//		
+//		listSelectionModel = table.getSelectionModel();
+//>>>>>>> 6b352667b7504c103e47053ab1c2daeb4a691129
         listSelectionModel.addListSelectionListener(new ListSelectionListener(){
 
             @Override
@@ -110,6 +146,10 @@ public class OpensessionPanel extends JPanel {
         timer.start();
     }
 
+	public int getSelectedID() {
+	    return table.getSelectedID();
+	}
+	
     /**
      * Refreshes the table associated with this panel.
      */
