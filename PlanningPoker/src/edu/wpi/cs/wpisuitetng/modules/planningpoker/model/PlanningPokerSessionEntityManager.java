@@ -19,7 +19,6 @@ import edu.wpi.cs.wpisuitetng.database.Data;
 import edu.wpi.cs.wpisuitetng.exceptions.BadRequestException;
 import edu.wpi.cs.wpisuitetng.exceptions.ConflictException;
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
-import edu.wpi.cs.wpisuitetng.exceptions.NotImplementedException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
@@ -160,7 +159,7 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
         	System.out.println("Didn't save");
             throw new WPISuiteException();
         }
-
+        
         // Return the newly created message (this gets passed back to the client)
         return session;
     }

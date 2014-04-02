@@ -3,6 +3,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
@@ -14,6 +16,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import com.lowagie.text.List;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
@@ -105,7 +109,7 @@ public class OpensessionTable extends JTable
 
 	public void addSessions(PlanningPokerSession[] sessions) {
 		for (PlanningPokerSession session : sessions) {
-			tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), session.getModerator() });
+		    tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), session.getModerator() });
 		}
 		
 	}
