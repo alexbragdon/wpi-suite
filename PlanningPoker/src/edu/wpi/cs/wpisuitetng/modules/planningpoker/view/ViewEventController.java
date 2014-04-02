@@ -3,9 +3,14 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationPanel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.requirements.RequirementPanel;
 
 
 /**
@@ -18,6 +23,7 @@ public class ViewEventController {
 	private static ViewEventController instance = null;
 	private MainView main = null;
 	private ToolbarView toolbar = null;
+	private HashMap<PlanningPokerSession, Integer> listOfEditingSessions = new HashMap<PlanningPokerSession, Integer>();
 
 	/**
 	 * Default constructor for ViewEventController.  Is protected to prevent instantiation.
@@ -64,12 +70,31 @@ public class ViewEventController {
 		main.setSelectedComponent(newSession);
 	}
 	
-	public void editSession(PlanningPokerSession session) {
-	    SessionPanel editSession = new SessionPanel(session);
-	    main.addTab("Edit Session", null, editSession, "Edit this session");
-	    main.invalidate();
-	    main.repaint();
-	    main.setSelectedComponent(editSession);
+	public void editSession(PlanningPokerSession session) {	    
+	    boolean exists = false;
+	    int index = 0;
+	    
+	    for(PlanningPokerSession ppSession : listOfEditingSessions.keySet())
+		{
+			if(listOfEditingSessions.containsKey(session))
+			{
+				exists = true;
+				index = listOfEditingSessions.get(session);
+				break;
+			}
+		}	
+	    
+	    if (exists == false) {
+	    	SessionPanel sessionEditor = new SessionPanel(session);
+	    	String tabName = "Edit " + session.getName();
+		    main.addTab(tabName, null, sessionEditor, "Edit this session");
+		    main.invalidate();
+		    main.repaint();
+		    main.setSelectedComponent(sessionEditor);
+		    listOfEditingSessions.put(session, main.getSelectedIndex());
+	    } else {
+	    	main.setSelectedIndex(index);
+	    }
 	}
 
 	/**
