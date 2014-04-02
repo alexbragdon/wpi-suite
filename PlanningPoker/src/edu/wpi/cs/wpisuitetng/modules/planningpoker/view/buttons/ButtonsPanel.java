@@ -112,4 +112,9 @@ public class ButtonsPanel extends ToolbarGroupView {
     public JButton getCreateIterationButton() {
         return createButton;
     }
+
+	public JButton getEditButton() {
+		// TODO Auto-generated method stub
+		return editButton;
+	}
 }
