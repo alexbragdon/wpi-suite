@@ -405,7 +405,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
     public void OKPressed() {
         if (validateFields(true)) {
-            PlanningPokerSession session = new PlanningPokerSession(0, nameField.getText(),
+            PlanningPokerSession session = new PlanningPokerSession(displaySession.getID(), nameField.getText(),
                             desField.getText(), dateChooser.getDate(),
                             Integer.parseInt(hourSpin.getValue().toString()),
                             Integer.parseInt(minuteSpin.getValue().toString()),

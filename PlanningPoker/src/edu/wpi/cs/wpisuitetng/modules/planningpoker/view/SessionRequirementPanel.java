@@ -111,7 +111,7 @@ public class SessionRequirementPanel extends JPanel {
             for (RequirementEstimate displayRequirement : displaySession.getRequirements()) {
                 boolean exists = false;
                 for (int i = 0; i < requirements.size(); i++) {
-                    if (requirements.get(i).getId() == displayRequirement.getId() && requirements.get(i).getName() == displayRequirement.getName()) {
+                    if (requirements.get(i).getId() == displayRequirement.getId() && requirements.get(i).getName().equals(displayRequirement.getName())) {
                         exists = true;
                         model.setValueAt(true, i, 2);
                     }

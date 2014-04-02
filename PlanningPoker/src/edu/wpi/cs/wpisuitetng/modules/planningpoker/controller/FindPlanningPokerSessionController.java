@@ -40,9 +40,9 @@ public class FindPlanningPokerSessionController {
      * This method adds a requirement to the server.
      * @param newSession is the requirement to be added to the server.
      */
-    public void findPlanningPokerSessionbyID(String ID) 
+    public void findPlanningPokerSessionbyID(int ID) 
     {
-        final Request request = Network.getInstance().makeRequest("planningpoker/planningpokersession/" + ID, HttpMethod.GET);
+        final Request request = Network.getInstance().makeRequest("planningpoker/planningpokersession/" + String.valueOf(ID), HttpMethod.GET);
         request.addObserver(observer);
         request.send();
     }

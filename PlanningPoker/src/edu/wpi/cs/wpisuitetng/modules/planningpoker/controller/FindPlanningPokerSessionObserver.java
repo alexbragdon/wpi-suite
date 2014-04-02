@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -34,7 +35,7 @@ public class FindPlanningPokerSessionObserver  implements RequestObserver {
     @Override
     public void responseSuccess(IRequest iReq) {
         PlanningPokerSession session = PlanningPokerSession.fromJsonArray(iReq.getResponse().getBody())[0];
-        controller.receivedMessages(session);
+        ViewEventController.getInstance().editSession(session);
     }
 
     /*
