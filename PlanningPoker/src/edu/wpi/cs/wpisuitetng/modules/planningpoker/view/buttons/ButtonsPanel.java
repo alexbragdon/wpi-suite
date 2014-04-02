@@ -80,6 +80,8 @@ public class ButtonsPanel extends ToolbarGroupView {
                 int id = parent.getOpensession().getSelectedID();
                 if (id != -1) {
                     new FindPlanningPokerSessionController().findPlanningPokerSessionbyID(id);
+                    editButton.setVisible(false);
+                    parent.getOpensession().getListSelectionModel().clearSelection();
                 }
             }
         });

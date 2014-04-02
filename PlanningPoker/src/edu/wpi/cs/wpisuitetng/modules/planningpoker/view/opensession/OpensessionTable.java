@@ -106,9 +106,9 @@ public class OpensessionTable extends JTable
 	public void addSessions(PlanningPokerSession[] sessions) {
 		for (PlanningPokerSession session : sessions) {
 			//does not display old sessions without a moderator
-		    if(!session.getModerator().equals("")){
+		    //if(!session.getModerator().equals("")){
 			    tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), session.getModerator() });
-			}
+			//}
 		}
 		
 	}
