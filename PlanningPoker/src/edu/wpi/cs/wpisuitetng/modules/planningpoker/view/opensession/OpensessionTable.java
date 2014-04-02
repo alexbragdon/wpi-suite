@@ -10,10 +10,13 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 /**
  * This is the open session table.
  * @author Fangming Ning
@@ -42,7 +45,19 @@ public class OpensessionTable extends JTable
 		this.setAutoCreateRowSorter(true);
 		setFillsViewportHeight(true);
 
-
+//        this.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+//            public void valueChanged(ListSelectionEvent e){
+//                /*
+//                if(e != null){
+//                    parent.getToolbarView().getReqButton().getEditButton().setVisible(false);
+//                }
+//                
+//                else{
+//                    parent.getToolbarView().getReqButton().getEditButton().setVisible(true);
+//                }
+//                */
+//            }
+//        });
 	}
 	
 	public int getSelectedID() {

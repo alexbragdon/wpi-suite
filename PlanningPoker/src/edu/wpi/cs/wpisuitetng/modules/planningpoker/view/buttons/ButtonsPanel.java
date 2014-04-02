@@ -112,5 +112,4 @@ public class ButtonsPanel extends ToolbarGroupView {
     public JButton getCreateIterationButton() {
         return createButton;
     }
-
 }

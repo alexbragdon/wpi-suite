@@ -24,9 +24,13 @@ import javax.swing.JScrollPane;
 
 
 
+import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 
 
 /**
@@ -38,6 +42,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerS
 public class OpensessionPanel extends JPanel {
 	
 	OpensessionTable table;
+	private MainView parent;
+	private ListSelectionModel listSelectionModel;
 	
 	
 	
@@ -49,9 +55,9 @@ public class OpensessionPanel extends JPanel {
 	/**
 	 * Sets up directory table of requirements in system
 	 */
-	public OpensessionPanel()
+	public OpensessionPanel(MainView mainView)
 	{
-		
+		parent = mainView;
 		String[] columnNames = {"ID", "Name"};
 				
 		Object[][] data = {};
@@ -67,7 +73,23 @@ public class OpensessionPanel extends JPanel {
 		
 		this.setLayout(new BorderLayout());
 		
-		
+		listSelectionModel = table.getSelectionModel();
+        listSelectionModel.addListSelectionListener(new ListSelectionListener(){
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(e != null){
+                    if(getParent().getToolbarView().getReqButton().getEditButton() == null){
+                        System.out.println("EDIT BUTTON WAS NULL!!!");
+                    }
+                    else{
+                        getParent().getToolbarView().getReqButton().getEditButton().setVisible(true);
+                    }
+                }
+            }
+            
+        });
+        table.setSelectionModel(listSelectionModel);
 
 
 		JPanel refreshPanel = new JPanel();
@@ -93,5 +115,9 @@ public class OpensessionPanel extends JPanel {
     public void refresh() {
         // Feels a little hacky
         new GetPlanningPokerSessionController(table).actionPerformed(null);
+    }
+    
+    public MainView getParent(){
+        return parent;
     }
 }
