@@ -29,8 +29,14 @@ import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetCurrentUserObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 
 /**
@@ -40,68 +46,69 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
  */
 @SuppressWarnings("serial")
 public class OpensessionPanel extends JPanel {
-	
-	OpensessionTable table;
-	private MainView parent;
-	private ListSelectionModel listSelectionModel;
-	
-	/**
-	 * Timer used to poll the database for changes.
-	 */
-	Timer timer;
-	
-	/**
-	 * Sets up directory table of requirements in system
-	 */
-	public OpensessionPanel(MainView mainView)
-	{
-		parent = mainView;
-		String[] columnNames = {"ID", "Name"};
-				
-		Object[][] data = {};
-		
-		table = new OpensessionTable(data, columnNames);
-		
-		JScrollPane tablePanel = new JScrollPane(table);
-		tablePanel.setPreferredSize(new Dimension(1000, 800));
-				
-		table.getColumnModel().getColumn(0).setMinWidth(100);
-		
-		table.getColumnModel().getColumn(1).setMinWidth(500);
-		
-		this.setLayout(new BorderLayout());
-		
-		listSelectionModel = table.getSelectionModel();
+
+    OpensessionTable table;
+    private MainView parent;
+    private ListSelectionModel listSelectionModel;
+
+    /**
+     * Timer used to poll the database for changes.
+     */
+    Timer timer;
+
+    /**
+     * Sets up directory table of requirements in system
+     */
+    public OpensessionPanel(MainView mainView)
+    {
+        parent = mainView;
+        String[] columnNames = {"ID", "Name", "Moderator"};
+
+        Object[][] data = {};
+
+        table = new OpensessionTable(data, columnNames);
+
+        JScrollPane tablePanel = new JScrollPane(table);
+        tablePanel.setPreferredSize(new Dimension(1000, 800));
+
+        table.getColumnModel().getColumn(0).setMinWidth(50);
+
+        table.getColumnModel().getColumn(1).setMinWidth(500);
+
+        table.getColumnModel().getColumn(2).setMinWidth(100);
+
+        this.setLayout(new BorderLayout());
+
+        listSelectionModel = table.getSelectionModel();
         listSelectionModel.addListSelectionListener(new ListSelectionListener(){
 
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(e != null){
-                    if(getParent().getToolbarView().getReqButton().getEditButton() == null){
-                        System.out.println("EDIT BUTTON WAS NULL!!!");
-                    }
-                    else{
-                        getParent().getToolbarView().getReqButton().getEditButton().setVisible(true);
-                    }
+                if (table.getValueAt(table.getSelectedRow(), 2) != null && 
+                                ConfigManager.getConfig().getUserName().equals(table.getValueAt(table.getSelectedRow(), 2))){
+                    getParent().getToolbarView().getReqButton().getEditButton().setVisible(true);
+                }
+                else{
+                    getParent().getToolbarView().getReqButton().getEditButton().setVisible(false);
                 }
             }
-            
+
         });
         table.setSelectionModel(listSelectionModel);
 
 
-		JPanel refreshPanel = new JPanel();
-		JButton refresh = new JButton("Refresh");
-		refreshPanel.add(refresh);
-		refresh.setVisible(false);
-		refresh.addActionListener(new GetPlanningPokerSessionController(table));
-		this.add(tablePanel, BorderLayout.CENTER);
-		this.add(refreshPanel, BorderLayout.EAST);
+        JPanel refreshPanel = new JPanel();
+        JButton refresh = new JButton("Refresh");
+        refreshPanel.add(refresh);
+        refresh.setVisible(false);
+        refresh.addActionListener(new GetPlanningPokerSessionController(table));
+        this.add(tablePanel, BorderLayout.CENTER);
+        this.add(refreshPanel, BorderLayout.EAST);
 
-		timer = new Timer(1000, new GetPlanningPokerSessionController(table));
-		timer.setInitialDelay(10000);
-		timer.start();
-	}
+        timer = new Timer(1000, new GetPlanningPokerSessionController(table));
+        timer.setInitialDelay(10000);
+        timer.start();
+    }
 
     /**
      * Refreshes the table associated with this panel.
@@ -110,7 +117,7 @@ public class OpensessionPanel extends JPanel {
         // Feels a little hacky
         new GetPlanningPokerSessionController(table).actionPerformed(null);
     }
-    
+
     public MainView getParent(){
         return parent;
     }

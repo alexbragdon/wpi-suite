@@ -18,6 +18,8 @@ public class PlanningPokerSession extends AbstractModel {
 	String Name;
 	String Discription;
 	Date date;
+	private String moderator;
+	
 	
 	int Hour, Min;
 	
@@ -82,6 +84,14 @@ public class PlanningPokerSession extends AbstractModel {
         return date;
     }
     
+    public String getModerator(){
+        return moderator;
+    }
+    
+    public void setModerator(String newModerator){
+        this.moderator = newModerator;
+    }
+    
     public void setDate(Date date) 
     {
         this.date = date;
@@ -131,6 +141,7 @@ public class PlanningPokerSession extends AbstractModel {
 		ID = 0;
 		Name = "";
 		Discription = "";
+		moderator = "";
 		date = new Date();
 		Hour = 0;
 		Min = 0;
@@ -144,11 +155,12 @@ public class PlanningPokerSession extends AbstractModel {
 	 * constructor for a planning poker Session
 	 */
 	public PlanningPokerSession(int id, String name, String discription, Date date,int hour, int min, List<RequirementEstimate>
-			requirementestimates, sessionType type, boolean active, boolean complete) 
+			requirementestimates, sessionType type, boolean active, boolean complete, String moderator) 
 	{
 		super();
 		ID = id;
 		Discription = discription;
+		this.moderator = moderator;
 		this.date = date;
 		Hour = hour;
 		Min = min;
@@ -218,7 +230,7 @@ public class PlanningPokerSession extends AbstractModel {
         this.Type = updatedSession.Type;
         this.isActive = updatedSession.isActive;
         this.isComplete = updatedSession.isActive;
-		
+		this.moderator = updatedSession.moderator;
 	}
 
 }

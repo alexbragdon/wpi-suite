@@ -98,7 +98,7 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
     @Override
     public boolean deleteEntity(Session arg0, String arg1) throws WPISuiteException {
         // Throw an exception because Sessions cannot be deleted
-        throw new WPISuiteException();
+        return (db.delete(getEntity(arg0, arg1)[0]) != null) ? true : false;
     }
 
     /* 
@@ -152,6 +152,7 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
         final PlanningPokerSession session = PlanningPokerSession.fromJson(content);
 
         session.setID(Count()+1);
+        session.setModerator(s.getUsername());
         // Save the session in the database if possible, otherwise throw an exception
         // We want the message to be associated with the project the user logged in to
         System.out.println("Trying to save...");

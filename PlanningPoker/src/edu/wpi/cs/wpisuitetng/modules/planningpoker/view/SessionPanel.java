@@ -410,7 +410,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                             Integer.parseInt(hourSpin.getValue().toString()),
                             Integer.parseInt(minuteSpin.getValue().toString()),
                             requirementsPanel.getSelectedRequirements(), sessionType.REALTIME, false,
-                            false);
+                            false, "");
 
             switch (viewMode) {
                 case CREATE: AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session); break;

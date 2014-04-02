@@ -33,7 +33,7 @@ public class SessionPanelTest {
 	 **/
 	@Before
 	public void setUp() throws Exception {
-		ses = new PlanningPokerSession(0, "Test Session", "Hello The World", new Date(), 12, 0, new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false);
+		ses = new PlanningPokerSession(0, "Test Session", "Hello The World", new Date(), 12, 0, new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin");
 		sesPan = new SessionPanel(ses);
 	}
 

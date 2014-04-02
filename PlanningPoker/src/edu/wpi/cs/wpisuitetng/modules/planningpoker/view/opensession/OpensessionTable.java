@@ -45,19 +45,6 @@ public class OpensessionTable extends JTable
 		this.setAutoCreateRowSorter(true);
 		setFillsViewportHeight(true);
 
-//        this.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-//            public void valueChanged(ListSelectionEvent e){
-//                /*
-//                if(e != null){
-//                    parent.getToolbarView().getReqButton().getEditButton().setVisible(false);
-//                }
-//                
-//                else{
-//                    parent.getToolbarView().getReqButton().getEditButton().setVisible(true);
-//                }
-//                */
-//            }
-//        });
 	}
 	
 
@@ -113,7 +100,7 @@ public class OpensessionTable extends JTable
 
 	public void addSessions(PlanningPokerSession[] sessions) {
 		for (PlanningPokerSession session : sessions) {
-			tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName() });
+			tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), session.getModerator() });
 		}
 		
 	}
