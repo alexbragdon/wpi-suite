@@ -74,15 +74,15 @@ public class ViewEventController {
 	    boolean exists = false;
 	    int index = 0;
 	    
-	    for(PlanningPokerSession ppSession : listOfEditingSessions.keySet())
-		{
+	    //for(PlanningPokerSession ppSession : listOfEditingSessions.keySet())
+		//{
 			if(listOfEditingSessions.containsKey(session))
 			{
 				exists = true;
 				index = listOfEditingSessions.get(session);
-				break;
+				//break;
 			}
-		}	
+		//}	
 	    
 	    if (exists == false) {
 	    	SessionPanel sessionEditor = new SessionPanel(session);
@@ -93,6 +93,7 @@ public class ViewEventController {
 		    main.setSelectedComponent(sessionEditor);
 		    listOfEditingSessions.put(session, main.getSelectedIndex());
 	    } else {
+	        index = main.indexOfTab("Edit " + session.getName());
 	    	main.setSelectedIndex(index);
 	    }
 	}
@@ -102,7 +103,7 @@ public class ViewEventController {
 	 * @param comp the component to remove
 	 */
 	public void removeTab(JComponent comp)
-	{
+	{	    
         listOfEditingSessions.remove(((SessionPanel) comp).getSession());
 		main.remove(comp);
 	}
