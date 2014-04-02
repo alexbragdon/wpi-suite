@@ -23,7 +23,7 @@ public class PlanningPokerSession extends AbstractModel {
 	
 	int Hour, Min;
 	
-	List<RequirementEstimate> RequirementEstimates;
+	ArrayList<RequirementEstimate> RequirementEstimates;
 	sessionType Type;
 	// True if the game is active and ready to join
 	boolean isActive;
@@ -165,7 +165,7 @@ public class PlanningPokerSession extends AbstractModel {
 		Hour = hour;
 		Min = min;
 		Name = name;
-		RequirementEstimates = requirementestimates;
+		RequirementEstimates = new ArrayList<RequirementEstimate>(requirementestimates);
 		Type = type;
 		isActive = active;
 		
@@ -272,11 +272,8 @@ public class PlanningPokerSession extends AbstractModel {
 			return false;
 		}
 		PlanningPokerSession other = (PlanningPokerSession) obj;
-		if (Discription == null) {
-			if (other.Discription != null) {
-				return false;
-			}
-		} else if (!Discription.equals(other.Discription)) {
+		System.out.println("1: " + Discription + " 2: " + other.Discription);
+		if (!Discription.equals(other.Discription)) {
 			return false;
 		}
 		if (Hour != other.Hour) {
@@ -288,28 +285,24 @@ public class PlanningPokerSession extends AbstractModel {
 		if (Min != other.Min) {
 			return false;
 		}
-		if (Name == null) {
-			if (other.Name != null) {
-				return false;
-			}
-		} else if (!Name.equals(other.Name)) {
+		if (!Name.equals(other.Name)) {
 			return false;
 		}
-		if (RequirementEstimates == null) {
-			if (other.RequirementEstimates != null) {
-				return false;
+		boolean reqsEqual = true;
+		if (RequirementEstimates.size() == other.RequirementEstimates.size()) {
+			for (int i = 0; i < RequirementEstimates.size(); i++) {
+				if (other.RequirementEstimates.get(i).getId() != RequirementEstimates.get(i).getId()) {
+					reqsEqual = false;
+				}
 			}
-		} else if (!RequirementEstimates.equals(other.RequirementEstimates)) {
-			return false;
+		} else {
+			reqsEqual = false;
 		}
+		if (!reqsEqual) return false;
 		if (Type != other.Type) {
 			return false;
 		}
-		if (date == null) {
-			if (other.date != null) {
-				return false;
-			}
-		} else if (!date.equals(other.date)) {
+		if (!date.equals(other.date)) {
 			return false;
 		}
 		if (isActive != other.isActive) {
