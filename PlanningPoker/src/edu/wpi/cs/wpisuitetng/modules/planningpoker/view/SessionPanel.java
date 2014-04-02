@@ -6,6 +6,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
@@ -58,7 +61,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     private JTextField nameField = new JTextField();
 
 	private JCheckBox timeEnable = new JCheckBox();
-    
+	
     private JTextArea desField = new JTextArea();
 
     private final JLabel infoLabel = new JLabel("");
@@ -102,6 +105,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         displaySession = session;
         viewMode = ViewMode.EDIT;
         this.buildLayout();
+       
     }
 
     /**
@@ -112,7 +116,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     public SessionPanel() {
         displaySession = new PlanningPokerSession();
         viewMode = ViewMode.CREATE;
-
         this.buildLayout();
     }
 
@@ -122,7 +125,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     public boolean validateFields(boolean display) {
         boolean isNameValid;
         boolean isDescriptionValid;
-        boolean isHourValid;
         boolean isDateValid;
         int nameCharLimit = 1000000;
         int desCharLimit = 1000000;
@@ -175,26 +177,22 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             isDescriptionValid = true;
         }
 
-        //Get the selected date and set the time to the value set by the spinners
-        Calendar selected = dateToCalendar(dateChooser.getDate());
-        selected.set(Calendar.HOUR_OF_DAY, (Integer) hourSpin.getValue());
-        selected.set(Calendar.MINUTE, (Integer) minuteSpin.getValue());
-        Calendar now = dateToCalendar(new Date());
-        System.out.println("calling");
-        isDateValid = true;
-        if (isBefore(selected, now)) {
-            infoLabel.setText("Date is in the past");
-            isDateValid = false;
-        }
-
-        if ((Integer) hourSpin.getValue() <= 23) {
-            isHourValid = true;
-        } else {
-            isHourValid = false;
-            infoLabel.setText("Hour is Invalid");
+        if (timeEnable.isSelected()) {isDateValid = true;}
+           else {
+        	//Get the selected date and set the time to the value set by the spinners
+        	Calendar selected = dateToCalendar(dateChooser.getDate());
+        	selected.set(Calendar.HOUR_OF_DAY, (Integer) hourSpin.getValue());
+        	selected.set(Calendar.MINUTE, (Integer) minuteSpin.getValue());
+        	Calendar now = dateToCalendar(new Date());
+        	System.out.println("calling");
+        	isDateValid = true;
+        	if (isBefore(selected, now)) {
+        		infoLabel.setText("Date is in the past");
+        		isDateValid = false;
+        	}
         }
         
-        return isNameValid && isDescriptionValid && isDateValid && isHourValid;
+        return isNameValid && isDescriptionValid && isDateValid;
     }
 
     /**
@@ -319,6 +317,24 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     // Listeners for the text boxes
     private void setupListeners() {
 
+    	timeEnable.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (timeEnable.isSelected()) {
+					dateChooser.setEnabled(false);
+					hourSpin.setEnabled(false);
+    				minuteSpin.setEnabled(false);
+				} else {
+					dateChooser.setEnabled(true);
+					hourSpin.setEnabled(true);
+    				minuteSpin.setEnabled(true);
+				}
+				
+			}
+        	
+        });
+    	
         hourSpin.addChangeListener(new ChangeListener() {
 
             @Override
