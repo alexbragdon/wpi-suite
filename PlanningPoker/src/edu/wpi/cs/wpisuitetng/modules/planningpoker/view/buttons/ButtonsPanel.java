@@ -38,7 +38,7 @@ public class ButtonsPanel extends ToolbarGroupView{
 
 		this.createButton.setHorizontalAlignment(SwingConstants.CENTER);
 		try {
-		    Image img = ImageIO.read(getClass().getResource("createSession.png"));
+		    Image img = ImageIO.read(getClass().getResource("createSession2.png"));
 		    this.createButton.setIcon(new ImageIcon(img));
 		    
 		    img = ImageIO.read(getClass().getResource("joinSession.png"));
@@ -47,7 +47,7 @@ public class ButtonsPanel extends ToolbarGroupView{
 		    img = ImageIO.read(getClass().getResource("viewSession.png"));
 		    this.viewButton.setIcon(new ImageIcon(img));
 		    
-		    img = ImageIO.read(getClass().getResource("createSession.png"));
+		    img = ImageIO.read(getClass().getResource("editSession.png"));
 		    this.editButton.setIcon(new ImageIcon(img));
 		    
 		} catch (IOException ex) {}
