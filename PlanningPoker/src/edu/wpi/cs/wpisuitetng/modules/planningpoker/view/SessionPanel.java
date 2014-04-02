@@ -238,10 +238,14 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         final JLabel desLabel = new JLabel("Description *");
         Font boardFont = new Font(infoLabel.getFont().getName(), Font.BOLD, infoLabel.getFont()
                         .getSize());
+        Calendar rightNow = Calendar.getInstance();
+        int setHour = rightNow.get(Calendar.HOUR_OF_DAY);
+        int setMinute = rightNow.get(Calendar.MINUTE);
+
 
         dateChooser = new JCalendar(new Date()); //Create new JCalendar with now default selected
-        hourSpin = new JSpinner(new SpinnerNumberModel(0, 0, 23, 1));
-        minuteSpin = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+        hourSpin = new JSpinner(new SpinnerNumberModel(setHour, 0, 23, 1));
+        minuteSpin = new JSpinner(new SpinnerNumberModel(setMinute, 0, 59, 1));
         JFormattedTextField hourf = ((JSpinner.DefaultEditor) hourSpin.getEditor()).getTextField();
         JFormattedTextField minf = ((JSpinner.DefaultEditor) minuteSpin.getEditor()).getTextField();
         hourf.setEditable(false);
@@ -421,7 +425,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
     public void OKPressed() {
         if (validateFields(true)) {
-            PlanningPokerSession session = new PlanningPokerSession(0, nameField.getText(),
+            PlanningPokerSession session = new PlanningPokerSession(displaySession.getID(), nameField.getText(),
                             desField.getText(), dateChooser.getDate(),
                             Integer.parseInt(hourSpin.getValue().toString()),
                             Integer.parseInt(minuteSpin.getValue().toString()),

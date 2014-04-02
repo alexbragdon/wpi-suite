@@ -37,8 +37,9 @@ public class planningpoker implements IJanewayModule {
 		
 		tabs = new ArrayList<JanewayTabModel>();
 
-        ToolbarView toolBar = new ToolbarView(true);
-		MainView mainPanel = new MainView(toolBar);
+		MainView mainPanel = new MainView();
+		ToolbarView toolBar = new ToolbarView(true, mainPanel);
+		mainPanel.setToolbarView(toolBar);
 
 		ViewEventController.getInstance().setMainView(mainPanel);
 		ViewEventController.getInstance().setToolBar(toolBar);

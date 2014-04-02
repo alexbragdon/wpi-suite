@@ -29,8 +29,7 @@ public class MainView extends JTabbedPane {
 	/**
 	 * Adds main subtab when user goes to planningpoker
 	 */
-	public MainView(ToolbarView toolbarView) {
-		this.toolbarView = toolbarView;
+	public MainView() {
 	    
 	    this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		this.addTab("Open Sessions", opensession);
@@ -46,6 +45,10 @@ public class MainView extends JTabbedPane {
             }
 		});
 
+	}
+	
+	public void setToolbarView(ToolbarView toolbar) {
+	    toolbarView = toolbar;
 	}
 
 

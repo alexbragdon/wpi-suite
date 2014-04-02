@@ -45,6 +45,8 @@ public class OpensessionPanel extends JPanel {
 	private MainView parent;
 	private ListSelectionModel listSelectionModel;
 	
+	
+	
 	/**
 	 * Timer used to poll the database for changes.
 	 */
@@ -103,6 +105,10 @@ public class OpensessionPanel extends JPanel {
 		timer.start();
 	}
 
+	public int getSelectedID() {
+	    return table.getSelectedID();
+	}
+	
     /**
      * Refreshes the table associated with this panel.
      */

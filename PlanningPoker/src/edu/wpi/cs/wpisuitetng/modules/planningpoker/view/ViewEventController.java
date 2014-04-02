@@ -64,8 +64,8 @@ public class ViewEventController {
 		main.setSelectedComponent(newSession);
 	}
 	
-	public void editSession() {
-	    SessionPanel editSession = new SessionPanel(new PlanningPokerSession());
+	public void editSession(PlanningPokerSession session) {
+	    SessionPanel editSession = new SessionPanel(session);
 	    main.addTab("Edit Session", null, editSession, "Edit this session");
 	    main.invalidate();
 	    main.repaint();
