@@ -57,7 +57,7 @@ public class ViewEventController {
 	 * Opens a new tab for the creation of a session.
 	 */
 	public void createSession() {
-		SessionPanel newSession = new SessionPanel(new PlanningPokerSession());
+		SessionPanel newSession = new SessionPanel();
 		main.addTab("New Session", null, newSession, "Create a new session");
 		main.invalidate(); //force the tabbedpane to redraw.
 		main.repaint();
@@ -65,7 +65,7 @@ public class ViewEventController {
 	}
 	
 	public void editSession() {
-	    EditSessionPanel editSession = new EditSessionPanel();
+	    SessionPanel editSession = new SessionPanel(new PlanningPokerSession());
 	    main.addTab("Edit Session", null, editSession, "Edit this session");
 	    main.invalidate();
 	    main.repaint();

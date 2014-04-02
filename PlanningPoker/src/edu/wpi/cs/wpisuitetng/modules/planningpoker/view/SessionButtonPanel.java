@@ -22,6 +22,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+
 /**
  * @author Team Romulus
  *
@@ -33,10 +36,21 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
     final private JButton clearButton;
     final private JButton cancelButton;
 
-    public SessionButtonPanel(SessionPanel sessionPanel){
-        saveButton = new JButton("Save");
-        clearButton = new JButton("Clear");
-        cancelButton = new JButton("Cancel");
+    public SessionButtonPanel(SessionPanel sessionPanel, ViewMode viewMode, PlanningPokerSession session) {
+        switch (viewMode) {
+            case EDIT:
+                saveButton = new JButton("Update");
+                clearButton = new JButton("Undo changes");
+                cancelButton = new JButton("Cancel");
+                break;
+            case CREATE:
+                saveButton = new JButton("Create");
+                clearButton = new JButton("Clear");
+                cancelButton = new JButton("Cancel");
+                break;
+            default:
+                throw new RuntimeException("Invalid ViewMode");
+        }
         this.parent = sessionPanel;
 
         try {

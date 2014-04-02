@@ -11,7 +11,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import java.awt.event.ActionEvent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.EditSessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionTable;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -26,13 +25,13 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 public class FindPlanningPokerSessionController {
     private static FindPlanningPokerSessionController instance;
     private FindPlanningPokerSessionObserver observer;
-    private EditSessionPanel model;
+    //private EditSessionPanel model;
     
     /**
      * Construct an FindPlanningPokerSessionController    
      */
-    public FindPlanningPokerSessionController(EditSessionPanel anEditSessionPanel) {
-        this.model = anEditSessionPanel;
+    public FindPlanningPokerSessionController(/*EditSessionPanel anEditSessionPanel*/) {
+        //this.model = anEditSessionPanel;
         observer = new FindPlanningPokerSessionObserver(this);
     }
     
@@ -56,7 +55,7 @@ public class FindPlanningPokerSessionController {
      * @param messages an array of messages received from the server
      */
     public void receivedMessages(PlanningPokerSession session) {
-        if (model == null){
+        /*if (model == null){
             System.out.println("model is null!");
         }else{
         // Make sure the response was not null
@@ -67,6 +66,6 @@ public class FindPlanningPokerSessionController {
         }else{
             System.out.println("Find Session Fail!");
         }
-        }
+        }*/
     }
 }
