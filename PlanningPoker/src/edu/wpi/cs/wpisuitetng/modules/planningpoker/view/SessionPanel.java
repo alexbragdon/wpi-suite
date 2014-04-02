@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -56,6 +57,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
     private JTextField nameField = new JTextField();
 
+	private JCheckBox timeEnable = new JCheckBox();
+    
     private JTextArea desField = new JTextArea();
 
     private final JLabel infoLabel = new JLabel("");
@@ -272,6 +275,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         infoPanel.add(nameField, "growx, pushx, shrinkx, span, wrap");
         infoPanel.add(desLabel, "wrap");
         infoPanel.add(desFieldContainer, "growx, pushx, shrinkx, span, height 200px, wmin 10, wrap");
+		infoPanel.add(timeEnable);
+		JPanel timeCheck = new JPanel();
+		timeCheck.add(timeEnable);
+		timeCheck.add(new JLabel("Set an end time?"));
+		infoPanel.add(timeCheck, "wrap");
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         infoLabel.setText("");
         infoLabel.setForeground(Color.red);
