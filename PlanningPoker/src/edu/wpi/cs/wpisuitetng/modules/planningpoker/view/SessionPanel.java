@@ -327,20 +327,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
         nameField.setPreferredSize(new Dimension(300, 30));
 
-        switch (viewMode) {
-            case EDIT:
-                nameField.setText(displaySession.getName());
-                desField.setText(displaySession.getDiscription());
-                dateChooser.setDate(displaySession.getDate());
-                hourSpin.setValue(displaySession.getHour());
-                minuteSpin.setValue(displaySession.getMin());
-                break;
-            case CREATE:
-                nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date())
-                                + " Planning Poker");
-                break;
-        }
-
         JScrollPane desFieldContainer = new JScrollPane();
         desField.setBorder(defaultBorder);
         desField.setLineWrap(true);
@@ -394,6 +380,30 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         dateChooser.setEnabled(false);
 		hourSpin.setEnabled(false);
 		minuteSpin.setEnabled(false);
+        
+        switch (viewMode) {
+        case EDIT:
+            nameField.setText(displaySession.getName());
+            desField.setText(displaySession.getDiscription());
+            dateChooser.setDate(displaySession.getDate());
+            hourSpin.setValue(displaySession.getHour());
+            minuteSpin.setValue(displaySession.getMin());
+            if (displaySession.getType() == sessionType.DISTRIBUTED) {
+            	timeEnable.setSelected(true);
+                dateChooser.setEnabled(true);
+        		hourSpin.setEnabled(true);
+        		minuteSpin.setEnabled(true);
+            } else {
+            	dateChooser.setEnabled(false);
+				hourSpin.setEnabled(false);
+				minuteSpin.setEnabled(false);
+            }
+            break;
+        case CREATE:
+            nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date())
+                            + " Planning Poker");
+            break;
+        }
     }
     
     // Listeners for the text boxes
@@ -412,7 +422,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 					hourSpin.setEnabled(false);
     				minuteSpin.setEnabled(false);
 				}
-				
+				updateButtonsIfChanges();
 			}
         	
         });
@@ -428,6 +438,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 else {
                     buttonPanel.getButtonSave().setEnabled(false);
                 }
+                updateButtonsIfChanges();
             }
 
         });
@@ -443,6 +454,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 else {
                     buttonPanel.getButtonSave().setEnabled(false);
                 }
+                updateButtonsIfChanges();
             }
 
         });
@@ -458,6 +470,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 else {
                     buttonPanel.getButtonSave().setEnabled(false);
                 }
+                updateButtonsIfChanges();
             }
 
         });
@@ -472,12 +485,14 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             public void insertUpdate(DocumentEvent e) {
                 // TODO Auto-generated method stub
                 textChanged();
+                updateButtonsIfChanges();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
                 // TODO Auto-generated method stub
                 textChanged();
+                updateButtonsIfChanges();
             }
         });
 
@@ -491,12 +506,14 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             public void insertUpdate(DocumentEvent arg0) {
                 // TODO Auto-generated method stub
                 textChanged();
+                updateButtonsIfChanges();
             }
 
             @Override
             public void removeUpdate(DocumentEvent arg0) {
                 // TODO Auto-generated method stub
                 textChanged();
+                updateButtonsIfChanges();
             }
         });
         
@@ -508,20 +525,31 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			        buttonPanel.getButtonSave().setEnabled(true);
 			        buttonPanel.getButtonClear().setEnabled(true);
 				}
+				updateButtonsIfChanges();
 				
 			}
         	
         });
     }
 
+    private void updateButtonsIfChanges() {
+    	if (hasChanges()) {
+    		buttonPanel.getButtonSave().setEnabled(true);
+    		buttonPanel.getButtonClear().setEnabled(true);
+    	} else {
+    		buttonPanel.getButtonSave().setEnabled(false);
+    		buttonPanel.getButtonClear().setEnabled(false);
+    	}
+    }
+    
+    private boolean hasChanges() {
+    	PlanningPokerSession session = createSessionFromFields();
+    	return !session.equals(displaySession);
+    }
+    
     public void OKPressed() {
         if (validateFields(true)) {
-            PlanningPokerSession session = new PlanningPokerSession(displaySession.getID(), nameField.getText(),
-                            desField.getText(), dateChooser.getDate(),
-                            Integer.parseInt(hourSpin.getValue().toString()),
-                            Integer.parseInt(minuteSpin.getValue().toString()),
-                            requirementsPanel.getSelectedRequirements(), sessionType.REALTIME, false,
-                            false);
+        	PlanningPokerSession session = createSessionFromFields();
 
             switch (viewMode) {
                 case CREATE: AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session); break;
@@ -541,6 +569,17 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             //buttonPanel.getButtonClear().setEnabled(true);
         }
     }
+
+	public PlanningPokerSession createSessionFromFields() {
+		sessionType type = timeEnable.isSelected() ? sessionType.DISTRIBUTED : sessionType.REALTIME;
+		PlanningPokerSession session = new PlanningPokerSession(displaySession.getID(), nameField.getText(),
+		                desField.getText(), dateChooser.getDate(),
+		                Integer.parseInt(hourSpin.getValue().toString()),
+		                Integer.parseInt(minuteSpin.getValue().toString()),
+		                requirementsPanel.getSelectedRequirements(), type, false,
+		                false);
+		return session;
+	}
 
     public void clearPressed() {
         nameField.setText(displaySession.getName());
