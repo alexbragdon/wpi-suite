@@ -225,7 +225,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     /**
      * Builds the layout of the panel.
      */
-    private void buildLayout() {
+    @SuppressWarnings("deprecation")
+	private void buildLayout() {
         buttonPanel = new SessionButtonPanel(this, viewMode, displaySession);
         requirementsPanel = new SessionRequirementPanel(this, viewMode, displaySession);
         infoPanel = new ScrollablePanel();
@@ -238,14 +239,86 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         final JLabel desLabel = new JLabel("Description *");
         Font boardFont = new Font(infoLabel.getFont().getName(), Font.BOLD, infoLabel.getFont()
                         .getSize());
-        Calendar rightNow = Calendar.getInstance();
-        int setHour = rightNow.get(Calendar.HOUR_OF_DAY);
-        int setMinute = rightNow.get(Calendar.MINUTE);
+		Date dt = new Date();
+		int currentYear = dt.getYear();
+		int currentMonth = dt.getMonth();
+		int currentDay = dt.getDate();
+		int currentHour = dt.getHours() + 1;
+		int currentMinute = dt.getMinutes();
+		if (currentMonth == 2) {
+			if (currentYear % 4 == 0) {// There is FEB 29th in leap year
+				if (currentDay == 29) {// Today of FEB 29th
+					if (currentHour >= 24) {
+						currentHour = 0;
+						dt.setMonth(3);
+						dt.setDate(1);// Next day is MAR 1st
+					}
+				} else {// Not last day
+					if (currentHour >= 24) {
+						currentHour = 0;
+						dt.setDate(currentDay + 1);
+					}
+				}
+			} else {// Not leap year
+				if (currentDay == 28) {// Today of FEB 29th
+					if (currentHour >= 24) {
+						currentHour = 0;
+						dt.setMonth(3);
+						dt.setDate(1);// Next day is MAR 1st
+					}
+				} else {// Not last day
+					if (currentHour >= 24) {
+						currentHour = 0;
+						dt.setDate(currentDay + 1);
+						}
+				}
+			}
+		} else if (currentMonth == 12) {
+			if (currentDay == 31) {// Last day of the year
+				if (currentHour >= 24) {
+					currentHour = 0;
+					dt.setYear(currentYear + 1);// To the next year
+					dt.setMonth(1);
+					dt.setDate(1);// Next day is JAN 1st
+				}
+			} else {
+				if (currentHour >= 24) {
+					currentHour = 0;
+					dt.setDate(currentDay + 1);
+				}
+			}
+		} else if (currentMonth == 4 || currentMonth == 6 || currentMonth == 9
+				|| currentMonth == 11) {
+			if (currentDay == 31) {// Last day of the current month
+				if (currentHour >= 24) {
+					currentHour = 0;
+					dt.setMonth(currentMonth + 1);// To the next month
+					dt.setDate(1);// Next day is 1st
+				}
+			} else {
+				if (currentHour >= 24) {
+					currentHour = 0;
+					dt.setDate(currentDay + 1);
+				}
+			}
+		} else {
+			if (currentDay == 30) {// Last day of the current month
+				if (currentHour >= 24) {
+					currentHour = 0;
+					dt.setMonth(currentMonth + 1);// To the next month
+					dt.setDate(1);// Next day is 1st
+				}
+			} else {
+				if (currentHour >= 24) {
+					currentHour = 0;
+					dt.setDate(currentDay + 1);
+				}
+			}
+		}
 
-
-        dateChooser = new JCalendar(new Date()); //Create new JCalendar with now default selected
-        hourSpin = new JSpinner(new SpinnerNumberModel(setHour, 0, 23, 1));
-        minuteSpin = new JSpinner(new SpinnerNumberModel(setMinute, 0, 59, 1));
+        dateChooser = new JCalendar(dt); //Create new JCalendar with now default selected
+        hourSpin = new JSpinner(new SpinnerNumberModel(currentHour, 0, 23, 1));
+        minuteSpin = new JSpinner(new SpinnerNumberModel(currentMinute, 0, 59, 1));
         JFormattedTextField hourf = ((JSpinner.DefaultEditor) hourSpin.getEditor()).getTextField();
         JFormattedTextField minf = ((JSpinner.DefaultEditor) minuteSpin.getEditor()).getTextField();
         hourf.setEditable(false);
