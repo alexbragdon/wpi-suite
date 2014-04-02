@@ -19,6 +19,7 @@ import java.util.LinkedList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
@@ -34,6 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  */
 @SuppressWarnings("serial")
 public class SessionRequirementPanel extends JPanel {
+	PlanningPokerSession displaySession;
 
     /*
      * Rows in the table
@@ -49,7 +51,7 @@ public class SessionRequirementPanel extends JPanel {
      */
     public SessionRequirementPanel(SessionPanel parent, ViewMode viewMode,
                     PlanningPokerSession displaySession) {
-
+    	this.displaySession = displaySession;
         Object[][] data = {};
         String[] columns = { "ID", "NAME", /*"RELEASE", "ITERATION","TYPE","STATUS","PRIORITY","ESTIMATE",*/
                         "BOX" };
@@ -58,7 +60,12 @@ public class SessionRequirementPanel extends JPanel {
 
         System.out.print(importedRequirements.size());
 
-        model = new DefaultTableModel(data, columns);
+        model = new DefaultTableModel(data, columns) {
+        	@Override
+        	public boolean isCellEditable(int row, int column) {
+        		return column == 2;
+        	}
+        };
 
         for (int i = 0; i < importedRequirements.size(); i++) {
             Requirement req = importedRequirements.get(i);
@@ -94,6 +101,7 @@ public class SessionRequirementPanel extends JPanel {
         table.getColumnModel().getColumn(0).setMinWidth(30);
         table.getColumnModel().getColumn(1).setMinWidth(200);
         table.getColumnModel().getColumn(2).setMinWidth(100);
+        
         /*table.getColumnModel().getColumn(3).setMinWidth(75);
         table.getColumnModel().getColumn(4).setMinWidth(75);
         table.getColumnModel().getColumn(5).setMinWidth(75);
@@ -108,22 +116,34 @@ public class SessionRequirementPanel extends JPanel {
         //this.add(refreshPanel, BorderLayout.EAST);
 
         if (viewMode == ViewMode.EDIT) {
-            for (RequirementEstimate displayRequirement : displaySession.getRequirements()) {
-                boolean exists = false;
-                for (int i = 0; i < requirements.size(); i++) {
-                    if (requirements.get(i).getId() == displayRequirement.getId() && requirements.get(i).getName().equals(displayRequirement.getName())) {
-                        exists = true;
-                        model.setValueAt(true, i, 2);
-                    }
-                }
-                if (!exists) {
-                    requirements.add(displayRequirement);
-                    model.addRow(new Object[] { displayRequirement.getId(), displayRequirement.getName(), true });
-                }
-            }
+            refreshRequirementSelection();
         }
     }
 
+	public void refreshRequirementSelection() {
+		for (int i = 0; i < requirements.size(); i++) {
+			model.setValueAt(false, i, 2);
+		}
+		
+		for (RequirementEstimate displayRequirement : displaySession.getRequirements()) {
+		    boolean exists = false;
+		    for (int i = 0; i < requirements.size(); i++) {
+		        if (requirements.get(i).getId() == displayRequirement.getId() && requirements.get(i).getName().equals(displayRequirement.getName())) {
+		            exists = true;
+		            model.setValueAt(true, i, 2);
+		        }
+		    }
+		    if (!exists) {
+		        requirements.add(displayRequirement);
+		        model.addRow(new Object[] { displayRequirement.getId(), displayRequirement.getName(), true });
+		    }
+		}
+	}
+
+	public void addListener(TableModelListener l) {
+		model.addTableModelListener(l);
+	}
+	
     /*
      * Return the requirements with selected checkboxes
      * @return A List containing the selected requirements

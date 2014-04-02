@@ -32,6 +32,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import com.toedter.calendar.JCalendar;
 
@@ -71,9 +73,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     private ViewMode viewMode;
 
     JSpinner hourSpin;
-
+    
     JSpinner minuteSpin;
-
+    
     /**
      * Goes on left, holds basic info (name, time). changed to scrollable panel
      */
@@ -177,8 +179,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             isDescriptionValid = true;
         }
 
-        if (timeEnable.isSelected()) {isDateValid = true;}
-           else {
+        if (timeEnable.isSelected()) {
         	//Get the selected date and set the time to the value set by the spinners
         	Calendar selected = dateToCalendar(dateChooser.getDate());
         	selected.set(Calendar.HOUR_OF_DAY, (Integer) hourSpin.getValue());
@@ -190,7 +191,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         		infoLabel.setText("Date is in the past");
         		isDateValid = false;
         	}
-        }
+        } else {isDateValid = true;}
         
         return isNameValid && isDescriptionValid && isDateValid;
     }
@@ -230,7 +231,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         requirementsPanel = new SessionRequirementPanel(this, viewMode, displaySession);
         infoPanel = new ScrollablePanel();
         infoPanel.setLayout(new MigLayout("", "", "shrink"));
-
+        
         JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel,
                         requirementsPanel);
         // Change the info string to add info. Delete the second string
@@ -316,8 +317,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         validateFields(true);
 
         setupListeners();
+        
+        dateChooser.setEnabled(false);
+		hourSpin.setEnabled(false);
+		minuteSpin.setEnabled(false);
     }
-
+    
     // Listeners for the text boxes
     private void setupListeners() {
 
@@ -326,13 +331,13 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (timeEnable.isSelected()) {
+				    dateChooser.setEnabled(true);
+					hourSpin.setEnabled(true);
+					minuteSpin.setEnabled(true);
+				} else {
 					dateChooser.setEnabled(false);
 					hourSpin.setEnabled(false);
     				minuteSpin.setEnabled(false);
-				} else {
-					dateChooser.setEnabled(true);
-					hourSpin.setEnabled(true);
-    				minuteSpin.setEnabled(true);
 				}
 				
 			}
@@ -421,6 +426,19 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 textChanged();
             }
         });
+        
+        requirementsPanel.addListener(new TableModelListener() {
+
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				if (validateFields(true)) {
+			        buttonPanel.getButtonSave().setEnabled(true);
+			        buttonPanel.getButtonClear().setEnabled(true);
+				}
+				
+			}
+        	
+        });
     }
 
     public void OKPressed() {
@@ -454,6 +472,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     public void clearPressed() {
         nameField.setText(displaySession.getName());
         desField.setText(displaySession.getDiscription());
+        requirementsPanel.refreshRequirementSelection();
         buttonPanel.getButtonSave().setEnabled(false);
         buttonPanel.getButtonClear().setEnabled(false);
     }
