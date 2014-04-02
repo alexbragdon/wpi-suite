@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -115,6 +116,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 	public boolean validateFields(boolean display) {
 		boolean isNameValid;
 		boolean isDescriptionValid;
+		boolean isHourValid;
+		boolean isDateValid;
 		int nameCharLimit = 1000000;
 		int desCharLimit = 1000000;
 		infoLabel.setForeground(Color.red);
@@ -171,12 +174,20 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 		selected.set(Calendar.MINUTE, (Integer) minuteSpin.getValue());
 		Calendar now = dateToCalendar(new Date());
 		System.out.println("calling");
+		isDateValid = true;
 		if (isBefore(selected, now)) {
 			infoLabel.setText("Date is in the past");
-			return false;
+			isDateValid = false;
 		}
-
-		return isNameValid && isDescriptionValid;
+		
+		if ((Integer) hourSpin.getValue() <= 23) {
+			isHourValid = true;
+		} else {
+			isHourValid = false;
+			infoLabel.setText("Hour is Invalid");
+		}
+		
+		return isNameValid && isDescriptionValid && isDateValid && isHourValid;
 	}
 
 
@@ -253,6 +264,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener
 		JPanel minutePanel = new JPanel(new BorderLayout());
 		hourSpin = new JSpinner(new SpinnerNumberModel(0,0,23,1));
 		minuteSpin = new JSpinner(new SpinnerNumberModel (0,0,59,1));
+		JFormattedTextField hourf = ((JSpinner.DefaultEditor) hourSpin.getEditor()).getTextField();
+		JFormattedTextField minf = ((JSpinner.DefaultEditor) minuteSpin.getEditor()).getTextField();
+	    hourf.setEditable(false);
+	    minf.setEditable(false);
 
 		hourPanel.add(hourSpin, BorderLayout.CENTER);
 		hourPanel.add(new JLabel("Choose the ending Hour:"), BorderLayout.NORTH);
