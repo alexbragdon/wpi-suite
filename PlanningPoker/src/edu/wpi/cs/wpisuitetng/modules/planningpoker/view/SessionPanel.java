@@ -625,4 +625,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     public String getInfoLabel() {
         return infoLabel.getText();
     }
+    
+    public PlanningPokerSession getSession(){
+        return displaySession;
+    }
 }

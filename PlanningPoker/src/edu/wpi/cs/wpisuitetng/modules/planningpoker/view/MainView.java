@@ -42,6 +42,10 @@ public class MainView extends JTabbedPane {
                 JComponent selected = (JComponent) self.getSelectedComponent();
                 if (selected == opensession)
                     opensession.refresh();
+                else{
+                    getToolbarView().getReqButton().getEditButton().setVisible(false);
+                    getOpensession().getListSelectionModel().clearSelection();
+                }
             }
 		});
 

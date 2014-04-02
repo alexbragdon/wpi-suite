@@ -103,10 +103,7 @@ public class ViewEventController {
 	 */
 	public void removeTab(JComponent comp)
 	{
-
+        listOfEditingSessions.remove(((SessionPanel) comp).getSession());
 		main.remove(comp);
 	}
-
-
-	
 }
