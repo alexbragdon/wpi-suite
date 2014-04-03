@@ -12,15 +12,19 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
 
+import javax.swing.AbstractButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
@@ -54,7 +58,7 @@ public class SessionRequirementPanel extends JPanel {
     	this.displaySession = displaySession;
         Object[][] data = {};
         String[] columns = { "ID", "NAME", /*"RELEASE", "ITERATION","TYPE","STATUS","PRIORITY","ESTIMATE",*/
-                        "BOX" };
+                        "" };
 
         List<Requirement> importedRequirements = RequirementModel.getInstance().getRequirements();
 
@@ -100,19 +104,14 @@ public class SessionRequirementPanel extends JPanel {
         };
 
         JScrollPane tablePanel = new JScrollPane(table);
+        TableColumn tc = table.getColumnModel().getColumn(2);
+        tc.setHeaderRenderer(new CheckBoxHeader(new MyItemListener())); 
         tablePanel.setPreferredSize(new Dimension(1000, 800));
 
-        table.getColumnModel().getColumn(0).setMinWidth(30);
-        table.getColumnModel().getColumn(1).setMinWidth(200);
+        table.getColumnModel().getColumn(0).setMinWidth(50);
+        table.getColumnModel().getColumn(1).setMinWidth(850);
         table.getColumnModel().getColumn(2).setMinWidth(100);
         
-        /*table.getColumnModel().getColumn(3).setMinWidth(75);
-        table.getColumnModel().getColumn(4).setMinWidth(75);
-        table.getColumnModel().getColumn(5).setMinWidth(75);
-        table.getColumnModel().getColumn(6).setMinWidth(75);
-        table.getColumnModel().getColumn(7).setMinWidth(75);
-        table.getColumnModel().getColumn(7).setMinWidth(75);*/
-
         this.setLayout(new BorderLayout());
 
         //JPanel refreshPanel = new JPanel();
@@ -122,6 +121,19 @@ public class SessionRequirementPanel extends JPanel {
         if (viewMode == ViewMode.EDIT) {
             refreshRequirementSelection();
         }
+    }
+    
+    class MyItemListener implements ItemListener  
+    {
+      public void itemStateChanged(ItemEvent e) {  
+        Object source = e.getSource();  
+        if (source instanceof AbstractButton == false) return;  
+        boolean checked = e.getStateChange() == ItemEvent.SELECTED;  
+        for(int x = 0, y = table.getRowCount(); x < y; x++)  
+        {  
+          table.setValueAt(new Boolean(checked),x,2);  
+        }  
+      }   
     }
 
 	public void refreshRequirementSelection() {
