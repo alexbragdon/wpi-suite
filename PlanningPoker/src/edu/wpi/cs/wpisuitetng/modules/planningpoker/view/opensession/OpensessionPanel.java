@@ -12,18 +12,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-
-
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-
-
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
@@ -31,11 +22,7 @@ import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
-import edu.wpi.cs.wpisuitetng.network.Network;
-import edu.wpi.cs.wpisuitetng.network.Request;
-import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 
 /**
@@ -77,7 +64,7 @@ public class OpensessionPanel extends JPanel {
         table.getColumnModel().getColumn(2).setMinWidth(100);
 
         this.setLayout(new BorderLayout());
-
+        
         listSelectionModel = table.getSelectionModel();
         listSelectionModel.addListSelectionListener(new ListSelectionListener(){
 
