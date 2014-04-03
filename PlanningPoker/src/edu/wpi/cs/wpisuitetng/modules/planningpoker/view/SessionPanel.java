@@ -137,17 +137,17 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
         if (nameField.getText().length() > nameCharLimit) {
             if (display) {
-                infoLabel.setText("The name has to be less than one million characters.");
+                infoLabel.setText("*The name has to be less than one million characters.");
             }
             isNameValid = false;
         } else if (nameField.getText().length() == 0) {
             if (display) {
-                infoLabel.setText("Please enter a name.");
+                infoLabel.setText("*Please enter a name.");
             }
             isNameValid = false;
         } else if (nameField.getText().startsWith(" ")) {
             if (display) {
-                infoLabel.setText("Name cannot start with a space.");
+                infoLabel.setText("*Name cannot start with a space.");
             }
             isNameValid = false;
         } else {
@@ -159,18 +159,17 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
         if (desField.getText().length() > desCharLimit) {
             if (display && isNameValid) {
-                infoLabel.setText(infoLabel.getText()
-                                + "The description has to be less than one million characters.");
+                infoLabel.setText("*The description has to be less than one million characters.");
             }
             isDescriptionValid = false;
         } else if (desField.getText().length() == 0) {
             if (display && isNameValid) {
-                infoLabel.setText(infoLabel.getText() + "Please enter a description.");
+                infoLabel.setText("*Please enter a description.");
             }
             isDescriptionValid = false;
         } else if (desField.getText().startsWith(" ")) {
             if (display && isNameValid) {
-                infoLabel.setText("Description cannot start with a space.");
+                infoLabel.setText("*Description cannot start with a space.");
             }
             isDescriptionValid = false;
         } else {
@@ -189,7 +188,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         	System.out.println("calling");
         	isDateValid = true;
         	if (isBefore(selected, now)) {
-        		infoLabel.setText("Date is in the past");
+        		infoLabel.setText("*Date is in the past");
         		isDateValid = false;
         	}
         } else {isDateValid = true;}
