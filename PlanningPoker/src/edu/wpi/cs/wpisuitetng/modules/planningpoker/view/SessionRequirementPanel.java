@@ -70,17 +70,21 @@ public class SessionRequirementPanel extends JPanel {
         for (int i = 0; i < importedRequirements.size(); i++) {
             Requirement req = importedRequirements.get(i);
             String currEst = String.valueOf(req.getEstimate());
+            String iteration = req.getIteration().toString();
+            
+            if (iteration.equals("Backlog")) {
 
-            model.addRow(new Object[] { req.getId(), req.getName(),
-            /*req.getRelease(),
-            req.getIteration(),
-            req.getType(),
-            req.getStatus(),
-            req.getPriority(),
-            currEst,*/
+            	model.addRow(new Object[] { req.getId(), req.getName(),
+              /*req.getRelease(),
+            	req.getIteration(),
+            	req.getType(),
+            	req.getStatus(),
+            	req.getPriority(),
+            	currEst,*/
             false });
             
             requirements.add(new RequirementEstimate(req.getId(), req.getName(), 0, false));
+            }
         }
 
         table = new JTable(model) {
