@@ -26,39 +26,44 @@ import java.awt.event.*;
 
 @SuppressWarnings("serial")
 public class CheckBoxHeader extends JCheckBox  implements TableCellRenderer, MouseListener {  
-	/**
-	 * 
-	 */
-	protected CheckBoxHeader rendererComponent;  
+	  protected CheckBoxHeader rendererComponent;  
 	  protected int column;  
-	  protected boolean mousePressed = false;  
+	  protected boolean mousePressed = false; 
+	  
 	  public CheckBoxHeader(ItemListener itemListener) {  
 	    rendererComponent = this;  
 	    rendererComponent.addItemListener(itemListener);  
+		setHorizontalAlignment(JLabel.CENTER);
+		setBorderPaintedFlat(true);
+		setBorderPainted(true);
 	  }  
+	  
 	  public Component getTableCellRendererComponent(  
 	      JTable table, Object value,  
 	      boolean isSelected, boolean hasFocus, int row, int column) {  
-	    if (table != null) {  
-	      JTableHeader header = table.getTableHeader();  
-	      if (header != null) {  
-	        rendererComponent.setForeground(header.getForeground());  
-	        rendererComponent.setBackground(header.getBackground());  
-	        rendererComponent.setFont(header.getFont());  
-	        header.addMouseListener(rendererComponent);  
-	      }  
-	    }  
-	    setColumn(column);  
-	    rendererComponent.setText("Check All");  
-	    setBorder(UIManager.getBorder("TableHeader.cellBorder"));  
-	    return rendererComponent;  
-	  }  
+		  	if (table != null) {  
+		  		JTableHeader header = table.getTableHeader();  
+		  		if (header != null) {  
+			  		//rendererComponent.setForeground(header.getForeground());  
+			  		//rendererComponent.setBackground(header.getBackground());  
+			  		//rendererComponent.setFont(header.getFont());  
+			  		header.addMouseListener(rendererComponent);  
+		  		}  
+		  	}  
+		  	setColumn(column);  
+		  	rendererComponent.setText("Check All");  
+		  	setBorder(UIManager.getBorder("TableHeader.cellBorder"));  
+		  	return rendererComponent;  
+	  	};
+	  
 	  protected void setColumn(int column) {  
 	    this.column = column;  
 	  }  
+	  
 	  public int getColumn() {  
 	    return column;  
-	  }  
+	  }
+	  
 	  protected void handleClickEvent(MouseEvent e) {  
 	    if (mousePressed) {  
 	      mousePressed=false;  

@@ -73,19 +73,12 @@ public class SessionRequirementPanel extends JPanel {
 
         for (int i = 0; i < importedRequirements.size(); i++) {
             Requirement req = importedRequirements.get(i);
-            String currEst = String.valueOf(req.getEstimate());
+            //String currEst = String.valueOf(req.getEstimate());
             String iteration = req.getIteration().toString();
             
             if (iteration.equals("Backlog")) {
 
-            	model.addRow(new Object[] { req.getId(), req.getName(),
-              /*req.getRelease(),
-            	req.getIteration(),
-            	req.getType(),
-            	req.getStatus(),
-            	req.getPriority(),
-            	currEst,*/
-            false });
+            	model.addRow(new Object[] { req.getId(), req.getName(), false });
             
             requirements.add(new RequirementEstimate(req.getId(), req.getName(), 0, false));
             }
@@ -103,9 +96,7 @@ public class SessionRequirementPanel extends JPanel {
             }
         };
 
-        JScrollPane tablePanel = new JScrollPane(table);
-        TableColumn tc = table.getColumnModel().getColumn(2);
-        tc.setHeaderRenderer(new CheckBoxHeader(new MyItemListener())); 
+        JScrollPane tablePanel = new JScrollPane(table); 
         tablePanel.setPreferredSize(new Dimension(1000, 800));
 
         table.getColumnModel().getColumn(0).setMinWidth(50);
@@ -117,6 +108,11 @@ public class SessionRequirementPanel extends JPanel {
         //JPanel refreshPanel = new JPanel();
         this.add(tablePanel, BorderLayout.CENTER);
         //this.add(refreshPanel, BorderLayout.EAST);
+        
+        TableColumn tc = table.getColumnModel().getColumn(2);
+        tc.setCellEditor(table.getDefaultEditor(Boolean.class));  
+        tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
+        tc.setHeaderRenderer(new CheckBoxHeader(new MyItemListener()));
 
         if (viewMode == ViewMode.EDIT) {
             refreshRequirementSelection();
