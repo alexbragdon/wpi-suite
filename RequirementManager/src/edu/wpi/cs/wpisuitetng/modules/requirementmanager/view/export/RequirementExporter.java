@@ -14,6 +14,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -24,7 +26,7 @@ public class RequirementExporter {
     /**
      * The list of requirements to export.
      */
-    private List<Requirement> requirements;
+    private List<ExportRequirement> requirements = new ArrayList<ExportRequirement>();
     
     /**
      * Creates a new RequirementExporter with the given requirements.
@@ -32,12 +34,15 @@ public class RequirementExporter {
      * @param requirements requirements to export
      */
     public RequirementExporter(List<Requirement> requirements) {
-        this.requirements = new ArrayList<Requirement>(requirements);
+        for (Requirement requirement : requirements) {
+            this.requirements.add(new ExportRequirement(requirement));
+        }
     }
     
     public void exportTo(File file) throws FileNotFoundException {
         PrintWriter writer = new PrintWriter(file);
-        writer.println("Hello world");
+        String output = new Gson().toJson(requirements, requirements.getClass());
+        writer.write(output);
         writer.close();
     }
 }
