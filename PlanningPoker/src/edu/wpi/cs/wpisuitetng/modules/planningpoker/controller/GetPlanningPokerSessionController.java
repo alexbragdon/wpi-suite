@@ -40,11 +40,18 @@ public class GetPlanningPokerSessionController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Send a request to the core to save this message
-        final Request request = Network.getInstance().makeRequest(
-                        "planningpoker/planningpokersession", HttpMethod.GET); // GET == read
-        request.addObserver(new GetPlanningPokerSessionRequestObserver(this)); // add an observer to process the response
-        request.send(); // send the request
+        try {
+            // Check that the network has been configured
+            Network.getInstance().getDefaultNetworkConfiguration();
+            
+            // Send a request to the core to save this message
+            final Request request = Network.getInstance().makeRequest(
+                            "planningpoker/planningpokersession", HttpMethod.GET); // GET == read
+            request.addObserver(new GetPlanningPokerSessionRequestObserver(this)); // add an observer to process the response
+            request.send(); // send the request
+        } catch (RuntimeException ex) {
+            // The network hasn't been configured yet, but that's not a problem
+        }
     }
 
     /**
