@@ -129,6 +129,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         boolean isNameValid;
         boolean isDescriptionValid;
         boolean isDateValid;
+        boolean isReqsValid;
         int nameCharLimit = 1000000;
         int desCharLimit = 1000000;
         infoLabel.setForeground(Color.red);
@@ -193,7 +194,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         	}
         } else {isDateValid = true;}
         
-        return isNameValid && isDescriptionValid && isDateValid;
+        isReqsValid = requirementsPanel.getSelectedRequirements().size() > 0;
+        if (!isReqsValid) {
+            infoLabel.setText("*Select at least one requirement");
+        }
+        
+        return isNameValid && isDescriptionValid && isDateValid && isReqsValid;
     }
 
     /**
