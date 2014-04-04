@@ -30,7 +30,8 @@ public class CheckBoxHeader extends JCheckBox  implements TableCellRenderer, Mou
 	  protected int column;  
 	  protected boolean mousePressed = false; 
 	  
-	  public CheckBoxHeader(ItemListener itemListener) {  
+	  public CheckBoxHeader(ItemListener itemListener, boolean isChecked) {
+	    setSelected(isChecked);
 	    rendererComponent = this;  
 	    rendererComponent.addItemListener(itemListener);  
 		setHorizontalAlignment(JLabel.CENTER);

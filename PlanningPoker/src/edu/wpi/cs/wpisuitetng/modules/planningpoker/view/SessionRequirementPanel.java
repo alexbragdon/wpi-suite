@@ -117,11 +117,17 @@ public class SessionRequirementPanel extends JPanel {
         TableColumn tc = table.getColumnModel().getColumn(2);
         tc.setCellEditor(table.getDefaultEditor(Boolean.class));  
         tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
-        tc.setHeaderRenderer(new CheckBoxHeader(new MyItemListener()));
 
         if (viewMode == ViewMode.EDIT) {
             refreshRequirementSelection();
         }
+        
+        
+        boolean allChecked = true;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            allChecked &= (boolean)model.getValueAt(i, 2);
+        }
+        tc.setHeaderRenderer(new CheckBoxHeader(new MyItemListener(), allChecked));
     }
     
     class MyItemListener implements ItemListener  
