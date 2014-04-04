@@ -85,6 +85,7 @@ public class RequirementTableModel extends AbstractTableModel {
         if (columnIndex == 0) {
             isSelected.set(rowIndex, (boolean)aValue);
         }
+        fireTableCellUpdated(rowIndex, columnIndex);
     }
     
     /*
@@ -133,5 +134,17 @@ public class RequirementTableModel extends AbstractTableModel {
             }
         }
         return result;
+    }
+
+    /**
+     * Selects or deselects all requirements.
+     *
+     * @param checked select all if true
+     */
+    public void setAllSelected(boolean checked) {
+        for (int i = 0; i < isSelected.size(); i++) {
+            isSelected.set(i, checked);
+        }
+        fireTableDataChanged();
     }
 }

@@ -8,6 +8,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.export;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -36,6 +38,11 @@ public class ExportButtonPanel extends JPanel {
      * The cancel button.
      */
     private JButton cancelButton = new JButton("Cancel");
+    
+    /**
+     * The info text.
+     */
+    private JLabel infoText = new JLabel();
     
     /**
      * Creates a new ExportButtonPanel.
@@ -68,8 +75,11 @@ public class ExportButtonPanel extends JPanel {
             }
         });
         
+        infoText.setForeground(Color.red);
+        
         add(exportButton);
         add(cancelButton);
+        add(infoText);
     }
     
     public JButton getExportButton() {
@@ -78,5 +88,9 @@ public class ExportButtonPanel extends JPanel {
     
     public JButton getCancelButton() {
         return cancelButton;
+    }
+    
+    public JLabel getInfoText() {
+        return infoText;
     }
 }
