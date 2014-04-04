@@ -88,6 +88,8 @@ public class SessionRequirementPanel extends JPanel {
             @Override
             public Class<?> getColumnClass(int column) {
                 switch (column) {
+                    case 0:
+                        return Integer.class;
                     case 2:
                         return Boolean.class;
                     default:
@@ -113,6 +115,7 @@ public class SessionRequirementPanel extends JPanel {
         tc.setCellEditor(table.getDefaultEditor(Boolean.class));  
         tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
         tc.setHeaderRenderer(new CheckBoxHeader(new MyItemListener()));
+        table.getTableHeader().setReorderingAllowed(false);
 
         if (viewMode == ViewMode.EDIT) {
             refreshRequirementSelection();
