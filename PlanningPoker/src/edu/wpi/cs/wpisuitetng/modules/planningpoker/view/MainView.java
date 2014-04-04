@@ -17,7 +17,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.Opensession
  * @contributOr Team romulus
  */
 @SuppressWarnings("serial")
-public class MainView extends JTabbedPane {
+//public class MainView extends JTabbedPane {
 
 
 	private OpensessionPanel opensession = new OpensessionPanel(this);
