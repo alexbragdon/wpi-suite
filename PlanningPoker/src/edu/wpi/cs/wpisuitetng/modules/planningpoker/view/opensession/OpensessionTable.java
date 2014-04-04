@@ -34,7 +34,16 @@ public class OpensessionTable extends JTable
 	 */
 	public OpensessionTable(Object[][] data, String[] columnNames)
 	{
-		this.tableModel = new DefaultTableModel(data, columnNames);
+		this.tableModel = new DefaultTableModel(data, columnNames) {
+		    @Override
+		    public Class getColumnClass(int columnIndex) {
+		        if (columnIndex == 0) {
+		            return Integer.class;
+		        } else {
+		            return String.class;
+		        }
+		    }
+		};
 		this.setModel(tableModel);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setDropMode(DropMode.ON);
@@ -49,7 +58,7 @@ public class OpensessionTable extends JTable
 	        return -1;
 	    }
 	    
-	    return Integer.parseInt((String) tableModel.getValueAt(getSelectedRow(), 0));
+	    return (int) tableModel.getValueAt(getSelectedRow(), 0);
 	}
 	
 	/**
@@ -102,7 +111,7 @@ public class OpensessionTable extends JTable
 
 	public void addSessions(PlanningPokerSession[] sessions) {
 		for (PlanningPokerSession session : sessions) {
-		    tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), session.getModerator() });
+		    tableModel.addRow(new Object[] { session.getID(), session.getName(), session.getModerator() });
 		}
 		
 	}
