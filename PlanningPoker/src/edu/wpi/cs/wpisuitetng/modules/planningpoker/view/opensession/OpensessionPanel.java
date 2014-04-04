@@ -48,7 +48,7 @@ public class OpensessionPanel extends JPanel {
     public OpensessionPanel(MainView mainView)
     {
         parent = mainView;
-        String[] columnNames = {"ID", "Name", "Moderator"};
+        String[] columnNames = {"", "Name", "Moderator"};
 
         Object[][] data = {};
 
@@ -57,7 +57,10 @@ public class OpensessionPanel extends JPanel {
         JScrollPane tablePanel = new JScrollPane(table);
         tablePanel.setPreferredSize(new Dimension(1000, 800));
 
-        table.getColumnModel().getColumn(0).setMinWidth(50);
+        table.getColumnModel().getColumn(0).setMaxWidth(0);
+        table.getColumnModel().getColumn(0).setMinWidth(0);
+        table.getColumnModel().getColumn(0).setPreferredWidth(0);
+        table.getColumnModel().getColumn(0).setResizable(false);
 
         table.getColumnModel().getColumn(1).setMinWidth(500);
 
