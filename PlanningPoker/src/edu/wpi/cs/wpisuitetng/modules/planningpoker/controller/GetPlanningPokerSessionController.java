@@ -43,7 +43,7 @@ public class GetPlanningPokerSessionController implements ActionListener {
         try {
             // Check that the network has been configured
             Network.getInstance().getDefaultNetworkConfiguration();
-            
+
             // Send a request to the core to save this message
             final Request request = Network.getInstance().makeRequest(
                             "planningpoker/planningpokersession", HttpMethod.GET); // GET == read
@@ -62,14 +62,30 @@ public class GetPlanningPokerSessionController implements ActionListener {
      */
     public void receivedMessages(PlanningPokerSession[] sessions) {
 
+        if (sessions == null) {
+            return;
+        }
+
+        // Check for changes
         if (sessions.length == model.getRowCount()) {
             boolean hasChanges = false;
-            for (int i = 0; i < sessions.length; i++) {
-                if (!sessions[i].getName().equals(model.getValueAt(i, 1))) {
-                    hasChanges = true;
-                    break;
+
+            // Check if every session has an equal
+            for (PlanningPokerSession session : sessions) {
+                boolean hasEqual = false;
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    if (session.getID() == (int) model.getValueAt(i, 0)
+                                    && session.getName().equals(model.getValueAt(i, 1))
+                                    && session.getModerator().equals(model.getValueAt(i, 2))) {
+                        hasEqual = true;
+                        break;
+                    }
                 }
+
+                // If something doesn't have an equal, that something changed
+                hasChanges |= !hasEqual;
             }
+
             if (!hasChanges) {
                 return;
             }
@@ -81,12 +97,8 @@ public class GetPlanningPokerSessionController implements ActionListener {
         // Empty the local model to eliminate duplications
         model.clear();
 
-        // Make sure the response was not null
-        if (sessions != null) {
-
-            // add the messages to the local model
-            model.addSessions(sessions);
-        }
+        // add the messages to the local model
+        model.addSessions(sessions);
 
         if (row != -1 && row < model.getRowCount()) {
             model.setRowSelectionInterval(row, row);
