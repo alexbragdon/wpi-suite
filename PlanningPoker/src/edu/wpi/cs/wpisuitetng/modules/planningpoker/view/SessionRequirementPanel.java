@@ -34,8 +34,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
 /**
  * This is the panel on the open session table.
  * 
- * @author Fangming Ning
- * @contributOr Team romulus
+ * @author Team Romulus
+ * @contributOr 
  */
 @SuppressWarnings("serial")
 public class SessionRequirementPanel extends JPanel {
@@ -57,8 +57,7 @@ public class SessionRequirementPanel extends JPanel {
                     PlanningPokerSession displaySession) {
     	this.displaySession = displaySession;
         Object[][] data = {};
-        String[] columns = { "ID", "NAME", /*"RELEASE", "ITERATION","TYPE","STATUS","PRIORITY","ESTIMATE",*/
-                        "" };
+        String[] columns = { "ID", "NAME", "" };
 
         List<Requirement> importedRequirements = RequirementModel.getInstance().getRequirements();
 
@@ -99,9 +98,10 @@ public class SessionRequirementPanel extends JPanel {
         JScrollPane tablePanel = new JScrollPane(table); 
         tablePanel.setPreferredSize(new Dimension(1000, 800));
 
-        table.getColumnModel().getColumn(0).setMinWidth(50);
-        table.getColumnModel().getColumn(1).setMinWidth(850);
+        table.getColumnModel().getColumn(0).setMinWidth(70);
         table.getColumnModel().getColumn(2).setMinWidth(100);
+        table.getColumnModel().getColumn(0).setMaxWidth(70);
+        table.getColumnModel().getColumn(2).setMaxWidth(100);
         
         this.setLayout(new BorderLayout());
 
