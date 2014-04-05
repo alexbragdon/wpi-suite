@@ -3,6 +3,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.ButtonsPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SuperButtonPanel;
 
 /**
  * The view of tool bars of planning poker game. It holds all the buttons in tool bar.
@@ -13,7 +14,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.ButtonsPanel;
 @SuppressWarnings("serial")
 public class ToolbarView extends DefaultToolbarView {
 
-    public ButtonsPanel Button;
+    public ButtonsPanel CreateButtonPanel;
+    public SuperButtonPanel SuperButtonPanel;
 
     /**
      * Creates and positions option buttons in upper toolbar
@@ -21,8 +23,10 @@ public class ToolbarView extends DefaultToolbarView {
      * @param visible boolean
      */
     public ToolbarView(boolean visible, MainView mainView) {
-        Button = new ButtonsPanel(mainView);
-        this.addGroup(Button);
+        CreateButtonPanel = new ButtonsPanel(mainView);
+        this.addGroup(CreateButtonPanel);
+        SuperButtonPanel = new SuperButtonPanel(mainView);
+        this.addGroup(SuperButtonPanel);
     }
 
     /**
@@ -31,6 +35,10 @@ public class ToolbarView extends DefaultToolbarView {
      * @return RequirementButtonsPanel
      */
     public ButtonsPanel getReqButton() {
-        return Button;
+        return CreateButtonPanel;
+    }
+    
+    public SuperButtonPanel GetSuperButtonPanel(){
+        return SuperButtonPanel;
     }
 }
