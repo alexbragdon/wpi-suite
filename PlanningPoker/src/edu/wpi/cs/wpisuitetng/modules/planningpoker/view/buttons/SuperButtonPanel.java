@@ -45,6 +45,9 @@ public class SuperButtonPanel extends ToolbarGroupView {
         //change this to 450 when we have three buttons
         this.setPreferredWidth(300);
 
+        // TODO: Delete this line
+        selectedPanelIndex = 0;
+        
         superButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,7 +55,7 @@ public class SuperButtonPanel extends ToolbarGroupView {
                 
                 // Edit session
                 if(selectedPanelIndex == 0){
-                    superButton.EditSession();
+                    superButton.EditSession(parent);
                 }
 
                 // Vote session

@@ -20,6 +20,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.FindPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
+
 /**
  * @author Team Romulus
  *
@@ -45,7 +48,10 @@ public class SuperButton extends JButton {
 
         } catch (IOException ex) {}
 
-        this.setVisible(false);
+        //this.setVisible(false);
+        
+        // TODO: Delete this default
+        Update(0);
     }
 
     public void Update(int selectedIndex){
@@ -53,13 +59,13 @@ public class SuperButton extends JButton {
         if(selectedIndex == 0){
             this.setEnabled(true);
             
-            this.setName("<html>Edit<br />Session</html>");
+            this.setText("<html>Edit<br />Session</html>");
             this.setIcon(new ImageIcon(editImg));
         }
 
         // Vote session
         if(selectedIndex == 1){
-            this.setName("<html>Vote in<br />Session</html>");
+            this.setText("<html>Vote in<br />Session</html>");
             this.setIcon(new ImageIcon(voteImg));
 
             // TODO: Make this button do something
@@ -68,7 +74,7 @@ public class SuperButton extends JButton {
 
         // View session
         if(selectedIndex == 2){
-            this.setName("<html>View<br />Results</html>");
+            this.setText("<html>View<br />Results</html>");
             this.setIcon(new ImageIcon(viewImg));
 
             // TODO: Make this button do something
@@ -76,8 +82,13 @@ public class SuperButton extends JButton {
         }
     }
 
-    public void EditSession(){
-
+    public void EditSession(final MainView parent){
+        int id = parent.getOpensession().getSelectedID();
+        if (id != -1) {
+            new FindPlanningPokerSessionController().findPlanningPokerSessionbyID(id);
+            this.setVisible(false);
+            parent.getOpensession().getListSelectionModel().clearSelection();
+        }
     }
 
     public void VoteSession(){
