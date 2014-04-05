@@ -57,8 +57,7 @@ public class SessionRequirementPanel extends JPanel {
                     PlanningPokerSession displaySession) {
     	this.displaySession = displaySession;
         Object[][] data = {};
-        String[] columns = { "", "NAME", /*"RELEASE", "ITERATION","TYPE","STATUS","PRIORITY","ESTIMATE",*/
-                        "" };
+        String[] columns = { "ID", "NAME", "" };
 
         List<Requirement> importedRequirements = RequirementModel.getInstance().getRequirements();
 
@@ -105,8 +104,9 @@ public class SessionRequirementPanel extends JPanel {
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setPreferredWidth(0);
         table.getColumnModel().getColumn(0).setResizable(false);
-        table.getColumnModel().getColumn(1).setMinWidth(850);
+        table.getColumnModel().getColumn(1).setMinWidth(100);
         table.getColumnModel().getColumn(2).setMinWidth(100);
+        table.getColumnModel().getColumn(2).setMaxWidth(100);
         
         table.getTableHeader().setReorderingAllowed(false);
         
