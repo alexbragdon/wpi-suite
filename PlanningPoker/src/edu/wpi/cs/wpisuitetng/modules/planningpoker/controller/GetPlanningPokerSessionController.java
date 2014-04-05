@@ -82,7 +82,7 @@ public class GetPlanningPokerSessionController implements ActionListener {
                     }
                 }
 
-                // If something doesn't have an equal, that something changed
+                // If something doesn't have an equal, that means something changed
                 hasChanges |= !hasEqual;
             }
 
