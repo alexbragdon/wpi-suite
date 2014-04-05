@@ -9,6 +9,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.mysession.MySessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionPanel;
 
 /**
@@ -23,6 +24,7 @@ public class MainView extends JTabbedPane {
 	private OpensessionPanel opensession = new OpensessionPanel(this);
 	private Component lastTab = null;
 	private ToolbarView toolbarView;
+	private MySessionPanel mySession = new MySessionPanel(this);
 
 
 
@@ -33,6 +35,7 @@ public class MainView extends JTabbedPane {
 	    
 	    this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		this.addTab("Open Sessions", opensession);
+		this.addTab("My Sessions", mySession);
 
 		// Listen for tab changes to invoke auto refresh
 		final MainView self = this;
