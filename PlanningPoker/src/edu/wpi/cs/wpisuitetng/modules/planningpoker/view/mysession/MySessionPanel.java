@@ -35,7 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
  * @contributOr Team romulus
  */
 @SuppressWarnings("serial")
-public class MySessionPanel extends JPanel {
+public class MySessionPanel extends JSplitPane {
 	
 	private ModeratingSessionTable table1;
 	private JoiningSessionTable table2;
@@ -59,10 +59,28 @@ public class MySessionPanel extends JPanel {
         JScrollPane tablePanel1 = new JScrollPane(table1);
         JScrollPane tablePanel2 = new JScrollPane(table2);
         JScrollPane tablePanel3 = new JScrollPane(table3);
+        
+        JPanel panel1 = new JPanel();
+        JPanel panel2 = new JPanel();
+        JPanel panel3 = new JPanel();
+        
+        panel1.setLayout(new BorderLayout());
+        panel2.setLayout(new BorderLayout());
+        panel3.setLayout(new BorderLayout());
+        panel1.add(label1, BorderLayout.NORTH);
+        panel2.add(label2, BorderLayout.NORTH);
+        panel3.add(label3, BorderLayout.NORTH);
+        
+        panel1.add(tablePanel1, BorderLayout.CENTER);
+        panel2.add(tablePanel2, BorderLayout.CENTER);
+        panel3.add(tablePanel3, BorderLayout.CENTER);
+        
+//        JSplitPane splitPaneLeft = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, panel1, panel2);
+//        JSplitPane splitPaneRight = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, splitPaneLeft, panel3);
               
-        tablePanel1.setPreferredSize(new Dimension(300, 300));
-        tablePanel2.setPreferredSize(new Dimension(300, 300));
-        tablePanel3.setPreferredSize(new Dimension(300, 300));
+        tablePanel1.setPreferredSize(new Dimension(300, 600));
+        tablePanel2.setPreferredSize(new Dimension(400, 600));
+        tablePanel3.setPreferredSize(new Dimension(300, 600));
 
         table1.getColumnModel().getColumn(0).setMinWidth(200);
 
@@ -86,10 +104,13 @@ public class MySessionPanel extends JPanel {
 
         });
         table1.setSelectionModel(listSelectionModel);
+        
+//        this.add(splitPaneLeft, BorderLayout.WEST);
+//        this.add(splitPaneRight, BorderLayout.CENTER);
 
-        this.add(tablePanel1, BorderLayout.EAST);
-        this.add(tablePanel2, BorderLayout.CENTER);
-        this.add(tablePanel3, BorderLayout.WEST);
+        this.add(panel1, BorderLayout.WEST);
+        this.add(panel2, BorderLayout.CENTER);
+        this.add(panel3, BorderLayout.EAST);
         //this.add(refreshPanel, BorderLayout.EAST);
     }
 
