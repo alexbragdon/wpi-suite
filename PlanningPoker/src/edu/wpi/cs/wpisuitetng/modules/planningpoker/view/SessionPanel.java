@@ -73,9 +73,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
     private ViewMode viewMode;
 
-    JSpinner hourSpin;
+    private JSpinner hourSpin;
     
-    JSpinner minuteSpin;
+    private JSpinner minuteSpin;
     
     /**
      * Goes on left, holds basic info (name, time). changed to scrollable panel
