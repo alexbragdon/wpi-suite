@@ -98,6 +98,10 @@ public class MainView extends JTabbedPane {
 		} catch (IllegalArgumentException e){}
 	}
 
+	/**
+	 * Return the tool bar view for testing
+	 * @return
+	 */
 	public ToolbarView getToolbarView(){
 	    return toolbarView;
 	}

@@ -77,6 +77,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     
     private JSpinner minuteSpin;
     
+    
     /**
      * Goes on left, holds basic info (name, time). changed to scrollable panel
      */
@@ -707,6 +708,15 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     
     public void setTimeDisabled(){
     	timeEnable.setSelected(false);
+    }
+    
+    public void setTimeEnabled(){
+    	timeEnable.setSelected(true);
+    }
+    
+    public void setSpinTime(){
+    	hourSpin.setValue(0);
+    	minuteSpin.setValue(0);
     }
     
 

@@ -1,6 +1,12 @@
-/**
+/*******************************************************************************
+ * Copyright (c) 2014 WPI-Suite
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  * 
- */
+ * Contributors: Team Romulus
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import static org.junit.Assert.*;
@@ -46,7 +52,7 @@ public class SessionPanelTest {
 	}
 
 	@Test
-	public void testTheValidateFieldsMethod() {
+	public void testTheValidateFieldsMethodWithoutCalendar() {
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
 		sesPan.setTimeDisabled();
@@ -65,4 +71,46 @@ public class SessionPanelTest {
 		assertFalse(sesPan.validateFields(true));
 		assertEquals("*Description cannot start with a space.",sesPan.getInfoLabel());
 	}
+	
+	@Test
+	public void testTheValidateFieldsMethodWithCalendar() {
+		sesPan.setNameField("Test Name");
+		sesPan.setDesField("Test Description");
+		sesPan.setTimeEnabled();
+		assertTrue(sesPan.validateFields(true));
+		sesPan.setSpinTime();
+		assertFalse(sesPan.validateFields(true));
+		assertEquals("*Date is in the past",sesPan.getInfoLabel());
+	}
+	@Test
+	public void testTheValidateFieldsMethodWithoutRequirement() {
+		sesPan.setNameField("Test Name");
+		sesPan.setDesField("Test Description");
+		sesPan.setTimeDisabled();
+		ses = new PlanningPokerSession(0, "Test Session", "Hello The World", new Date(), 12, 0,
+				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin");
+		sesPan = new SessionPanel(ses);
+		assertFalse(sesPan.validateFields(true));
+		assertEquals("*Select at least one requirement",sesPan.getInfoLabel());
+	}
+	@Test
+	public void testTheValidateFieldsMethodWhenCreatingNewSession() {
+		sesPan = new SessionPanel();
+		sesPan.setNameField("Test Name");
+		sesPan.setDesField("Test Description");
+		sesPan.setTimeDisabled();
+		// Assert False because there is no way to let the new created session to choose a requirement.
+		//This test only test whether the constructor for creating session works, so no need to assertTrue. 
+		assertFalse(sesPan.validateFields(true));
+	}
+	@Test
+	public void testClearFunctionality() {
+		sesPan = new SessionPanel();
+		sesPan.setNameField("Test Name");
+		sesPan.setDesField("Test Description");
+		sesPan.setTimeDisabled();
+		sesPan.clearPressed();
+		assertEquals("*Select at least one requirement",sesPan.getInfoLabel());
+	}
+	
 }
