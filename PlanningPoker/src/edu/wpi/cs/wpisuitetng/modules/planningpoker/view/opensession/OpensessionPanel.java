@@ -73,7 +73,7 @@ public class OpensessionPanel extends JPanel {
 
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (table.getValueAt(table.getSelectedRow(), 2) != null && 
+                if (table.getSelectedRow() != -1 && table.getValueAt(table.getSelectedRow(), 2) != null && 
                                 ConfigManager.getConfig().getUserName().equals(table.getValueAt(table.getSelectedRow(), 2))){
                     getParent().getToolbarView().getReqButton().getEditButton().setVisible(true);
                 }

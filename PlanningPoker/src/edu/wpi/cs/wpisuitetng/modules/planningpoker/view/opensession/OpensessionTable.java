@@ -58,7 +58,7 @@ public class OpensessionTable extends JTable
 	        return -1;
 	    }
 	    
-	    return (int) tableModel.getValueAt(getSelectedRow(), 0);
+	    return (int) tableModel.getValueAt(convertRowIndexToModel(getSelectedRow()), 0);
 	}
 	
 	/**
