@@ -38,18 +38,16 @@ public class ModeratingSessionTable extends JTable
 	/**
 	 * Sets initial table view
 	 */
-	public ModeratingSessionTable()
+	public ModeratingSessionTable(Object[][] data, String[] columnNames)
 	{
-		Object[][] data = {{"Test","April/05", "ended"}};
-		String[] columnNames = {"Name", "End Time", "Status"};
 		this.tableModel = new DefaultTableModel(data, columnNames);
 		this.setModel(tableModel);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.setDropMode(DropMode.ON);
+//		this.setDragEnabled(true);
+//        this.setDropMode(DropMode.ON);
 		this.getTableHeader().setReorderingAllowed(false);
 		this.setAutoCreateRowSorter(true);
 		setFillsViewportHeight(true);
-
 	}
 	
 	public int getSelectedID() {
@@ -77,8 +75,6 @@ public class ModeratingSessionTable extends JTable
 	@Override
 	public void paintComponent(Graphics g)
 	{
-
-
 		super.paintComponent(g);
 	}
 

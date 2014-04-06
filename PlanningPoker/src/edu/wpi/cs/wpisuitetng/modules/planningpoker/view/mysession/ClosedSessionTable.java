@@ -38,10 +38,8 @@ public class ClosedSessionTable extends JTable
 	/**
 	 * Sets initial table view
 	 */
-	public ClosedSessionTable()
+	public ClosedSessionTable(Object[][] data, String[] columnNames )
 	{
-		Object[][] data = {};
-		String[] columnNames = {"Name", "Time Closed"};
 		this.tableModel = new DefaultTableModel(data, columnNames);
 		this.setModel(tableModel);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
