@@ -704,10 +704,17 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     public void setDesField(String text) {
         desField.setText(text);
     }
+    
+    public void setTimeDisabled(){
+    	timeEnable.setSelected(false);
+    }
+    
 
     public String getInfoLabel() {
         return infoLabel.getText();
     }
+    
+    
     
     public PlanningPokerSession getSession(){
         return displaySession;
