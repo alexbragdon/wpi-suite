@@ -1,7 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 /**
- * The base type for planning poker decks. 
+ * The base type for planning poker decks. Any new decks must implement this interface
  * @author Romulus
  */
 public interface PokerDeck {
@@ -19,7 +19,7 @@ public interface PokerDeck {
 	String getName();
 	
 	/**
-	 * Get the instance of the poker deck
+	 * Get the instance of the poker deck, all subclasses must be singleton
 	 * @return The instance
 	 */
 	PokerDeck getInstance();

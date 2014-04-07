@@ -7,6 +7,8 @@ public class FibonacciDeck implements PokerDeck {
 	private static final FibonacciDeck INSTANCE = new FibonacciDeck();
 	private final int[] choices = {1, 1, 2, 3, 5, 8, 13, 21, 34};
 	private final String name = "Fibonacci";
+	
+	private FibonacciDeck() {} //Suppress instantiation
 
 	@Override
 	public int[] getChoices() {
