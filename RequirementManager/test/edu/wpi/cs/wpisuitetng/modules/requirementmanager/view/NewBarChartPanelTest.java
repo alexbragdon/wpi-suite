@@ -81,7 +81,7 @@ public class NewBarChartPanelTest {
 
 	@Test
 	public void creationOfIterationBarChartTabTest() {
-		assertEquals(3, vec.getMainView().getTabCount());
+		assertEquals(2, vec.getMainView().getTabCount());
 		vec.getMainView().removeTabAt(2);	// remove the previously created bar chart tab
 		assertEquals(2, vec.getMainView().getTabCount());
 		vec.createBarChart("Iteration");
@@ -101,7 +101,7 @@ public class NewBarChartPanelTest {
 		RequirementModel.getInstance().emptyModel();
 		RequirementModel.getInstance().addRequirement(req1);
 		RequirementModel.getInstance().addRequirement(req2);
-		assertEquals(3, vec.getMainView().getTabCount());
+		assertEquals(2, vec.getMainView().getTabCount());
 		vec.getMainView().removeTabAt(2);	// remove the previously created bar chart tab
 		assertEquals(2, vec.getMainView().getTabCount());
 		vec.createBarChart("Data");
