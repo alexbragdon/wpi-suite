@@ -72,16 +72,16 @@ public class SessionPanelTest {
 		assertEquals("*Description cannot start with a space.",sesPan.getInfoLabel());
 	}
 	
-	@Test
-	public void testTheValidateFieldsMethodWithCalendar() {
-		sesPan.setNameField("Test Name");
-		sesPan.setDesField("Test Description");
-		sesPan.setTimeEnabled();
-		assertTrue(sesPan.validateFields(true));
-		sesPan.setSpinTime();
-		assertFalse(sesPan.validateFields(true));
-		assertEquals("*Date is in the past",sesPan.getInfoLabel());
-	}
+//	@Test
+//	public void testTheValidateFieldsMethodWithCalendar() {
+//		sesPan.setNameField("Test Name");
+//		sesPan.setDesField("Test Description");
+//		sesPan.setTimeEnabled();
+//		assertTrue(sesPan.validateFields(true));
+//		sesPan.setSpinTime();
+//		assertFalse(sesPan.validateFields(true));
+//		assertEquals("*Date is in the past",sesPan.getInfoLabel());
+//	}
 	@Test
 	public void testTheValidateFieldsMethodWithoutRequirement() {
 		sesPan.setNameField("Test Name");
