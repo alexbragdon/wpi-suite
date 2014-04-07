@@ -19,11 +19,17 @@ import javax.swing.table.DefaultTableModel;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockRequest;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
  * tests the functionality of the SessionPanel.java source file
@@ -127,6 +133,10 @@ public class SessionPanelTest {
 		assertTrue(sesPan.changed());
 		sesPan.cancelPressed();
 		sesPan.textChanged();
+		Network.initNetwork(new MockNetwork());
+		Network.getInstance().setDefaultNetworkConfiguration(
+				new NetworkConfiguration("http://wpisuitetng"));
+		sesPan.OKPressed();
 	}
 	@Test
 	public void testDisturbedSession() {
@@ -136,5 +146,52 @@ public class SessionPanelTest {
 		sesPan = new SessionPanel(disturbedses);
 		assertTrue(sesPan.validateFields(true));
 		sesPan.clearPressed();
+	}
+	@Test
+	public void testButtonPressedInOtherConditions() {
+		sesPan.setNameField("Test Name");
+		sesPan.setDesField("Test Description");
+		sesPan.setTimeEnabled();
+		sesPan.textChanged();
+		sesPan.setNameField("");
+		sesPan.setDesField("");
+		sesPan.textChanged();
+	}
+	@Test
+	public void testIncreasmentOfOneHour(){
+		sesPan.setNameField("Test Name");
+		sesPan.setDesField("Test Description");
+		sesPan.setTimeDisabled();
+		assertTrue(sesPan.validateFields(true));
+		sesPan.setDateTime(2012, 2, 29, 23, 30);
+		sesPan.buildLY();
+		sesPan.setDateTime(2012, 2, 22, 23, 30);
+		sesPan.buildLY();
+	}
+	@Test
+	public void testIncreasmentOfOneHour2(){
+		sesPan.setNameField("Test Name");
+		sesPan.setDesField("Test Description");
+		sesPan.setTimeDisabled();
+		assertTrue(sesPan.validateFields(true));
+		sesPan.setDateTime(2011, 2, 28, 23, 30);
+		sesPan.buildLY();
+		sesPan.setDateTime(2011, 1, 29, 23, 30);
+		sesPan.buildLY();
+		sesPan.setDateTime(2011, 1, 22, 23, 30);
+		sesPan.buildLY();
+
+	}
+	@Test
+	public void testIncreasmentOfOneHour3(){
+		sesPan.setNameField("Test Name");
+		sesPan.setDesField("Test Description");
+		sesPan.setTimeDisabled();
+		assertTrue(sesPan.validateFields(true));
+
+		sesPan.setDateTime(2015, 12, 30, 23, 30);
+		sesPan.buildLY();
+		sesPan.setDateTime(2015, 12, 31, 23, 30);
+		sesPan.buildLY();
 	}
 }

@@ -77,6 +77,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     
     private JSpinner minuteSpin;
     
+    private Date dt;
     
     /**
      * Goes on left, holds basic info (name, time). changed to scrollable panel
@@ -108,6 +109,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     public SessionPanel(PlanningPokerSession session) {
         displaySession = session;
         viewMode = ViewMode.EDIT;
+        dt = new Date();
         this.buildLayout();
        
     }
@@ -120,6 +122,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     public SessionPanel() {
         displaySession = new PlanningPokerSession();
         viewMode = ViewMode.CREATE;
+        dt = new Date();
         this.buildLayout();
     }
 
@@ -247,7 +250,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         final JLabel desLabel = new JLabel("Description *");
         Font boardFont = new Font(infoLabel.getFont().getName(), Font.BOLD, infoLabel.getFont()
                         .getSize());
-		Date dt = new Date();
+		
 		int currentYear = dt.getYear();
 		int currentMonth = dt.getMonth();
 		int currentDay = dt.getDate();
@@ -297,7 +300,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			}
 		} else if (currentMonth == 4 || currentMonth == 6 || currentMonth == 9
 				|| currentMonth == 11) {
-			if (currentDay == 31) {// Last day of the current month
+			if (currentDay == 30) {// Last day of the current month
 				if (currentHour >= 24) {
 					currentHour = 0;
 					dt.setMonth(currentMonth + 1);// To the next month
@@ -310,7 +313,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				}
 			}
 		} else {
-			if (currentDay == 30) {// Last day of the current month
+			if (currentDay == 31) {// Last day of the current month
 				if (currentHour >= 24) {
 					currentHour = 0;
 					dt.setMonth(currentMonth + 1);// To the next month
@@ -726,5 +729,17 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     
     public PlanningPokerSession getSession(){
         return displaySession;
+    }
+    
+    public void setDateTime(int cY, int cM, int cD, int cH, int cMi){
+    	this.dt.setYear(cY);
+    	this.dt.setMonth(cM);
+    	this.dt.setDate(cD);
+    	this.dt.setHours(cH);
+    	this.dt.setMinutes(cMi);
+    }
+    
+    public void buildLY(){
+        this.buildLayout();
     }
 }

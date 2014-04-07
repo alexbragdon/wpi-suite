@@ -98,4 +98,5 @@ public class ScatteredTestCases {
 		assertEquals("Planning Poker", pp.getName());
 		assertNotNull(pp.getTabs());
 	}
+	
 }
