@@ -32,9 +32,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel
  *
  */
 public class SessionPanelTest {
-	
+	private MainView mv;
+	private ToolbarView tbv;
+	private ViewEventController vec;
 	private SessionPanel sesPan;
 	private PlanningPokerSession ses;
+	private PlanningPokerSession disturbedses;
 	private ArrayList<RequirementEstimate> reqList;
 	
 	
@@ -46,9 +49,16 @@ public class SessionPanelTest {
 	public void setUp() throws Exception {
 		reqList = new ArrayList<RequirementEstimate>();
 		reqList.add(new RequirementEstimate(1,"2",2,true));
-		ses = new PlanningPokerSession(0, "Test Session", "Hello The World", new Date(), 12, 0,
+		ses = new PlanningPokerSession(3123, "Test Session", "Hello The World", new Date(), 23, 59,
 				reqList, sessionType.REALTIME, false, false, "admin");
+		disturbedses = new PlanningPokerSession(1212, "Test Session", "Hello The World", new Date(), 23, 59,
+				reqList, sessionType.DISTRIBUTED, false, false, "admin");
 		sesPan = new SessionPanel(ses);
+		mv = new MainView();
+		tbv = new ToolbarView(true, mv);
+		mv.setToolbarView(tbv);
+		vec = ViewEventController.getInstance();
+		vec.setMainView(mv);
 	}
 
 	@Test
@@ -72,22 +82,22 @@ public class SessionPanelTest {
 		assertEquals("*Description cannot start with a space.",sesPan.getInfoLabel());
 	}
 	
-//	@Test
-//	public void testTheValidateFieldsMethodWithCalendar() {
-//		sesPan.setNameField("Test Name");
-//		sesPan.setDesField("Test Description");
-//		sesPan.setTimeEnabled();
-//		assertTrue(sesPan.validateFields(true));
-//		sesPan.setSpinTime();
-//		assertFalse(sesPan.validateFields(true));
-//		assertEquals("*Date is in the past",sesPan.getInfoLabel());
-//	}
+	@Test
+	public void testTheValidateFieldsMethodWithCalendar() {
+		sesPan.setNameField("Test Name");
+		sesPan.setDesField("Test Description");
+		sesPan.setTimeEnabled();
+		assertTrue(sesPan.validateFields(true));
+		sesPan.setSpinTime();
+		assertFalse(sesPan.validateFields(true));
+		assertEquals("*Date is in the past",sesPan.getInfoLabel());
+	}
 	@Test
 	public void testTheValidateFieldsMethodWithoutRequirement() {
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
 		sesPan.setTimeDisabled();
-		ses = new PlanningPokerSession(0, "Test Session", "Hello The World", new Date(), 12, 0,
+		ses = new PlanningPokerSession(21345, "Test Session", "Hello The World", new Date(), 23, 59,
 				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin");
 		sesPan = new SessionPanel(ses);
 		assertFalse(sesPan.validateFields(true));
@@ -112,5 +122,19 @@ public class SessionPanelTest {
 		sesPan.clearPressed();
 		assertEquals("*Select at least one requirement",sesPan.getInfoLabel());
 	}
-	
+	@Test
+	public void testChangedAndButtonPressed() {
+		assertTrue(sesPan.changed());
+		sesPan.cancelPressed();
+		sesPan.textChanged();
+	}
+	@Test
+	public void testDisturbedSession() {
+		sesPan.setNameField("Test Name");
+		sesPan.setDesField("Test Description");
+		sesPan.setTimeDisabled();
+		sesPan = new SessionPanel(disturbedses);
+		assertTrue(sesPan.validateFields(true));
+		sesPan.clearPressed();
+	}
 }

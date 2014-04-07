@@ -29,9 +29,9 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  */
 
 public class ViewEventControllerTest {
-	MainView mv;
-	ToolbarView tbv;
-	ViewEventController vec;
+	private MainView mv;
+	private ToolbarView tbv;
+	private ViewEventController vec;
 	private PlanningPokerSession ses;
 	
 	@Before

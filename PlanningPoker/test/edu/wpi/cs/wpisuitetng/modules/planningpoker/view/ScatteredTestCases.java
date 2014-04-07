@@ -11,20 +11,25 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import static org.junit.Assert.*;
 
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.planningpoker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.icons.PokerIcons;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
@@ -43,6 +48,8 @@ public class ScatteredTestCases {
 	private PlanningPokerSession ses;
 	private SessionButtonPanel sbp;
 	private ViewMode vm;
+	private PokerIcons pi;
+	private planningpoker pp;
 
 	
 	@Before
@@ -53,7 +60,11 @@ public class ScatteredTestCases {
 				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin");
 		vm =  ViewMode.EDIT;
 		sbp = new SessionButtonPanel(parent, vm, ses);
+		pi = new PokerIcons();
+		pp = new planningpoker();
 	}
+	
+	
 	@Test
 	public void testActionPreformed(){
 		ActionEvent event = new ActionEvent(this, 1, "");
@@ -77,5 +88,14 @@ public class ScatteredTestCases {
 		vm =  ViewMode.CREATE;
 		sbp = new SessionButtonPanel(parent, vm, ses);
 	}
-	
+	@Test
+	public void testPokerIcons(){
+		assertEquals(5, pi.getIconHeight());
+		assertEquals(5, pi.getIconWidth());
+	}
+	@Test
+	public void testPlanningPoker(){
+		assertEquals("Planning Poker", pp.getName());
+		assertNotNull(pp.getTabs());
+	}
 }
