@@ -3,13 +3,14 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Component;
 
+
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.mysession.MySessionPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.MySessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionPanel;
 
 /**
@@ -74,7 +75,7 @@ public class MainView extends JTabbedPane {
 	public void insertTab(String title, Icon icon, Component component,
 			String tip, int index) {
 		super.insertTab(title, icon, component, tip, index);
-		if (!(component instanceof OpensessionPanel) ) {
+		if (!(component instanceof OpensessionPanel) && !(component instanceof MySessionPanel)) {
 			setTabComponentAt(index, new ClosableTabComponent(this));
 		}
 	}
