@@ -22,7 +22,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 
 /**
@@ -52,7 +51,7 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
                 saveButton = new JButton();
                 clearButton = new JButton();
                 saveButton.setVisible(false);
-                clearButton.setVisible(true);
+                clearButton.setVisible(false);
                 cancelButton = new JButton("Delete");
                 break;
             default:
