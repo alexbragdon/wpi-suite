@@ -132,7 +132,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         boolean result;
         
         infoLabel.setText("");
-        if (viewMode != ViewMode.VIEW){
+        if (!(viewMode.equals(ViewMode.VIEW))){
             if (nameField.getText().length() > nameCharLimit) {
                 if (display) {
                     infoLabel.setText("*The name has to be less than one million characters.");

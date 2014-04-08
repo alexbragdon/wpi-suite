@@ -34,8 +34,6 @@ public class SuperButton extends JButton {
     private Image voteImg;
 
     public SuperButton(){
-        // this.setName("<html>Create<br />Session</html>");
-
         this.setHorizontalAlignment(SwingConstants.CENTER);
         try {
             viewImg = ImageIO.read(getClass().getResource("viewSession.png"));
@@ -48,11 +46,6 @@ public class SuperButton extends JButton {
             //this.setIcon(new ImageIcon(img));
 
         } catch (IOException ex) {}
-
-        //this.setVisible(false);
-
-        // TODO: Delete this default
-        Update(2);
     }
 
     public void Update(int selectedIndex){

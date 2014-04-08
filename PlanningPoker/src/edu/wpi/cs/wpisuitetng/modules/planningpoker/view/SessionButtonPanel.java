@@ -48,6 +48,13 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
                 clearButton = new JButton("Clear");
                 cancelButton = new JButton("Cancel");
                 break;
+            case VIEW:
+                saveButton = new JButton();
+                clearButton = new JButton();
+                saveButton.setVisible(false);
+                clearButton.setVisible(true);
+                cancelButton = new JButton("Delete");
+                break;
             default:
                 throw new RuntimeException("Invalid ViewMode");
         }

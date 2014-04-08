@@ -20,13 +20,11 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class ViewPlanningPokerController {
     private ViewPlanningPokerObserver observer;
-    //private EditSessionPanel model;
 
     /**
      * Construct an FindPlanningPokerSessionController    
      */
     public ViewPlanningPokerController() {
-        //this.model = anEditSessionPanel;
         observer = new ViewPlanningPokerObserver(this);
     }
 
