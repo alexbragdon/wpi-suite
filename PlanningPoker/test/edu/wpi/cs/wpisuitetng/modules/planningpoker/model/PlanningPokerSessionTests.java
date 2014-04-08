@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import org.junit.Before;
@@ -42,6 +43,7 @@ public class PlanningPokerSessionTests {
 
 	private PlanningPokerSession testSession;
 	private PlanningPokerSession otherSession;
+	private int testNum = 2;
 	@Before
 	public void setUp() throws Exception {
 		testSession = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
@@ -110,7 +112,12 @@ public class PlanningPokerSessionTests {
 	public void TestsTheHashCodeFunction(){
 		testSession.hashCode();
 		assertNotNull(testSession.hashCode());
-		
+	}
+	@Test
+	public void TestsMultipleEqualsFuequalsnctions(){
+		assertTrue(testSession.equals(testSession));
+		assertFalse(testSession.equals(""));
+		assertFalse(testSession.equals(new JTable()));
 	}
 
 }

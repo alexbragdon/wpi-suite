@@ -54,7 +54,6 @@ public class RequirementEstimate {
     public int getId() {
         return id;
     }
-    
     public String getName() {
         return name;
     }
@@ -88,4 +87,5 @@ public class RequirementEstimate {
     public void addVote(String username, int estimate) {
         votes.put(username, estimate);
     }
+    public 
 }
