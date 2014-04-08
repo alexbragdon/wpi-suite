@@ -11,6 +11,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.mysession;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,7 +23,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 
 
@@ -79,15 +80,28 @@ public class JoiningSessionPanel extends JPanel {
                 else{
                     getParent().getToolbarView().getReqButton().getEditButton().setVisible(false);
                 }
+                
             }
 
         });
+        
         table.setSelectionModel(listSelectionModel);
 
         JPanel panel = new JPanel();
+        JPanel blankPanel = new JPanel();
+        JPanel blankPanel2 = new JPanel();
+        JPanel blankPanel3 = new JPanel();
+        JPanel topPanel = new JPanel();
+        JPanel bottomPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
         panel.setLayout(new BorderLayout());
-        panel.add(new JLabel("Session I'm voting in"), BorderLayout.NORTH);
+        topPanel.add(blankPanel3, BorderLayout.NORTH);
+        topPanel.add(new JLabel("   Session I'm voting in"), BorderLayout.SOUTH);
+        panel.add(topPanel, BorderLayout.NORTH);
         panel.add(tablePanel, BorderLayout.CENTER);
+        panel.add(blankPanel, BorderLayout.WEST);
+        panel.add(blankPanel2, BorderLayout.EAST);
+        panel.add(bottomPanel, BorderLayout.SOUTH);
 
         this.add(panel, BorderLayout.CENTER);
     }
@@ -103,6 +117,7 @@ public class JoiningSessionPanel extends JPanel {
     public MainView getParent(){
         return parent;
     }
+    
     
     public ListSelectionModel getListSelectionModel(){
         return this.listSelectionModel;

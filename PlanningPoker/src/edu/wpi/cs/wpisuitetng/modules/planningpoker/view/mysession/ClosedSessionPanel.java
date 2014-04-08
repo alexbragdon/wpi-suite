@@ -11,6 +11,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.mysession;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,7 +23,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 
 
@@ -68,11 +69,12 @@ public class ClosedSessionPanel extends JPanel {
         
         listSelectionModel = table.getSelectionModel();
         listSelectionModel.addListSelectionListener(new ListSelectionListener(){
+            
 
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if (table.getValueAt(table.getSelectedRow(), 1) != null && 
-                                ConfigManager.getConfig().getUserName().equals(table.getValueAt(table.getSelectedRow(), 1))){
+                if (table.getValueAt(table.getSelectedRow(), 0) != null && 
+                                ConfigManager.getConfig().getUserName().equals(table.getValueAt(table.getSelectedRow(), 0))){
                     getParent().getToolbarView().getReqButton().getEditButton().setVisible(true);
                 }
                 else{
@@ -82,11 +84,21 @@ public class ClosedSessionPanel extends JPanel {
 
         });
         table.setSelectionModel(listSelectionModel);
+        
 
         JPanel panel = new JPanel();
+        JPanel blankPanel = new JPanel();
+        JPanel blankPanel2 = new JPanel();
+        JPanel topPanel = new JPanel();
+        JPanel bottomPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
         panel.setLayout(new BorderLayout());
-        panel.add(new JLabel("Closed Sessions"), BorderLayout.NORTH);
+        topPanel.add(blankPanel2, BorderLayout.NORTH);
+        topPanel.add(new JLabel("Closed Sessions"), BorderLayout.SOUTH);
         panel.add(tablePanel, BorderLayout.CENTER);
+        panel.add(blankPanel, BorderLayout.EAST);
+        panel.add(topPanel, BorderLayout.NORTH);
+        panel.add(bottomPanel, BorderLayout.SOUTH);
 
         this.add(panel, BorderLayout.CENTER);
     }

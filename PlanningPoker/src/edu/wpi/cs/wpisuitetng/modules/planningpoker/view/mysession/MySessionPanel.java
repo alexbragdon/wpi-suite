@@ -13,12 +13,15 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.mysession;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
@@ -49,18 +52,23 @@ public class MySessionPanel extends JPanel {
 	private JPanel closedPanel = new JPanel();
     private MainView parent;
     private ListSelectionModel listSelectionModel;
+    private JPanel blankPanel = new JPanel();
     
     public MySessionPanel(MainView mainView)
     {
     	moderatingPanel = new ModeratingSessionPanel(mainView);
     	joiningPanel = new JoiningSessionPanel(mainView);
     	closedPanel = new ClosedSessionPanel(mainView);
+    	this.setMinimumSize(getPreferredSize());
     	
     	this.setLayout(new BorderLayout());
     	
     	this.add(moderatingPanel, BorderLayout.WEST);
     	this.add(joiningPanel, BorderLayout.CENTER);
     	this.add(closedPanel, BorderLayout.EAST);
+    	
+    	
+    	
 //        table1 = new ModeratingSessionTable();
 ////        table2 = new JoiningSessionTable();
 ////        table3 = new ClosedSessionTable();

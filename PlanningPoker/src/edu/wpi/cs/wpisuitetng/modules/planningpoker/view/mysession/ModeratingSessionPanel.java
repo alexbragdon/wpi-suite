@@ -11,6 +11,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.mysession;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.mysession.JoiningSessionPanel;
 
 
 /**
@@ -70,13 +75,14 @@ public class ModeratingSessionPanel extends JPanel {
 
         this.setLayout(new BorderLayout());
         
-       
         
         listSelectionModel = table.getSelectionModel();
-        listSelectionModel.addListSelectionListener(new ListSelectionListener(){
+        listSelectionModel.addListSelectionListener(new ListSelectionListener() {
+            
 
             @Override
             public void valueChanged(ListSelectionEvent e) {
+                
                 if (table.getValueAt(table.getSelectedRow(), 2) != null && 
                                 ConfigManager.getConfig().getUserName().equals(table.getValueAt(table.getSelectedRow(), 2))){
                     getParent().getToolbarView().getReqButton().getEditButton().setVisible(true);
@@ -88,12 +94,21 @@ public class ModeratingSessionPanel extends JPanel {
 
         });
         table.setSelectionModel(listSelectionModel);
-        table.setRowSelectionAllowed(true);
+        
 
         JPanel panel = new JPanel();
+        JPanel blankPanel = new JPanel();
+        JPanel blankPanel2 = new JPanel();
+        JPanel topPanel = new JPanel();
+        JPanel bottomPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
         panel.setLayout(new BorderLayout());
-        panel.add(new JLabel("Sessions I'm moderating"), BorderLayout.NORTH);
+        topPanel.add(blankPanel2, BorderLayout.NORTH);
+        topPanel.add(new JLabel("   Sessions I'm moderating"), BorderLayout.SOUTH);
+        panel.add(topPanel, BorderLayout.NORTH);
         panel.add(tablePanel, BorderLayout.CENTER);
+        panel.add(blankPanel, BorderLayout.WEST);
+        panel.add(bottomPanel, BorderLayout.SOUTH);
 
         this.add(panel, BorderLayout.CENTER);
     }
