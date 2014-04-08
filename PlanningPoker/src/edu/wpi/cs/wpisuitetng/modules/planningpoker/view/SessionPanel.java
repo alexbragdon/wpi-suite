@@ -9,15 +9,20 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,7 +46,10 @@ import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.FibonacciDeck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PokerDeck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
@@ -76,6 +84,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     private JSpinner hourSpin;
     
     private JSpinner minuteSpin;
+    
+    private DeckSet decks = new DeckSet();
+    
+    private JComboBox<String> deckChooser = new JComboBox<String>(decks.getNames());
     
     /**
      * Goes on left, holds basic info (name, time). changed to scrollable panel
@@ -234,6 +246,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      */
     @SuppressWarnings("deprecation")
 	private void buildLayout() {
+    	
+    	deckChooser.setSelectedIndex(0); //default to the "-None-" deck
+    	
         buttonPanel = new SessionButtonPanel(this, viewMode, displaySession);
         requirementsPanel = new SessionRequirementPanel(this, viewMode, displaySession);
         infoPanel = new ScrollablePanel();
@@ -247,6 +262,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         Font boardFont = new Font(infoLabel.getFont().getName(), Font.BOLD, infoLabel.getFont()
                         .getSize());
 		Date dt = new Date();
+		
 		int currentYear = dt.getYear();
 		int currentMonth = dt.getMonth();
 		int currentDay = dt.getDate();
@@ -344,6 +360,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         infoPanel.add(desLabel, "wrap");
         infoPanel.add(desFieldContainer, "growx, pushx, shrinkx, span, height 200px, wmin 10, wrap");
 		infoPanel.add(timeEnable);
+		infoPanel.add(deckChooser);
 		JPanel timeCheck = new JPanel();
 		timeCheck.add(timeEnable);
 		timeCheck.add(new JLabel("Set an end time?"));
@@ -364,12 +381,13 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
         JPanel hourPanel = new JPanel(new BorderLayout());
         JPanel minutePanel = new JPanel(new BorderLayout());
-
+        
         hourPanel.add(hourSpin, BorderLayout.CENTER);
         hourPanel.add(new JLabel("Choose the ending Hour:"), BorderLayout.NORTH);
         minutePanel.add(minuteSpin, BorderLayout.CENTER);
         minutePanel.add(new JLabel("Choose the ending minute."), BorderLayout.NORTH);
 
+        
         timePanel.add(hourPanel, BorderLayout.WEST);
         timePanel.add(minutePanel, BorderLayout.EAST);
         calendarPanel.add(timePanel, BorderLayout.SOUTH);
@@ -413,10 +431,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         
         updateButtonsIfChanges();
     }
-    
-    // Listeners for the text boxes
-    private void setupListeners() {
 
+	// Listeners for the text boxes
+    private void setupListeners() {
+    	
     	timeEnable.addActionListener(new ActionListener(){
 
 			@Override
