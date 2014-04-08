@@ -41,31 +41,33 @@ public class PlanningPokerSessionTests {
 	
 
 	private PlanningPokerSession testSession;
+	private PlanningPokerSession otherSession;
 	@Before
 	public void setUp() throws Exception {
 		testSession = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
-				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "aGuy");
-		
+				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "aGuy");	
+		otherSession = new PlanningPokerSession(10, "BrandNewSession", "BeepBeep", new Date(), 10, 12,
+				new ArrayList<RequirementEstimate>(), sessionType.DISTRIBUTED, true, true, "coolGuy");
 	}
 	@Test
 	public void TestsTheSetIDFunction(){
 		testSession.setID(6);
-		assertEquals(6, testSession.ID);
+		assertEquals(6, testSession.getID());
 	}
 	@Test
 	public void TestsTheSetHourFunction(){
 		testSession.setHour(12);
-		assertEquals(12, testSession.Hour);
+		assertEquals(12, testSession.getHour());
 	}
 	@Test
 	public void TestsTheSetMinFunction(){
 		testSession.setMin(20);
-		assertEquals(20, testSession.Min);
+		assertEquals(20, testSession.getMin());
 	}
 	@Test
 	public void TestsTheSetDescriptionFunction(){
 		testSession.setDescription("Blargh");
-		assertEquals("Blargh", testSession.Description);
+		assertEquals("Blargh", testSession.getDescription());
 	}
 	@Test
 	public void TestsTheSetModeratorFunction(){
@@ -75,17 +77,40 @@ public class PlanningPokerSessionTests {
 	@Test
 	public void TestsTheSetNameFunction(){
 		testSession.setName("NotADummy");
-		assertEquals("NotADummy", testSession.Name);
+		assertEquals("NotADummy", testSession.getName());
 	}
 	@Test
 	public void TestsTheSetActiveFunction(){
 		testSession.setActive(true);
-		assertEquals(true, testSession.isActive);
+		assertEquals(true, testSession.isActive());
 	}
 	@Test
 	public void TestsTheSetCompleteFunction(){
 		testSession.setComplete(true);
-		assertEquals(true, testSession.isComplete);
+		assertEquals(true, testSession.isComplete());
+	}
+	@Test
+	public void TestsTheSetTypeFunction(){
+		testSession.setType(sessionType.DISTRIBUTED);
+		assertEquals(sessionType.DISTRIBUTED, testSession.getType());
+	}
+	@Test
+	public void TestsTheCopyFromFunction(){
+		testSession.copyFrom(otherSession);
+		assertEquals(10, testSession.getID());
+		assertEquals("BrandNewSession", testSession.getName());
+		assertEquals("BeepBeep", testSession.getDescription());
+		assertEquals(10, testSession.getHour());
+		assertEquals(12, testSession.getMin());
+		assertEquals(sessionType.DISTRIBUTED, testSession.getType());
+		assertEquals(true, testSession.isComplete());
+		assertEquals(true, testSession.isActive());
+	}
+	@Test
+	public void TestsTheHashCodeFunction(){
+		testSession.hashCode();
+		assertNotNull(testSession.hashCode());
+		
 	}
 
 }
