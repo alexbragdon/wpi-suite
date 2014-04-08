@@ -79,6 +79,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     
     private Date dt;
     
+    private boolean isOpen = false;
+    
     /**
      * Goes on left, holds basic info (name, time). changed to scrollable panel
      */
@@ -203,7 +205,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             infoLabel.setText("*Select at least one requirement");
         }
         
-        return isNameValid && isDescriptionValid && isDateValid && isReqsValid;
+        if (isOpen) {
+        	infoLabel.setText("*Cannot update an open session.");
+        }
+        
+        return isNameValid && isDescriptionValid && isDateValid && isReqsValid && !isOpen;
     }
 
     /**
@@ -393,6 +399,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         
         switch (viewMode) {
         case EDIT:
+        	isOpen = displaySession.isActive();
             nameField.setText(displaySession.getName());
             desField.setText(displaySession.getDescription());
             dateChooser.setDate(displaySession.getDate());
@@ -443,6 +450,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             		buttonPanel.getButtonSave().setEnabled(true);
             	else
             		buttonPanel.getButtonSave().setEnabled(false);
+            	
+            	if (validateFields(true) && !isOpen) {
+            		buttonPanel.getButtonOpen().setEnabled(true);
+            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
 			}
         	
         });
@@ -460,6 +471,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             		buttonPanel.getButtonSave().setEnabled(true);
             	else
             		buttonPanel.getButtonSave().setEnabled(false);
+            	
+            	if (validateFields(true) && !isOpen) {
+            		buttonPanel.getButtonOpen().setEnabled(true);
+            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
             }
 
         });
@@ -477,6 +492,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             		buttonPanel.getButtonSave().setEnabled(true);
             	else
             		buttonPanel.getButtonSave().setEnabled(false);
+            	
+            	if (validateFields(true) && !isOpen) {
+            		buttonPanel.getButtonOpen().setEnabled(true);
+            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
             }
 
         });
@@ -494,6 +513,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             		buttonPanel.getButtonSave().setEnabled(true);
             	else
             		buttonPanel.getButtonSave().setEnabled(false);
+            	
+            	if (validateFields(true) && !isOpen) {
+            		buttonPanel.getButtonOpen().setEnabled(true);
+            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
             }
 
         });
@@ -510,6 +533,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             		buttonPanel.getButtonSave().setEnabled(true);
             	else
             		buttonPanel.getButtonSave().setEnabled(false);
+            	
+            	if (validateFields(true) && !isOpen) {
+            		buttonPanel.getButtonOpen().setEnabled(true);
+            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
             }
 
             @Override
@@ -523,6 +550,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             		buttonPanel.getButtonSave().setEnabled(true);
             	else
             		buttonPanel.getButtonSave().setEnabled(false);
+            	
+            	if (validateFields(true) && !isOpen) {
+            		buttonPanel.getButtonOpen().setEnabled(true);
+            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
             }
 
             @Override
@@ -536,6 +567,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             		buttonPanel.getButtonSave().setEnabled(true);
             	else
             		buttonPanel.getButtonSave().setEnabled(false);
+            	
+            	if (validateFields(true) && !isOpen) {
+            		buttonPanel.getButtonOpen().setEnabled(true);
+            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
             }
         });
 
@@ -551,6 +586,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             		buttonPanel.getButtonSave().setEnabled(true);
             	else
             		buttonPanel.getButtonSave().setEnabled(false);
+            	
+            	if (validateFields(true) && !isOpen) {
+            		buttonPanel.getButtonOpen().setEnabled(true);
+            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
             }
 
             @Override
@@ -567,6 +606,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             		buttonPanel.getButtonSave().setEnabled(true);
             	else
             		buttonPanel.getButtonSave().setEnabled(false);
+            	
+            	if (validateFields(true) && !isOpen) {
+            		buttonPanel.getButtonOpen().setEnabled(true);
+            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
             }
 
             @Override
@@ -583,6 +626,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             		buttonPanel.getButtonSave().setEnabled(true);
             	else
             		buttonPanel.getButtonSave().setEnabled(false);
+            	
+            	if (validateFields(true) && !isOpen) {
+            		buttonPanel.getButtonOpen().setEnabled(true);
+            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
             }
         });
         
@@ -599,6 +646,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             		buttonPanel.getButtonSave().setEnabled(true);
             	else
             		buttonPanel.getButtonSave().setEnabled(false);
+            	
+            	if (validateFields(true) && !isOpen) {
+            		buttonPanel.getButtonOpen().setEnabled(true);
+            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
 				
 			}
         	
@@ -613,6 +664,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     		buttonPanel.getButtonSave().setEnabled(false);
     		buttonPanel.getButtonClear().setEnabled(false);
     	}
+    	
+    	if (validateFields(true) && !isOpen) {
+    		buttonPanel.getButtonOpen().setEnabled(true);
+    	} else {buttonPanel.getButtonOpen().setEnabled(false);}
     }
     
     private boolean hasChanges() {
@@ -644,6 +699,15 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             //buttonPanel.getButtonClear().setEnabled(true);
         }
     }
+    
+    public void openPressed() {
+    	if (validateFields(true)) {
+    		isOpen = true;
+    		PlanningPokerSession session = createSessionFromFields();
+    		EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+    		ViewEventController.getInstance().removeTab(this);
+    	}
+    }
 
 	public PlanningPokerSession createSessionFromFields() {
 		sessionType type = timeEnable.isSelected() ? sessionType.DISTRIBUTED : sessionType.REALTIME;
@@ -651,7 +715,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		                desField.getText(), dateChooser.getDate(),
 		                Integer.parseInt(hourSpin.getValue().toString()),
 		                Integer.parseInt(minuteSpin.getValue().toString()),
-		                requirementsPanel.getSelectedRequirements(), type, false,
+		                requirementsPanel.getSelectedRequirements(), type, isOpen,
 		                false, ConfigManager.getConfig().getUserName());
 		return session;
 	}
