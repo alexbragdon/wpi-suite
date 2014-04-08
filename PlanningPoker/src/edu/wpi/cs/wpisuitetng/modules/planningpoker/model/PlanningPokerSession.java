@@ -258,6 +258,7 @@ public class PlanningPokerSession extends AbstractModel {
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + (isActive ? 1231 : 1237);
 		result = prime * result + (isComplete ? 1231 : 1237);
+		result = prime * result + ((deck == null) ? 0 : deck.hashCode());
 		return result;
 	}
 
@@ -286,6 +287,23 @@ public class PlanningPokerSession extends AbstractModel {
 		if (ID != other.ID) {
 			return false;
 		}
+		
+		if ((this.deck == null) && (other.deck != null)) {
+			return false;
+		}
+		
+		//assert: this deck not null
+		if (other.deck == null) {
+			return false;
+		}
+		
+		//assert: other deck not null
+		
+		//check if equal
+		if (!this.deck.equals(other.deck)) {
+			return false;
+		}
+		
 		if (Min != other.Min) {
 			return false;
 		}
