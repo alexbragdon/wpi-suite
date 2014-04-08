@@ -98,4 +98,8 @@ public class SuperButton extends JButton {
     public void ViewSession(){
 
     }
+    
+    public String getTextOnButton(){
+    	return this.getText();
+    }
 }
