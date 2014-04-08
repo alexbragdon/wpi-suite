@@ -14,7 +14,10 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.Timer;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionControllerModerating;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionTable;
 
@@ -28,6 +31,8 @@ public class ModeratingSessionPanel extends JPanel {
     
     ModeratingSessionTable table;
     private MainView parent;
+    
+    Timer timer;
     
     public ModeratingSessionPanel(MainView mainView, final MySessionPanel mySessionPanel)
     {
@@ -66,9 +71,18 @@ public class ModeratingSessionPanel extends JPanel {
         panel.add(bottomPanel, BorderLayout.SOUTH);
         
         this.add(panel, BorderLayout.CENTER);
-
-  
         
+        timer = new Timer(1000, new GetPlanningPokerSessionControllerModerating(table));
+        timer.setInitialDelay(10000);
+        timer.start(); 
+    }
+    
+    /**
+     * Refreshes the table associated with this panel.
+     */
+    public void refresh() {
+        // Feels a little hacky
+        new GetPlanningPokerSessionControllerModerating(table).actionPerformed(null);
     }
 
 }

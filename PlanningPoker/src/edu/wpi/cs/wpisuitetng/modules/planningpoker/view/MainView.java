@@ -26,8 +26,7 @@ public class MainView extends JTabbedPane {
 	private Component lastTab = null;
 	private ToolbarView toolbarView;
 	private MySessionPanel mySession = new MySessionPanel(this);
-
-
+	
 
 	/**
 	 * Adds main subtab when user goes to planningpoker

@@ -76,7 +76,7 @@ public class MySessionPanel extends JPanel {
         this.add(moderatingPanel, BorderLayout.WEST);
         this.add(joiningPanel, BorderLayout.CENTER);
         this.add(closedPanel, BorderLayout.EAST);
-        populateTables(sessions);
+        //populateTables(sessions);
      
         
     }
