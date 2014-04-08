@@ -19,7 +19,6 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @version Apr 7, 2014
  */
 public class ViewPlanningPokerController {
-    private static ViewPlanningPokerController instance;
     private ViewPlanningPokerObserver observer;
     //private EditSessionPanel model;
 

@@ -8,14 +8,11 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
@@ -40,16 +37,15 @@ import com.toedter.calendar.JCalendar;
 import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.DeletePlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonListener;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * This is session panel for the sessions of planning poker game.
@@ -63,8 +59,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
     private JTextField nameField = new JTextField();
 
-	private JCheckBox timeEnable = new JCheckBox();
-	
+    private JCheckBox timeEnable = new JCheckBox();
+
     private JTextArea desField = new JTextArea();
 
     private final JLabel infoLabel = new JLabel("");
@@ -74,9 +70,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     private ViewMode viewMode;
 
     private JSpinner hourSpin;
-    
+
     private JSpinner minuteSpin;
-    
+
     /**
      * Goes on left, holds basic info (name, time). changed to scrollable panel
      */
@@ -104,11 +100,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      * 
      * @param editingSession requirement to edit
      */
-    public SessionPanel(PlanningPokerSession session) {
+    public SessionPanel(PlanningPokerSession session,ViewMode mode) {
         displaySession = session;
-        viewMode = ViewMode.EDIT;
+        viewMode = mode;
         this.buildLayout();
-       
+
     }
 
     /**
@@ -133,73 +129,77 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         int nameCharLimit = 1000000;
         int desCharLimit = 1000000;
         infoLabel.setForeground(Color.red);
-
+        boolean result;
+        
         infoLabel.setText("");
+        if (viewMode != ViewMode.VIEW){
+            if (nameField.getText().length() > nameCharLimit) {
+                if (display) {
+                    infoLabel.setText("*The name has to be less than one million characters.");
+                }
+                isNameValid = false;
+            } else if (nameField.getText().length() == 0) {
+                if (display) {
+                    infoLabel.setText("*Please enter a name.");
+                }
+                isNameValid = false;
+            } else if (nameField.getText().startsWith(" ")) {
+                if (display) {
+                    infoLabel.setText("*Name cannot start with a space.");
+                }
+                isNameValid = false;
+            } else {
+                if (display) {
+                    infoLabel.setText("");
+                }
+                isNameValid = true;
+            }
 
-        if (nameField.getText().length() > nameCharLimit) {
-            if (display) {
-                infoLabel.setText("*The name has to be less than one million characters.");
+            if (desField.getText().length() > desCharLimit) {
+                if (display && isNameValid) {
+                    infoLabel.setText("*The description has to be less than one million characters.");
+                }
+                isDescriptionValid = false;
+            } else if (desField.getText().length() == 0) {
+                if (display && isNameValid) {
+                    infoLabel.setText("*Please enter a description.");
+                }
+                isDescriptionValid = false;
+            } else if (desField.getText().startsWith(" ")) {
+                if (display && isNameValid) {
+                    infoLabel.setText("*Description cannot start with a space.");
+                }
+                isDescriptionValid = false;
+            } else {
+                if (display && isNameValid) {
+                    infoLabel.setText(infoLabel.getText() + "");
+                }
+                isDescriptionValid = true;
             }
-            isNameValid = false;
-        } else if (nameField.getText().length() == 0) {
-            if (display) {
-                infoLabel.setText("*Please enter a name.");
-            }
-            isNameValid = false;
-        } else if (nameField.getText().startsWith(" ")) {
-            if (display) {
-                infoLabel.setText("*Name cannot start with a space.");
-            }
-            isNameValid = false;
-        } else {
-            if (display) {
-                infoLabel.setText("");
-            }
-            isNameValid = true;
-        }
 
-        if (desField.getText().length() > desCharLimit) {
-            if (display && isNameValid) {
-                infoLabel.setText("*The description has to be less than one million characters.");
-            }
-            isDescriptionValid = false;
-        } else if (desField.getText().length() == 0) {
-            if (display && isNameValid) {
-                infoLabel.setText("*Please enter a description.");
-            }
-            isDescriptionValid = false;
-        } else if (desField.getText().startsWith(" ")) {
-            if (display && isNameValid) {
-                infoLabel.setText("*Description cannot start with a space.");
-            }
-            isDescriptionValid = false;
-        } else {
-            if (display && isNameValid) {
-                infoLabel.setText(infoLabel.getText() + "");
-            }
-            isDescriptionValid = true;
-        }
+            if (timeEnable.isSelected()) {
+                //Get the selected date and set the time to the value set by the spinners
+                Calendar selected = dateToCalendar(dateChooser.getDate());
+                selected.set(Calendar.HOUR_OF_DAY, (Integer) hourSpin.getValue());
+                selected.set(Calendar.MINUTE, (Integer) minuteSpin.getValue());
+                Calendar now = dateToCalendar(new Date());
+                System.out.println("calling");
+                isDateValid = true;
+                if (isBefore(selected, now)) {
+                    infoLabel.setText("*Date is in the past");
+                    isDateValid = false;
+                }
+            } else {isDateValid = true;}
 
-        if (timeEnable.isSelected()) {
-        	//Get the selected date and set the time to the value set by the spinners
-        	Calendar selected = dateToCalendar(dateChooser.getDate());
-        	selected.set(Calendar.HOUR_OF_DAY, (Integer) hourSpin.getValue());
-        	selected.set(Calendar.MINUTE, (Integer) minuteSpin.getValue());
-        	Calendar now = dateToCalendar(new Date());
-        	System.out.println("calling");
-        	isDateValid = true;
-        	if (isBefore(selected, now)) {
-        		infoLabel.setText("*Date is in the past");
-        		isDateValid = false;
-        	}
-        } else {isDateValid = true;}
-        
-        isReqsValid = requirementsPanel.getSelectedRequirements().size() > 0;
-        if (!isReqsValid) {
-            infoLabel.setText("*Select at least one requirement");
+            isReqsValid = requirementsPanel.getSelectedRequirements().size() > 0;
+            if (!isReqsValid) {
+                infoLabel.setText("*Select at least one requirement");
+            }
+            result = isNameValid && isDescriptionValid && isDateValid && isReqsValid;
+        }else {
+            result = true; 
         }
-        
-        return isNameValid && isDescriptionValid && isDateValid && isReqsValid;
+        return result;
     }
 
     /**
@@ -233,12 +233,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      * Builds the layout of the panel.
      */
     @SuppressWarnings("deprecation")
-	private void buildLayout() {
+    private void buildLayout() {
         buttonPanel = new SessionButtonPanel(this, viewMode, displaySession);
         requirementsPanel = new SessionRequirementPanel(this, viewMode, displaySession);
         infoPanel = new ScrollablePanel();
         infoPanel.setLayout(new MigLayout("", "", "shrink"));
-        
+
         JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel,
                         requirementsPanel);
         // Change the info string to add info. Delete the second string
@@ -246,82 +246,82 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         final JLabel desLabel = new JLabel("Description *");
         Font boardFont = new Font(infoLabel.getFont().getName(), Font.BOLD, infoLabel.getFont()
                         .getSize());
-		Date dt = new Date();
-		int currentYear = dt.getYear();
-		int currentMonth = dt.getMonth();
-		int currentDay = dt.getDate();
-		int currentHour = dt.getHours() + 1;
-		int currentMinute = dt.getMinutes();
-		if (currentMonth == 2) {
-			if (currentYear % 4 == 0) {// There is FEB 29th in leap year
-				if (currentDay == 29) {// Today of FEB 29th
-					if (currentHour >= 24) {
-						currentHour = 0;
-						dt.setMonth(3);
-						dt.setDate(1);// Next day is MAR 1st
-					}
-				} else {// Not last day
-					if (currentHour >= 24) {
-						currentHour = 0;
-						dt.setDate(currentDay + 1);
-					}
-				}
-			} else {// Not leap year
-				if (currentDay == 28) {// Today of FEB 29th
-					if (currentHour >= 24) {
-						currentHour = 0;
-						dt.setMonth(3);
-						dt.setDate(1);// Next day is MAR 1st
-					}
-				} else {// Not last day
-					if (currentHour >= 24) {
-						currentHour = 0;
-						dt.setDate(currentDay + 1);
-						}
-				}
-			}
-		} else if (currentMonth == 12) {
-			if (currentDay == 31) {// Last day of the year
-				if (currentHour >= 24) {
-					currentHour = 0;
-					dt.setYear(currentYear + 1);// To the next year
-					dt.setMonth(1);
-					dt.setDate(1);// Next day is JAN 1st
-				}
-			} else {
-				if (currentHour >= 24) {
-					currentHour = 0;
-					dt.setDate(currentDay + 1);
-				}
-			}
-		} else if (currentMonth == 4 || currentMonth == 6 || currentMonth == 9
-				|| currentMonth == 11) {
-			if (currentDay == 31) {// Last day of the current month
-				if (currentHour >= 24) {
-					currentHour = 0;
-					dt.setMonth(currentMonth + 1);// To the next month
-					dt.setDate(1);// Next day is 1st
-				}
-			} else {
-				if (currentHour >= 24) {
-					currentHour = 0;
-					dt.setDate(currentDay + 1);
-				}
-			}
-		} else {
-			if (currentDay == 30) {// Last day of the current month
-				if (currentHour >= 24) {
-					currentHour = 0;
-					dt.setMonth(currentMonth + 1);// To the next month
-					dt.setDate(1);// Next day is 1st
-				}
-			} else {
-				if (currentHour >= 24) {
-					currentHour = 0;
-					dt.setDate(currentDay + 1);
-				}
-			}
-		}
+        Date dt = new Date();
+        int currentYear = dt.getYear();
+        int currentMonth = dt.getMonth();
+        int currentDay = dt.getDate();
+        int currentHour = dt.getHours() + 1;
+        int currentMinute = dt.getMinutes();
+        if (currentMonth == 2) {
+            if (currentYear % 4 == 0) {// There is FEB 29th in leap year
+                if (currentDay == 29) {// Today of FEB 29th
+                    if (currentHour >= 24) {
+                        currentHour = 0;
+                        dt.setMonth(3);
+                        dt.setDate(1);// Next day is MAR 1st
+                    }
+                } else {// Not last day
+                    if (currentHour >= 24) {
+                        currentHour = 0;
+                        dt.setDate(currentDay + 1);
+                    }
+                }
+            } else {// Not leap year
+                if (currentDay == 28) {// Today of FEB 29th
+                    if (currentHour >= 24) {
+                        currentHour = 0;
+                        dt.setMonth(3);
+                        dt.setDate(1);// Next day is MAR 1st
+                    }
+                } else {// Not last day
+                    if (currentHour >= 24) {
+                        currentHour = 0;
+                        dt.setDate(currentDay + 1);
+                    }
+                }
+            }
+        } else if (currentMonth == 12) {
+            if (currentDay == 31) {// Last day of the year
+                if (currentHour >= 24) {
+                    currentHour = 0;
+                    dt.setYear(currentYear + 1);// To the next year
+                    dt.setMonth(1);
+                    dt.setDate(1);// Next day is JAN 1st
+                }
+            } else {
+                if (currentHour >= 24) {
+                    currentHour = 0;
+                    dt.setDate(currentDay + 1);
+                }
+            }
+        } else if (currentMonth == 4 || currentMonth == 6 || currentMonth == 9
+                        || currentMonth == 11) {
+            if (currentDay == 31) {// Last day of the current month
+                if (currentHour >= 24) {
+                    currentHour = 0;
+                    dt.setMonth(currentMonth + 1);// To the next month
+                    dt.setDate(1);// Next day is 1st
+                }
+            } else {
+                if (currentHour >= 24) {
+                    currentHour = 0;
+                    dt.setDate(currentDay + 1);
+                }
+            }
+        } else {
+            if (currentDay == 30) {// Last day of the current month
+                if (currentHour >= 24) {
+                    currentHour = 0;
+                    dt.setMonth(currentMonth + 1);// To the next month
+                    dt.setDate(1);// Next day is 1st
+                }
+            } else {
+                if (currentHour >= 24) {
+                    currentHour = 0;
+                    dt.setDate(currentDay + 1);
+                }
+            }
+        }
 
         dateChooser = new JCalendar(dt); //Create new JCalendar with now default selected
         hourSpin = new JSpinner(new SpinnerNumberModel(currentHour, 0, 23, 1));
@@ -343,11 +343,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         infoPanel.add(nameField, "growx, pushx, shrinkx, span, wrap");
         infoPanel.add(desLabel, "wrap");
         infoPanel.add(desFieldContainer, "growx, pushx, shrinkx, span, height 200px, wmin 10, wrap");
-		infoPanel.add(timeEnable);
-		JPanel timeCheck = new JPanel();
-		timeCheck.add(timeEnable);
-		timeCheck.add(new JLabel("Set an end time?"));
-		infoPanel.add(timeCheck, "wrap");
+        infoPanel.add(timeEnable);
+        JPanel timeCheck = new JPanel();
+        timeCheck.add(timeEnable);
+        timeCheck.add(new JLabel("Set an end time?"));
+        infoPanel.add(timeCheck, "wrap");
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         infoLabel.setText("");
         infoLabel.setForeground(Color.red);
@@ -382,80 +382,96 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         validateFields(true);
 
         setupListeners();
-        
+
         dateChooser.setEnabled(false);
-		hourSpin.setEnabled(false);
-		minuteSpin.setEnabled(false);
-        
+        hourSpin.setEnabled(false);
+        minuteSpin.setEnabled(false);
+
         switch (viewMode) {
-        case EDIT:
-            nameField.setText(displaySession.getName());
-            desField.setText(displaySession.getDiscription());
-            dateChooser.setDate(displaySession.getDate());
-            hourSpin.setValue(displaySession.getHour());
-            minuteSpin.setValue(displaySession.getMin());
-            if (displaySession.getType() == sessionType.DISTRIBUTED) {
-            	timeEnable.setSelected(true);
-                dateChooser.setEnabled(true);
-        		hourSpin.setEnabled(true);
-        		minuteSpin.setEnabled(true);
-            } else {
-            	dateChooser.setEnabled(false);
-				hourSpin.setEnabled(false);
-				minuteSpin.setEnabled(false);
-            }
-            break;
-        case CREATE:
-            nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date())
-                            + " Planning Poker");
-            break;
+            case VIEW:
+                nameField.setText(displaySession.getName());
+                desField.setText(displaySession.getDiscription());
+                dateChooser.setDate(displaySession.getDate());
+                hourSpin.setValue(displaySession.getHour());
+                minuteSpin.setValue(displaySession.getMin());
+                if (displaySession.getType() == sessionType.DISTRIBUTED) {
+                    timeEnable.setSelected(true);
+                }
+                timeEnable.setEnabled(false);
+                nameField.setEnabled(false);
+                desField.setEnabled(false);
+                dateChooser.setEnabled(false);
+                hourSpin.setEnabled(false);
+                minuteSpin.setEnabled(false);
+                break;
+            case EDIT:
+                nameField.setText(displaySession.getName());
+                desField.setText(displaySession.getDiscription());
+                dateChooser.setDate(displaySession.getDate());
+                hourSpin.setValue(displaySession.getHour());
+                minuteSpin.setValue(displaySession.getMin());
+                if (displaySession.getType() == sessionType.DISTRIBUTED) {
+                    timeEnable.setSelected(true);
+                    dateChooser.setEnabled(true);
+                    hourSpin.setEnabled(true);
+                    minuteSpin.setEnabled(true);
+                } else {
+                    dateChooser.setEnabled(false);
+                    hourSpin.setEnabled(false);
+                    minuteSpin.setEnabled(false);
+                }
+                break;
+            case CREATE:
+                nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date())
+                                + " Planning Poker");
+                break;
         }
-        
+
         updateButtonsIfChanges();
     }
-    
+
     // Listeners for the text boxes
     private void setupListeners() {
 
-    	timeEnable.addActionListener(new ActionListener(){
+        timeEnable.addActionListener(new ActionListener(){
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (timeEnable.isSelected()) {
-				    dateChooser.setEnabled(true);
-					hourSpin.setEnabled(true);
-					minuteSpin.setEnabled(true);
-				} else {
-					dateChooser.setEnabled(false);
-					hourSpin.setEnabled(false);
-    				minuteSpin.setEnabled(false);
-				}
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-			}
-        	
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (timeEnable.isSelected()) {
+                    dateChooser.setEnabled(true);
+                    hourSpin.setEnabled(true);
+                    minuteSpin.setEnabled(true);
+                } else {
+                    dateChooser.setEnabled(false);
+                    hourSpin.setEnabled(false);
+                    minuteSpin.setEnabled(false);
+                }
+                if (hasChanges())
+                    buttonPanel.getButtonClear().setEnabled(true);
+                else
+                    buttonPanel.getButtonClear().setEnabled(false);
+
+                if (hasChanges() && validateFields(true))
+                    buttonPanel.getButtonSave().setEnabled(true);
+                else
+                    buttonPanel.getButtonSave().setEnabled(false);
+            }
+
         });
-    	
+
         hourSpin.addChangeListener(new ChangeListener() {
 
             @Override
             public void stateChanged(ChangeEvent e) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
+                if (hasChanges())
+                    buttonPanel.getButtonClear().setEnabled(true);
+                else
+                    buttonPanel.getButtonClear().setEnabled(false);
+
+                if (hasChanges() && validateFields(true))
+                    buttonPanel.getButtonSave().setEnabled(true);
+                else
+                    buttonPanel.getButtonSave().setEnabled(false);
             }
 
         });
@@ -464,15 +480,15 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
             @Override
             public void stateChanged(ChangeEvent e) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
+                if (hasChanges())
+                    buttonPanel.getButtonClear().setEnabled(true);
+                else
+                    buttonPanel.getButtonClear().setEnabled(false);
+
+                if (hasChanges() && validateFields(true))
+                    buttonPanel.getButtonSave().setEnabled(true);
+                else
+                    buttonPanel.getButtonSave().setEnabled(false);
             }
 
         });
@@ -481,15 +497,15 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
+                if (hasChanges())
+                    buttonPanel.getButtonClear().setEnabled(true);
+                else
+                    buttonPanel.getButtonClear().setEnabled(false);
+
+                if (hasChanges() && validateFields(true))
+                    buttonPanel.getButtonSave().setEnabled(true);
+                else
+                    buttonPanel.getButtonSave().setEnabled(false);
             }
 
         });
@@ -497,56 +513,56 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         nameField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent e) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
+                if (hasChanges())
+                    buttonPanel.getButtonClear().setEnabled(true);
+                else
+                    buttonPanel.getButtonClear().setEnabled(false);
+
+                if (hasChanges() && validateFields(true))
+                    buttonPanel.getButtonSave().setEnabled(true);
+                else
+                    buttonPanel.getButtonSave().setEnabled(false);
             }
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
+                if (hasChanges())
+                    buttonPanel.getButtonClear().setEnabled(true);
+                else
+                    buttonPanel.getButtonClear().setEnabled(false);
+
+                if (hasChanges() && validateFields(true))
+                    buttonPanel.getButtonSave().setEnabled(true);
+                else
+                    buttonPanel.getButtonSave().setEnabled(false);
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
+                if (hasChanges())
+                    buttonPanel.getButtonClear().setEnabled(true);
+                else
+                    buttonPanel.getButtonClear().setEnabled(false);
+
+                if (hasChanges() && validateFields(true))
+                    buttonPanel.getButtonSave().setEnabled(true);
+                else
+                    buttonPanel.getButtonSave().setEnabled(false);
             }
         });
 
         desField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent arg0) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
+                if (hasChanges())
+                    buttonPanel.getButtonClear().setEnabled(true);
+                else
+                    buttonPanel.getButtonClear().setEnabled(false);
+
+                if (hasChanges() && validateFields(true))
+                    buttonPanel.getButtonSave().setEnabled(true);
+                else
+                    buttonPanel.getButtonSave().setEnabled(false);
             }
 
             @Override
@@ -554,15 +570,15 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 // TODO Auto-generated method stub
                 //updateButtonsIfChanges();
                 //textChanged();
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
+                if (hasChanges())
+                    buttonPanel.getButtonClear().setEnabled(true);
+                else
+                    buttonPanel.getButtonClear().setEnabled(false);
+
+                if (hasChanges() && validateFields(true))
+                    buttonPanel.getButtonSave().setEnabled(true);
+                else
+                    buttonPanel.getButtonSave().setEnabled(false);
             }
 
             @Override
@@ -570,63 +586,64 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 // TODO Auto-generated method stub
                 //updateButtonsIfChanges();
                 //textChanged();
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
+                if (hasChanges())
+                    buttonPanel.getButtonClear().setEnabled(true);
+                else
+                    buttonPanel.getButtonClear().setEnabled(false);
+
+                if (hasChanges() && validateFields(true))
+                    buttonPanel.getButtonSave().setEnabled(true);
+                else
+                    buttonPanel.getButtonSave().setEnabled(false);
             }
         });
-        
+
         requirementsPanel.addListener(new TableModelListener() {
 
-			@Override
-			public void tableChanged(TableModelEvent e) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-				
-			}
-        	
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (hasChanges())
+                    buttonPanel.getButtonClear().setEnabled(true);
+                else
+                    buttonPanel.getButtonClear().setEnabled(false);
+
+                if (hasChanges() && validateFields(true))
+                    buttonPanel.getButtonSave().setEnabled(true);
+                else
+                    buttonPanel.getButtonSave().setEnabled(false);
+
+            }
+
         });
     }
-    
+
     private void updateButtonsIfChanges() {
-    	if (hasChanges()) {
-    		buttonPanel.getButtonSave().setEnabled(true);
-    		buttonPanel.getButtonClear().setEnabled(true);
-    	} else {
-    		buttonPanel.getButtonSave().setEnabled(false);
-    		buttonPanel.getButtonClear().setEnabled(false);
-    	}
+        if (hasChanges()) {
+            buttonPanel.getButtonSave().setEnabled(true);
+            buttonPanel.getButtonClear().setEnabled(true);
+        } else {
+            buttonPanel.getButtonSave().setEnabled(false);
+            buttonPanel.getButtonClear().setEnabled(false);
+        }
     }
-    
+
     private boolean hasChanges() {
-    	PlanningPokerSession session = createSessionFromFields();
-    	PlanningPokerSession otherSession = displaySession;
-    	return !session.equals(displaySession);
+        PlanningPokerSession session = createSessionFromFields();
+        PlanningPokerSession otherSession = displaySession;
+        return !session.equals(displaySession);
     }
-    
+
     public void OKPressed() {
         if (validateFields(true)) {
 
-        	PlanningPokerSession session = createSessionFromFields();
+            PlanningPokerSession session = createSessionFromFields();
 
             switch (viewMode) {
                 case CREATE: AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session); break;
                 case EDIT: EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session); break;
+                case VIEW: break;
             }
-            
+
             ViewEventController.getInstance().removeTab(this);
 
             //get selected requirements
@@ -641,40 +658,47 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         }
     }
 
-	public PlanningPokerSession createSessionFromFields() {
-		sessionType type = timeEnable.isSelected() ? sessionType.DISTRIBUTED : sessionType.REALTIME;
-		PlanningPokerSession session = new PlanningPokerSession(displaySession.getID(), nameField.getText(),
-		                desField.getText(), dateChooser.getDate(),
-		                Integer.parseInt(hourSpin.getValue().toString()),
-		                Integer.parseInt(minuteSpin.getValue().toString()),
-		                requirementsPanel.getSelectedRequirements(), type, false,
-		                false, ConfigManager.getConfig().getUserName());
-		return session;
-	}
+    public PlanningPokerSession createSessionFromFields() {
+        sessionType type = timeEnable.isSelected() ? sessionType.DISTRIBUTED : sessionType.REALTIME;
+        PlanningPokerSession session = new PlanningPokerSession(displaySession.getID(), nameField.getText(),
+                        desField.getText(), dateChooser.getDate(),
+                        Integer.parseInt(hourSpin.getValue().toString()),
+                        Integer.parseInt(minuteSpin.getValue().toString()),
+                        requirementsPanel.getSelectedRequirements(), type, false,
+                        false, ConfigManager.getConfig().getUserName());
+        return session;
+    }
 
     public void clearPressed() {
         nameField.setText(displaySession.getName());
         desField.setText(displaySession.getDiscription());
-    	dateChooser.setDate(displaySession.getDate());
-    	hourSpin.setValue(displaySession.getHour());
-    	minuteSpin.setValue(displaySession.getMin());
+        dateChooser.setDate(displaySession.getDate());
+        hourSpin.setValue(displaySession.getHour());
+        minuteSpin.setValue(displaySession.getMin());
         requirementsPanel.refreshRequirementSelection();
         if (displaySession.getType() == sessionType.DISTRIBUTED) {
-        	timeEnable.setSelected(true);
-        	dateChooser.setEnabled(true);
-        	hourSpin.setEnabled(true);
-        	minuteSpin.setEnabled(true);
+            timeEnable.setSelected(true);
+            dateChooser.setEnabled(true);
+            hourSpin.setEnabled(true);
+            minuteSpin.setEnabled(true);
         } else {
-        	timeEnable.setSelected(false);
-        	dateChooser.setEnabled(false);
-        	hourSpin.setEnabled(false);
-        	minuteSpin.setEnabled(false);
+            timeEnable.setSelected(false);
+            dateChooser.setEnabled(false);
+            hourSpin.setEnabled(false);
+            minuteSpin.setEnabled(false);
         }
         buttonPanel.getButtonSave().setEnabled(false);
         buttonPanel.getButtonClear().setEnabled(false);
     }
 
     public void cancelPressed() {
+        switch(viewMode){ 
+            case VIEW:
+                DeletePlanningPokerSessionController.getInstance().deletePlanningPokerSession(displaySession);
+                break;
+            default:
+                break;
+        }   
         ViewEventController.getInstance().removeTab(this);
     }
 
@@ -708,7 +732,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     public String getInfoLabel() {
         return infoLabel.getText();
     }
-    
+
     public PlanningPokerSession getSession(){
         return displaySession;
     }

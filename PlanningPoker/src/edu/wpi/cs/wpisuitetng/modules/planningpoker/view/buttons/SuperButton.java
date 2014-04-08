@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.FindPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.ViewPlanningPokerController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 
 /**
@@ -49,16 +50,15 @@ public class SuperButton extends JButton {
         } catch (IOException ex) {}
 
         //this.setVisible(false);
-        
+
         // TODO: Delete this default
-        Update(0);
+        Update(2);
     }
 
     public void Update(int selectedIndex){
         // Edit session
         if(selectedIndex == 0){
             this.setEnabled(true);
-            
             this.setText("<html>Edit<br />Session</html>");
             this.setIcon(new ImageIcon(editImg));
         }
@@ -76,9 +76,7 @@ public class SuperButton extends JButton {
         if(selectedIndex == 2){
             this.setText("<html>View<br />Results</html>");
             this.setIcon(new ImageIcon(viewImg));
-
-            // TODO: Make this button do something
-            this.setEnabled(false);
+            this.setEnabled(true);
         }
     }
 
@@ -86,7 +84,7 @@ public class SuperButton extends JButton {
         int id = parent.getOpensession().getSelectedID();
         if (id != -1) {
             new FindPlanningPokerSessionController().findPlanningPokerSessionbyID(id);
-            this.setVisible(false);
+            this.setVisible(true);
             parent.getOpensession().getListSelectionModel().clearSelection();
         }
     }
@@ -95,7 +93,12 @@ public class SuperButton extends JButton {
 
     }
 
-    public void ViewSession(){
-
+    public void ViewSession(final MainView parent){
+        int id = parent.getOpensession().getSelectedID();
+        if (id != -1) {
+            new ViewPlanningPokerController().findPlanningPokerSessionbyID(id);
+            this.setVisible(true);
+            parent.getOpensession().getListSelectionModel().clearSelection();
+        }
     }
 }

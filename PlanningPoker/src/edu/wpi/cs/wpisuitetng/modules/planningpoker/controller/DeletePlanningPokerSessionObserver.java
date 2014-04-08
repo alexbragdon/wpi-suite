@@ -17,13 +17,12 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * Description
  *
  * @author Xiaosong
- * @version Mar 31, 2014
+ * @version Apr 7, 2014
  */
-public class ViewPlanningPokerObserver  implements RequestObserver {
-    
-    public ViewPlanningPokerController controller;
-    
-    public ViewPlanningPokerObserver(ViewPlanningPokerController controller) {
+public class DeletePlanningPokerSessionObserver implements RequestObserver {
+    private DeletePlanningPokerSessionController controller;
+
+    public DeletePlanningPokerSessionObserver(DeletePlanningPokerSessionController controller) {
         this.controller = controller;
     }
 
@@ -34,8 +33,8 @@ public class ViewPlanningPokerObserver  implements RequestObserver {
      */
     @Override
     public void responseSuccess(IRequest iReq) {
-        PlanningPokerSession session = PlanningPokerSession.fromJsonArray(iReq.getResponse().getBody())[0];
-        ViewEventController.getInstance().ViewSession(session);
+        //PlanningPokerSession session = PlanningPokerSession.fromJsonArray(iReq.getResponse().getBody())[0];
+        //ViewEventController.getInstance().editSession(session);
     }
 
     /*

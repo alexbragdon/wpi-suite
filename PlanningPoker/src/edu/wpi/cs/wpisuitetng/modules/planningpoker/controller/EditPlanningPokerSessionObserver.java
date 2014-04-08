@@ -34,7 +34,6 @@ public class EditPlanningPokerSessionObserver implements RequestObserver{
         @Override
         public void responseSuccess(IRequest iReq) {
             final ResponseModel response = iReq.getResponse();
-            
             final PlanningPokerSession session = PlanningPokerSession.fromJson(response.getBody());       
             System.out.println("Success");
             

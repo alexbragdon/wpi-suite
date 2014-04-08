@@ -46,7 +46,7 @@ public class SuperButtonPanel extends ToolbarGroupView {
         this.setPreferredWidth(300);
 
         // TODO: Delete this line
-        selectedPanelIndex = 0;
+        selectedPanelIndex = 2;
         
         superButton.addActionListener(new ActionListener() {
             @Override
@@ -55,7 +55,7 @@ public class SuperButtonPanel extends ToolbarGroupView {
                 
                 // Edit session
                 if(selectedPanelIndex == 0){
-                    superButton.EditSession(parent);
+                    //superButton.EditSession(parent);
                 }
 
                 // Vote session
@@ -65,7 +65,7 @@ public class SuperButtonPanel extends ToolbarGroupView {
 
                 // View session
                 if(selectedPanelIndex == 2){
-                    superButton.ViewSession();
+                    superButton.ViewSession(parent);
                 }
             }
         });

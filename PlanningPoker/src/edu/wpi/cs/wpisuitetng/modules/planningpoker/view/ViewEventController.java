@@ -3,14 +3,11 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationPanel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.requirements.RequirementPanel;
 
 
 /**
@@ -81,7 +78,7 @@ public class ViewEventController {
         }
 
         if (exists == false) {
-            SessionPanel sessionEditor = new SessionPanel(session);
+            SessionPanel sessionEditor = new SessionPanel(session, ViewMode.EDIT);
             String tabName = "Edit " + session.getName();
             main.addTab(tabName, null, sessionEditor, "Edit this session");
             main.invalidate();
@@ -102,5 +99,35 @@ public class ViewEventController {
     {
         listOfEditingSessions.remove(((SessionPanel) comp).getSession());
         main.remove(comp);
+    }
+
+    /**
+     * Description goes here.
+     *
+     * @param session
+     */
+    public void ViewSession(PlanningPokerSession session) {
+        boolean exists = false;
+        int index = 0;
+
+        if(listOfEditingSessions.containsKey(session))
+        {
+            exists = true;
+            index = listOfEditingSessions.get(session);
+        }
+
+        if (exists == false) {
+            SessionPanel sessionEditor = new SessionPanel(session,ViewMode.VIEW);
+            String tabName = "View " + session.getName();
+            main.addTab(tabName, null, sessionEditor, "View this session");
+            main.invalidate();
+            main.repaint();
+            main.setSelectedComponent(sessionEditor);
+            listOfEditingSessions.put(session, main.getSelectedIndex());
+        } else {
+            index = main.indexOfTab("View " + session.getName());
+            main.setSelectedIndex(index);
+
+        }
     }
 }
