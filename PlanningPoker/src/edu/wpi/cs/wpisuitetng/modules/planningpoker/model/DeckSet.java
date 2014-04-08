@@ -5,24 +5,53 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The base type for planning poker decks. Any new decks must implement this interface
+ * The set of all decks available for use with a Planning Poker session. This
+ * class is a singleton
  * @author Romulus
  */
 public class DeckSet {
 	
+	/**
+	 * The instance of the deck set.
+	 */
+	private static final DeckSet INSTANCE = new DeckSet();
+	
+	/**
+	 * The Map mapping names of decks to their contents
+	 */
 	private Map<String, int[]> decks = new HashMap<String, int[]>();
 	
 	private final int[] fibonacci = {1, 1, 2, 3, 5, 8, 13, 21};
 	
-	public DeckSet() {
+	/**
+	 * Create a deck set and load with the given decks
+	 */
+	private DeckSet() {
 		decks.put("-None-", new int[] {}); //"none" deck is empty
 		decks.put("Fibonacci", fibonacci);
 	}
 	
+	/**
+	 * Get the singleton instance of the DeckSet
+	 * @return The sole DeckSet instance
+	 */
+	public static DeckSet getInstance() {
+		return INSTANCE;
+	}
+	
+	/**
+	 * Get the valid deck names
+	 * @return An array of the names of the decks
+	 */
 	public String[] getNames() {
 		return decks.keySet().toArray(new String[decks.size()]);
 	}
 	
+	/**
+	 * Convert the deck's contents to a comma-separated String
+	 * @param forName The name of the deck whose contents to get
+	 * @return A comma-separated string of the given values in the deck
+	 */
 	public String deckToString(String forName) {
 		StringBuilder sb = new StringBuilder();
 		int[] cards = getDeck(forName);
@@ -38,6 +67,11 @@ public class DeckSet {
 		return sb.toString();
 	}
 	
+	/**
+	 * Get the contents of the given deck.
+	 * @param forName The name of the deck whose contents to get
+	 * @return An integer array of the contents of the deck
+	 */
 	public int[] getDeck(String forName) {
 		int[] nums = decks.get(forName);
 		return Arrays.copyOf(nums, nums.length);

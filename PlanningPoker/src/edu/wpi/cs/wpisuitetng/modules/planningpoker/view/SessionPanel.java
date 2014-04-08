@@ -84,7 +84,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     /**
      * All pre-defined decks available for use.    
      */
-    private DeckSet decks = new DeckSet();
+    private DeckSet decks = DeckSet.getInstance();
     
     /**
      * The drop-down menu to select the deck
