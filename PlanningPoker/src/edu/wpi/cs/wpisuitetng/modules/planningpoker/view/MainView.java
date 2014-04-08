@@ -11,7 +11,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.MySessionPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionPanel;
 
 /**
  * This is the main view of planning poker game. All tabs, buttons, GUI are created by this main view. 
@@ -20,7 +19,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.Opensession
  */
 @SuppressWarnings("serial")
 public class MainView extends JTabbedPane {
-    private OpensessionPanel opensession = new OpensessionPanel(this);
 	private Component lastTab = null;
 	private ToolbarView toolbarView;
 	private MySessionPanel mySession = new MySessionPanel(this);
@@ -32,7 +30,6 @@ public class MainView extends JTabbedPane {
 	public MainView() {
 	    
 	    this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		this.addTab("Open Sessions", opensession);
 		this.addTab("My Sessions", mySession);
 
 		// Listen for tab changes to invoke auto refresh
@@ -41,12 +38,9 @@ public class MainView extends JTabbedPane {
             @Override
             public void stateChanged(ChangeEvent arg0) {
                 JComponent selected = (JComponent) self.getSelectedComponent();
-                if (selected == opensession)
-                    opensession.refresh();
-                else{
-                    getToolbarView().getReqButton().getEditButton().setVisible(false);
-                    getOpensession().getListSelectionModel().clearSelection();
-                }
+                //else{
+                    //getToolbarView().getReqButton().getEditButton().setVisible(false);
+                //}
             }
 		});
 
@@ -72,19 +66,10 @@ public class MainView extends JTabbedPane {
 	public void insertTab(String title, Icon icon, Component component,
 			String tip, int index) {
 		super.insertTab(title, icon, component, tip, index);
-		if (!(component instanceof OpensessionPanel) && !(component instanceof MySessionPanel)) {
-			setTabComponentAt(index, new ClosableTabComponent(this));
-		}
+//		if (!(component instanceof OpensessionPanel) && !(component instanceof MySessionPanel)) {
+//			setTabComponentAt(index, new ClosableTabComponent(this));
+//		}
 	}
-	
-	/**
-	 * Method getOpensession.
-	
-	 * @return OpensessionPanel */
-	public OpensessionPanel getOpensession() {
-		return opensession;
-	}
-
 
 	/**
 	 * Method removeTabAt.

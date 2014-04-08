@@ -67,7 +67,6 @@ public class ButtonTest {
 	public void testButtonsPanel(){
 		assertEquals("<html>Create<br />Session</html>", bp.getCreateButton().getText());
 		assertEquals("<html>Create<br />Session</html>", bp.getCreateIterationButton().getText());
-		assertEquals("<html>Edit<br />Session</html>", bp.getEditButton().getText());
 	}
 	@Test
 	public void testSuperButtonPanel(){

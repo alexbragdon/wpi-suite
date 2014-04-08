@@ -83,12 +83,12 @@ public class SuperButton extends JButton {
     }
 
     public void EditSession(final MainView parent){
-        int id = parent.getOpensession().getSelectedID();
-        if (id != -1) {
-            new FindPlanningPokerSessionController().findPlanningPokerSessionbyID(id);
-            this.setVisible(false);
-            parent.getOpensession().getListSelectionModel().clearSelection();
-        }
+//        int id = parent.getOpensession().getSelectedID();
+//        if (id != -1) {
+//            new FindPlanningPokerSessionController().findPlanningPokerSessionbyID(id);
+//            this.setVisible(false);
+//            parent.getOpensession().getListSelectionModel().clearSelection();
+//        }
     }
 
     public void VoteSession(){
