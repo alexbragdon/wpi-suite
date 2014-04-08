@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SpringLayout;
 
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
@@ -35,6 +36,7 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
     final private JButton saveButton;
     final private JButton clearButton;
     final private JButton cancelButton;
+    final private JButton openButton;
 
     public SessionButtonPanel(SessionPanel sessionPanel, ViewMode viewMode, PlanningPokerSession session) {
         switch (viewMode) {
@@ -42,15 +44,21 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
                 saveButton = new JButton("Update");
                 clearButton = new JButton("Undo changes");
                 cancelButton = new JButton("Cancel");
+                openButton = new JButton("Open Session");
                 break;
             case CREATE:
                 saveButton = new JButton("Create");
                 clearButton = new JButton("Clear");
                 cancelButton = new JButton("Cancel");
+                openButton = new JButton("");
+                openButton.setEnabled(false);
                 break;
             default:
                 throw new RuntimeException("Invalid ViewMode");
         }
+        
+        SpringLayout layout = new SpringLayout();
+        this.setLayout(layout);
         this.parent = sessionPanel;
 
         try {
@@ -60,11 +68,22 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
             clearButton.setIcon(new ImageIcon(img2));
             Image img3  = ImageIO.read(getClass().getResource("cancel-icon.png"));
             cancelButton.setIcon(new ImageIcon(img3));
+            openButton.setIcon(new ImageIcon(img1));
         }catch(IOException ex){}
 
         this.add(saveButton);
-        this.add(clearButton);
-        this.add(cancelButton);
+        switch (viewMode) {
+        case EDIT:
+            this.add(clearButton);
+            this.add(cancelButton);
+            this.add(openButton);
+            break;
+        case CREATE:
+        	this.add(clearButton);
+            this.add(cancelButton);
+            break;
+        }
+        
 
         setupListeners();
     }
@@ -87,6 +106,12 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 parent.cancelPressed();
+            }
+        });
+        
+        openButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                parent.openPressed();
             }
         });
     }
@@ -119,4 +144,11 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
     public JButton getButtonCancel() {
         return cancelButton;
     }
+    
+    /**
+    *
+    * * @return the cancel button  */
+   public JButton getButtonOpen() {
+       return openButton;
+   }
 }
