@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Timer;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionControllerJoining;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionControllerModerating;
@@ -27,21 +29,20 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
  * @version Apr 7, 2014
  */
 public class JoiningSessionPanel extends JPanel {
-    
     JoiningSessionTable table;
     private MainView parent;
-    
+
     Timer timer;
 
     public JoiningSessionPanel(MainView mainView, final MySessionPanel mySessionPanel)
     {
         parent = mainView;
         String[] columnNames = {"ID", "Name", "End Time"};
-        
+
         Object[][] data = {};
-        
+
         table = new JoiningSessionTable(data, columnNames);
-        
+
         JScrollPane tablePanel = new JScrollPane(table);
 
         table.getColumnModel().getColumn(0).setMinWidth(0);
@@ -51,9 +52,9 @@ public class JoiningSessionPanel extends JPanel {
         table.getColumnModel().getColumn(1).setPreferredWidth(200);
 
         table.getColumnModel().getColumn(2).setMinWidth(70);
-        
+
         this.setLayout(new BorderLayout());
-        
+
         JPanel panel = new JPanel();
         JPanel blankPanel = new JPanel();
         JPanel blankPanel2 = new JPanel();
@@ -69,20 +70,38 @@ public class JoiningSessionPanel extends JPanel {
         panel.add(blankPanel, BorderLayout.WEST);
         panel.add(blankPanel2, BorderLayout.EAST);
         panel.add(bottomPanel, BorderLayout.SOUTH);
-        
+
         this.add(panel, BorderLayout.CENTER);
+
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(table.getSelectedRow() != -1){
+                    parent.getMySession().getModeratingPanel().getTable().clearSelection();
+                    parent.getMySession().getClosedPanel().getTable().clearSelection();
+                }
+            }
+        });
 
         timer = new Timer(1000, new GetPlanningPokerSessionControllerJoining(table));
         timer.setInitialDelay(10000);
         timer.start(); 
- 
+
     }
-    
+
     /**
      * Refreshes the table associated with this panel.
      */
     public void refresh() {
         // Feels a little hacky
         new GetPlanningPokerSessionControllerJoining(table).actionPerformed(null);
+    }
+
+
+    /**
+     * @return the table
+     */
+    public JoiningSessionTable getTable() {
+        return table;
     }
 }

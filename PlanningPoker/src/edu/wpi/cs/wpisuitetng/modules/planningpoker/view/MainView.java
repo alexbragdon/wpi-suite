@@ -20,9 +20,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.Opensession
  */
 @SuppressWarnings("serial")
 public class MainView extends JTabbedPane {
-
-
-	private OpensessionPanel opensession = new OpensessionPanel(this);
+    private OpensessionPanel opensession = new OpensessionPanel(this);
 	private Component lastTab = null;
 	private ToolbarView toolbarView;
 	private MySessionPanel mySession = new MySessionPanel(this);
@@ -104,4 +102,12 @@ public class MainView extends JTabbedPane {
 	public ToolbarView getToolbarView(){
 	    return toolbarView;
 	}
+	
+
+    /**
+     * @return the mySession
+     */
+    public MySessionPanel getMySession() {
+        return mySession;
+    }
 }

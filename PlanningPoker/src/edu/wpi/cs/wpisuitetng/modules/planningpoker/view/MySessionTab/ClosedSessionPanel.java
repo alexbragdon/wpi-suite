@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Timer;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionControllerClosed;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionControllerModerating;
@@ -27,21 +29,20 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
  * @version Apr 7, 2014
  */
 public class ClosedSessionPanel extends JPanel {
-    
     ClosedSessionTable table;
     private MainView parent;
-    
+
     Timer timer;
-    
+
     public ClosedSessionPanel(MainView mainView, final MySessionPanel mySessionPanel)
     {
         parent = mainView;
         String[] columnNames = {"ID", "Name", "Time Closed"};
-        
+
         Object[][] data = {};
-        
+
         table = new ClosedSessionTable(data, columnNames);
-        
+
         JScrollPane tablePanel = new JScrollPane(table);
 
         table.getColumnModel().getColumn(0).setMinWidth(0);
@@ -52,9 +53,9 @@ public class ClosedSessionPanel extends JPanel {
 
         table.getColumnModel().getColumn(2).setMinWidth(70);
 
-        
+
         this.setLayout(new BorderLayout());
-        
+
         JPanel panel = new JPanel();
         JPanel blankPanel = new JPanel();
         JPanel blankPanel2 = new JPanel();
@@ -68,15 +69,25 @@ public class ClosedSessionPanel extends JPanel {
         panel.add(blankPanel, BorderLayout.EAST);
         panel.add(topPanel, BorderLayout.NORTH);
         panel.add(bottomPanel, BorderLayout.SOUTH);
-        
+
         this.add(panel, BorderLayout.CENTER);
-        
+
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            @Override
+            public void valueChanged(ListSelectionEvent arg0) {
+                if(table.getSelectedRow() != -1){
+                    parent.getMySession().getJoiningPanel().getTable().clearSelection();
+                    parent.getMySession().getModeratingPanel().getTable().clearSelection();
+                }
+            }
+        });
+
         timer = new Timer(1000, new GetPlanningPokerSessionControllerClosed(table));
         timer.setInitialDelay(10000);
         timer.start(); 
-        
+
     }
-    
+
     /**
      * Refreshes the table associated with this panel.
      */
@@ -85,4 +96,11 @@ public class ClosedSessionPanel extends JPanel {
         new GetPlanningPokerSessionControllerClosed(table).actionPerformed(null);
     }
 
+
+    /**
+     * @return the table
+     */
+    public ClosedSessionTable getTable() {
+        return table;
+    }
 }
