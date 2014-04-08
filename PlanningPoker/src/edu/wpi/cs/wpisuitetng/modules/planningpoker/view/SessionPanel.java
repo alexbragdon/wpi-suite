@@ -76,12 +76,24 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     
     private JSpinner minuteSpin;
     
+    /**
+     * The label that displays the chosen deck to the user.
+     */
     private JLabel chosenSequence;
     
+    /**
+     * All pre-defined decks available for use.    
+     */
     private DeckSet decks = new DeckSet();
     
+    /**
+     * The drop-down menu to select the deck
+     */
     private JComboBox<String> deckChooser = new JComboBox<String>(decks.getNames());
     
+    /**
+     * The currently selected deck
+     */
     String selectedDeck = "-None-";
     
     /**
