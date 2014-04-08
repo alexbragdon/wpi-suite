@@ -20,7 +20,18 @@ public class DeckSet {
 	}
 	
 	public String[] getNames() {
-		return (String[]) decks.keySet().toArray();
+		return decks.keySet().toArray(new String[decks.size()]);
+	}
+	
+	public String deckToString(String forName) {
+		StringBuilder sb = new StringBuilder();
+		int[] cards = getDeck(forName);
+		for (int i : cards) {
+			sb.append(i);
+			sb.append(", ");
+		}
+		sb.setLength(sb.length() - 2); //Trim off last ", "
+		return sb.toString();
 	}
 	
 	public int[] getDeck(String forName) {

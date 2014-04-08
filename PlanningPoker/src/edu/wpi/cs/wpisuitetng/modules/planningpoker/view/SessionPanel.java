@@ -15,12 +15,7 @@ import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -47,17 +42,13 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.FibonacciDeck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PokerDeck;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonListener;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * This is session panel for the sessions of planning poker game.
@@ -85,9 +76,13 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     
     private JSpinner minuteSpin;
     
+    private JLabel chosenSequence;
+    
     private DeckSet decks = new DeckSet();
     
     private JComboBox<String> deckChooser = new JComboBox<String>(decks.getNames());
+    
+    String selectedDeck = "-None-";
     
     /**
      * Goes on left, holds basic info (name, time). changed to scrollable panel
@@ -247,7 +242,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     @SuppressWarnings("deprecation")
 	private void buildLayout() {
     	
-    	deckChooser.setSelectedIndex(0); //default to the "-None-" deck
+    	deckChooser.setSelectedItem(selectedDeck); //default to the "-None-" deck
+    	chosenSequence = new JLabel(decks.deckToString(selectedDeck));
     	
         buttonPanel = new SessionButtonPanel(this, viewMode, displaySession);
         requirementsPanel = new SessionRequirementPanel(this, viewMode, displaySession);
@@ -361,6 +357,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         infoPanel.add(desFieldContainer, "growx, pushx, shrinkx, span, height 200px, wmin 10, wrap");
 		infoPanel.add(timeEnable);
 		infoPanel.add(deckChooser);
+		infoPanel.add(chosenSequence); //Show contents of currently selected deck
 		JPanel timeCheck = new JPanel();
 		timeCheck.add(timeEnable);
 		timeCheck.add(new JLabel("Set an end time?"));
@@ -435,8 +432,21 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 	// Listeners for the text boxes
     private void setupListeners() {
     	
-    	timeEnable.addActionListener(new ActionListener(){
+    	deckChooser.addItemListener(new ItemListener() {
 
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if (arg0.getStateChange() == ItemEvent.SELECTED) {
+					selectedDeck = deckChooser.getSelectedItem().toString();
+					System.out.println("Item state changed to: " + selectedDeck);
+					chosenSequence.setText(decks.deckToString(selectedDeck));
+				}
+			}
+    		
+    	});
+    	
+    	timeEnable.addActionListener(new ActionListener(){
+    		
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (timeEnable.isSelected()) {
@@ -639,6 +649,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         if (validateFields(true)) {
 
         	PlanningPokerSession session = createSessionFromFields();
+        	
+        	System.out.println("Selected deck is: " + selectedDeck + ": " + decks.getDeck(selectedDeck));
 
             switch (viewMode) {
                 case CREATE: AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session); break;
