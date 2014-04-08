@@ -14,7 +14,10 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.Timer;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionControllerClosed;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionControllerModerating;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 
 /**
@@ -27,6 +30,8 @@ public class ClosedSessionPanel extends JPanel {
     
     ClosedSessionTable table;
     private MainView parent;
+    
+    Timer timer;
     
     public ClosedSessionPanel(MainView mainView, final MySessionPanel mySessionPanel)
     {
@@ -65,6 +70,18 @@ public class ClosedSessionPanel extends JPanel {
         
         this.add(panel, BorderLayout.CENTER);
         
+        timer = new Timer(1000, new GetPlanningPokerSessionControllerClosed(table));
+        timer.setInitialDelay(10000);
+        timer.start(); 
+        
+    }
+    
+    /**
+     * Refreshes the table associated with this panel.
+     */
+    public void refresh() {
+        // Feels a little hacky
+        new GetPlanningPokerSessionControllerClosed(table).actionPerformed(null);
     }
 
 }

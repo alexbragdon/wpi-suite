@@ -18,12 +18,12 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * @author rafaelangelo
  * @version Apr 8, 2014
  */
-public class GetPlanningPokerSessionRequestObserverModerating implements RequestObserver {
+public class GetPlanningPokerSessionRequestObserverJoining implements RequestObserver {
     
-    public GetPlanningPokerSessionControllerModerating controller;
+    public GetPlanningPokerSessionControllerJoining controller;
     
-    public GetPlanningPokerSessionRequestObserverModerating
-    (GetPlanningPokerSessionControllerModerating controller) {
+    public GetPlanningPokerSessionRequestObserverJoining
+    (GetPlanningPokerSessionControllerJoining controller) {
         this.controller = controller;
     }
 
@@ -35,7 +35,6 @@ public class GetPlanningPokerSessionRequestObserverModerating implements Request
         PlanningPokerSession[] messages = PlanningPokerSession.fromJsonArray(iReq.getResponse().getBody());
         //System.out.println("Get success: "  + iReq.getResponse().getBody());
         controller.receivedMessages(messages);
-        
     }
 
     /*
@@ -44,7 +43,6 @@ public class GetPlanningPokerSessionRequestObserverModerating implements Request
     @Override
     public void responseError(IRequest iReq) {
         fail(iReq, null);
-        
     }
 
     /*
@@ -55,7 +53,5 @@ public class GetPlanningPokerSessionRequestObserverModerating implements Request
         // TODO Auto-generated method stub
         
     }
-    
-    
 
 }
