@@ -87,5 +87,4 @@ public class RequirementEstimate {
     public void addVote(String username, int estimate) {
         votes.put(username, estimate);
     }
-    public 
 }
