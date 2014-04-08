@@ -14,7 +14,9 @@ import com.google.gson.Gson;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 
 /**
- * Description
+ * Holds a single notification for an associated user. User and notifications
+ * are both (currently) strings. Note that an older version of Janeway simply 
+ * will not pull these from the DB. 
  *
  * @author AlienGorilla
  * @version Apr 7, 2014
