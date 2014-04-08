@@ -394,7 +394,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         switch (viewMode) {
         case EDIT:
             nameField.setText(displaySession.getName());
-            desField.setText(displaySession.getDiscription());
+            desField.setText(displaySession.getDescription());
             dateChooser.setDate(displaySession.getDate());
             hourSpin.setValue(displaySession.getHour());
             minuteSpin.setValue(displaySession.getMin());
@@ -658,7 +658,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
     public void clearPressed() {
         nameField.setText(displaySession.getName());
-        desField.setText(displaySession.getDiscription());
+        desField.setText(displaySession.getDescription());
     	dateChooser.setDate(displaySession.getDate());
     	hourSpin.setValue(displaySession.getHour());
     	minuteSpin.setValue(displaySession.getMin());
