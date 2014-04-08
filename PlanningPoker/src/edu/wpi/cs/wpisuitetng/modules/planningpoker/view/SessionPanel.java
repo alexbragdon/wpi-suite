@@ -443,7 +443,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				if (arg0.getStateChange() == ItemEvent.SELECTED) {
 					selectedDeck = deckChooser.getSelectedItem().toString();
 					System.out.println("Item state changed to: " + selectedDeck);
-					chosenSequence.setText(decks.deckToString(selectedDeck));
+					chosenSequence.setText("  " + decks.deckToString(selectedDeck)); //Add space for better display
 				}
 			}
     		
