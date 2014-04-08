@@ -34,6 +34,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.text.NumberFormatter;
 
 import com.toedter.calendar.JCalendar;
 
@@ -328,12 +329,17 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		}
 
         dateChooser = new JCalendar(dt); //Create new JCalendar with now default selected
+        
         hourSpin = new JSpinner(new SpinnerNumberModel(currentHour, 0, 23, 1));
+        JFormattedTextField hourf = ((JSpinner.NumberEditor) hourSpin.getEditor()).getTextField();
+        ((NumberFormatter) hourf.getFormatter()).setAllowsInvalid(false);
+        hourf.setEditable(true);
+        
         minuteSpin = new JSpinner(new SpinnerNumberModel(currentMinute, 0, 59, 1));
-        JFormattedTextField hourf = ((JSpinner.DefaultEditor) hourSpin.getEditor()).getTextField();
-        JFormattedTextField minf = ((JSpinner.DefaultEditor) minuteSpin.getEditor()).getTextField();
-        hourf.setEditable(false);
-        minf.setEditable(false);
+        JFormattedTextField minf = ((JSpinner.NumberEditor) minuteSpin.getEditor()).getTextField();
+        ((NumberFormatter) minf.getFormatter()).setAllowsInvalid(false);
+        minf.setEditable(true);
+        
 
         nameField.setPreferredSize(new Dimension(300, 30));
 
