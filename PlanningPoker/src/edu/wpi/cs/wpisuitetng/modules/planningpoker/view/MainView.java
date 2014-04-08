@@ -3,12 +3,14 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Component;
 
+
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.MySessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionPanel;
 
 /**
@@ -18,13 +20,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.Opensession
  */
 @SuppressWarnings("serial")
 public class MainView extends JTabbedPane {
-
-
-	private OpensessionPanel opensession = new OpensessionPanel(this);
+    private OpensessionPanel opensession = new OpensessionPanel(this);
 	private Component lastTab = null;
 	private ToolbarView toolbarView;
-
-
+	private MySessionPanel mySession = new MySessionPanel(this);
+	
 
 	/**
 	 * Adds main subtab when user goes to planningpoker
@@ -33,6 +33,7 @@ public class MainView extends JTabbedPane {
 	    
 	    this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		this.addTab("Open Sessions", opensession);
+		this.addTab("My Sessions", mySession);
 
 		// Listen for tab changes to invoke auto refresh
 		final MainView self = this;
@@ -71,7 +72,7 @@ public class MainView extends JTabbedPane {
 	public void insertTab(String title, Icon icon, Component component,
 			String tip, int index) {
 		super.insertTab(title, icon, component, tip, index);
-		if (!(component instanceof OpensessionPanel) ) {
+		if (!(component instanceof OpensessionPanel) && !(component instanceof MySessionPanel)) {
 			setTabComponentAt(index, new ClosableTabComponent(this));
 		}
 	}
@@ -105,4 +106,12 @@ public class MainView extends JTabbedPane {
 	public ToolbarView getToolbarView(){
 	    return toolbarView;
 	}
+	
+
+    /**
+     * @return the mySession
+     */
+    public MySessionPanel getMySession() {
+        return mySession;
+    }
 }
