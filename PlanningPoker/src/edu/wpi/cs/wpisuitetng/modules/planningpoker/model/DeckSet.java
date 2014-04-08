@@ -26,6 +26,10 @@ public class DeckSet {
 	public String deckToString(String forName) {
 		StringBuilder sb = new StringBuilder();
 		int[] cards = getDeck(forName);
+		if (cards.length == 0) {
+			return ""; //If no deck is selected. display nothing
+		}
+		
 		for (int i : cards) {
 			sb.append(i);
 			sb.append(", ");
