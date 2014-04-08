@@ -50,7 +50,10 @@ public class JoiningSessionPanel extends JPanel {
         parent = mainView;
         String[] columnNames = {"Name", "End Time", "My Progress"};
 
-        Object[][] data = {};
+        Object[][] data = {{"Test", "15:00", "Open"},
+                        {"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
+                        {"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
+                        {"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"}};
 
         table = new ClosedSessionTable(data, columnNames);
 

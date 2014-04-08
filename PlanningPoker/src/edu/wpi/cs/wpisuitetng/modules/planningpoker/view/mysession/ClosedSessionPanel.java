@@ -50,7 +50,9 @@ public class ClosedSessionPanel extends JPanel {
         parent = mainView;
         String[] columnNames = {"Name", "Time Closed"};
 
-        Object[][] data = {};
+        Object[][] data = {{"Test", "14:00"}, {"Test", "14:00"},
+                        {"Test", "14:00"},{"Test", "14:00"},{"Test", "14:00"},
+                        {"Test", "14:00"},{"Test", "14:00"},{"Test", "14:00"}};
 
         table = new ClosedSessionTable(data, columnNames);
 

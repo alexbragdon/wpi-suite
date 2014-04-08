@@ -40,8 +40,9 @@ public class JoiningSessionTable extends JTable
 	 */
 	public JoiningSessionTable()
 	{
-		Object[][] data = {{"Test1", "April/04", "4/5"}};
 		String[] columnNames = {"Name", "End Time", "My Progress"};
+		
+		Object[][] data = {{"Test1", "April/04", "4/5"}};
 		this.tableModel = new DefaultTableModel(data, columnNames);
 		this.setModel(tableModel);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

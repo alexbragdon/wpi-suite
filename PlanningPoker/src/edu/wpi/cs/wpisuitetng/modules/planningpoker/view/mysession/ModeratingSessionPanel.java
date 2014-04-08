@@ -51,13 +51,13 @@ public class ModeratingSessionPanel extends JPanel {
         String[] columnNames = {"Name", "End Time", "Status"};
 
         Object[][] data = {{"Test", "15:00", "Open"},
-        		{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
-        		{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
-        		{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
-        		{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
-        		{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
-        		{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
-        		{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"}};
+                        {"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
+                        {"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
+                        {"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
+                        {"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
+                        {"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
+                        {"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"},
+                        {"Test", "15:00", "Open"},{"Test", "15:00", "Open"},{"Test", "15:00", "Open"}};
 
         table = new ModeratingSessionTable(data, columnNames);
 
@@ -69,6 +69,8 @@ public class ModeratingSessionPanel extends JPanel {
         table.getColumnModel().getColumn(2).setMinWidth(100);
 
         this.setLayout(new BorderLayout());
+        
+       
         
         listSelectionModel = table.getSelectionModel();
         listSelectionModel.addListSelectionListener(new ListSelectionListener(){

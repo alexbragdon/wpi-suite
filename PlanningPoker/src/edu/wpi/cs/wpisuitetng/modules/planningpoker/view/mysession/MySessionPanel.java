@@ -46,7 +46,7 @@ public class MySessionPanel extends JPanel {
 	
 	private ModeratingSessionPanel moderatingPanel;
 	private JPanel joiningPanel = new JPanel();
-	private JPanel clsoedPanel = new JPanel();
+	private JPanel closedPanel = new JPanel();
     private MainView parent;
     private ListSelectionModel listSelectionModel;
     
@@ -54,13 +54,13 @@ public class MySessionPanel extends JPanel {
     {
     	moderatingPanel = new ModeratingSessionPanel(mainView);
     	joiningPanel = new JoiningSessionPanel(mainView);
-    	clsoedPanel = new ClosedSessionPanel(mainView);
+    	closedPanel = new ClosedSessionPanel(mainView);
     	
     	this.setLayout(new BorderLayout());
     	
     	this.add(moderatingPanel, BorderLayout.WEST);
     	this.add(joiningPanel, BorderLayout.CENTER);
-    	this.add(clsoedPanel, BorderLayout.EAST);
+    	this.add(closedPanel, BorderLayout.EAST);
 //        table1 = new ModeratingSessionTable();
 ////        table2 = new JoiningSessionTable();
 ////        table3 = new ClosedSessionTable();
