@@ -20,7 +20,9 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 
@@ -63,7 +65,7 @@ public class JoiningSessionTable extends JTable {
             if (session.getType() == sessionType.DISTRIBUTED) {
                 date.setHours(session.getHour());
                 date.setMinutes(session.getMin());
-                dateString = session.getDate().toString();
+                dateString = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(date);
             }
             tableModel.addRow(new String[] { String.valueOf(session.getID()), 
                             session.getName(), dateString });

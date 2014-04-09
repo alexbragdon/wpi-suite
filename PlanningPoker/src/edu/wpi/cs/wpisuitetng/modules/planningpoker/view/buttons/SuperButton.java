@@ -14,6 +14,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
 import java.awt.Image;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -21,7 +22,9 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.FindPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 
 /**
@@ -125,7 +128,14 @@ public class SuperButton extends JButton {
     public void CloseSession(MainView parent) {
         int id = parent.getMySession().getSelectedID(0);
         if (id != -1) {
-            // TODO closes the session
+            PlanningPokerSession newSession = parent.getMySession().getSessionById(id);
+            if (newSession == null) {
+                return;
+            }
+            newSession.setComplete(true);
+            newSession.setCompletionTime(new Date());
+            EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
+            this.setVisible(false);
         }
     }
 }

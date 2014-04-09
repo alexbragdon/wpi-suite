@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -101,17 +102,13 @@ public class ClosedSessionTable extends JTable {
     }
 
     
-    @SuppressWarnings("deprecation")
     public void addSessions(PlanningPokerSession session) {
-            Date date = session.getDate();
-            date.setHours(session.getHour());
-            date.setMinutes(session.getMin());
-            Date nowDate = new Date();
-            String dateString = date.toString();
-            if (session.getType() == sessionType.REALTIME) {
-                dateString = "--";
-            }
-            tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), dateString });
+        if (session.getCompletionTime() != null) {
+            String date = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(session.getCompletionTime());
+            tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), date });
+        } else {
+            tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), "--" });
+        }
 
     }
 }

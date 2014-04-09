@@ -31,7 +31,17 @@ public class PlanningPokerSession extends AbstractModel {
 	// True if the game is complete and cannot be played 
 	boolean isComplete;
 	
-	/**
+	Date completionTime;
+	
+	public Date getCompletionTime() {
+        return completionTime;
+    }
+
+    public void setCompletionTime(Date completionTime) {
+        this.completionTime = completionTime;
+    }
+
+    /**
 	 * Generated getters and setters via Eclipse
 	 */
 	public int getID() 
@@ -235,6 +245,7 @@ public class PlanningPokerSession extends AbstractModel {
         this.isActive = updatedSession.isActive;
         this.isComplete = updatedSession.isComplete;
 		this.moderator = updatedSession.moderator;
+		this.completionTime = updatedSession.completionTime;
 	}
 
 	/* (non-Javadoc)
@@ -277,7 +288,6 @@ public class PlanningPokerSession extends AbstractModel {
 			return false;
 		}
 		PlanningPokerSession other = (PlanningPokerSession) obj;
-		System.out.println("1: " + Description + " 2: " + other.Description);
 		if (!Description.equals(other.Description)) {
 			return false;
 		}
@@ -288,20 +298,17 @@ public class PlanningPokerSession extends AbstractModel {
 			return false;
 		}
 		
-		if ((this.deck == null) && (other.deck != null)) {
-			return false;
+		if (deck == null) {
+		    if (other.deck != null) {
+		        return false;
+		    }
 		}
 		
-		//assert: this deck not null
-		if (other.deck == null) {
-			return false;
-		}
-		
-		//assert: other deck not null
-		
-		//check if equal
-		if (!this.deck.equals(other.deck)) {
-			return false;
+		if (!(other.deck == null && deck == null)) {		
+		    //check if equal
+		    if (!this.deck.equals(other.deck)) {
+		        return false;
+		    }
 		}
 		
 		if (Min != other.Min) {
@@ -324,14 +331,23 @@ public class PlanningPokerSession extends AbstractModel {
 		if (Type != other.Type) {
 			return false;
 		}
-		if (!date.equals(other.date)) {
-			return false;
+		if (Type == sessionType.DISTRIBUTED) {
+    		if (!date.equals(other.date)) {
+    			return false;
+    		}
 		}
 		if (isActive != other.isActive) {
 			return false;
 		}
 		if (isComplete != other.isComplete) {
 			return false;
+		}
+		if (completionTime != null) {
+		    if (!completionTime.equals(other.completionTime)) {
+		        return false;
+		    }
+		} else if (other.completionTime != null) {
+		    return false;
 		}
 		return true;
 	}

@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -111,7 +112,7 @@ public class ModeratingSessionTable extends JTable {
             if (session.getType() == sessionType.DISTRIBUTED) {
                 date.setHours(session.getHour());
                 date.setMinutes(session.getMin());
-                dateString = session.getDate().toString();
+                dateString = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(date);
             }
             
             String statusString = "New";

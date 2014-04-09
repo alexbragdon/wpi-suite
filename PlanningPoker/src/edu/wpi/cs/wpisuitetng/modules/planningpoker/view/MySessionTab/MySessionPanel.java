@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.Timer;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
@@ -44,6 +45,9 @@ public class MySessionPanel extends JPanel {
     private JoiningSessionPanel joiningPanel;
     private ClosedSessionPanel closedPanel;
     private MainView parent;
+    private PlanningPokerSession[] sessions = { };
+    private Timer timer;
+    
     /**
      * @return the moderatingPanel
      */
@@ -80,17 +84,40 @@ public class MySessionPanel extends JPanel {
         this.add(closedPanel);
         //populateTables(sessions);
      
-        
+        timer = new Timer(1000, new GetPlanningPokerSessionController(this));
+        timer.setInitialDelay(1000);
+        timer.start();
     }
     
-    public void populateTables(PlanningPokerSession[] sessions) {
+    public void populateTables(PlanningPokerSession[] newSessions) {        
+        boolean hasChanges = false;
+        if (sessions.length != newSessions.length) {
+            hasChanges = true;
+        } else {
+            for (PlanningPokerSession oldSession : this.sessions) {
+                for (PlanningPokerSession newSession : newSessions) {
+                    if (newSession.getID() == oldSession.getID()) {
+                        if (!newSession.equals(oldSession)) {
+                            hasChanges = true;
+                        }
+                    }
+                }
+            }
+        }
+        
+        this.sessions = newSessions;
+        
+        if (!hasChanges) {
+            return;
+        }
+        
         moderatingPanel.getTable().clear();
         joiningPanel.getTable().clear();
         closedPanel.getTable().clear();
 
         String username = ConfigManager.getConfig().getUserName();
         
-        for (PlanningPokerSession session : sessions) {
+        for (PlanningPokerSession session : newSessions) {
             if (session.isComplete()) {
                 closedPanel.getTable().addSessions(session);
             } else if (session.isActive() && !session.getModerator().equals(username)) {
@@ -125,6 +152,21 @@ public class MySessionPanel extends JPanel {
      */
     public void refresh() {
         new GetPlanningPokerSessionController(this).actionPerformed(null);
+    }
+    
+    /**
+     * Returns a session for the given ID, or null.
+     *
+     * @param id the id to search for
+     * @return the session
+     */
+    public PlanningPokerSession getSessionById(int id) {
+        for (PlanningPokerSession session : sessions) {
+            if (session.getID() == id) {
+                return session;
+            }
+        }
+        return null;
     }
 
 }
