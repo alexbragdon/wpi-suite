@@ -40,10 +40,10 @@ public class SuperButton extends JButton {
         
         this.setHorizontalAlignment(SwingConstants.CENTER);
         try {
-            viewImg = ImageIO.read(getClass().getResource("viewSession.png"));
+            viewImg = ImageIO.read(getClass().getResource("viewSession2.png"));
             //this.viewButton.setIcon(new ImageIcon(img));
 
-            voteImg = ImageIO.read(getClass().getResource("joinSession.png"));
+            voteImg = ImageIO.read(getClass().getResource("joinSession2.png"));
             //this.joinButton.setIcon(new ImageIcon(img));
 
             editImg = ImageIO.read(getClass().getResource("editSession.png"));
