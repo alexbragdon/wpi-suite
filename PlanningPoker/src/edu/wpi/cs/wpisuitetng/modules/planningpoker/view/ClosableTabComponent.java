@@ -66,4 +66,9 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 		}
 	}
 	
+	public void addTab(){
+		tabbedPane.addTab("New tab", new JPanel());
+		tabbedPane.setTabComponentAt(0, new JLabel("Tab"));
+	}
+	
 }

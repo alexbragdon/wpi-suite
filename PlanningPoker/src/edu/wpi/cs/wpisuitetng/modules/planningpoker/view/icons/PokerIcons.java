@@ -6,6 +6,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.icons;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 /**
  * @author rafaelangelo
@@ -53,5 +55,7 @@ public class PokerIcons {
 		g.setColor(new Color(255, 127, 0));
 		g.fillOval(x, y, width, height);
 	}
+	
+	
 
 }

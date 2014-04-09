@@ -16,7 +16,7 @@ public class PlanningPokerSession extends AbstractModel {
 	 */
 	int ID;
 	String Name;
-	String Discription;
+	String Description;
 	Date date;
 	private String moderator;
 	private String deck;
@@ -64,9 +64,9 @@ public class PlanningPokerSession extends AbstractModel {
         Min = min;
     }
 	    
-	public void setDiscription(String discription) 
+	public void setDescription(String description) 
     {
-       Discription = discription;
+       Description = description;
     }
 
 	public String getName() 
@@ -75,9 +75,9 @@ public class PlanningPokerSession extends AbstractModel {
 	}
 
 
-    public String getDiscription() 
+    public String getDescription() 
     {
-        return Discription;
+        return Description;
     }
     
     public Date getDate() 
@@ -141,7 +141,7 @@ public class PlanningPokerSession extends AbstractModel {
 		super();
 		ID = 0;
 		Name = "";
-		Discription = "";
+		Description = "";
 		moderator = "";
 		date = new Date();
 		Hour = 0;
@@ -156,12 +156,13 @@ public class PlanningPokerSession extends AbstractModel {
 	/**
 	 * constructor for a planning poker Session
 	 */
-	public PlanningPokerSession(int id, String name, String discription, Date date,int hour, int min, List<RequirementEstimate>
+
+	public PlanningPokerSession(int id, String name, String description, Date date,int hour, int min, List<RequirementEstimate>
 			requirementestimates, sessionType type, boolean active, boolean complete, String moderator, String deck) 
 	{
 		super();
 		ID = id;
-		Discription = discription;
+		Description = description;
 		this.moderator = moderator;
 		this.date = date;
 		Hour = hour;
@@ -225,7 +226,7 @@ public class PlanningPokerSession extends AbstractModel {
 	public void copyFrom(PlanningPokerSession updatedSession) {
         this.ID = updatedSession.ID;
         this.Name = updatedSession.Name;
-        this.Discription = updatedSession.Discription;
+        this.Description = updatedSession.Description;
         this.date = updatedSession.date;
         this.Hour = updatedSession.Hour;
         this.Min = updatedSession.Min;
@@ -244,7 +245,7 @@ public class PlanningPokerSession extends AbstractModel {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((Discription == null) ? 0 : Discription.hashCode());
+				+ ((Description == null) ? 0 : Description.hashCode());
 		result = prime * result + Hour;
 		result = prime * result + ID;
 		result = prime * result + Min;
@@ -275,8 +276,8 @@ public class PlanningPokerSession extends AbstractModel {
 			return false;
 		}
 		PlanningPokerSession other = (PlanningPokerSession) obj;
-		System.out.println("1: " + Discription + " 2: " + other.Discription);
-		if (!Discription.equals(other.Discription)) {
+		System.out.println("1: " + Description + " 2: " + other.Description);
+		if (!Description.equals(other.Description)) {
 			return false;
 		}
 		if (Hour != other.Hour) {
@@ -316,6 +317,7 @@ public class PlanningPokerSession extends AbstractModel {
 		}
 		return true;
 	}
+	
 
     /**
      * @return the deck

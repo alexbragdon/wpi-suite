@@ -16,7 +16,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.requirements.Requi
 /**
  * The functionality of buttons and lists , etc goes here.
  * @author Fangming Ning
- * @contributOr Team romulus
+ * @contributOr Team Romulus
  */
 
 public class ViewEventController {
@@ -41,6 +41,8 @@ public class ViewEventController {
         return instance;
     }
 
+
+    
     /**
      * Sets the main view to the given view.
 
@@ -48,6 +50,9 @@ public class ViewEventController {
      */
     public void setMainView(MainView mainview) {
         main = mainview;
+    }
+    public MainView getMainView() {
+        return main;
     }
 
     /**
@@ -70,6 +75,10 @@ public class ViewEventController {
         main.setSelectedComponent(newSession);
     }
 
+    /**
+     * Find the session to edit. If the session is not opened in tab, open it.
+     * @param session
+     */
     public void editSession(PlanningPokerSession session) {	    
         boolean exists = false;
         int index = 0;
@@ -102,5 +111,11 @@ public class ViewEventController {
     {
         listOfEditingSessions.remove(((SessionPanel) comp).getSession());
         main.remove(comp);
+    }
+    /**
+     * Return the size of the hash map for testing code
+     */
+    public int getSize(){
+    	return listOfEditingSessions.size();
     }
 }

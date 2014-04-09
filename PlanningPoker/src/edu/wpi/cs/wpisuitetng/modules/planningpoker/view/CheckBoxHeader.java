@@ -73,7 +73,6 @@ public class CheckBoxHeader extends JCheckBox  implements TableCellRenderer, Mou
 	      TableColumnModel columnModel = tableView.getColumnModel();  
 	      int viewColumn = columnModel.getColumnIndexAtX(e.getX());  
 	      int column = tableView.convertColumnIndexToModel(viewColumn);  
-	   
 	      if (viewColumn == this.column && e.getClickCount() == 1 && column != -1) {  
 	        doClick();  
 	      }  
