@@ -51,8 +51,8 @@ public class AddPlanningPokerSessionController{
 	}
 
 	/**
-	 * This method adds a requirement to the server.
-	 * @param newSession is the requirement to be added to the server.
+	 * This method adds a ppSession to the server.
+	 * @param newSession is the ppSession to be added to the server.
 	 */
 	public void addPlanningPokerSession(PlanningPokerSession newSession) 
 	{
@@ -60,5 +60,9 @@ public class AddPlanningPokerSessionController{
 		request.setBody(newSession.toJSON()); // put the new requirement in the body of the request
 		request.addObserver(observer); // add an observer to process the response
 		request.send();
+		
+		final Request Notifirequest = Network.getInstance().makeRequest("planningpoker/planningpokernotification", HttpMethod.PUT); // PUT == create
+        Notifirequest.setBody(newSession.toJSON()); // put the new requirement in the body of the request
+        Notifirequest.send();
 	}	
 }

@@ -18,6 +18,7 @@ import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * Description
@@ -26,14 +27,14 @@ import edu.wpi.cs.wpisuitetng.modules.Model;
  * @version Apr 7, 2014
  */
 public class PlanningPokerNotificationEntityManager implements
-                                                   EntityManager<PlanningPokerNotification> {
+EntityManager<PlanningPokerNotification> {
 
     private final Data db;
-    
+
     public PlanningPokerNotificationEntityManager(Data db) {
         this.db = db;
     }
-    
+
     /*
      * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count()
      */
@@ -116,7 +117,7 @@ public class PlanningPokerNotificationEntityManager implements
         if(sessions.length < 1 || sessions[0] == null) {
             throw new NotFoundException();
         }
-      
+
         return sessions;
     }
 
@@ -127,18 +128,24 @@ public class PlanningPokerNotificationEntityManager implements
     public PlanningPokerNotification makeEntity(Session s, String content)
                     throws BadRequestException, ConflictException, WPISuiteException {
         // Parse from JSON
-        final PlanningPokerNotification notification = PlanningPokerNotification.fromJson(content);
+        final PlanningPokerSession session = PlanningPokerSession.fromJson(content);
 
-        // Save the session in the database if possible, otherwise throw an exception
-        // We want the message to be associated with the project the user logged in to
-        System.out.println("Trying to save...");
-        if (!db.save(notification, s.getProject())) {
-            System.out.println("Didn't save");
-            throw new WPISuiteException();
+        for (User user : s.getProject().getTeam()) {
+            if (!user.equals(s.getUser())) {
+                PlanningPokerNotification n = new PlanningPokerNotification(session.getName(), user.getUsername());
+
+                // Save the session in the database if possible, otherwise throw an exception
+                // We want the message to be associated with the project the user logged in to
+                System.out.println("Trying to save...");
+                if (!db.save(n, s.getProject())) {
+                    System.out.println("Didn't save");
+                    throw new WPISuiteException();
+                }
+            }
         }
-        
+
         // Return the newly created message (this gets passed back to the client)
-        return notification;
+        return new PlanningPokerNotification();
     }
 
     /*
@@ -157,7 +164,7 @@ public class PlanningPokerNotificationEntityManager implements
         final PlanningPokerNotification updatedNotification = PlanningPokerNotification.fromJson(content);
 
         // We have to get the original session from db4o, copy properties, then save.
-        
+
         List<Model> oldNotifications = db.retrieve(PlanningPokerNotification.class, "ID", updatedNotification.getUsername(),
                         s.getProject());
         if (oldNotifications.size() < 1 || oldNotifications.get(0) == null) {
