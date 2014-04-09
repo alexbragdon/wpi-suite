@@ -58,10 +58,12 @@ public class SuperButton extends JButton {
         } catch (IOException ex) {}
 
         this.setVisible(false);
+        parent.setVisible(false);
     }
 
     public void Update(int selectedIndex, boolean isActive){
         this.setVisible(true);
+        parent.setVisible(true);
         parent.setSessionActive(isActive);
         
         // Edit session
@@ -105,6 +107,7 @@ public class SuperButton extends JButton {
         if (id != -1) {
             new FindPlanningPokerSessionController().findPlanningPokerSessionbyID(id);
             this.setVisible(false);
+            this.parent.setVisible(false);
         } 
     }
 
@@ -136,6 +139,7 @@ public class SuperButton extends JButton {
             newSession.setCompletionTime(new Date());
             EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
             this.setVisible(false);
+            this.parent.setVisible(false);
         }
     }
 }
