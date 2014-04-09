@@ -101,7 +101,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      */
     String selectedDeck = "-None-";
     
-    String lastDeck = selectedDeck;
+    boolean selectedDeckChanged = false;
     
     /**
      * Goes on left, holds basic info (name, time). changed to scrollable panel
@@ -475,6 +475,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if (arg0.getStateChange() == ItemEvent.SELECTED) {
+					selectedDeckChanged = !selectedDeckChanged;
 					selectedDeck = deckChooser.getSelectedItem().toString();
 					System.out.println("Item state changed to: " + selectedDeck);
 					chosenSequence.setText("  " + decks.deckToString(selectedDeck)); //Add space for better display
@@ -798,17 +799,18 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     	dateChooser.setDate(displaySession.getDate());
     	hourSpin.setValue(displaySession.getHour());
     	minuteSpin.setValue(displaySession.getMin());
-    	
+    
+    	if (selectedDeckChanged) {
     	int selectedIndex = deckChooser.getSelectedIndex();
-    	
-    	if (selectedIndex == 0) {
-    		selectedIndex = 1;
-    	} else {
-    		selectedIndex = 0;
+		    if (selectedIndex == 0) {
+		    	selectedIndex = 1;
+		    } else {
+		    	selectedIndex = 0;
+		    }   	
+	    	deckChooser.setSelectedIndex(selectedIndex);
     	}
     	
-    	deckChooser.setSelectedIndex(selectedIndex);
-        requirementsPanel.refreshRequirementSelection();
+    	requirementsPanel.refreshRequirementSelection();
         if (displaySession.getType() == sessionType.DISTRIBUTED) {
         	timeEnable.setSelected(true);
         	dateChooser.setEnabled(true);
