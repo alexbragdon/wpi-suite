@@ -27,7 +27,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionTable;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
@@ -41,17 +40,16 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 
 public class GetSessionTest {
-	private OpensessionTable ost;
 	private GetPlanningPokerSessionController gppsc;
 	//private PlanningPokerSession[] sesArray;
 	
 	@Before
 	public void setUp() throws Exception {
-		Object[][] obj = {{3123, "Test Session", "Hello The World", new Date(), 23, 59,
+		/*Object[][] obj = {{3123, "Test Session", "Hello The World", new Date(), 23, 59,
 			new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin"}};
 		String[] str = {"", "Name", "Moderator"};
-		ost = new OpensessionTable(obj, str);
-		gppsc = new GetPlanningPokerSessionController(ost);
+		ost = new OpensessionTable(obj, str);*/
+		gppsc = new GetPlanningPokerSessionController();
 	}
 	@Test
 	public void testReceiveNullMessage(){

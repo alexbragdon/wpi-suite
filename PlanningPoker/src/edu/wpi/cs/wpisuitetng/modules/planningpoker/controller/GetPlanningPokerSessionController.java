@@ -19,7 +19,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.ModeratingSessionTable;
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardMessage;
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionTable;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -33,10 +32,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class GetPlanningPokerSessionController implements ActionListener {
 
-    private final OpensessionTable model;
-
-    public GetPlanningPokerSessionController(OpensessionTable model) {
-        this.model = model;
+    public GetPlanningPokerSessionController() {
     }
 
     @Override
@@ -62,8 +58,10 @@ public class GetPlanningPokerSessionController implements ActionListener {
      * @param messages an array of messages received from the server
      */
     public void receivedMessages(PlanningPokerSession[] sessions) {
+        
+        // TODO update the tables
 
-        if (sessions == null) {
+        /*if (sessions == null) {
             return;
         }
 
@@ -103,6 +101,6 @@ public class GetPlanningPokerSessionController implements ActionListener {
 
         if (row != -1 && row < model.getRowCount()) {
             model.setRowSelectionInterval(row, row);
-        }
+        }*/
     }
 }
