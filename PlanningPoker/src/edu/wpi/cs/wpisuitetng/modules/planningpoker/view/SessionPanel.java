@@ -733,6 +733,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         if (validateFields(true)) {
 
         	PlanningPokerSession session = createSessionFromFields();
+        	session.setDeck(selectedDeck);
         	
         	System.out.println("Selected deck is: " + selectedDeck + ": " + decks.getDeck(selectedDeck));
 
