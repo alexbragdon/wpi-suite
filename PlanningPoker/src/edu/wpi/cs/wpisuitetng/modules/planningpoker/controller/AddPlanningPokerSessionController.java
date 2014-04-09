@@ -51,8 +51,8 @@ public class AddPlanningPokerSessionController{
 	}
 
 	/**
-	 * This method adds a requirement to the server.
-	 * @param newSession is the requirement to be added to the server.
+	 * This method adds a ppSession to the server.
+	 * @param newSession is the ppSession to be added to the server.
 	 */
 	public void addPlanningPokerSession(PlanningPokerSession newSession) 
 	{

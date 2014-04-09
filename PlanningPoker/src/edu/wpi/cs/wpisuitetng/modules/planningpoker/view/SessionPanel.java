@@ -50,6 +50,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonListener;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * This is session panel for the sessions of planning poker game.
@@ -778,6 +781,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     		PlanningPokerSession session = createSessionFromFields();
     		EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
     		ViewEventController.getInstance().removeTab(this);
+    		
+    	    final Request Notifirequest = Network.getInstance().makeRequest("planningpoker/planningpokernotification", HttpMethod.PUT); // PUT == create
+    	    Notifirequest.setBody(session.toJSON()); // put the new ?? in the body of the request
+    	    Notifirequest.send();
     	}
     }
 
