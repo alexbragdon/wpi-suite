@@ -104,7 +104,7 @@ public class SessionPanelTest {
 		sesPan.setDesField("Test Description");
 		sesPan.setTimeDisabled();
 		ses = new PlanningPokerSession(21345, "Test Session", "Hello The World", new Date(), 23, 59,
-				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin");
+				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin", null);
 		sesPan = new SessionPanel(ses);
 		assertFalse(sesPan.validateFields(true));
 		assertEquals("*Select at least one requirement",sesPan.getInfoLabel());

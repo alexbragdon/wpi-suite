@@ -23,11 +23,13 @@ public class DeckSet {
 	
 	private final int[] fibonacci = {1, 1, 2, 3, 5, 8, 13, 21};
 	
+	private final int[] empty = {};
+	
 	/**
 	 * Create a deck set and load with the given decks
 	 */
 	private DeckSet() {
-		decks.put("-None-", new int[] {}); //"none" deck is empty
+		decks.put("-None-", empty); //"none" deck is empty
 		decks.put("Fibonacci", fibonacci);
 	}
 	
@@ -53,6 +55,10 @@ public class DeckSet {
 	 * @return A comma-separated string of the given values in the deck
 	 */
 	public String deckToString(String forName) {
+		if (forName == null) {
+			return "";
+		}
+		
 		StringBuilder sb = new StringBuilder();
 		int[] cards = getDeck(forName);
 		if (cards.length == 0) {
@@ -73,6 +79,10 @@ public class DeckSet {
 	 * @return An integer array of the contents of the deck
 	 */
 	public int[] getDeck(String forName) {
+		if (forName == null) {
+			return empty;
+		}
+		
 		int[] nums = decks.get(forName);
 		return Arrays.copyOf(nums, nums.length);
 	}

@@ -42,7 +42,7 @@ public class ViewEventControllerTest {
 		vec = ViewEventController.getInstance();
 		vec.setMainView(mv);
 		ses = new PlanningPokerSession(0, "Test Session", "Hello The World", new Date(), 12, 0,
-				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin");
+				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin", null);
 	}
 	
 	@Test
