@@ -133,7 +133,7 @@ EntityManager<PlanningPokerNotification> {
         for (User user : s.getProject().getTeam()) {
             if (!user.equals(s.getUser())) {
                 PlanningPokerNotification n = new PlanningPokerNotification(session.getName(), user.getUsername());
-
+                
                 // Save the session in the database if possible, otherwise throw an exception
                 // We want the message to be associated with the project the user logged in to
                 System.out.println("Trying to save...");
@@ -141,6 +141,9 @@ EntityManager<PlanningPokerNotification> {
                     System.out.println("Didn't save");
                     throw new WPISuiteException();
                 }
+                
+                System.out.println("Sent noticiation to user " + user.getUsername() + " That session " 
+                                        + session.getName() + " was created");
             }
         }
 
