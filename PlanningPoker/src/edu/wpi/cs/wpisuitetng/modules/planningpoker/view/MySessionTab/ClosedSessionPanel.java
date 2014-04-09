@@ -48,6 +48,7 @@ public class ClosedSessionPanel extends JPanel {
         table.getColumnModel().getColumn(1).setPreferredWidth(200);
 
         table.getColumnModel().getColumn(2).setMinWidth(70);
+        table.setRowSorter(null);
 
 
         this.setLayout(new BorderLayout());
