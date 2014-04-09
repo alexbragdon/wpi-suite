@@ -23,7 +23,7 @@ import javax.swing.event.ListSelectionListener;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.mysession.JoiningSessionPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.JoiningSessionPanel;
 
 
 /**

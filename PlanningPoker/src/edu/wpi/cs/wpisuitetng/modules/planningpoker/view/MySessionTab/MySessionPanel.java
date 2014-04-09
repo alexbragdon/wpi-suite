@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,14 +69,15 @@ public class MySessionPanel extends JPanel {
         joiningPanel = new JoiningSessionPanel(mainView, this);
         closedPanel = new ClosedSessionPanel(mainView, this);
 
-        this.setMinimumSize(getPreferredSize());
+        GridLayout experimentLayout = new GridLayout(0,3);
+        //this.setMinimumSize(getPreferredSize());
 
         
-        this.setLayout(new BorderLayout());
+        this.setLayout(experimentLayout);
         
-        this.add(moderatingPanel, BorderLayout.WEST);
-        this.add(joiningPanel, BorderLayout.CENTER);
-        this.add(closedPanel, BorderLayout.EAST);
+        this.add(moderatingPanel);
+        this.add(joiningPanel);
+        this.add(closedPanel);
         //populateTables(sessions);
      
         
