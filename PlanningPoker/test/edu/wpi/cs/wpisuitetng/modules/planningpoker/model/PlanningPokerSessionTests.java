@@ -47,9 +47,9 @@ public class PlanningPokerSessionTests {
 	@Before
 	public void setUp() throws Exception {
 		testSession = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
-				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "aGuy");	
+				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "aGuy", null);	
 		otherSession = new PlanningPokerSession(10, "BrandNewSession", "BeepBeep", new Date(), 10, 12,
-				new ArrayList<RequirementEstimate>(), sessionType.DISTRIBUTED, true, true, "coolGuy");
+				new ArrayList<RequirementEstimate>(), sessionType.DISTRIBUTED, true, true, "coolGuy", null);
 	}
 	@Test
 	public void TestsTheSetIDFunction(){

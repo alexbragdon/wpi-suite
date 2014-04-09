@@ -60,7 +60,7 @@ public class GetSessionTest {
 	@Test
 	public void testReceiveNotNullMessage(){
 		PlanningPokerSession[] sesArray = {new PlanningPokerSession(3123, "Test Session", "Hello The World", new Date(), 23, 59,
-				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin")};
+				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin", null)};
 		gppsc.receivedMessages(sesArray);
 	}
 
