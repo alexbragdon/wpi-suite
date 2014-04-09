@@ -23,7 +23,7 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
  */
 public class PlanningPokerNotification extends AbstractModel {
     String notificiation;
-    private String user;
+    private String username;
 
     /**
      * @return the notificiation
@@ -42,15 +42,15 @@ public class PlanningPokerNotification extends AbstractModel {
     /**
      * @return the user
      */
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
     /**
      * @param user the user to set
      */
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String user) {
+        this.username = user;
     }
 
     /**
@@ -69,7 +69,7 @@ public class PlanningPokerNotification extends AbstractModel {
      */
     public PlanningPokerNotification() {
         super();
-        this.user = "";
+        this.username = "";
         this.notificiation = "This is a dummy Notification";
     }
     
@@ -78,7 +78,15 @@ public class PlanningPokerNotification extends AbstractModel {
      */
     public PlanningPokerNotification(String notific, String usr) {
         this.notificiation = notific;
-        this.user = usr;
+        this.username = usr;
+    }
+    
+    /**
+     * Copy constructor for PlanningPokerNotification
+     */
+    public PlanningPokerNotification(PlanningPokerNotification p) {
+        this.notificiation = p.notificiation;
+        this.username = p.username;
     }
     
     /**
