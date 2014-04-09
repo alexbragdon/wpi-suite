@@ -238,6 +238,7 @@ public class PlanningPokerSession extends AbstractModel {
         this.Name = updatedSession.Name;
         this.Description = updatedSession.Description;
         this.date = updatedSession.date;
+        this.deck = updatedSession.deck;
         this.Hour = updatedSession.Hour;
         this.Min = updatedSession.Min;
         this.RequirementEstimates = updatedSession.RequirementEstimates;
