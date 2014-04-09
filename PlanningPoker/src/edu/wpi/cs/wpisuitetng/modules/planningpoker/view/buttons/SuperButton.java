@@ -33,6 +33,7 @@ public class SuperButton extends JButton {
     private Image editImg;
     private Image viewImg;
     private Image voteImg;
+    private Image closeImg;
 
     public SuperButton(SuperButtonPanel parent){
         // this.setName("<html>Create<br />Session</html>");
@@ -48,25 +49,33 @@ public class SuperButton extends JButton {
 
             editImg = ImageIO.read(getClass().getResource("editSession.png"));
             //this.setIcon(new ImageIcon(img));
+            
+            closeImg = ImageIO.read(getClass().getResource("closeSession.png"));
 
         } catch (IOException ex) {}
 
-        //this.setVisible(false);
-        
-        // TODO: Delete this default
-        Update(0);
+        this.setVisible(false);
     }
 
-    public void Update(int selectedIndex){
+    public void Update(int selectedIndex, boolean isActive){
         this.setVisible(true);
+        parent.setSessionActive(isActive);
         
         // Edit session
-        if(selectedIndex == 0){
+        if(selectedIndex == 0 && !isActive){
             this.setEnabled(true);
             parent.setSelectedPanelIndex(0);
             
             this.setText("<html>Edit<br />Session</html>");
             this.setIcon(new ImageIcon(editImg));
+        }
+        
+        if (selectedIndex == 0 && isActive) {
+            this.setEnabled(true);
+            parent.setSelectedPanelIndex(0);
+            
+            this.setText("<html>Close<br />Session</html>");
+            this.setIcon(new ImageIcon(closeImg));
         }
 
         // Vote session
@@ -106,5 +115,17 @@ public class SuperButton extends JButton {
     
     public String getTextOnButton(){
     	return this.getText();
+    }
+
+    /**
+     * Closes the session
+     *
+     * @param parent the parent
+     */
+    public void CloseSession(MainView parent) {
+        int id = parent.getMySession().getSelectedID(0);
+        if (id != -1) {
+            // TODO closes the session
+        }
     }
 }

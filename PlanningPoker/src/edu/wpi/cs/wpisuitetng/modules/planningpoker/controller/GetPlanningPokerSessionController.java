@@ -14,9 +14,11 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.ModeratingSessionTable;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.MySessionPanel;
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardMessage;
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -32,7 +34,15 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class GetPlanningPokerSessionController implements ActionListener {
 
-    public GetPlanningPokerSessionController() {
+    private MySessionPanel panel;
+    
+    /**
+     * Makes a MySessionPanel.
+     *
+     * @param panel the parent
+     */
+    public GetPlanningPokerSessionController(MySessionPanel panel) {
+        this.panel = panel;
     }
 
     @Override
@@ -58,49 +68,6 @@ public class GetPlanningPokerSessionController implements ActionListener {
      * @param messages an array of messages received from the server
      */
     public void receivedMessages(PlanningPokerSession[] sessions) {
-        
-        // TODO update the tables
-
-        /*if (sessions == null) {
-            return;
-        }
-
-        // Check for changes
-        if (sessions.length == model.getRowCount()) {
-            boolean hasChanges = false;
-
-            // Check if every session has an equal
-            for (PlanningPokerSession session : sessions) {
-                boolean hasEqual = false;
-                for (int i = 0; i < model.getRowCount(); i++) {
-                    if (session.getID() == (int) model.getValueAt(i, 0)
-                                    && session.getName().equals(model.getValueAt(i, 1))
-                                    && session.getModerator().equals(model.getValueAt(i, 2))) {
-                        hasEqual = true;
-                        break;
-                    }
-                }
-
-                // If something doesn't have an equal, that means something changed
-                hasChanges |= !hasEqual;
-            }
-
-            if (!hasChanges) {
-                return;
-            }
-        }
-
-        // Make sure the selection doesn't change
-        int row = model.getSelectedRow();
-
-        // Empty the local model to eliminate duplications
-        model.clear();
-
-        // add the messages to the local model
-        model.addSessions(sessions);
-
-        if (row != -1 && row < model.getRowCount()) {
-            model.setRowSelectionInterval(row, row);
-        }*/
+        panel.populateTables(sessions);
     }
 }

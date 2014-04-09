@@ -38,13 +38,14 @@ public class SuperButtonPanel extends ToolbarGroupView {
     private SuperButton superButton = new SuperButton(this);
     private final JPanel contentPanel = new JPanel();
     private int selectedPanelIndex = -1;
+    private boolean isSessionActive = false;
 
     public SuperButtonPanel(final MainView parent) {
         super("");
 
         this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         //change this to 450 when we have three buttons
-        this.setPreferredWidth(300);
+        this.setPreferredWidth(150);
         
         superButton.addActionListener(new ActionListener() {
             @Override
@@ -52,8 +53,12 @@ public class SuperButtonPanel extends ToolbarGroupView {
                 // ViewEventController.getInstance().createSession();
                 
                 // Edit session
-                if(selectedPanelIndex == 0){
+                if(selectedPanelIndex == 0 && !isSessionActive){
                     superButton.EditSession(parent);
+                }
+                
+                if (selectedPanelIndex == 0 && isSessionActive) {
+                    superButton.CloseSession(parent);
                 }
 
                 // Vote session
@@ -103,5 +108,19 @@ public class SuperButtonPanel extends ToolbarGroupView {
      */
     public void setSelectedPanelIndex(int newIndex){
         selectedPanelIndex = newIndex;
+    }
+
+    /**
+     * @return the isSessionActive
+     */
+    public boolean isSessionActive() {
+        return isSessionActive;
+    }
+
+    /**
+     * @param isSessionActive the isSessionActive to set
+     */
+    public void setSessionActive(boolean isSessionActive) {
+        this.isSessionActive = isSessionActive;
     }
 }

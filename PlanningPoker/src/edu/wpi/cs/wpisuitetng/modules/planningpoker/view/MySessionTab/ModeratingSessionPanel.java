@@ -19,7 +19,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionControllerModerating;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 
 /**
@@ -31,8 +30,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 public class ModeratingSessionPanel extends JPanel {
     private ModeratingSessionTable table;
     private MainView parent;
-
-    Timer timer;
 
     public ModeratingSessionPanel(MainView mainView, final MySessionPanel mySessionPanel)
     {
@@ -79,22 +76,11 @@ public class ModeratingSessionPanel extends JPanel {
                 if(table.getSelectedRow() != -1){
                     parent.getMySession().getJoiningPanel().getTable().clearSelection();
                     parent.getMySession().getClosedPanel().getTable().clearSelection();
-                    parent.getToolbarView().GetSuperButtonPanel().getSuperButton().Update(0);
+                    boolean isActive = ((String) getTable().getValueAt(getTable().getSelectedRow(), 3)).equals("Active");
+                    parent.getToolbarView().GetSuperButtonPanel().getSuperButton().Update(0, isActive);
                 }
             }
         });
-
-        timer = new Timer(1000, new GetPlanningPokerSessionControllerModerating(table));
-        timer.setInitialDelay(10000);
-        timer.start(); 
-    }
-
-    /**
-     * Refreshes the table associated with this panel.
-     */
-    public void refresh() {
-        // Feels a little hacky
-        new GetPlanningPokerSessionControllerModerating(table).actionPerformed(null);
     }
 
 

@@ -35,7 +35,7 @@ public class ButtonsPanel extends ToolbarGroupView {
 
         this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         //change this to 450 when we have three buttons
-        this.setPreferredWidth(300);
+        this.setPreferredWidth(150);
 
         this.createButton.setHorizontalAlignment(SwingConstants.CENTER);
         try {

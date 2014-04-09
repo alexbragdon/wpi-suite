@@ -23,6 +23,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.ClosedSessionPanel;
@@ -43,7 +44,6 @@ public class MySessionPanel extends JPanel {
     private JoiningSessionPanel joiningPanel;
     private ClosedSessionPanel closedPanel;
     private MainView parent;
-    private List<PlanningPokerSession> sessions;
     /**
      * @return the moderatingPanel
      */
@@ -83,18 +83,20 @@ public class MySessionPanel extends JPanel {
         
     }
     
-    public void populateTables(List<PlanningPokerSession> sessions) {
-        // TODO clear existing tables
+    public void populateTables(PlanningPokerSession[] sessions) {
+        moderatingPanel.getTable().clear();
+        joiningPanel.getTable().clear();
+        closedPanel.getTable().clear();
 
         String username = ConfigManager.getConfig().getUserName();
         
-        for (PlanningPokerSession session : this.sessions) {
-            if (session.getModerator().equals(username)) {
-                // 
-            } else if (!session.isComplete()) {
-                // TODO add to joining panel
-            } else {
-                // TODO add to closed panel
+        for (PlanningPokerSession session : sessions) {
+            if (session.isComplete()) {
+                closedPanel.getTable().addSessions(session);
+            } else if (session.isActive() && !session.getModerator().equals(username)) {
+                joiningPanel.getTable().addSessions(session);
+            } else if (session.getModerator().equals(username)) {
+                moderatingPanel.getTable().addSessions(session);
             }
         }
     }
@@ -116,6 +118,13 @@ public class MySessionPanel extends JPanel {
             default:
                 throw new RuntimeException("Invalid panel index");
         }
+    }
+    /**
+     * Description goes here.
+     *
+     */
+    public void refresh() {
+        new GetPlanningPokerSessionController(this).actionPerformed(null);
     }
 
 }

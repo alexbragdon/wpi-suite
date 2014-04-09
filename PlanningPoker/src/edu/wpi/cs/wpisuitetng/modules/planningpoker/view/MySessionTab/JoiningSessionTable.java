@@ -20,7 +20,9 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import java.util.Date;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 
 /**
  * Description
@@ -55,11 +57,16 @@ public class JoiningSessionTable extends JTable {
         }
     }
     
-    public void addSessions(PlanningPokerSession[] sessions) {
-        for (PlanningPokerSession session : sessions) {
+    public void addSessions(PlanningPokerSession session) {
+            Date date = session.getDate();
+            String dateString = "--";
+            if (session.getType() == sessionType.DISTRIBUTED) {
+                date.setHours(session.getHour());
+                date.setMinutes(session.getMin());
+                dateString = session.getDate().toString();
+            }
             tableModel.addRow(new String[] { String.valueOf(session.getID()), 
-                            session.getName(), session.getModerator() });
-        }
+                            session.getName(), dateString });
         
     }
 

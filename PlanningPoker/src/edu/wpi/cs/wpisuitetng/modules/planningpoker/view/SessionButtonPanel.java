@@ -68,7 +68,8 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
             clearButton.setIcon(new ImageIcon(img2));
             Image img3  = ImageIO.read(getClass().getResource("cancel-icon.png"));
             cancelButton.setIcon(new ImageIcon(img3));
-            openButton.setIcon(new ImageIcon(img1));
+            Image img4 = ImageIO.read(getClass().getResource("openSession.png"));
+            openButton.setIcon(new ImageIcon(img4));
         }catch(IOException ex){}
 
         this.add(saveButton);

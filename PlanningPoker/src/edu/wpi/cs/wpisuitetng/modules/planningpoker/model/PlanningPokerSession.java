@@ -233,7 +233,7 @@ public class PlanningPokerSession extends AbstractModel {
         this.RequirementEstimates = updatedSession.RequirementEstimates;
         this.Type = updatedSession.Type;
         this.isActive = updatedSession.isActive;
-        this.isComplete = updatedSession.isActive;
+        this.isComplete = updatedSession.isComplete;
 		this.moderator = updatedSession.moderator;
 	}
 

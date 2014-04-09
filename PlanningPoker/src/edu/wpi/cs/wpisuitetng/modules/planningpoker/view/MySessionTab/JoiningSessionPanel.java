@@ -18,8 +18,6 @@ import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionControllerJoining;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionControllerModerating;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 
 /**
@@ -31,8 +29,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 public class JoiningSessionPanel extends JPanel {
     JoiningSessionTable table;
     private MainView parent;
-
-    Timer timer;
 
     public JoiningSessionPanel(MainView mainView, final MySessionPanel mySessionPanel)
     {
@@ -77,25 +73,13 @@ public class JoiningSessionPanel extends JPanel {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if(table.getSelectedRow() != -1){
-                    parent.getToolbarView().GetSuperButtonPanel().getSuperButton().Update(1);
+                    parent.getToolbarView().GetSuperButtonPanel().getSuperButton().Update(1, false);
                     parent.getMySession().getModeratingPanel().getTable().clearSelection();
                     parent.getMySession().getClosedPanel().getTable().clearSelection();
                 }
             }
         });
 
-        timer = new Timer(1000, new GetPlanningPokerSessionControllerJoining(table));
-        timer.setInitialDelay(10000);
-        timer.start(); 
-
-    }
-
-    /**
-     * Refreshes the table associated with this panel.
-     */
-    public void refresh() {
-        // Feels a little hacky
-        new GetPlanningPokerSessionControllerJoining(table).actionPerformed(null);
     }
 
 

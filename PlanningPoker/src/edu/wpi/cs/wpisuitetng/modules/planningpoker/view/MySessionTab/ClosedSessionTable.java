@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 
 /**
  * Description
@@ -101,17 +102,16 @@ public class ClosedSessionTable extends JTable {
 
     
     @SuppressWarnings("deprecation")
-    public void addSessions(PlanningPokerSession[] sessions) {
-        for (PlanningPokerSession session : sessions) {
+    public void addSessions(PlanningPokerSession session) {
             Date date = session.getDate();
             date.setHours(session.getHour());
             date.setMinutes(session.getMin());
             Date nowDate = new Date();
-            if (date.compareTo(nowDate) < 0) {
-                tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), String.valueOf(date) });
+            String dateString = date.toString();
+            if (session.getType() == sessionType.REALTIME) {
+                dateString = "--";
             }
-
-        }
+            tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), dateString });
 
     }
 }

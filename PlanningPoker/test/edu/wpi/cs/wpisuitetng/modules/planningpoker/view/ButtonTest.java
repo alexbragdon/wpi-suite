@@ -52,9 +52,9 @@ public class ButtonTest {
 	}
 	@Test
 	public void testUpdateWithIndex(){
-		sb.Update(1);
+		sb.Update(1, false);
 		assertEquals("<html>Vote in<br />Session</html>", sb.getTextOnButton());
-		sb.Update(2);
+		sb.Update(2, false);
 		assertEquals("<html>View<br />Results</html>", sb.getTextOnButton());
 	}
 	@Test

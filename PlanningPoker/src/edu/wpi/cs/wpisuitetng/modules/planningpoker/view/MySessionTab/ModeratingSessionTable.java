@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
@@ -21,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
 
 /**
  * Description
@@ -103,13 +105,20 @@ public class ModeratingSessionTable extends JTable {
         }
     }
     
-    public void addSessions(PlanningPokerSession[] sessions) {
-        for (PlanningPokerSession session : sessions) {
-            String moderator = session.getModerator();
-            //if (moderator.equals()){
-                tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), session.getModerator() });
-            //}
-        }
+    public void addSessions(PlanningPokerSession session) {
+            Date date = session.getDate();
+            String dateString = "--";
+            if (session.getType() == sessionType.DISTRIBUTED) {
+                date.setHours(session.getHour());
+                date.setMinutes(session.getMin());
+                dateString = session.getDate().toString();
+            }
+            
+            String statusString = "New";
+            if (session.isActive()) {
+                statusString = "Active";
+            }
+                tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), dateString, statusString });
         
     }
 
