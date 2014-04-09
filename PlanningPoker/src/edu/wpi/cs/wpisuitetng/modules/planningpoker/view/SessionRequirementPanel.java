@@ -34,8 +34,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
 /**
  * This is the panel on the open session table.
  * 
- * @author Fangming Ning
- * @contributOr Team romulus
+ * @author Team Romulus
+ * @contributOr 
  */
 @SuppressWarnings("serial")
 public class SessionRequirementPanel extends JPanel {

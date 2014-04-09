@@ -28,12 +28,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 public class ButtonsPanel extends ToolbarGroupView {
     private JButton createButton = new JButton("<html>Create<br />Session</html>");
 
-    //private final JButton joinButton = new JButton("<html>Join<br />Session</html>");
-
-    private final JButton editButton = new JButton("<html>Edit<br />Session</html>");
-
-    //private final JButton viewButton = new JButton("<html>View Old<br />Session</html>");
-
     private final JPanel contentPanel = new JPanel();
 
     public ButtonsPanel(final MainView parent) {
@@ -41,22 +35,12 @@ public class ButtonsPanel extends ToolbarGroupView {
 
         this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         //change this to 450 when we have three buttons
-        this.setPreferredWidth(300);
+        this.setPreferredWidth(150);
 
         this.createButton.setHorizontalAlignment(SwingConstants.CENTER);
         try {
             Image img = ImageIO.read(getClass().getResource("createSession2.png"));
             this.createButton.setIcon(new ImageIcon(img));
-
-//            img = ImageIO.read(getClass().getResource("joinSession.png"));
-//            this.joinButton.setIcon(new ImageIcon(img));
-//
-//            img = ImageIO.read(getClass().getResource("viewSession.png"));
-//            this.viewButton.setIcon(new ImageIcon(img));
-
-            img = ImageIO.read(getClass().getResource("editSession.png"));
-            this.editButton.setIcon(new ImageIcon(img));
-
         } catch (IOException ex) {}
 
         createButton.addActionListener(new ActionListener() {
@@ -73,27 +57,12 @@ public class ButtonsPanel extends ToolbarGroupView {
 //            }
 //        });
 
-        editButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // TODO SORTA A HACK, DEAL WITH THIS MORE CLEANLY
-                int id = parent.getOpensession().getSelectedID();
-                if (id != -1) {
-                    new FindPlanningPokerSessionController().findPlanningPokerSessionbyID(id);
-                    editButton.setVisible(false);
-                    parent.getOpensession().getListSelectionModel().clearSelection();
-                }
-            }
-        });
-
         contentPanel.add(createButton);
 //        contentPanel.add(joinButton);
 //        contentPanel.add(viewButton);
-        contentPanel.add(editButton);
         contentPanel.setOpaque(false);
 //        joinButton.setVisible(false);
 //        viewButton.setVisible(false);
-        editButton.setVisible(false);
         this.add(contentPanel);
     }
 
@@ -114,9 +83,4 @@ public class ButtonsPanel extends ToolbarGroupView {
     public JButton getCreateIterationButton() {
         return createButton;
     }
-
-	public JButton getEditButton() {
-		// TODO Auto-generated method stub
-		return editButton;
-	}
 }

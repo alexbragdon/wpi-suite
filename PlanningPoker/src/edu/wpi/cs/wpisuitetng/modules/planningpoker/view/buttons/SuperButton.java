@@ -18,6 +18,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.FindPlanningPokerSessionController;
@@ -28,46 +29,60 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
  *
  */
 public class SuperButton extends JButton {
+    private SuperButtonPanel parent;
     private Image editImg;
     private Image viewImg;
     private Image voteImg;
+    private Image closeImg;
 
-    public SuperButton(){
+    public SuperButton(SuperButtonPanel parent){
         // this.setName("<html>Create<br />Session</html>");
-
+        this.parent = parent;
+        
         this.setHorizontalAlignment(SwingConstants.CENTER);
         try {
-            viewImg = ImageIO.read(getClass().getResource("viewSession.png"));
+            viewImg = ImageIO.read(getClass().getResource("viewSession2.png"));
             //this.viewButton.setIcon(new ImageIcon(img));
 
-            voteImg = ImageIO.read(getClass().getResource("joinSession.png"));
+            voteImg = ImageIO.read(getClass().getResource("joinSession2.png"));
             //this.joinButton.setIcon(new ImageIcon(img));
 
             editImg = ImageIO.read(getClass().getResource("editSession.png"));
             //this.setIcon(new ImageIcon(img));
+            
+            closeImg = ImageIO.read(getClass().getResource("closeSession.png"));
 
         } catch (IOException ex) {}
 
-        //this.setVisible(false);
-        
-        // TODO: Delete this default
-        Update(0);
+        this.setVisible(false);
     }
 
-    public void Update(int selectedIndex){
+    public void Update(int selectedIndex, boolean isActive){
+        this.setVisible(true);
+        parent.setSessionActive(isActive);
+        
         // Edit session
-        if(selectedIndex == 0){
+        if(selectedIndex == 0 && !isActive){
             this.setEnabled(true);
+            parent.setSelectedPanelIndex(0);
             
             this.setText("<html>Edit<br />Session</html>");
             this.setIcon(new ImageIcon(editImg));
+        }
+        
+        if (selectedIndex == 0 && isActive) {
+            this.setEnabled(true);
+            parent.setSelectedPanelIndex(0);
+            
+            this.setText("<html>Close<br />Session</html>");
+            this.setIcon(new ImageIcon(closeImg));
         }
 
         // Vote session
         if(selectedIndex == 1){
             this.setText("<html>Vote in<br />Session</html>");
             this.setIcon(new ImageIcon(voteImg));
-
+            parent.setSelectedPanelIndex(1);
             // TODO: Make this button do something
             this.setEnabled(false);
         }
@@ -76,19 +91,18 @@ public class SuperButton extends JButton {
         if(selectedIndex == 2){
             this.setText("<html>View<br />Results</html>");
             this.setIcon(new ImageIcon(viewImg));
-
+            parent.setSelectedPanelIndex(2);
             // TODO: Make this button do something
             this.setEnabled(false);
         }
     }
 
     public void EditSession(final MainView parent){
-        int id = parent.getOpensession().getSelectedID();
+        int id = parent.getMySession().getSelectedID(0);
         if (id != -1) {
             new FindPlanningPokerSessionController().findPlanningPokerSessionbyID(id);
             this.setVisible(false);
-            parent.getOpensession().getListSelectionModel().clearSelection();
-        }
+        } 
     }
 
     public void VoteSession(){
@@ -97,5 +111,21 @@ public class SuperButton extends JButton {
 
     public void ViewSession(){
 
+    }
+    
+    public String getTextOnButton(){
+    	return this.getText();
+    }
+
+    /**
+     * Closes the session
+     *
+     * @param parent the parent
+     */
+    public void CloseSession(MainView parent) {
+        int id = parent.getMySession().getSelectedID(0);
+        if (id != -1) {
+            // TODO closes the session
+        }
     }
 }

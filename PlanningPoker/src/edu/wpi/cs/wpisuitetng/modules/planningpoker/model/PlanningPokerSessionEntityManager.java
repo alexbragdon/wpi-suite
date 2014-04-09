@@ -150,7 +150,16 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
         // Parse from JSON
         final PlanningPokerSession session = PlanningPokerSession.fromJson(content);
 
-        session.setID(Count()+1);
+        // Figure out what the next ID is
+        List<PlanningPokerSession> sessions = db.retrieveAll(new PlanningPokerSession());
+        int highestID = 0;
+        for (PlanningPokerSession currentSession : sessions) {
+            if (currentSession.getID() > highestID) {
+                highestID = currentSession.getID();
+            }
+        }
+        
+        session.setID(highestID+1);
         session.setModerator(s.getUsername());
         // Save the session in the database if possible, otherwise throw an exception
         // We want the message to be associated with the project the user logged in to

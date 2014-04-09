@@ -56,9 +56,9 @@ public class SessionPanelTest {
 		reqList = new ArrayList<RequirementEstimate>();
 		reqList.add(new RequirementEstimate(1,"2",2,true));
 		ses = new PlanningPokerSession(3123, "Test Session", "Hello The World", new Date(), 23, 59,
-				reqList, sessionType.REALTIME, false, false, "admin");
+				reqList, sessionType.REALTIME, false, false, "admin", "-None-");
 		disturbedses = new PlanningPokerSession(1212, "Test Session", "Hello The World", new Date(), 23, 59,
-				reqList, sessionType.DISTRIBUTED, false, false, "admin");
+				reqList, sessionType.DISTRIBUTED, false, false, "admin", "-None-");
 		sesPan = new SessionPanel(ses);
 		mv = new MainView();
 		tbv = new ToolbarView(true, mv);
@@ -104,7 +104,7 @@ public class SessionPanelTest {
 		sesPan.setDesField("Test Description");
 		sesPan.setTimeDisabled();
 		ses = new PlanningPokerSession(21345, "Test Session", "Hello The World", new Date(), 23, 59,
-				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin");
+				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin", null);
 		sesPan = new SessionPanel(ses);
 		assertFalse(sesPan.validateFields(true));
 		assertEquals("*Select at least one requirement",sesPan.getInfoLabel());

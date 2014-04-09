@@ -11,7 +11,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import java.awt.event.ActionEvent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.opensession.OpensessionTable;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;

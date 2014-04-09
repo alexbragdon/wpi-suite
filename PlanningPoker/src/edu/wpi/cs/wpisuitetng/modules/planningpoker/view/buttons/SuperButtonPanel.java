@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -34,19 +35,17 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  *
  */
 public class SuperButtonPanel extends ToolbarGroupView {
-    private SuperButton superButton = new SuperButton();
+    private SuperButton superButton = new SuperButton(this);
     private final JPanel contentPanel = new JPanel();
     private int selectedPanelIndex = -1;
+    private boolean isSessionActive = false;
 
     public SuperButtonPanel(final MainView parent) {
         super("");
 
         this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         //change this to 450 when we have three buttons
-        this.setPreferredWidth(300);
-
-        // TODO: Delete this line
-        selectedPanelIndex = 0;
+        this.setPreferredWidth(150);
         
         superButton.addActionListener(new ActionListener() {
             @Override
@@ -54,8 +53,12 @@ public class SuperButtonPanel extends ToolbarGroupView {
                 // ViewEventController.getInstance().createSession();
                 
                 // Edit session
-                if(selectedPanelIndex == 0){
+                if(selectedPanelIndex == 0 && !isSessionActive){
                     superButton.EditSession(parent);
+                }
+                
+                if (selectedPanelIndex == 0 && isSessionActive) {
+                    superButton.CloseSession(parent);
                 }
 
                 // Vote session
@@ -67,9 +70,14 @@ public class SuperButtonPanel extends ToolbarGroupView {
                 if(selectedPanelIndex == 2){
                     superButton.ViewSession();
                 }
+                
+                parent.getMySession().getModeratingPanel().getTable().clearSelection();
+                parent.getMySession().getJoiningPanel().getTable().clearSelection();
+                parent.getMySession().getClosedPanel().getTable().clearSelection();
             }
         });
 
+        superButton.setVisible(false);
         contentPanel.add(superButton);
         contentPanel.setOpaque(false);
         this.add(contentPanel);
@@ -78,9 +86,9 @@ public class SuperButtonPanel extends ToolbarGroupView {
     /**
      * Method getSuperButton.
      * 
-     * @return JButton
+     * @return SuperButton
      */
-    public JButton getSuperButton() {
+    public SuperButton getSuperButton() {
         return superButton;
     }
 
@@ -100,5 +108,19 @@ public class SuperButtonPanel extends ToolbarGroupView {
      */
     public void setSelectedPanelIndex(int newIndex){
         selectedPanelIndex = newIndex;
+    }
+
+    /**
+     * @return the isSessionActive
+     */
+    public boolean isSessionActive() {
+        return isSessionActive;
+    }
+
+    /**
+     * @param isSessionActive the isSessionActive to set
+     */
+    public void setSessionActive(boolean isSessionActive) {
+        this.isSessionActive = isSessionActive;
     }
 }
