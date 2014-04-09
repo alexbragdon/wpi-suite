@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
@@ -43,7 +44,6 @@ public class MySessionPanel extends JPanel {
     private ClosedSessionPanel closedPanel;
     private MainView parent;
     private List<PlanningPokerSession> sessions;
-    
     /**
      * @return the moderatingPanel
      */
@@ -99,6 +99,23 @@ public class MySessionPanel extends JPanel {
         }
     }
     
-    
+    public int getSelectedID(int panel) {
+        switch (panel) {
+            case 0:
+                int row = moderatingPanel.getTable().getSelectedRow();
+                if (row == -1) return -1;
+                return Integer.parseInt((String) moderatingPanel.getTable().getValueAt(row, 0));
+            case 1:
+                row = joiningPanel.getTable().getSelectedRow();
+                if (row == -1) return -1;
+                return Integer.parseInt((String) joiningPanel.getTable().getValueAt(row, 0));
+            case 2:
+                row = closedPanel.getTable().getSelectedRow();
+                if (row == -1) return -1;
+                return Integer.parseInt((String) closedPanel.getTable().getValueAt(row, 0));
+            default:
+                throw new RuntimeException("Invalid panel index");
+        }
+    }
 
 }

@@ -18,6 +18,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.FindPlanningPokerSessionController;
@@ -28,13 +29,15 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
  *
  */
 public class SuperButton extends JButton {
+    private SuperButtonPanel parent;
     private Image editImg;
     private Image viewImg;
     private Image voteImg;
 
-    public SuperButton(){
+    public SuperButton(SuperButtonPanel parent){
         // this.setName("<html>Create<br />Session</html>");
-
+        this.parent = parent;
+        
         this.setHorizontalAlignment(SwingConstants.CENTER);
         try {
             viewImg = ImageIO.read(getClass().getResource("viewSession.png"));
@@ -55,9 +58,12 @@ public class SuperButton extends JButton {
     }
 
     public void Update(int selectedIndex){
+        this.setVisible(true);
+        
         // Edit session
         if(selectedIndex == 0){
             this.setEnabled(true);
+            parent.setSelectedPanelIndex(0);
             
             this.setText("<html>Edit<br />Session</html>");
             this.setIcon(new ImageIcon(editImg));
@@ -67,7 +73,7 @@ public class SuperButton extends JButton {
         if(selectedIndex == 1){
             this.setText("<html>Vote in<br />Session</html>");
             this.setIcon(new ImageIcon(voteImg));
-
+            parent.setSelectedPanelIndex(1);
             // TODO: Make this button do something
             this.setEnabled(false);
         }
@@ -76,19 +82,18 @@ public class SuperButton extends JButton {
         if(selectedIndex == 2){
             this.setText("<html>View<br />Results</html>");
             this.setIcon(new ImageIcon(viewImg));
-
+            parent.setSelectedPanelIndex(2);
             // TODO: Make this button do something
             this.setEnabled(false);
         }
     }
 
     public void EditSession(final MainView parent){
-//        int id = parent.getOpensession().getSelectedID();
-//        if (id != -1) {
-//            new FindPlanningPokerSessionController().findPlanningPokerSessionbyID(id);
-//            this.setVisible(false);
-//            parent.getOpensession().getListSelectionModel().clearSelection();
-//        }
+        int id = parent.getMySession().getSelectedID(0);
+        if (id != -1) {
+            new FindPlanningPokerSessionController().findPlanningPokerSessionbyID(id);
+            this.setVisible(false);
+        } 
     }
 
     public void VoteSession(){

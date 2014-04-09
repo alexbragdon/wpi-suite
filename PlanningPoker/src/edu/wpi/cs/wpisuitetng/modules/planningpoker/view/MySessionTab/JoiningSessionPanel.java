@@ -77,6 +77,7 @@ public class JoiningSessionPanel extends JPanel {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if(table.getSelectedRow() != -1){
+                    parent.getToolbarView().GetSuperButtonPanel().getSuperButton().Update(1);
                     parent.getMySession().getModeratingPanel().getTable().clearSelection();
                     parent.getMySession().getClosedPanel().getTable().clearSelection();
                 }

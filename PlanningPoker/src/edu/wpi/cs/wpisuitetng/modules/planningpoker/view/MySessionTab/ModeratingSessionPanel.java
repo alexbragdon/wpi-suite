@@ -79,6 +79,7 @@ public class ModeratingSessionPanel extends JPanel {
                 if(table.getSelectedRow() != -1){
                     parent.getMySession().getJoiningPanel().getTable().clearSelection();
                     parent.getMySession().getClosedPanel().getTable().clearSelection();
+                    parent.getToolbarView().GetSuperButtonPanel().getSuperButton().Update(0);
                 }
             }
         });

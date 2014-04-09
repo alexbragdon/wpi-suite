@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -34,7 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  *
  */
 public class SuperButtonPanel extends ToolbarGroupView {
-    private SuperButton superButton = new SuperButton();
+    private SuperButton superButton = new SuperButton(this);
     private final JPanel contentPanel = new JPanel();
     private int selectedPanelIndex = -1;
 
@@ -44,9 +45,6 @@ public class SuperButtonPanel extends ToolbarGroupView {
         this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         //change this to 450 when we have three buttons
         this.setPreferredWidth(300);
-
-        // TODO: Delete this line
-        selectedPanelIndex = 0;
         
         superButton.addActionListener(new ActionListener() {
             @Override
@@ -67,9 +65,14 @@ public class SuperButtonPanel extends ToolbarGroupView {
                 if(selectedPanelIndex == 2){
                     superButton.ViewSession();
                 }
+                
+                parent.getMySession().getModeratingPanel().getTable().clearSelection();
+                parent.getMySession().getJoiningPanel().getTable().clearSelection();
+                parent.getMySession().getClosedPanel().getTable().clearSelection();
             }
         });
 
+        superButton.setVisible(false);
         contentPanel.add(superButton);
         contentPanel.setOpaque(false);
         this.add(contentPanel);
@@ -78,9 +81,9 @@ public class SuperButtonPanel extends ToolbarGroupView {
     /**
      * Method getSuperButton.
      * 
-     * @return JButton
+     * @return SuperButton
      */
-    public JButton getSuperButton() {
+    public SuperButton getSuperButton() {
         return superButton;
     }
 

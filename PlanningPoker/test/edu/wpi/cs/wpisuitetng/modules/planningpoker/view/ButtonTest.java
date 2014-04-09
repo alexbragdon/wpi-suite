@@ -42,10 +42,10 @@ public class ButtonTest {
 	private MainView mv;
 	private ToolbarView tbv;
 	@Before
-	public void setUp() throws Exception {
-		sb = new SuperButton();
+	public void setUp() throws Exception {		
 		bp = new ButtonsPanel(mv);
 		sbp = new SuperButtonPanel(mv);
+		sb = new SuperButton(sbp);
 		mv = new MainView();
 		tbv = new ToolbarView(true, mv);
 		mv.setToolbarView(tbv);
