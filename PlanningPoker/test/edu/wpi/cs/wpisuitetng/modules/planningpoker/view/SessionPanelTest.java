@@ -56,9 +56,9 @@ public class SessionPanelTest {
 		reqList = new ArrayList<RequirementEstimate>();
 		reqList.add(new RequirementEstimate(1,"2",2,true));
 		ses = new PlanningPokerSession(3123, "Test Session", "Hello The World", new Date(), 23, 59,
-				reqList, sessionType.REALTIME, false, false, "admin");
+				reqList, sessionType.REALTIME, false, false, "admin", "-None-");
 		disturbedses = new PlanningPokerSession(1212, "Test Session", "Hello The World", new Date(), 23, 59,
-				reqList, sessionType.DISTRIBUTED, false, false, "admin");
+				reqList, sessionType.DISTRIBUTED, false, false, "admin", "-None-");
 		sesPan = new SessionPanel(ses);
 		mv = new MainView();
 		tbv = new ToolbarView(true, mv);
