@@ -19,6 +19,7 @@ public class PlanningPokerSession extends AbstractModel {
 	String Discription;
 	Date date;
 	private String moderator;
+	private String deck;
 	
 	
 	int Hour, Min;
@@ -149,13 +150,14 @@ public class PlanningPokerSession extends AbstractModel {
 		Type = sessionType.REALTIME;
 		isActive = false;
 		isComplete = false;
+		setDeck("-None-");
 	}
 
 	/**
 	 * constructor for a planning poker Session
 	 */
 	public PlanningPokerSession(int id, String name, String discription, Date date,int hour, int min, List<RequirementEstimate>
-			requirementestimates, sessionType type, boolean active, boolean complete, String moderator) 
+			requirementestimates, sessionType type, boolean active, boolean complete, String moderator, String deck) 
 	{
 		super();
 		ID = id;
@@ -168,6 +170,7 @@ public class PlanningPokerSession extends AbstractModel {
 		RequirementEstimates = new ArrayList<RequirementEstimate>(requirementestimates);
 		Type = type;
 		isActive = active;
+		this.setDeck(deck);
 		
 		// Prevents from adding an active, closed session
 		if (isActive) {
@@ -313,5 +316,19 @@ public class PlanningPokerSession extends AbstractModel {
 		}
 		return true;
 	}
+
+    /**
+     * @return the deck
+     */
+    public String getDeck() {
+        return deck;
+    }
+
+    /**
+     * @param deck the deck to set
+     */
+    public void setDeck(String deck) {
+        this.deck = deck;
+    }
 
 }

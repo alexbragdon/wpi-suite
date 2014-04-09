@@ -253,7 +253,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      */
     @SuppressWarnings("deprecation")
 	private void buildLayout() {
-    	
+        
+        if(viewMode == ViewMode.EDIT){
+            this.selectedDeck = displaySession.getDeck();
+        }
     	deckChooser.setSelectedItem(selectedDeck); //default to the "-None-" deck
     	chosenSequence = new JLabel(decks.deckToString(selectedDeck));
     	
@@ -694,7 +697,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		                Integer.parseInt(hourSpin.getValue().toString()),
 		                Integer.parseInt(minuteSpin.getValue().toString()),
 		                requirementsPanel.getSelectedRequirements(), type, false,
-		                false, ConfigManager.getConfig().getUserName());
+		                false, ConfigManager.getConfig().getUserName(),
+		                selectedDeck);
 		return session;
 	}
 
