@@ -476,6 +476,19 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 					selectedDeck = deckChooser.getSelectedItem().toString();
 					System.out.println("Item state changed to: " + selectedDeck);
 					chosenSequence.setText("  " + decks.deckToString(selectedDeck)); //Add space for better display
+					if (hasChanges())
+	            		buttonPanel.getButtonClear().setEnabled(true);
+	            	else
+	            		buttonPanel.getButtonClear().setEnabled(false);
+	            	
+	            	if (hasChanges() && validateFields(true))
+	            		buttonPanel.getButtonSave().setEnabled(true);
+	            	else
+	            		buttonPanel.getButtonSave().setEnabled(false);
+	            	
+	            	if (validateFields(true) && !isOpen) {
+	            		buttonPanel.getButtonOpen().setEnabled(true);
+	            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
 				}
 			}
     		
@@ -773,7 +786,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		                Integer.parseInt(minuteSpin.getValue().toString()),
 		                requirementsPanel.getSelectedRequirements(), type, isOpen,
 		                false, ConfigManager.getConfig().getUserName(),
-		                selectedDeck);
+		                (String) deckChooser.getSelectedItem());
 		return session;
 	}
 
@@ -783,6 +796,16 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     	dateChooser.setDate(displaySession.getDate());
     	hourSpin.setValue(displaySession.getHour());
     	minuteSpin.setValue(displaySession.getMin());
+    	
+    	int selectedIndex = deckChooser.getSelectedIndex();
+    	
+    	if (selectedIndex == 0) {
+    		selectedIndex = 1;
+    	} else {
+    		selectedIndex = 0;
+    	}
+    	
+    	deckChooser.setSelectedIndex(selectedIndex);
         requirementsPanel.refreshRequirementSelection();
         if (displaySession.getType() == sessionType.DISTRIBUTED) {
         	timeEnable.setSelected(true);
