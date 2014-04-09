@@ -105,7 +105,10 @@ public class ModeratingSessionTable extends JTable {
     
     public void addSessions(PlanningPokerSession[] sessions) {
         for (PlanningPokerSession session : sessions) {
-            tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), session.getModerator() });
+            String moderator = session.getModerator();
+            //if (moderator.equals()){
+                tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), session.getModerator() });
+            //}
         }
         
     }

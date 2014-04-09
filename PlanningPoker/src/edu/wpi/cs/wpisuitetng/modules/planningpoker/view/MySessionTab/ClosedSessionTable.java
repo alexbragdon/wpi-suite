@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
@@ -29,10 +30,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
  * @version Apr 7, 2014
  */
 public class ClosedSessionTable extends JTable {
-    
+
     private DefaultTableModel tableModel = null;
     private Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
-    
+
     public ClosedSessionTable(Object[][] data, String[] columnNames)
     {
         this.tableModel = new DefaultTableModel(data, columnNames);
@@ -45,64 +46,72 @@ public class ClosedSessionTable extends JTable {
 
     }
     public int getSelectedID() {
-	    if (getSelectedRow() == -1) {
-	        return -1;
-	    }
-	    
-	    return Integer.parseInt((String) tableModel.getValueAt(getSelectedRow(), 0));
-	}
-	
-	/**
-	 * Overrides the isCellEditable method to ensure no cells are editable.
-	 * @return boolean */
-	@Override
-	public boolean isCellEditable(int row, int col)
-	{
-		return false;
-	}
+        if (getSelectedRow() == -1) {
+            return -1;
+        }
 
-	/**
-	 * Overrides the paintComponent method to retrieve the requirements on the first painting.
-	 * 
-	 * @param g	The component object to paint
-	 */
-	@Override
-	public void paintComponent(Graphics g)
-	{
+        return Integer.parseInt((String) tableModel.getValueAt(getSelectedRow(), 0));
+    }
+
+    /**
+     * Overrides the isCellEditable method to ensure no cells are editable.
+     * @return boolean */
+    @Override
+    public boolean isCellEditable(int row, int col)
+    {
+        return false;
+    }
+
+    /**
+     * Overrides the paintComponent method to retrieve the requirements on the first painting.
+     * 
+     * @param g	The component object to paint
+     */
+    @Override
+    public void paintComponent(Graphics g)
+    {
 
 
-		super.paintComponent(g);
-	}
+        super.paintComponent(g);
+    }
 
-	/**
-	 * Method prepareRenderer.
-	 * @param renderer TableCellRenderer
-	 * @param row int
-	 * @param column int
-	 * @return Component
-	 */
-	@Override
+    /**
+     * Method prepareRenderer.
+     * @param renderer TableCellRenderer
+     * @param row int
+     * @param column int
+     * @return Component
+     */
+    @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
         Component comp = super.prepareRenderer(renderer, row, column);
 
         if (JComponent.class.isInstance(comp)){
             ((JComponent)comp).setBorder(paddingBorder);
         }
-		return comp;
+        return comp;
 
     }
-    
+
     public void clear() {
         for (int i = tableModel.getRowCount() - 1; i >= 0; i--) {
             tableModel.removeRow(i);
         }
     }
+
     
+    @SuppressWarnings("deprecation")
     public void addSessions(PlanningPokerSession[] sessions) {
         for (PlanningPokerSession session : sessions) {
-            tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), session.getModerator() });
-        }
-        
-    }
+            Date date = session.getDate();
+            date.setHours(session.getHour());
+            date.setMinutes(session.getMin());
+            Date nowDate = new Date();
+            if (date.compareTo(nowDate) < 0) {
+                tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), String.valueOf(date) });
+            }
 
+        }
+
+    }
 }
