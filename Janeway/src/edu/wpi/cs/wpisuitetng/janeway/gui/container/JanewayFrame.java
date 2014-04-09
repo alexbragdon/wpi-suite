@@ -80,7 +80,7 @@ public class JanewayFrame extends JFrame {
 		// Add the tab panel
 		tabPanel = new TabPanel(modules);
 		this.add(tabPanel, BorderLayout.CENTER);
-
+		
 		// Add key event dispatcher and global shortcuts
 		JanewayKeyEventDispatcher keyEventDispatcher = new JanewayKeyEventDispatcher(this, modules);
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(keyEventDispatcher);
@@ -109,6 +109,7 @@ public class JanewayFrame extends JFrame {
 	public TabPanel getTabPanel() {
 		return tabPanel;
 	}
+	
 
 	/**
 	 * Add global keyboard shortcuts

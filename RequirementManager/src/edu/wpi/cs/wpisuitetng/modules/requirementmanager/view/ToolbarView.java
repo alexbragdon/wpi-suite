@@ -21,6 +21,7 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.ChartButtonsPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.EditButtonsPanel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.ImportExportButtonsPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.RequirementButtonsPanel;
 
 /**
@@ -35,6 +36,7 @@ public class ToolbarView  extends DefaultToolbarView {
 	public ChartButtonsPanel chartButton = new ChartButtonsPanel();
 	public EditButtonsPanel editButton = new EditButtonsPanel();
 	public RequirementButtonsPanel reqButton = new RequirementButtonsPanel();
+	private ImportExportButtonsPanel importExportButtons = new ImportExportButtonsPanel();
 	
 	/**
 	 * Creates and positions option buttons in upper toolbar
@@ -45,7 +47,8 @@ public class ToolbarView  extends DefaultToolbarView {
 		this.addGroup(reqButton);
 		this.addGroup(chartButton);
 		this.addGroup(editButton);
-
+		this.addGroup(importExportButtons);
+		
 	}
 	
 	/**
@@ -70,5 +73,13 @@ public class ToolbarView  extends DefaultToolbarView {
 	 * @return RequirementButtonsPanel */
 	public RequirementButtonsPanel getReqButton() {
 		return reqButton;
+	}
+	
+	/**
+	 * Returns the import and export buttons.
+	 * @return import and export buttons.
+	 */
+	public ImportExportButtonsPanel getImportExportButtons() {
+	    return importExportButtons;
 	}
 }

@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.overview.OverviewTable;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.overview.OverviewTreePanel;
 
 /**
  * @author justinhess
@@ -37,7 +38,6 @@ public class RequirementModelTest {
 		
 		OverviewTable ovTable = new OverviewTable(null, null);
 		viewCon.setOverviewTable(ovTable);
-		 
 	}
 	
 	@Test

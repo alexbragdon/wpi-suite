@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.Itera
 /**
  * Basic Requirement class that contains the data to be stored for a Requirement
  * 
- * 
+ * x
  * @version $Revision: 1.0 $
  * @author justinhess
  */

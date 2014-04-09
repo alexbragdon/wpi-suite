@@ -19,6 +19,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequir
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.Iteration;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.IterationModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.export.ExportPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationOverviewPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.overview.OverviewPanel;
@@ -45,6 +46,7 @@ public class ViewEventController {
 	private ArrayList<RequirementPanel> listOfEditingPanels = new ArrayList<RequirementPanel>();
 	private ArrayList<IterationPanel> listOfIterationPanels = new ArrayList<IterationPanel>();
 	private IterationOverviewPanel iterationOverview;
+	private ExportPanel exportPanel;
 	
 	/**
 	 * Sets the OverviewTable for the controller
@@ -270,7 +272,20 @@ public class ViewEventController {
 		}	
 	}
 
-
+    /**
+     * Opens a tab to export requirements to disk.
+     */
+    public void exportRequirements() {
+        // Create the export panel if it's not open already
+        if (exportPanel == null) {
+            exportPanel = new ExportPanel();
+            main.addTab("Export", null, exportPanel, "Export selected requirements");
+            main.invalidate();
+            main.repaint();
+        }
+        
+        main.setSelectedComponent(exportPanel);
+    }
 
 	/** 
 	
@@ -305,6 +320,11 @@ public class ViewEventController {
 			if(!((IterationPanel)comp).readyToRemove()) return;
 			this.listOfIterationPanels.remove(comp);
 		}
+		
+		if (comp instanceof ExportPanel) {
+		    exportPanel = null;
+		}
+		
 		main.remove(comp);
 	}
 
@@ -393,6 +413,10 @@ public class ViewEventController {
 				if(!((IterationPanel)toBeRemoved).readyToRemove()) continue;
 				this.listOfIterationPanels.remove(toBeRemoved);
 			}
+			
+			if (toBeRemoved instanceof ExportPanel) {
+			    exportPanel = null;
+			}
 
 			main.removeTabAt(i);
 		}
@@ -429,6 +453,10 @@ public class ViewEventController {
 			{
 				if(!((IterationPanel)toBeRemoved).readyToRemove()) continue;
 				this.listOfIterationPanels.remove(toBeRemoved);
+			}
+			
+			if (toBeRemoved instanceof ExportPanel) {
+			    exportPanel = null;
 			}
 
 			main.removeTabAt(i);
