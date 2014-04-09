@@ -3,6 +3,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -82,7 +83,16 @@ public class ViewEventController {
     public void editSession(PlanningPokerSession session) {	    
         boolean exists = false;
         int index = 0;
+        Component component = null;
 
+        for (Component c : main.getComponents()) {
+            if (c instanceof SessionPanel && ((SessionPanel)c).getSession().equals(session)) {
+                exists = true;
+                component = c;
+                break;
+            }
+        }
+        
         if(listOfEditingSessions.containsKey(session))
         {
             exists = true;
@@ -98,8 +108,7 @@ public class ViewEventController {
             main.setSelectedComponent(sessionEditor);
             listOfEditingSessions.put(session, main.getSelectedIndex());
         } else {
-            index = main.indexOfTab("Edit " + session.getName());
-            main.setSelectedIndex(index);
+            main.setSelectedComponent(component);
         }
     }
 
