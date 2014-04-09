@@ -101,6 +101,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      */
     String selectedDeck = "-None-";
     
+    String lastDeck = selectedDeck;
+    
     /**
      * Goes on left, holds basic info (name, time). changed to scrollable panel
      */
