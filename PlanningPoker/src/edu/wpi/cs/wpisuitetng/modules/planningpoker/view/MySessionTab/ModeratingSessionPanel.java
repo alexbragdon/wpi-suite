@@ -51,6 +51,7 @@ public class ModeratingSessionPanel extends JPanel {
         table.getColumnModel().getColumn(2).setMinWidth(70);
 
         table.getColumnModel().getColumn(3).setMinWidth(70);
+        table.setRowSorter(null);
 
         this.setLayout(new BorderLayout());
 
