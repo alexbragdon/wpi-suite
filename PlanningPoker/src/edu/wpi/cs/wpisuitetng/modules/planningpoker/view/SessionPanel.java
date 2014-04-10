@@ -701,11 +701,14 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     }
     
     public void setDateTime(int cY, int cM, int cD, int cH, int cMi){
-    	this.dt.setYear(cY);
-    	this.dt.setMonth(cM);
-    	this.dt.setDate(cD);
-    	this.dt.setHours(cH);
-    	this.dt.setMinutes(cMi);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dt);
+        calendar.set(Calendar.YEAR, cY + 1900);
+        calendar.set(Calendar.MONTH, cM);
+        calendar.set(Calendar.DAY_OF_MONTH, cD);
+        calendar.set(Calendar.HOUR_OF_DAY, cH);
+        calendar.set(Calendar.MINUTE, cMi);
+        dt = calendar.getTime();
     }
     
     public void buildLY(){
