@@ -264,8 +264,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     /**
      * Builds the layout of the panel.
      */
-    @SuppressWarnings("deprecation")
-	private void buildLayout() {
+    private void buildLayout() {
         
         if(viewMode == ViewMode.EDIT){
             this.selectedDeck = displaySession.getDeck();
@@ -285,38 +284,41 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         final JLabel desLabel = new JLabel("Description *");
         Font boardFont = new Font(infoLabel.getFont().getName(), Font.BOLD, infoLabel.getFont()
                         .getSize());
-		Date dt = new Date();
 		
-		int currentYear = dt.getYear();
-		int currentMonth = dt.getMonth();
-		int currentDay = dt.getDate();
-		int currentHour = dt.getHours() + 1;
-		int currentMinute = dt.getMinutes();
+        Calendar calendar = Calendar.getInstance();
+        Date dt = new Date();
+        calendar.setTime(dt);
+		
+		int currentYear = calendar.get(Calendar.YEAR) - 1900;
+		int currentMonth = calendar.get(Calendar.MONTH);
+		int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+		int currentHour = calendar.get(Calendar.HOUR_OF_DAY) + 1;
+		int currentMinute = calendar.get(Calendar.MINUTE);
 		if (currentMonth == 2) {
 			if (currentYear % 4 == 0) {// There is FEB 29th in leap year
 				if (currentDay == 29) {// Today of FEB 29th
 					if (currentHour >= 24) {
 						currentHour = 0;
-						dt.setMonth(3);
-						dt.setDate(1);// Next day is MAR 1st
+						calendar.set(Calendar.MONTH, 3);
+						calendar.set(Calendar.DAY_OF_MONTH, 1); // Next day is MAR 1st
 					}
 				} else {// Not last day
 					if (currentHour >= 24) {
 						currentHour = 0;
-						dt.setDate(currentDay + 1);
+						calendar.set(Calendar.DAY_OF_MONTH, currentDay + 1);
 					}
 				}
 			} else {// Not leap year
 				if (currentDay == 28) {// Today of FEB 29th
 					if (currentHour >= 24) {
 						currentHour = 0;
-						dt.setMonth(3);
-						dt.setDate(1);// Next day is MAR 1st
+						calendar.set(Calendar.MONTH, 3);
+						calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is MAR 1st
 					}
 				} else {// Not last day
 					if (currentHour >= 24) {
 						currentHour = 0;
-						dt.setDate(currentDay + 1);
+						calendar.set(Calendar.DAY_OF_MONTH, currentDay + 1);
 						}
 				}
 			}
@@ -324,14 +326,14 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			if (currentDay == 31) {// Last day of the year
 				if (currentHour >= 24) {
 					currentHour = 0;
-					dt.setYear(currentYear + 1);// To the next year
-					dt.setMonth(1);
-					dt.setDate(1);// Next day is JAN 1st
+					calendar.set(Calendar.YEAR, currentYear + 1 + 1900);// To the next year
+					calendar.set(Calendar.MONTH, 1);
+					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is JAN 1st
 				}
 			} else {
 				if (currentHour >= 24) {
 					currentHour = 0;
-					dt.setDate(currentDay + 1);
+					calendar.set(Calendar.DAY_OF_MONTH, currentDay + 1);
 				}
 			}
 		} else if (currentMonth == 4 || currentMonth == 6 || currentMonth == 9
@@ -339,30 +341,31 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			if (currentDay == 30) {// Last day of the current month
 				if (currentHour >= 24) {
 					currentHour = 0;
-					dt.setMonth(currentMonth + 1);// To the next month
-					dt.setDate(1);// Next day is 1st
+					calendar.set(Calendar.MONTH, currentMonth + 1);// To the next month
+					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is 1st
 				}
 			} else {
 				if (currentHour >= 24) {
 					currentHour = 0;
-					dt.setDate(currentDay + 1);
+					calendar.set(Calendar.DAY_OF_MONTH, currentDay + 1);
 				}
 			}
 		} else {
 			if (currentDay == 31) {// Last day of the current month
 				if (currentHour >= 24) {
 					currentHour = 0;
-					dt.setMonth(currentMonth + 1);// To the next month
-					dt.setDate(1);// Next day is 1st
+					calendar.set(Calendar.MONTH, currentMonth + 1);// To the next month
+					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is 1st
 				}
 			} else {
 				if (currentHour >= 24) {
 					currentHour = 0;
-					dt.setDate(currentDay + 1);
+					calendar.set(Calendar.DAY_OF_MONTH, currentDay + 1);
 				}
 			}
 		}
 
+		dt = calendar.getTime();
         dateChooser = new JCalendar(dt); //Create new JCalendar with now default selected
         
         hourSpin = new JSpinner(new SpinnerNumberModel(currentHour, 0, 23, 1));
