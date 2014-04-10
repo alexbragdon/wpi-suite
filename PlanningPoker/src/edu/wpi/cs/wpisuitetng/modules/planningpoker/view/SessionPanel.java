@@ -391,7 +391,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		infoPanel.add(timeEnable);
 		
 		JPanel deckChooserPanel = new JPanel(new BorderLayout());
-		deckChooserPanel.add(deckChooser, BorderLayout.WEST);
+		deckChooserPanel.add(new JLabel("Deck: "), BorderLayout.WEST);
+		deckChooserPanel.add(deckChooser, BorderLayout.CENTER);
 		deckChooserPanel.add(chosenSequence, BorderLayout.EAST); //Show contents of currently selected deck
 		infoPanel.add(deckChooserPanel);
 		
