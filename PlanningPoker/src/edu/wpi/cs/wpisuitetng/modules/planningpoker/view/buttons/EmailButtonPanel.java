@@ -51,29 +51,44 @@ public class EmailButtonPanel extends ToolbarGroupView{
     public EmailButtonPanel(final MainView parent) {
         super("");
         this.emailPanel.setLayout(new BoxLayout(emailPanel, BoxLayout.X_AXIS));
-        this.setPreferredWidth(200);
+        this.setPreferredWidth(250);
         
         buildEmailButton();
         buildEmailField();
         
+        emailPanel.add(emailButton);
+        
         emailButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	if(buttonMode == 0){
-            		emailPanel.add(emailButton);
-            	}
-            	if(buttonMode == 1){
-            		emailPanel.add(emailField,"growx, pushx, shrinkx, span, wrap");
-                    emailPanel.add(infoLabel, "wrap");  
-            		emailPanel.add(submitButton);
-            		emailPanel.add(cancelButton);
-            	}
+            	emailPanel.removeAll();
+            	emailPanel.add(emailField,"growx, pushx, shrinkx, span, wrap");
+                emailPanel.add(infoLabel, "wrap");  
+        		emailPanel.add(submitButton);
+        		emailPanel.add(cancelButton);
+        		
+            }
+        });
+        
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	emailPanel.removeAll();
+            	emailPanel.add(emailButton);
+            }
+        });
+        
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	emailPanel.removeAll();
+            	emailPanel.add(emailButton);   		
             }
         });
 
-        
         emailPanel.setOpaque(false);
-        this.add(emailPanel);
+		this.add(emailPanel);
+        
         
     }
 
