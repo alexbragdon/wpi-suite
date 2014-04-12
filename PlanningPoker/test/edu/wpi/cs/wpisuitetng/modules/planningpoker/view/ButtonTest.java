@@ -71,7 +71,7 @@ public class ButtonTest {
 	@Test
 	public void testSuperButtonPanel(){
 		assertNotNull(sbp.getSuperButton());
-		assertEquals(0, sbp.getSelectedPanelIndex());
+		assertEquals(-1, sbp.getSelectedPanelIndex());
 		sbp.setSelectedPanelIndex(2);
 		assertEquals(2, sbp.getSelectedPanelIndex());
 	}

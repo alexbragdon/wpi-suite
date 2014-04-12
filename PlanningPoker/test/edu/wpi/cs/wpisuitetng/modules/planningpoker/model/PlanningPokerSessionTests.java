@@ -105,8 +105,8 @@ public class PlanningPokerSessionTests {
 		assertEquals(10, testSession.getHour());
 		assertEquals(12, testSession.getMin());
 		assertEquals(sessionType.DISTRIBUTED, testSession.getType());
-		assertEquals(true, testSession.isComplete());
-		assertEquals(true, testSession.isActive());
+		assertFalse(testSession.isComplete());
+		assertTrue(testSession.isActive());
 	}
 	@Test
 	public void TestsTheHashCodeFunction(){

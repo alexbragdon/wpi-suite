@@ -1,8 +1,12 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import javax.swing.Box;
+import javax.swing.JButton;
+
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.ButtonsPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.EmailButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SuperButtonPanel;
 
 /**
@@ -16,6 +20,7 @@ public class ToolbarView extends DefaultToolbarView {
 
     public ButtonsPanel CreateButtonPanel;
     public SuperButtonPanel SuperButtonPanel;
+    public EmailButtonPanel EmailButtonPanel;
 
     /**
      * Creates and positions option buttons in upper toolbar
@@ -27,6 +32,9 @@ public class ToolbarView extends DefaultToolbarView {
         this.addGroup(CreateButtonPanel);
         SuperButtonPanel = new SuperButtonPanel(mainView);
         this.addGroup(SuperButtonPanel);
+        this.add(Box.createHorizontalGlue());
+        EmailButtonPanel = new EmailButtonPanel(mainView);
+        this.add(EmailButtonPanel);
     }
 
     /**
@@ -40,5 +48,9 @@ public class ToolbarView extends DefaultToolbarView {
     
     public SuperButtonPanel GetSuperButtonPanel(){
         return SuperButtonPanel;
+    }
+    
+    public EmailButtonPanel GetEmailButtonPanel(){
+        return EmailButtonPanel;
     }
 }
