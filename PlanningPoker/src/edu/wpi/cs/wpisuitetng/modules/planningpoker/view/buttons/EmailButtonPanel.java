@@ -42,34 +42,56 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
  */
 @SuppressWarnings("serial")
 public class EmailButtonPanel extends ToolbarGroupView{
-	private JButton emailButton = new JButton("<html>Need email<br />notification?</html>");
+	private JButton emailButton = new JButton("<html>Email<br />Settings</html>");
     private final ScrollablePanel emailPanel = new ScrollablePanel();
-    private int buttonMode = 0;// 0 is button, 1 is text field for entering email
     private JTextField emailField;
     private JButton submitButton;
 	private JButton cancelButton;
 	private JLabel infoLabel;
-	private JPanel buttonPanel;
     
     public EmailButtonPanel(final MainView parent) {
         super("");
-        this.emailPanel.setLayout(new BoxLayout(emailPanel, BoxLayout.X_AXIS));
-        this.setPreferredWidth(250);
+        this.emailPanel.setLayout(new BoxLayout(emailPanel, BoxLayout.Y_AXIS));
+        this.setPreferredWidth(200);
         
-        buildEmailButton();
-        buildEmailField();
+        // Email settings button
+        this.emailButton.setHorizontalAlignment(SwingConstants.CENTER);
+        try {
+            Image img = ImageIO.read(getClass().getResource("emailButton.png"));
+            this.emailButton.setIcon(new ImageIcon(img));
+        } catch (IOException ex) {}
         
+        // Field for entering email
+        emailField = new JTextField();
+        emailField.setPreferredSize(new Dimension(150, 25));
+        
+        // Button for submitting new email
+        submitButton = new JButton("Submit");
+        submitButton.setEnabled(false);
+        
+        // Button for cancelling an email address
+        cancelButton = new JButton("Cancel");
+        
+        // Validation label
+        infoLabel  = new JLabel("");
+        infoLabel.setText("");// Delete this after creating validator.
+        infoLabel.setForeground(Color.red);
+        
+        emailPanel.add(submitButton);
+        emailPanel.add(cancelButton);
+        emailPanel.add(infoLabel);
+        emailPanel.add(emailField);
         emailPanel.add(emailButton);
+        //emailPanel.setLayout(new MigLayout("", "", "shrink"));
         
         emailButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	emailPanel.removeAll();
-            	emailPanel.add(emailField,"growx, pushx, shrinkx, span, wrap");
-                emailPanel.add(infoLabel, "wrap"); 
-                emailPanel.add(buttonPanel);
-                buttonPanel.setOpaque(false);
-        		
+            	emailField.setVisible(true);
+            	submitButton.setVisible(true);
+            	cancelButton.setVisible(true);
+            	infoLabel.setVisible(true);
+            	emailButton.setVisible(false);        		
             }
         });
         
@@ -77,8 +99,11 @@ public class EmailButtonPanel extends ToolbarGroupView{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (validateEmail()) {
-					emailPanel.removeAll();
-					emailPanel.add(emailButton);
+				    emailField.setVisible(false);
+	                submitButton.setVisible(false);
+	                cancelButton.setVisible(false);
+	                infoLabel.setVisible(false);
+	                emailButton.setVisible(true);
 				}else{
 					infoLabel.setText("Email format incorrect!");
 				}
@@ -88,16 +113,13 @@ public class EmailButtonPanel extends ToolbarGroupView{
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	emailPanel.removeAll();
-            	emailPanel.add(emailButton);   		
+                emailField.setVisible(false);
+                submitButton.setVisible(false);
+                cancelButton.setVisible(false);
+                infoLabel.setVisible(false);
+                emailButton.setVisible(true);  		
             }
         });
-
-        
-        emailPanel.setOpaque(false);
-		this.add(emailPanel);
-		
-        validateEmail();
         
         emailField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -131,34 +153,17 @@ public class EmailButtonPanel extends ToolbarGroupView{
             }
         });
         
+        emailPanel.setOpaque(false);
+        
+        emailField.setVisible(false);
+        submitButton.setVisible(false);
+        cancelButton.setVisible(false);
+        infoLabel.setVisible(false);
+        emailButton.setVisible(true);
+        
+        this.add(emailPanel);
     }
 
-	private void buildEmailButton() {
-		
-
-        this.emailButton.setHorizontalAlignment(SwingConstants.CENTER);
-        try {
-            Image img = ImageIO.read(getClass().getResource("emailButton.png"));
-            this.emailButton.setIcon(new ImageIcon(img));
-        } catch (IOException ex) {}
-	}
-	
-    private void buildEmailField() {
-		emailField = new JTextField();
-		emailField.setPreferredSize(new Dimension(150, 25));
-		buttonPanel = new JPanel();
-		submitButton = new JButton("Submit");
-		submitButton.setEnabled(false);
-		cancelButton = new JButton("Cancel");
-		buttonPanel.add(submitButton);
-		buttonPanel.add(cancelButton);
-		buttonPanel.setOpaque(false);
-		infoLabel  = new JLabel("");
-		infoLabel.setText("");// Delete this after creating validator.
-        infoLabel.setForeground(Color.red);
-		emailPanel.setLayout(new MigLayout("", "", "shrink"));
-	}
-    
     public boolean validateEmail(){
     	boolean valid = false;
     	if (emailField.getText().length() == 0) {
