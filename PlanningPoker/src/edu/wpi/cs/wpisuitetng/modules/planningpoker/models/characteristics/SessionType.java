@@ -8,7 +8,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics;
  * @author Romulus
  * 
  */
-public enum sessionType {
+public enum SessionType {
 	/**
 	 * Enumerations representing PlanningPokerSession Types
 	 */

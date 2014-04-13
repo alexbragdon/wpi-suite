@@ -44,7 +44,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerS
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonListener;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonPanel;
@@ -447,7 +447,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             dateChooser.setDate(displaySession.getDate());
             hourSpin.setValue(displaySession.getHour());
             minuteSpin.setValue(displaySession.getMin());
-            if (displaySession.getType() == sessionType.DISTRIBUTED) {
+            if (displaySession.getType() == SessionType.DISTRIBUTED) {
             	timeEnable.setSelected(true);
                 dateChooser.setEnabled(true);
         		hourSpin.setEnabled(true);
@@ -782,7 +782,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     }
 
 	public PlanningPokerSession createSessionFromFields() {
-		sessionType type = timeEnable.isSelected() ? sessionType.DISTRIBUTED : sessionType.REALTIME;
+		SessionType type = timeEnable.isSelected() ? SessionType.DISTRIBUTED : SessionType.REALTIME;
 		PlanningPokerSession session = new PlanningPokerSession(displaySession.getID(), nameField.getText(),
 		                desField.getText(), dateChooser.getDate(),
 		                Integer.parseInt(hourSpin.getValue().toString()),
@@ -811,7 +811,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     	}
     	
     	requirementsPanel.refreshRequirementSelection();
-        if (displaySession.getType() == sessionType.DISTRIBUTED) {
+        if (displaySession.getType() == SessionType.DISTRIBUTED) {
         	timeEnable.setSelected(true);
         	dateChooser.setEnabled(true);
         	hourSpin.setEnabled(true);

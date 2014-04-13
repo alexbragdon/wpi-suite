@@ -24,7 +24,7 @@ import org.junit.Test;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockRequest;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
@@ -47,9 +47,9 @@ public class PlanningPokerSessionTests {
 	@Before
 	public void setUp() throws Exception {
 		testSession = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
-				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "aGuy", null);	
+				new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "aGuy", null);	
 		otherSession = new PlanningPokerSession(10, "BrandNewSession", "BeepBeep", new Date(), 10, 12,
-				new ArrayList<RequirementEstimate>(), sessionType.DISTRIBUTED, true, true, "coolGuy", null);
+				new ArrayList<RequirementEstimate>(), SessionType.DISTRIBUTED, true, true, "coolGuy", null);
 	}
 	@Test
 	public void TestsTheSetIDFunction(){
@@ -93,8 +93,8 @@ public class PlanningPokerSessionTests {
 	}
 	@Test
 	public void TestsTheSetTypeFunction(){
-		testSession.setType(sessionType.DISTRIBUTED);
-		assertEquals(sessionType.DISTRIBUTED, testSession.getType());
+		testSession.setType(SessionType.DISTRIBUTED);
+		assertEquals(SessionType.DISTRIBUTED, testSession.getType());
 	}
 	@Test
 	public void TestsTheCopyFromFunction(){
@@ -104,7 +104,7 @@ public class PlanningPokerSessionTests {
 		assertEquals("BeepBeep", testSession.getDescription());
 		assertEquals(10, testSession.getHour());
 		assertEquals(12, testSession.getMin());
-		assertEquals(sessionType.DISTRIBUTED, testSession.getType());
+		assertEquals(SessionType.DISTRIBUTED, testSession.getType());
 		assertFalse(testSession.isComplete());
 		assertTrue(testSession.isActive());
 	}

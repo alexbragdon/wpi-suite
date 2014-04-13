@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 
 /**
  * Description
@@ -62,7 +62,7 @@ public class JoiningSessionTable extends JTable {
     public void addSessions(PlanningPokerSession session) {
             Date date = session.getDate();
             String dateString = "--";
-            if (session.getType() == sessionType.DISTRIBUTED) {
+            if (session.getType() == SessionType.DISTRIBUTED) {
                 date.setHours(session.getHour());
                 date.setMinutes(session.getMin());
                 dateString = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(date);
