@@ -28,6 +28,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 @SuppressWarnings("serial")
 public class CloseSessionPanel extends JPanel {
     private PlanningPokerSession session;
+    private boolean isEditable;
     private JScrollPane editPanel;
     private CloseSessionButtonsPanel buttons;
     
@@ -36,14 +37,15 @@ public class CloseSessionPanel extends JPanel {
      *
      * @param session session to close
      */
-    public CloseSessionPanel(PlanningPokerSession session) {
+    public CloseSessionPanel(PlanningPokerSession session, boolean isEditable) {
         this.session = session;
+        this.isEditable = isEditable;
         buildLayout();
     }
     
     private void buildLayout() {
-        editPanel = new JScrollPane(new JTable(new CloseSessionTableModel(session)));
-        buttons = new CloseSessionButtonsPanel(this);
+        editPanel = new JScrollPane(new JTable(new CloseSessionTableModel(session, isEditable)));
+        buttons = new CloseSessionButtonsPanel(this, isEditable);
         
         setLayout(new BorderLayout());
         add(new JLabel("Enter final estimates"), BorderLayout.NORTH);
@@ -58,20 +60,20 @@ public class CloseSessionPanel extends JPanel {
         session.setComplete(true);
         session.setCompletionTime(new Date());
         EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
-        close();
+        remove();
     }
     
     /**
      * Called by the buttons panel when cancel is pressed. Removes the tab.
      */
     public void cancelPressed() {
-        close();
+        remove();
     }
     
     /**
      * Removes the tab from Janeway.
      */
-    private void close() {
+    private void remove() {
         ViewEventController.getInstance().removeTab(this);
     }
     

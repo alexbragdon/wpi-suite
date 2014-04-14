@@ -18,6 +18,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 @SuppressWarnings("serial")
 public class CloseSessionTableModel extends AbstractTableModel {
     private PlanningPokerSession session;
+    private boolean isEditable;
     private String[] columns = { "Requirement Name", "Final Estimate" };
     
     /**
@@ -25,8 +26,9 @@ public class CloseSessionTableModel extends AbstractTableModel {
      *
      * @param session the session to model
      */
-    public CloseSessionTableModel(PlanningPokerSession session) {
+    public CloseSessionTableModel(PlanningPokerSession session, boolean isEditable) {
         this.session = session;
+        this.isEditable = isEditable;
     }
     
     /*
@@ -70,7 +72,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == 1;
+        return isEditable && columnIndex == 1;
     }
     
     /*

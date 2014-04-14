@@ -98,8 +98,6 @@ public class SuperButton extends JButton {
             this.setText("<html>View<br />Results</html>");
             this.setIcon(new ImageIcon(viewImg));
             parent.setSelectedPanelIndex(2);
-            // TODO: Make this button do something
-            this.setEnabled(false);
         }
     }
 
@@ -116,8 +114,14 @@ public class SuperButton extends JButton {
 
     }
 
-    public void ViewSession(){
-
+    public void ViewSession(MainView parent){
+        PlanningPokerSession session = getSelectedSession(parent, 2);
+        if (session == null) {
+            return;
+        }
+        ViewEventController.getInstance().viewClosedSession(session);
+        this.setVisible(false);
+        this.parent.setVisible(false);
     }
     
     public String getTextOnButton(){
@@ -130,15 +134,29 @@ public class SuperButton extends JButton {
      * @param parent the parent
      */
     public void CloseSession(MainView parent) {
-        int id = parent.getMySession().getSelectedID(0);
+        PlanningPokerSession session = getSelectedSession(parent, 0);
+        if (session == null) {
+            return;
+        }
+        ViewEventController.getInstance().closeSession(session);
+        this.setVisible(false);
+        this.parent.setVisible(false);
+    }
+    
+    /**
+     * Returns the selected session in the given panel, if it exists.
+     *
+     * @param parent the MainView with the tables in it
+     * @param panel the panel index to select
+     * @return selected session, or null if no session is selected
+     */
+    private PlanningPokerSession getSelectedSession(MainView parent, int panel) {
+        int id = parent.getMySession().getSelectedID(panel);
         if (id != -1) {
             PlanningPokerSession session = parent.getMySession().getSessionById(id);
-            if (session == null) {
-                return;
-            }
-            ViewEventController.getInstance().closeSession(session);
-            this.setVisible(false);
-            this.parent.setVisible(false);
+            return session;
+        } else {
+            return null;
         }
     }
 }

@@ -43,9 +43,9 @@ public class CloseSessionButtonsPanel extends JPanel {
      *
      * @param sessionPanel the parent
      */
-    public CloseSessionButtonsPanel(CloseSessionPanel sessionPanel) {
+    public CloseSessionButtonsPanel(CloseSessionPanel sessionPanel, boolean isEditable) {
         closeButton = new JButton("Close Session");
-        cancelButton = new JButton("Cancel");
+        cancelButton = new JButton(isEditable ? "Cancel" : "OK");
         
         setLayout(new FlowLayout(FlowLayout.LEFT));
         parent = sessionPanel;
@@ -53,13 +53,16 @@ public class CloseSessionButtonsPanel extends JPanel {
         try {
             Image img1  = ImageIO.read(getClass().getResource("save-icon.png"));
             closeButton.setIcon(new ImageIcon(img1));
-            Image img2  = ImageIO.read(getClass().getResource("cancel-icon.png"));
+            Image img2  = ImageIO.read(getClass().
+                            getResource(isEditable ? "cancel-icon.png" : "okay-icon.png"));
             cancelButton.setIcon(new ImageIcon(img2));
         } catch(IOException ex) {
             // Don't worry if the images didn't load
         }
 
-        add(closeButton);
+        if (isEditable) {
+            add(closeButton);
+        }
         add(cancelButton);
 
         setupListeners();

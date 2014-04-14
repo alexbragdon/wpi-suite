@@ -119,7 +119,6 @@ public class ViewEventController {
      * @param session the session to close
      */
     public void closeSession(PlanningPokerSession session) {
-        System.out.println("reached closeSession");
         boolean exists = false;
         Component component = null;
         
@@ -131,9 +130,37 @@ public class ViewEventController {
         }
         
         if (exists == false) {
-            CloseSessionPanel panel = new CloseSessionPanel(session);
+            CloseSessionPanel panel = new CloseSessionPanel(session, true);
             String tabName = "Close " + session.getName();
             main.addTab(tabName, null, panel, "Close this session");
+            main.invalidate();
+            main.repaint();
+            main.setSelectedComponent(panel);
+        } else {
+            main.setSelectedComponent(component);
+        }
+    }
+    
+    /**
+     * Opens a panel for viewing a closed session.
+     *
+     * @param session the session to view
+     */
+    public void viewClosedSession(PlanningPokerSession session) {
+        boolean exists = false;
+        Component component = null;
+        
+        for (Component c : main.getComponents()) {
+            if (c instanceof CloseSessionPanel && ((CloseSessionPanel)c).getSession().equals(session)) {
+                exists = true;
+                component = c;
+            }
+        }
+        
+        if (exists == false) {
+            CloseSessionPanel panel = new CloseSessionPanel(session, false);
+            String tabName = "View " + session.getName();
+            main.addTab(tabName, null, panel, "View this session");
             main.invalidate();
             main.repaint();
             main.setSelectedComponent(panel);

@@ -68,7 +68,7 @@ public class SuperButtonPanel extends ToolbarGroupView {
 
                 // View session
                 if(selectedPanelIndex == 2){
-                    superButton.ViewSession();
+                    superButton.ViewSession(parent);
                 }
                 
                 parent.getMySession().getModeratingPanel().getTable().clearSelection();
