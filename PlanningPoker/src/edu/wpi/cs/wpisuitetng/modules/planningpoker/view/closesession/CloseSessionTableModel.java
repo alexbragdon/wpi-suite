@@ -29,11 +29,6 @@ public class CloseSessionTableModel extends AbstractTableModel {
         this.session = session;
     }
     
-    @Override
-    public String getColumnName(int column) {
-        return columns[column];
-    }
-    
     /*
      * @see javax.swing.table.TableModel#getColumnCount()
      */
@@ -49,7 +44,35 @@ public class CloseSessionTableModel extends AbstractTableModel {
     public int getRowCount() {
         return session.getRequirements().size();
     }
+    
+    /*
+     * @see javax.swing.table.AbstractTableModel#getColumnName(int)
+     */
+    @Override
+    public String getColumnName(int column) {
+        return columns[column];
+    }
 
+    /*
+     * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
+     */
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        switch (columnIndex) {
+            case 0: return String.class;
+            case 1: return Integer.class;
+            default: throw new RuntimeException("Invalid column index");
+        }
+    }
+    
+    /*
+     * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
+     */
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return columnIndex == 1;
+    }
+    
     /*
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
@@ -63,5 +86,20 @@ public class CloseSessionTableModel extends AbstractTableModel {
             default:
                 throw new RuntimeException("Invalid column");
         }
+    }
+    
+    /*
+     * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
+     */
+    @Override
+    public void setValueAt(Object value, int row, int column) {
+        if (column != 1) {
+            throw new RuntimeException("Invalid column index");
+        }
+        
+        int estimate = (Integer)value;
+        if (estimate < 0) return;
+        session.getRequirements().get(row).setFinalEstimate(estimate);
+        fireTableCellUpdated(row, column);
     }
 }
