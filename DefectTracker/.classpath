@@ -8,5 +8,8 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Janeway"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Network"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/WPISuite-Interfaces"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/PlanningPoker"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/PostBoard"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/RequirementManager"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

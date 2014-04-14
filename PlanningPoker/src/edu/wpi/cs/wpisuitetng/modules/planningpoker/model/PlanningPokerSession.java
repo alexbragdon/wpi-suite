@@ -96,7 +96,12 @@ public class PlanningPokerSession extends AbstractModel {
     }
     
     public boolean isDateInPast() {
-    	return date.before(new Date());
+    	Date newDate = new Date(date.getTime());
+    	newDate.setHours(Hour);
+    	newDate.setMinutes(Min);
+    	Date now = new Date();
+    	now.setSeconds(60);
+    	return newDate.before(now);
     }
     
     public String getModerator(){
