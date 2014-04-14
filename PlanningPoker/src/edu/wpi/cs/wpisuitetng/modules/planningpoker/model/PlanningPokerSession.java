@@ -95,6 +95,10 @@ public class PlanningPokerSession extends AbstractModel {
         return date;
     }
     
+    public boolean isDateInPast() {
+    	return date.before(new Date());
+    }
+    
     public String getModerator(){
         return moderator;
     }

@@ -24,6 +24,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
@@ -90,7 +91,7 @@ public class MySessionPanel extends JPanel {
     }
     
     public void populateTables(PlanningPokerSession[] newSessions) {        
-        boolean hasChanges = false;
+        boolean hasChanges = false;    
         if (sessions.length != newSessions.length) {
             hasChanges = true;
         } else {
@@ -167,6 +168,20 @@ public class MySessionPanel extends JPanel {
             }
         }
         return null;
+    }
+    
+    public void closeTimedOutSessions(PlanningPokerSession[] sessions) {
+    	for (PlanningPokerSession s : sessions) {
+    		if (s.isDateInPast()) {
+    			PlanningPokerSession closedSession = new PlanningPokerSession(s.getID(), s.getName(),
+		                s.getDescription(), s.getDate(),
+		                s.getHour(),
+		                s.getMin(),
+		                s.getRequirements(), s.getType(), false,
+		                false, s.getModerator(), s.getDeck());
+    			EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(closedSession);
+    		}
+    	}
     }
 
 }
