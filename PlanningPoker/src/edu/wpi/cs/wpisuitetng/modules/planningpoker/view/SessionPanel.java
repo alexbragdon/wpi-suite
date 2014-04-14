@@ -264,8 +264,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     /**
      * Builds the layout of the panel.
      */
-    @SuppressWarnings("deprecation")
-	private void buildLayout() {
+    private void buildLayout() {
         
         if(viewMode == ViewMode.EDIT){
             this.selectedDeck = displaySession.getDeck();
@@ -285,38 +284,41 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         final JLabel desLabel = new JLabel("Description *");
         Font boardFont = new Font(infoLabel.getFont().getName(), Font.BOLD, infoLabel.getFont()
                         .getSize());
-		Date dt = new Date();
 		
-		int currentYear = dt.getYear();
-		int currentMonth = dt.getMonth();
-		int currentDay = dt.getDate();
-		int currentHour = dt.getHours() + 1;
-		int currentMinute = dt.getMinutes();
+        Calendar calendar = Calendar.getInstance();
+        Date dt = new Date();
+        calendar.setTime(dt);
+		
+		int currentYear = calendar.get(Calendar.YEAR) - 1900;
+		int currentMonth = calendar.get(Calendar.MONTH);
+		int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+		int currentHour = calendar.get(Calendar.HOUR_OF_DAY) + 1;
+		int currentMinute = calendar.get(Calendar.MINUTE);
 		if (currentMonth == 2) {
 			if (currentYear % 4 == 0) {// There is FEB 29th in leap year
 				if (currentDay == 29) {// Today of FEB 29th
 					if (currentHour >= 24) {
 						currentHour = 0;
-						dt.setMonth(3);
-						dt.setDate(1);// Next day is MAR 1st
+						calendar.set(Calendar.MONTH, 3);
+						calendar.set(Calendar.DAY_OF_MONTH, 1); // Next day is MAR 1st
 					}
 				} else {// Not last day
 					if (currentHour >= 24) {
 						currentHour = 0;
-						dt.setDate(currentDay + 1);
+						calendar.set(Calendar.DAY_OF_MONTH, currentDay + 1);
 					}
 				}
 			} else {// Not leap year
 				if (currentDay == 28) {// Today of FEB 29th
 					if (currentHour >= 24) {
 						currentHour = 0;
-						dt.setMonth(3);
-						dt.setDate(1);// Next day is MAR 1st
+						calendar.set(Calendar.MONTH, 3);
+						calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is MAR 1st
 					}
 				} else {// Not last day
 					if (currentHour >= 24) {
 						currentHour = 0;
-						dt.setDate(currentDay + 1);
+						calendar.set(Calendar.DAY_OF_MONTH, currentDay + 1);
 						}
 				}
 			}
@@ -324,14 +326,14 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			if (currentDay == 31) {// Last day of the year
 				if (currentHour >= 24) {
 					currentHour = 0;
-					dt.setYear(currentYear + 1);// To the next year
-					dt.setMonth(1);
-					dt.setDate(1);// Next day is JAN 1st
+					calendar.set(Calendar.YEAR, currentYear + 1 + 1900);// To the next year
+					calendar.set(Calendar.MONTH, 1);
+					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is JAN 1st
 				}
 			} else {
 				if (currentHour >= 24) {
 					currentHour = 0;
-					dt.setDate(currentDay + 1);
+					calendar.set(Calendar.DAY_OF_MONTH, currentDay + 1);
 				}
 			}
 		} else if (currentMonth == 4 || currentMonth == 6 || currentMonth == 9
@@ -339,30 +341,31 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			if (currentDay == 30) {// Last day of the current month
 				if (currentHour >= 24) {
 					currentHour = 0;
-					dt.setMonth(currentMonth + 1);// To the next month
-					dt.setDate(1);// Next day is 1st
+					calendar.set(Calendar.MONTH, currentMonth + 1);// To the next month
+					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is 1st
 				}
 			} else {
 				if (currentHour >= 24) {
 					currentHour = 0;
-					dt.setDate(currentDay + 1);
+					calendar.set(Calendar.DAY_OF_MONTH, currentDay + 1);
 				}
 			}
 		} else {
 			if (currentDay == 31) {// Last day of the current month
 				if (currentHour >= 24) {
 					currentHour = 0;
-					dt.setMonth(currentMonth + 1);// To the next month
-					dt.setDate(1);// Next day is 1st
+					calendar.set(Calendar.MONTH, currentMonth + 1);// To the next month
+					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is 1st
 				}
 			} else {
 				if (currentHour >= 24) {
 					currentHour = 0;
-					dt.setDate(currentDay + 1);
+					calendar.set(Calendar.DAY_OF_MONTH, currentDay + 1);
 				}
 			}
 		}
 
+		dt = calendar.getTime();
         dateChooser = new JCalendar(dt); //Create new JCalendar with now default selected
         
         hourSpin = new JSpinner(new SpinnerNumberModel(currentHour, 0, 23, 1));
@@ -464,14 +467,13 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             break;
         }
         
-        updateButtonsIfChanges();
+        updateButtonPanel();
     }
 
 	// Listeners for the text boxes
     private void setupListeners() {
     	
     	deckChooser.addItemListener(new ItemListener() {
-
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if (arg0.getStateChange() == ItemEvent.SELECTED) {
@@ -479,26 +481,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 					selectedDeck = deckChooser.getSelectedItem().toString();
 					System.out.println("Item state changed to: " + selectedDeck);
 					chosenSequence.setText("  " + decks.deckToString(selectedDeck)); //Add space for better display
-					if (hasChanges())
-	            		buttonPanel.getButtonClear().setEnabled(true);
-	            	else
-	            		buttonPanel.getButtonClear().setEnabled(false);
-	            	
-	            	if (hasChanges() && validateFields(true))
-	            		buttonPanel.getButtonSave().setEnabled(true);
-	            	else
-	            		buttonPanel.getButtonSave().setEnabled(false);
-	            	
-	            	if (validateFields(true) && !isOpen) {
-	            		buttonPanel.getButtonOpen().setEnabled(true);
-	            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
+					updateButtonPanel();
 				}
 			}
-    		
     	});
     	
     	timeEnable.addActionListener(new ActionListener(){
-    		
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (timeEnable.isSelected()) {
@@ -510,238 +498,81 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 					hourSpin.setEnabled(false);
     				minuteSpin.setEnabled(false);
 				}
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-            	
-            	if (validateFields(true) && !isOpen) {
-            		buttonPanel.getButtonOpen().setEnabled(true);
-            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
+            	updateButtonPanel();
 			}
-        	
         });
     	
-        hourSpin.addChangeListener(new ChangeListener() {
-
+        ChangeListener buttonsChangeListener = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-            	
-            	if (validateFields(true) && !isOpen) {
-            		buttonPanel.getButtonOpen().setEnabled(true);
-            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
+                updateButtonPanel();
             }
-
-        });
-
-        minuteSpin.addChangeListener(new ChangeListener() {
-
-            @Override
-            public void stateChanged(ChangeEvent e) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-            	
-            	if (validateFields(true) && !isOpen) {
-            		buttonPanel.getButtonOpen().setEnabled(true);
-            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
-            }
-
-        });
+        };
+        
+        hourSpin.addChangeListener(buttonsChangeListener);
+        minuteSpin.addChangeListener(buttonsChangeListener);
 
         dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
-
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-            	
-            	if (validateFields(true) && !isOpen) {
-            		buttonPanel.getButtonOpen().setEnabled(true);
-            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
+                updateButtonPanel();
             }
-
         });
 
-        nameField.getDocument().addDocumentListener(new DocumentListener() {
+        DocumentListener buttonsDocumentListener = new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent e) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-            	
-            	if (validateFields(true) && !isOpen) {
-            		buttonPanel.getButtonOpen().setEnabled(true);
-            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
+                updateButtonPanel();
             }
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-            	
-            	if (validateFields(true) && !isOpen) {
-            		buttonPanel.getButtonOpen().setEnabled(true);
-            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
+                updateButtonPanel();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-            	
-            	if (validateFields(true) && !isOpen) {
-            		buttonPanel.getButtonOpen().setEnabled(true);
-            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
+                updateButtonPanel();
             }
-        });
-
-        desField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void changedUpdate(DocumentEvent arg0) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-            	
-            	if (validateFields(true) && !isOpen) {
-            		buttonPanel.getButtonOpen().setEnabled(true);
-            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent arg0) {
-                // TODO Auto-generated method stub
-                //updateButtonsIfChanges();
-                //textChanged();
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-            	
-            	if (validateFields(true) && !isOpen) {
-            		buttonPanel.getButtonOpen().setEnabled(true);
-            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent arg0) {
-                // TODO Auto-generated method stub
-                //updateButtonsIfChanges();
-                //textChanged();
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-            	
-            	if (validateFields(true) && !isOpen) {
-            		buttonPanel.getButtonOpen().setEnabled(true);
-            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
-            }
-        });
+        };
+        
+        nameField.getDocument().addDocumentListener(buttonsDocumentListener);
+        desField.getDocument().addDocumentListener(buttonsDocumentListener);
         
         requirementsPanel.addListener(new TableModelListener() {
-
 			@Override
 			public void tableChanged(TableModelEvent e) {
-            	if (hasChanges())
-            		buttonPanel.getButtonClear().setEnabled(true);
-            	else
-            		buttonPanel.getButtonClear().setEnabled(false);
-            	
-            	if (hasChanges() && validateFields(true))
-            		buttonPanel.getButtonSave().setEnabled(true);
-            	else
-            		buttonPanel.getButtonSave().setEnabled(false);
-            	
-            	if (validateFields(true) && !isOpen) {
-            		buttonPanel.getButtonOpen().setEnabled(true);
-            	} else {buttonPanel.getButtonOpen().setEnabled(false);}
-				
+            	updateButtonPanel();
 			}
-        	
         });
     }
     
-    private void updateButtonsIfChanges() {
-    	if (hasChanges()) {
-    		buttonPanel.getButtonSave().setEnabled(true);
-    		buttonPanel.getButtonClear().setEnabled(true);
-    	} else {
-    		buttonPanel.getButtonSave().setEnabled(false);
-    		buttonPanel.getButtonClear().setEnabled(false);
-    	}
-    	
-    	if (validateFields(true) && !isOpen) {
-    		buttonPanel.getButtonOpen().setEnabled(true);
-    	} else {buttonPanel.getButtonOpen().setEnabled(false);}
+    /**
+     * Updates the bottom buttons to reflect validation and change state.
+     */
+    private void updateButtonPanel() {
+        if (hasChanges())
+            buttonPanel.getButtonClear().setEnabled(true);
+        else
+            buttonPanel.getButtonClear().setEnabled(false);
+        
+        if (hasChanges() && validateFields(true))
+            buttonPanel.getButtonSave().setEnabled(true);
+        else
+            buttonPanel.getButtonSave().setEnabled(false);
+        
+        if (validateFields(true) && !isOpen) {
+            buttonPanel.getButtonOpen().setEnabled(true);
+        } else {buttonPanel.getButtonOpen().setEnabled(false);}
     }
     
+    /**
+     * Returns true if the UI state is different from displaySession.
+     *
+     * @return true if the user has made changes
+     */
     private boolean hasChanges() {
     	PlanningPokerSession session = createSessionFromFields();
-    	PlanningPokerSession otherSession = displaySession;
     	return !session.equals(displaySession);
     }
     
@@ -759,16 +590,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             }
             
             ViewEventController.getInstance().removeTab(this);
-
-            //get selected requirements
-            //List<Requirement> selectedRequirements = requirementsPanel.getSelectedRequirements();
-            //System.out.println("You selected: " + selectedRequirements.size() + " requirements!");
-
-            //nameField.getText();
-            //desField.getText();
-
-            //buttonPanel.getButtonSave().setEnabled(false);
-            //buttonPanel.getButtonClear().setEnabled(true);
         }
     }
     
@@ -880,11 +701,14 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     }
     
     public void setDateTime(int cY, int cM, int cD, int cH, int cMi){
-    	this.dt.setYear(cY);
-    	this.dt.setMonth(cM);
-    	this.dt.setDate(cD);
-    	this.dt.setHours(cH);
-    	this.dt.setMinutes(cMi);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dt);
+        calendar.set(Calendar.YEAR, cY + 1900);
+        calendar.set(Calendar.MONTH, cM);
+        calendar.set(Calendar.DAY_OF_MONTH, cD);
+        calendar.set(Calendar.HOUR_OF_DAY, cH);
+        calendar.set(Calendar.MINUTE, cMi);
+        dt = calendar.getTime();
     }
     
     public void buildLY(){
