@@ -11,7 +11,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 import java.awt.BorderLayout;
 import java.util.Date;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
@@ -25,7 +28,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 @SuppressWarnings("serial")
 public class CloseSessionPanel extends JPanel {
     private PlanningPokerSession session;
-    private CloseSessionEditPanel editPanel;
+    private JScrollPane editPanel;
     private CloseSessionButtonsPanel buttons;
     
     /**
@@ -39,10 +42,11 @@ public class CloseSessionPanel extends JPanel {
     }
     
     private void buildLayout() {
-        editPanel = new CloseSessionEditPanel(session);
+        editPanel = new JScrollPane(new JTable(new CloseSessionTableModel(session)));
         buttons = new CloseSessionButtonsPanel(this);
         
         setLayout(new BorderLayout());
+        add(new JLabel("Enter final estimates"), BorderLayout.NORTH);
         add(editPanel, BorderLayout.CENTER);
         add(buttons, BorderLayout.SOUTH);
     }
