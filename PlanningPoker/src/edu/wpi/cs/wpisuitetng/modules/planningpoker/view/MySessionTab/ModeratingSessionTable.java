@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -107,11 +108,14 @@ public class ModeratingSessionTable extends JTable {
     }
     
     public void addSessions(PlanningPokerSession session) {
-            Date date = session.getDate();
+            Date date = new Date(session.getDate().getTime());
             String dateString = "--";
             if (session.getType() == SessionType.DISTRIBUTED) {
-                date.setHours(session.getHour());
-                date.setMinutes(session.getMin());
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                calendar.set(Calendar.HOUR_OF_DAY, session.getHour());
+                calendar.set(Calendar.MINUTE, session.getMin());
+                date = calendar.getTime();
                 dateString = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(date);
             }
             

@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
@@ -60,11 +61,14 @@ public class JoiningSessionTable extends JTable {
     }
     
     public void addSessions(PlanningPokerSession session) {
-            Date date = session.getDate();
+            Date date = new Date(session.getDate().getTime());
             String dateString = "--";
             if (session.getType() == SessionType.DISTRIBUTED) {
-                date.setHours(session.getHour());
-                date.setMinutes(session.getMin());
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                calendar.set(Calendar.HOUR_OF_DAY, session.getHour());
+                calendar.set(Calendar.MINUTE, session.getMin());
+                date = calendar.getTime();
                 dateString = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(date);
             }
             tableModel.addRow(new String[] { String.valueOf(session.getID()), 
