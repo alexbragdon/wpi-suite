@@ -19,7 +19,7 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
@@ -42,7 +42,7 @@ public class ViewEventControllerTest {
 		vec = ViewEventController.getInstance();
 		vec.setMainView(mv);
 		ses = new PlanningPokerSession(0, "Test Session", "Hello The World", new Date(), 12, 0,
-				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin", null);
+				new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "admin", null);
 	}
 	
 	@Test

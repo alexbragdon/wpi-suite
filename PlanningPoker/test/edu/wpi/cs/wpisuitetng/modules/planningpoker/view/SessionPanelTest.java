@@ -24,7 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockRequest;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -56,9 +56,9 @@ public class SessionPanelTest {
 		reqList = new ArrayList<RequirementEstimate>();
 		reqList.add(new RequirementEstimate(1,"2",2,true));
 		ses = new PlanningPokerSession(3123, "Test Session", "Hello The World", new Date(), 23, 59,
-				reqList, sessionType.REALTIME, false, false, "admin", "-None-");
+				reqList, SessionType.REALTIME, false, false, "admin", "-None-");
 		disturbedses = new PlanningPokerSession(1212, "Test Session", "Hello The World", new Date(), 23, 59,
-				reqList, sessionType.DISTRIBUTED, false, false, "admin", "-None-");
+				reqList, SessionType.DISTRIBUTED, false, false, "admin", "-None-");
 		sesPan = new SessionPanel(ses);
 		mv = new MainView();
 		tbv = new ToolbarView(true, mv);
@@ -104,7 +104,7 @@ public class SessionPanelTest {
 		sesPan.setDesField("Test Description");
 		sesPan.setTimeDisabled();
 		ses = new PlanningPokerSession(21345, "Test Session", "Hello The World", new Date(), 23, 59,
-				new ArrayList<RequirementEstimate>(), sessionType.REALTIME, false, false, "admin", null);
+				new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "admin", null);
 		sesPan = new SessionPanel(ses);
 		assertFalse(sesPan.validateFields(true));
 		assertEquals("*Select at least one requirement",sesPan.getInfoLabel());

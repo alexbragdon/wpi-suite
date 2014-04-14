@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.sessionType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 
 
 public class PlanningPokerSession extends AbstractModel {
@@ -25,7 +25,7 @@ public class PlanningPokerSession extends AbstractModel {
 	int Hour, Min;
 	
 	ArrayList<RequirementEstimate> RequirementEstimates;
-	sessionType Type;
+	SessionType Type;
 	// True if the game is active and ready to join
 	boolean isActive;
 	// True if the game is complete and cannot be played 
@@ -113,12 +113,12 @@ public class PlanningPokerSession extends AbstractModel {
 		Name = name;
 	}
 
-	public sessionType getType() 
+	public SessionType getType() 
 	{
 		return Type;
 	}
 
-	public void setType(sessionType type) 
+	public void setType(SessionType type) 
 	{
 		Type = type;
 	}
@@ -157,7 +157,7 @@ public class PlanningPokerSession extends AbstractModel {
 		Hour = 0;
 		Min = 0;
 		RequirementEstimates = new ArrayList<RequirementEstimate>();
-		Type = sessionType.REALTIME;
+		Type = SessionType.REALTIME;
 		isActive = false;
 		isComplete = false;
 		setDeck("-None-");
@@ -168,7 +168,7 @@ public class PlanningPokerSession extends AbstractModel {
 	 */
 
 	public PlanningPokerSession(int id, String name, String description, Date date,int hour, int min, List<RequirementEstimate>
-			requirementestimates, sessionType type, boolean active, boolean complete, String moderator, String deck) 
+			requirementestimates, SessionType type, boolean active, boolean complete, String moderator, String deck) 
 	{
 		super();
 		ID = id;
@@ -332,7 +332,7 @@ public class PlanningPokerSession extends AbstractModel {
 		if (Type != other.Type) {
 			return false;
 		}
-		if (Type == sessionType.DISTRIBUTED) {
+		if (Type == SessionType.DISTRIBUTED) {
     		if (!date.equals(other.date)) {
     			return false;
     		}
