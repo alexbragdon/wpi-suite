@@ -26,6 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPoker
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.FindPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
  * @author Team Romulus
@@ -131,13 +132,11 @@ public class SuperButton extends JButton {
     public void CloseSession(MainView parent) {
         int id = parent.getMySession().getSelectedID(0);
         if (id != -1) {
-            PlanningPokerSession newSession = parent.getMySession().getSessionById(id);
-            if (newSession == null) {
+            PlanningPokerSession session = parent.getMySession().getSessionById(id);
+            if (session == null) {
                 return;
             }
-            newSession.setComplete(true);
-            newSession.setCompletionTime(new Date());
-            EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
+            ViewEventController.getInstance().closeSession(session);
             this.setVisible(false);
             this.parent.setVisible(false);
         }

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.requirements.RequirementPanel;
 
@@ -113,12 +114,43 @@ public class ViewEventController {
     }
 
     /**
+     * Opens a panel for closing the given session.
+     *
+     * @param session the session to close
+     */
+    public void closeSession(PlanningPokerSession session) {
+        System.out.println("reached closeSession");
+        boolean exists = false;
+        Component component = null;
+        
+        for (Component c : main.getComponents()) {
+            if (c instanceof CloseSessionPanel && ((CloseSessionPanel)c).getSession().equals(session)) {
+                exists = true;
+                component = c;
+            }
+        }
+        
+        if (exists == false) {
+            CloseSessionPanel panel = new CloseSessionPanel(session);
+            String tabName = "Close " + session.getName();
+            main.addTab(tabName, null, panel, "Close this session");
+            main.invalidate();
+            main.repaint();
+            main.setSelectedComponent(panel);
+        } else {
+            main.setSelectedComponent(component);
+        }
+    }
+    
+    /**
      * Removes the tab for the given JComponent
      * @param comp the component to remove
      */
     public void removeTab(JComponent comp)
     {
-        listOfEditingSessions.remove(((SessionPanel) comp).getSession());
+        if (comp instanceof SessionPanel) {
+            listOfEditingSessions.remove(((SessionPanel) comp).getSession());
+        }
         main.remove(comp);
     }
     /**
