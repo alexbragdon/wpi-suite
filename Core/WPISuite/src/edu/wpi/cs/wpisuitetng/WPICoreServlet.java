@@ -8,6 +8,19 @@
  *
  * Contributors:
  *    mpdelladonna
+ *    Alex Bragdon
+ *    Sean Halloran
+ *    Ben McMorran
+ *    Zachary Richards
+ *    Fangming Ning
+ *    Hai Nguyen
+ *    Rafael Angelo
+ *    Xiaosong Wen
+ *    Stephen Long
+ *    Mike Racine
+ *    Penn Biggs
+ *    Robbie Esposito
+ *    Andrew Lund
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng;

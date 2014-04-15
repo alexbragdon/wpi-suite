@@ -143,7 +143,6 @@ public class RequirementModel extends AbstractListModel{
 	 * @return the next open id number */
 	public int getNextID()
 	{
-		
 		return this.nextID++;
 	}
 

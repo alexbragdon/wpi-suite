@@ -24,11 +24,11 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 
 public class User extends AbstractModel
 {
-
-	private String name;
+    private String name;
 	private String username;
 	private int idNum;
 	private Role role;
+	private String email;
 	
 	transient private String password; // excluded from serialization, still stored.
 	
@@ -255,4 +255,18 @@ public class User extends AbstractModel
 	public void setProject(Project aProject){
 		//Users are not currently Associated with projects directly 
 	}
+	
+	/**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

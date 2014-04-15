@@ -26,7 +26,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author justinhess
  */
 public class GetRequirementsController implements ActionListener {
-
+ 
 	private GetRequirementsRequestObserver observer;
 	private static GetRequirementsController instance;
 
