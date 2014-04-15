@@ -45,12 +45,14 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
                 clearButton = new JButton("Undo changes");
                 cancelButton = new JButton("Cancel");
                 openButton = new JButton("Open Session");
+                openButton.setToolTipText("Open this session.");
                 break;
             case CREATE:
                 saveButton = new JButton("Create");
                 clearButton = new JButton("Clear");
                 cancelButton = new JButton("Cancel");
                 openButton = new JButton("Create and Open");
+                openButton.setToolTipText("Create the planning poker session, add it to Sessions I'm Moderating in the sessions tab, and immediately make it active");
                 openButton.setEnabled(false);
                 break;
             default:
@@ -86,6 +88,9 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
             break;
         }
         
+        saveButton.setToolTipText("Create the planning poker session and add it to Sessions I'm Moderating in the sessions tab");
+        clearButton.setToolTipText("Clear all the fields of this new session");
+        cancelButton.setToolTipText("Cancel creation of session and close tab");
 
         setupListeners();
     }
