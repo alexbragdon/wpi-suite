@@ -25,6 +25,9 @@
 		<fileset dir="">
 			<include name="jcalendar-1.4.jar"/>
 		</fileset>
+		<fileset dir="">
+			<include name="mail.jar"/>
+		</fileset>
 		<pathelement path="build"/>
 	</path>
 

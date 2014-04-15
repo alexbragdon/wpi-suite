@@ -16,6 +16,7 @@ package edu.wpi.cs.wpisuitetng.modules.core.models;
 import com.google.gson.*;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+
 /**
  * The Data Model representation of a User. Implements
  * 	database interaction and serializing.
@@ -45,6 +46,7 @@ public class User extends AbstractModel
 		this.password = password;
 		this.idNum = idNum;
 		this.role = Role.USER;
+		this.email = "";
 	}
 	
 	@Override
@@ -73,6 +75,11 @@ public class User extends AbstractModel
 				{
 					return false;
 				}
+				
+				if(this.email != null && !this.email.equals(((User)other).email))
+                {
+                    return false;
+                }
 				
 				return true;
 			}
@@ -120,6 +127,20 @@ public class User extends AbstractModel
 	{
 		return username;
 	}
+	
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
 	
 	/* database interaction */
 	public void save()
@@ -245,6 +266,11 @@ public class User extends AbstractModel
 		
 		return gson.fromJson(json, User.class);
 	}
+	
+	public static User[] fromJsonArray(String json) {
+        final Gson parser = new Gson();
+        return parser.fromJson(json, User[].class);
+    }
 
 	@Override
 	public Project getProject() {
@@ -255,18 +281,4 @@ public class User extends AbstractModel
 	public void setProject(Project aProject){
 		//Users are not currently Associated with projects directly 
 	}
-	
-	/**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
