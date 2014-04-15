@@ -78,7 +78,7 @@ public class ViewDeckPanel extends JPanel {
 		
 		for (int i = 1; i < cardValues.length; i++) {
 			try {
-				cards.put(cardValues[i], loadImage("back.png"));
+				cards.put(cardValues[i], loadImage(i + ".png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
