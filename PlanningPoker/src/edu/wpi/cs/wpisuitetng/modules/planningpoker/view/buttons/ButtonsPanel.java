@@ -49,6 +49,8 @@ public class ButtonsPanel extends ToolbarGroupView {
                 ViewEventController.getInstance().createSession();
             }
         });
+        
+        this.createButton.setToolTipText("Create a new Planning Poker session");
 
 //        joinButton.addActionListener(new ActionListener() {
 //            @Override
