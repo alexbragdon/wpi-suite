@@ -76,6 +76,14 @@ public class ViewEventController {
         main.repaint();
         main.setSelectedComponent(newSession);
     }
+    
+    public void viewDeck() {
+    	ViewDeckPanel newDeck = ViewDeckPanel.getInstance(); 
+    	main.addTab("View Deck", null, newDeck, "View Chosen Deck");
+    	main.invalidate();
+    	main.repaint();
+    	main.setSelectedComponent(newDeck);
+    }
 
     /**
      * Find the session to edit. If the session is not opened in tab, open it.

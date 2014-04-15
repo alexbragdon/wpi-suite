@@ -127,6 +127,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      */
     // TODO replace JPanel with something real
     private SessionButtonPanel buttonPanel;
+    
+    private SessionPanel parent;
 
     /**
      * Constructor for editing a requirement
@@ -500,6 +502,13 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			}
     	});
     	
+    	showDeck.addActionListener(new ActionListener(){
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			ViewEventController.getInstance().viewDeck();
+    		}
+    	});
+    	
     	timeEnable.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -515,6 +524,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             	updateButtonPanel();
 			}
         });
+    	
     	
         ChangeListener buttonsChangeListener = new ChangeListener() {
             @Override
@@ -606,6 +616,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             ViewEventController.getInstance().removeTab(this);
         }
     }
+    
     
     public void openPressed() {
     	if (validateFields(true)) {
@@ -735,4 +746,5 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     public void buildLY(){
         this.buildLayout();
     }
+
 }

@@ -31,4 +31,5 @@ public interface SessionButtonListener {
      * Indicate to the listener that the cancel button was pressed.
      */
     public void cancelPressed();
+
 }
