@@ -39,17 +39,37 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
  */
 
 public class PlanningPokerSessionTests {
-	
+
 
 	private PlanningPokerSession testSession;
 	private PlanningPokerSession otherSession;
 	private int testNum = 2;
 	@Before
 	public void setUp() throws Exception {
-		testSession = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
-				new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "aGuy", null);	
-		otherSession = new PlanningPokerSession(10, "BrandNewSession", "BeepBeep", new Date(), 10, 12,
-				new ArrayList<RequirementEstimate>(), SessionType.DISTRIBUTED, true, true, "coolGuy", null);
+		testSession = new PlanningPokerSession.Builder(6)
+		.name("DummySession")
+		.description("HonkHonk")
+		.date(new Date())
+		.hour(23)
+		.minute(59)
+		.requirementEstimates(new ArrayList<RequirementEstimate>())
+		.sessionType(SessionType.REALTIME)
+		.active(false)
+		.complete(false)
+		.moderator("aGuy")
+		.deck(null).build();	
+		otherSession = new PlanningPokerSession.Builder(10)
+		.name("BrandNewSession")
+		.description("BeepBeep")
+		.date(new Date())
+		.hour(10)
+		.minute(12)
+		.requirementEstimates(new ArrayList<RequirementEstimate>())
+		.sessionType(SessionType.DISTRIBUTED)
+		.active(true)
+		.complete(true)
+		.moderator("coolGuy")
+		.deck(null).build();
 	}
 	@Test
 	public void TestsTheSetIDFunction(){
@@ -108,6 +128,22 @@ public class PlanningPokerSessionTests {
 		assertFalse(testSession.isComplete());
 		assertTrue(testSession.isActive());
 	}
+
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testDateBefore() {
+		Date past = new Date();
+		past.setYear(5);
+		PlanningPokerSession testSession = new PlanningPokerSession.Builder(40)
+			.date(past).build();
+		assertTrue(testSession.isDateInPast());
+		Date d = new Date();
+		d.setYear(150);
+		testSession.setDate(d);
+		assertFalse(testSession.isDateInPast());
+		
+	}
+
 	@Test
 	public void TestsTheHashCodeFunction(){
 		testSession.hashCode();

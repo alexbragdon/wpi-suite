@@ -56,8 +56,18 @@ public class ScatteredTestCases {
 	public void setUp() throws Exception {
 		jtp = new JTabbedPane();
 		ctc = new ClosableTabComponent(jtp);
-		ses = new PlanningPokerSession(0, "Test Session", "Hello The World", new Date(), 12, 0,
-				new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "admin", null);
+		ses = new PlanningPokerSession.Builder(0)
+			.name("Test Session")
+			.description("Hello The World")
+			.date(new Date())
+			.hour(12)
+			.minute(0)
+			.requirementEstimates(new ArrayList<RequirementEstimate>())
+			.sessionType(SessionType.REALTIME)
+			.active(false)
+			.complete(false)
+			.moderator("admin")
+			.deck(null).build();
 		vm =  ViewMode.EDIT;
 		sbp = new SessionButtonPanel(parent, vm, ses);
 		pi = new PokerIcons();

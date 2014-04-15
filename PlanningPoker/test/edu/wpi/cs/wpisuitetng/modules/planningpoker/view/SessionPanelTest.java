@@ -55,10 +55,30 @@ public class SessionPanelTest {
 	public void setUp() throws Exception {
 		reqList = new ArrayList<RequirementEstimate>();
 		reqList.add(new RequirementEstimate(1,"2",2,true));
-		ses = new PlanningPokerSession(3123, "Test Session", "Hello The World", new Date(), 23, 59,
-				reqList, SessionType.REALTIME, false, false, "admin", "-None-");
-		disturbedses = new PlanningPokerSession(1212, "Test Session", "Hello The World", new Date(), 23, 59,
-				reqList, SessionType.DISTRIBUTED, false, false, "admin", "-None-");
+		ses = new PlanningPokerSession.Builder(3123)
+			.name("Test Session")
+			.description("Hello The World")
+			.date(new Date())
+			.hour(23)
+			.minute(59)
+			.requirementEstimates(reqList)
+			.sessionType(SessionType.REALTIME)
+			.active(false)
+			.complete(false)
+			.moderator("admin")
+			.deck("-None-").build();
+		disturbedses = new PlanningPokerSession.Builder(1212)
+			.name("Test Session")
+			.description("Hello The World")
+			.date(new Date())
+			.hour(23)
+			.minute(59)
+			.requirementEstimates(reqList)
+			.sessionType(SessionType.DISTRIBUTED)
+			.active(false)
+			.complete(false)
+			.moderator("admin")
+			.deck("-None-").build();
 		sesPan = new SessionPanel(ses);
 		mv = new MainView();
 		tbv = new ToolbarView(true, mv);
@@ -103,8 +123,18 @@ public class SessionPanelTest {
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
 		sesPan.setTimeDisabled();
-		ses = new PlanningPokerSession(21345, "Test Session", "Hello The World", new Date(), 23, 59,
-				new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "admin", null);
+		ses = new PlanningPokerSession.Builder(21345)
+			.name("Test Session")
+			.description("Hello The World")
+			.date(new Date())
+			.hour(23)
+			.minute(59)
+			.requirementEstimates(new ArrayList<RequirementEstimate>())
+			.sessionType(SessionType.REALTIME)
+			.active(false)
+			.complete(false)
+			.moderator("admin")
+			.deck(null).build();
 		sesPan = new SessionPanel(ses);
 		assertFalse(sesPan.validateFields(true));
 		assertEquals("*Select at least one requirement",sesPan.getInfoLabel());
