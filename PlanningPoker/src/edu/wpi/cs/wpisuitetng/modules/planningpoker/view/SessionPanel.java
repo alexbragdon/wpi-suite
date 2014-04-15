@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -70,6 +71,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     private final JLabel infoLabel = new JLabel("");
 
     private PlanningPokerSession displaySession;
+    
+    private JButton showDeck = new JButton("Show Deck");
 
     private ViewMode viewMode;
 
@@ -402,6 +405,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		JPanel timeCheck = new JPanel();
 		timeCheck.add(timeEnable);
 		timeCheck.add(new JLabel("Set an end time?"));
+		infoPanel.add(showDeck, "wrap");
+		showDeck.setEnabled(false);
 		infoPanel.add(timeCheck, "wrap");
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         infoLabel.setText("");
@@ -480,6 +485,14 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				if (arg0.getStateChange() == ItemEvent.SELECTED) {
 					selectedDeckChanged = !selectedDeckChanged;
 					selectedDeck = deckChooser.getSelectedItem().toString();
+					if (!(selectedDeck.equals("-None-")))
+					{
+						showDeck.setEnabled(true);
+					}
+					else
+					{
+						showDeck.setEnabled(false);
+					}
 					System.out.println("Item state changed to: " + selectedDeck);
 					chosenSequence.setText("  " + decks.deckToString(selectedDeck)); //Add space for better display
 					updateButtonPanel();
