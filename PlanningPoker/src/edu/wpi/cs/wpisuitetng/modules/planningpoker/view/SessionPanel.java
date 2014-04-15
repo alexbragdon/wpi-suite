@@ -48,12 +48,14 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPoker
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetAllUsersController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonListener;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -609,25 +611,25 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             ViewEventController.getInstance().removeTab(this);
         }
     }
-    
+
     public void openPressed() {
-    	if (validateFields(true)) {
-    		isOpen = true;
-    		PlanningPokerSession session = createSessionFromFields();
-    		
-    		switch (viewMode) {
-            case CREATE:
-                AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
-                GetAllUsersController.getInstance().getAllUsers(this); // Send email to all users
-                break;
-            case EDIT:
-                EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
-                GetAllUsersController.getInstance().getAllUsers(this); // Send email to all users
-                break;
+        if (validateFields(true)) {
+            isOpen = true;
+            PlanningPokerSession session = createSessionFromFields();
+
+            switch (viewMode) {
+                case CREATE:
+                    AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
+                    GetAllUsersController.getInstance().getAllUsers(this); // Send email to all users
+                    break;
+                case EDIT:
+                    EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+                    GetAllUsersController.getInstance().getAllUsers(this); // Send email to all users
+                    break;
+            }
+
+            ViewEventController.getInstance().removeTab(this);
         }
-    		
-    		ViewEventController.getInstance().removeTab(this);
-    	}
     }
 
     public PlanningPokerSession createSessionFromFields() {
@@ -756,6 +758,17 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
         final String username = "planningpokerwpi@gmail.com";
         final String password = "team3romulus";
+        String requirementsString = "";
+        String deadlineString = "";
+
+        for(RequirementEstimate r : displaySession.getRequirements()){
+            requirementsString += "- " + r.getName();   
+        }
+
+        if(displaySession.getType() == SessionType.DISTRIBUTED){
+            deadlineString = "Voting ends on " + displaySession.getDate().toString() + " " +
+                            displaySession.getHour() + ":" + displaySession.getMin() + ".\n\n";
+        }
 
         Session session = Session.getInstance(properties,
                         new javax.mail.Authenticator() {
@@ -772,9 +785,15 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                                 InternetAddress.parse("mrracine@wpi.edu"));
                 message.setSubject("New Planning Poker Session " + displaySession.getName());
                 message.setText("Hello " + u.getName() + "," +
-                                "\n\nA new planning poker session " + displaySession.getName() + 
-                                " has begun with the following description: " +
-                                "\n\n" + displaySession.getDescription());
+                                "\n\n" + displaySession.getModerator() + " has begun planning poker session " + 
+                                "\"" + displaySession.getName() + "\"." + "\n\n" + "Description:" + "\n  " +
+                                displaySession.getDescription() + "\n\n" + "Requirements:" + "\n" +
+                                requirementsString + "\n\n" +
+                                deadlineString +
+                                "Enjoy your game of planning poker!" + "\n\n" +
+                                "-----------------------------------------------------------\n" +
+                                "-Planning Poker Notification System-"
+                                );
 
                 Transport.send(message);
             } catch (MessagingException e) {
