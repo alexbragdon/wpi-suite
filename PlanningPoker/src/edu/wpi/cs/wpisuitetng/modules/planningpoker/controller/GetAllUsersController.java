@@ -19,6 +19,7 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.EmailButtonPanel;
 
 /**
  * @author Team Romulus
@@ -28,14 +29,15 @@ public class GetAllUsersController {
     private static GetAllUsersController instance;
     private GetAllUsersObserver observer;
     private SessionPanel sp;
-    
+    private EmailButtonPanel ebp;
+
     /**
      * Construct a GetAllUsersController
      */
     private GetAllUsersController() {
         observer = new GetAllUsersObserver(this);
     }
-    
+
     /**
      * @return the instance of the GetAllUsersController or creates one if it does not
      * exist.
@@ -46,8 +48,19 @@ public class GetAllUsersController {
         {
             instance = new GetAllUsersController();
         }
-        
+
         return instance;
+    }
+
+    /**
+     * Gets all requirements from the database
+     */
+    public void getAllUsers(EmailButtonPanel ebp, String username) 
+    {
+        this.ebp = ebp;
+        final Request request = Network.getInstance().makeRequest("core/user/" + username, HttpMethod.GET);
+        request.addObserver(observer); // add an observer to process the response
+        request.send();
     }
 
     /**
@@ -60,8 +73,14 @@ public class GetAllUsersController {
         request.addObserver(observer); // add an observer to process the response
         request.send();
     }
-    
+
     public void sendToPanel(User[] users){
-        this.sp.sendEmail(users);
+        if(sp != null){
+            this.sp.sendEmail(users);
+        }
+
+        if(ebp != null){
+            this.ebp.setEmailAddress(users[0]);
+        }
     }
 }

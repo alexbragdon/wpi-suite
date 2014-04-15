@@ -746,11 +746,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     }
 
     public void sendEmail(User[] users){        
-        if(users.length == 0){
+        if(users == null){
             return;
         }
 
-        Properties properties = new Properties();
+        Properties properties = System.getProperties();
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.host", "smtp.gmail.com");
@@ -778,21 +778,25 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         });
 
         for(User u : users){
+            if(u.getEmail() == null || u.getEmail().equals("")){
+                break;
+            }
+            
             try {
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(username));
                 message.setRecipients(Message.RecipientType.TO,
-                                InternetAddress.parse("mrracine@wpi.edu"));
+                                InternetAddress.parse(u.getEmail()));
                 message.setSubject("New Planning Poker Session " + displaySession.getName());
                 message.setText("Hello " + u.getName() + "," +
                                 "\n\n" + displaySession.getModerator() + " has begun planning poker session " + 
-                                "\"" + displaySession.getName() + "\"." + "\n\n" + "Description:" + "\n  " +
+                                "\"" + displaySession.getName() + "\"." + "\n\n" + "Description:" + "\n   " +
                                 displaySession.getDescription() + "\n\n" + "Requirements:" + "\n" +
                                 requirementsString + "\n\n" +
                                 deadlineString +
                                 "Enjoy your game of planning poker!" + "\n\n" +
-                                "-----------------------------------------------------------\n" +
-                                "-Planning Poker Notification System-"
+                                "-----------------------------------------------------\n" +
+                                "-The Planning Poker Team-"
                                 );
 
                 Transport.send(message);
