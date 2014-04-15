@@ -76,7 +76,7 @@ public class ViewDeckPanel extends JPanel {
 	 */
 	private void initializeMap(int[] cardValues) {
 		
-		for (int i = 1; i < cardValues.length; i++) {
+		for (int i = 0; i < cardValues.length; i++) {
 			try {
 				cards.put(cardValues[i], loadImage(cardValues[i] + ".png"));
 			} catch (IOException e) {
