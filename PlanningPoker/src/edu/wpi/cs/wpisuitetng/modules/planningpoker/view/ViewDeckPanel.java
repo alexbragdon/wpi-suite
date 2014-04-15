@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
 
@@ -56,7 +57,8 @@ public class ViewDeckPanel extends JPanel {
 		}
 		
 		JLabel titleLabel = new JLabel("Fibonacci Deck");
-		this.add(cardsPanel, BorderLayout.CENTER);
+		JScrollPane scrPanel = new JScrollPane(cardsPanel);
+		this.add(scrPanel, BorderLayout.CENTER);
 		this.add(titleLabel, BorderLayout.NORTH);
 	}
 	
@@ -76,7 +78,8 @@ public class ViewDeckPanel extends JPanel {
 		
 		for (int i = 1; i < cardValues.length; i++) {
 			try {
-				cards.put(cardValues[i], loadImage(cardValues[i] + ".png"));
+				//cards.put(cardValues[i], loadImage(cardValues[i] + ".png"));
+				cards.put(cardValues[i], loadImage("back.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
