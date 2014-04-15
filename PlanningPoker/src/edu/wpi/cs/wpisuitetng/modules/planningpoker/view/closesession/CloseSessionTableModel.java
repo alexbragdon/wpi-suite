@@ -19,7 +19,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 public class CloseSessionTableModel extends AbstractTableModel {
     private PlanningPokerSession session;
     private boolean isEditable;
-    private String[] columns = { "Requirement Name", "Final Estimate" };
+    private String[] columns = { "Requirement Name", "Mean", "Median", "Final Estimate" };
     
     /**
      * Creates a new table model for the given session.
@@ -62,7 +62,9 @@ public class CloseSessionTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
             case 0: return String.class;
-            case 1: return Integer.class;
+            case 1: return String.class;
+            case 2: return String.class;
+            case 3: return Integer.class;
             default: throw new RuntimeException("Invalid column index");
         }
     }
@@ -72,7 +74,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return isEditable && columnIndex == 1;
+        return isEditable && columnIndex == 3;
     }
     
     /*
@@ -84,6 +86,9 @@ public class CloseSessionTableModel extends AbstractTableModel {
             case 0:
                 return session.getRequirements().get(row).getName();
             case 1:
+            case 2:
+                return "--";
+            case 3:
                 return session.getRequirements().get(row).getFinalEstimate();
             default:
                 throw new RuntimeException("Invalid column");
@@ -95,7 +100,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
      */
     @Override
     public void setValueAt(Object value, int row, int column) {
-        if (column != 1) {
+        if (column != 3) {
             throw new RuntimeException("Invalid column index");
         }
         

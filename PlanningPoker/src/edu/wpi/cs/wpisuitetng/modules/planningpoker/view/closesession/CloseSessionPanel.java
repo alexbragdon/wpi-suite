@@ -48,7 +48,6 @@ public class CloseSessionPanel extends JPanel {
         buttons = new CloseSessionButtonsPanel(this, isEditable);
         
         setLayout(new BorderLayout());
-        add(new JLabel("Enter final estimates"), BorderLayout.NORTH);
         add(editPanel, BorderLayout.CENTER);
         add(buttons, BorderLayout.SOUTH);
     }
