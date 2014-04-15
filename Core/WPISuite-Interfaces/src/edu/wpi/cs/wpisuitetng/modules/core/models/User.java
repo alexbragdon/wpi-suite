@@ -30,6 +30,7 @@ public class User extends AbstractModel
 	private int idNum;
 	private Role role;
 	private String email;
+	private boolean hasNotificationsEnabled;
 	
 	transient private String password; // excluded from serialization, still stored.
 	
@@ -47,6 +48,7 @@ public class User extends AbstractModel
 		this.idNum = idNum;
 		this.role = Role.USER;
 		this.email = "";
+		this.hasNotificationsEnabled = true;
 	}
 	
 	@Override
@@ -81,6 +83,11 @@ public class User extends AbstractModel
                     return false;
                 }
 				
+				if(this.hasNotificationsEnabled != ((User)other).hasNotificationsEnabled)
+                {
+                    return false;
+                }
+				
 				return true;
 			}
 		}
@@ -88,6 +95,20 @@ public class User extends AbstractModel
 	}
 	
 	/**
+     * @return the hasNotificationsEnabled
+     */
+    public boolean getHasNotificationsEnabled() {
+        return hasNotificationsEnabled;
+    }
+
+    /**
+     * @param hasNotificationsEnabled the hasNotificationsEnabled to set
+     */
+    public void setHasNotificationsEnabled(boolean hasNotificationsEnabled) {
+        this.hasNotificationsEnabled = hasNotificationsEnabled;
+    }
+
+    /**
 	 * Performs password checking logic. Fails if password field is null, which happens
 	 * 	when User is deserialized so as to protect the password.
 	 * @param pass	the password String to compare

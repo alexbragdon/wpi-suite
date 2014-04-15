@@ -262,6 +262,8 @@ public class UserManager implements EntityManager<User> {
 			if(changes.getEmail() != null){
 			    toUpdate.setEmail(changes.getEmail());
 			}
+			
+			toUpdate.setHasNotificationsEnabled(changes.getHasNotificationsEnabled());
 	
 			if((changes.getRole() != null))
 			{

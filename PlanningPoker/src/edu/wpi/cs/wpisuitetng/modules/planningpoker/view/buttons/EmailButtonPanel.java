@@ -64,6 +64,8 @@ public class EmailButtonPanel extends ToolbarGroupView {
     private JButton cancelButton;
     private JLabel infoLabel;
     private JCheckBox checkBox;
+    private String displayString;
+    private User displayUser;
 
     public EmailButtonPanel(final MainView parent) {
         super("");
@@ -115,11 +117,12 @@ public class EmailButtonPanel extends ToolbarGroupView {
         emailButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                emailButtonPanel.setVisible(false);
-                emailPanel.setVisible(true);
-                validateEmail();
-                if (infoLabel.getText().equals(" ") && !validateEmail()) {
-                    infoLabel.setText("*Email format incorrect");
+                if(displayUser == null){
+                    new GetAllUsersController().getAllUsers(EmailButtonPanel.this, ConfigManager.getConfig().getUserName()); // Send email to all users
+                }
+
+                else{
+                    switchToEdit();
                 }
             }
         });
@@ -128,7 +131,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (validateEmail()) {
-                    GetAllUsersController.getInstance().getAllUsers(EmailButtonPanel.this, ConfigManager.getConfig().getUserName()); // Send email to all users
+                    setEmailAddress(displayUser);
                     emailButtonPanel.setVisible(true);
                     emailPanel.setVisible(false);
                 } else {
@@ -149,41 +152,23 @@ public class EmailButtonPanel extends ToolbarGroupView {
 
         emailField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void changedUpdate(DocumentEvent e) {
-                if (validateEmail()) {
-                    submitButton.setEnabled(true);
-                } else {
-                    infoLabel.setText("*Email format incorrect");
-                    submitButton.setEnabled(false);
-                }
-            }
+            public void changedUpdate(DocumentEvent e) {}
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                if (validateEmail()) {
-                    submitButton.setEnabled(true);
-                } else {
-                    validateEmail();
-                    // infoLabel.setText("Email format incorrect!");
-                    submitButton.setEnabled(false);
-                    if (infoLabel.getText().equals("")) {
-                        infoLabel.setText("*Email format incorrect");
-                    }
-                }
+                submitButton.setEnabled(validateEmail());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                if (validateEmail()) {
-                    submitButton.setEnabled(true);
-                } else {
-                    validateEmail();
-                    // infoLabel.setText("Email format incorrect!");
-                    submitButton.setEnabled(false);
-                    if (infoLabel.getText().equals("")) {
-                        infoLabel.setText("*Email format incorrect");
-                    }
-                }
+                submitButton.setEnabled(validateEmail());
+            }
+        });
+
+        checkBox.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                submitButton.setEnabled(validateEmail());
             }
         });
 
@@ -201,21 +186,50 @@ public class EmailButtonPanel extends ToolbarGroupView {
 
     public void setEmailAddress(User u){
         u.setEmail(emailField.getText());
+        u.setHasNotificationsEnabled(checkBox.isSelected());
         EditUserController.getInstance().setEmail(u);
     }
 
     public boolean validateEmail() {
         boolean valid = false;
+        boolean changes = false;
+        
         if (emailField.getText().length() == 0) {
             infoLabel.setText("*Please enter your email");
             valid = false;
         } else if (emailField.getText().startsWith(" ")) {
-            infoLabel.setText("*Email can't start with space");
+            infoLabel.setText("*Email cannot start with space");
             valid = false;
-        } else if (emailField.getText().matches(".+@.+\\.[a-z]+")) {
+        } else if (!emailField.getText().matches(".+@.+\\.[a-z]+")) {
+            infoLabel.setText("*Invalid email format");
+            valid = false;
+        } else {
             infoLabel.setText("");
             valid = true;
         }
-        return valid;
+        
+        if (!emailField.getText().equals(displayUser.getEmail())){
+            changes = true;
+        } else if (checkBox.isSelected() != displayUser.getHasNotificationsEnabled()){
+            changes = true;
+        }
+
+        return valid && changes;
+    }
+
+    /**
+     * @param user
+     */
+    public void setUser(User user) {
+        displayUser = user;
+        switchToEdit();
+    }
+
+    public void switchToEdit(){
+        emailField.setText(displayUser.getEmail());
+        emailButtonPanel.setVisible(false);
+        emailPanel.setVisible(true);
+        checkBox.setSelected(displayUser.getHasNotificationsEnabled());
+        submitButton.setEnabled(validateEmail());
     }
 }

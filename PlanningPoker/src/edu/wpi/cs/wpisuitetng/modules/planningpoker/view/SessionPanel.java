@@ -620,11 +620,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             switch (viewMode) {
                 case CREATE:
                     AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
-                    GetAllUsersController.getInstance().getAllUsers(this); // Send email to all users
+                    new GetAllUsersController().getAllUsers(this); // Send email to all users
                     break;
                 case EDIT:
                     EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
-                    GetAllUsersController.getInstance().getAllUsers(this); // Send email to all users
+                    new GetAllUsersController().getAllUsers(this); // Send email to all users
                     break;
             }
 
@@ -778,7 +778,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         });
 
         for(User u : users){
-            if(u.getEmail() == null || u.getEmail().equals("")){
+            if(u.getEmail() == null || u.getEmail().equals("") || !u.getHasNotificationsEnabled()){
                 break;
             }
             

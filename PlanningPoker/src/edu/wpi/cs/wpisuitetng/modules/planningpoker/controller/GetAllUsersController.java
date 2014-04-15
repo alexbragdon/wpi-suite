@@ -34,22 +34,8 @@ public class GetAllUsersController {
     /**
      * Construct a GetAllUsersController
      */
-    private GetAllUsersController() {
+    public GetAllUsersController() {
         observer = new GetAllUsersObserver(this);
-    }
-
-    /**
-     * @return the instance of the GetAllUsersController or creates one if it does not
-     * exist.
-     */
-    public static GetAllUsersController getInstance()
-    {
-        if(instance == null)
-        {
-            instance = new GetAllUsersController();
-        }
-
-        return instance;
     }
 
     /**
@@ -80,7 +66,7 @@ public class GetAllUsersController {
         }
 
         if(ebp != null){
-            this.ebp.setEmailAddress(users[0]);
+            this.ebp.setUser(users[0]);
         }
     }
 }
