@@ -1,5 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -30,10 +31,9 @@ public class ViewDeckPanel extends JPanel {
 	 */
 	Map<Integer, Image> cards = new HashMap<Integer, Image>();
 	
-	private static final int WIDTH = 4;
-	private static final int HEIGHT = 2;
-	
 	private ViewDeckPanel() {
+		
+		this.setLayout(new BorderLayout());
 		
 		//TODO: When more decks are added, make this more robust.
 		int[] cardValues = DeckSet.getInstance().getDeck("Fibonacci"); //Assume Fibonacci deck for now
@@ -42,20 +42,22 @@ public class ViewDeckPanel extends JPanel {
 		initializeMap(cardValues);
 		
 		//set up panel and layout
-		this.setLayout(new GridLayout(HEIGHT, WIDTH));
+		JPanel cardsPanel = new JPanel();
 		JLabel[] cardLabels = getLabels(cardValues);
+		cardsPanel.setLayout(new GridLayout(1, cardLabels.length));
 		int index = 0;
 		for (JLabel label : cardLabels) {
 			if (label == null) {
 				System.out.print(index + " is null!");
 			}
+			
 			index++;
-			label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			add(label);
+			cardsPanel.add(label);
 		}
 		
-		Dimension size = new Dimension(WIDTH, HEIGHT);
-		this.setPreferredSize(preferredSize);
+		JLabel titleLabel = new JLabel("Fibonacci Deck");
+		this.add(cardsPanel, BorderLayout.CENTER);
+		this.add(titleLabel, BorderLayout.NORTH);
 	}
 	
 	private JLabel[] getLabels(int[] cardValues) {
@@ -80,6 +82,7 @@ public class ViewDeckPanel extends JPanel {
 				e.printStackTrace();
 			}
 		}
+		
 //		try {
 //			cards.put(0, loadImage("question.png"));
 //		} catch (IOException e) {
