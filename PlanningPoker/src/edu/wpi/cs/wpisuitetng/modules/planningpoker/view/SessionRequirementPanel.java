@@ -22,14 +22,16 @@ import javax.swing.AbstractButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.Timer;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
  * This is the panel on the open session table.
@@ -39,6 +41,10 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  */
 @SuppressWarnings("serial")
 public class SessionRequirementPanel extends JPanel {
+	
+	private Timer timer;
+	
+	
 	PlanningPokerSession displaySession;
 
     /*
@@ -47,7 +53,8 @@ public class SessionRequirementPanel extends JPanel {
     DefaultTableModel model = null;
 
     List<RequirementEstimate> requirements = new ArrayList<RequirementEstimate>();
-
+    List<Requirement> importedRequirements = new ArrayList<Requirement>();
+    
     JTable table;
 
     /**
@@ -59,9 +66,7 @@ public class SessionRequirementPanel extends JPanel {
         Object[][] data = {};
         String[] columns = { "ID", "NAME", "" };
 
-        List<Requirement> importedRequirements = RequirementModel.getInstance().getRequirements();
-
-        System.out.print(importedRequirements.size());
+       new GetRequirementsController(this).retrieveRequirements();
 
         model = new DefaultTableModel(data, columns) {
         	@Override
@@ -69,19 +74,6 @@ public class SessionRequirementPanel extends JPanel {
         		return column == 2;
         	}
         };
-
-        for (int i = 0; i < importedRequirements.size(); i++) {
-            Requirement req = importedRequirements.get(i);
-            //String currEst = String.valueOf(req.getEstimate());
-            String iteration = req.getIteration().toString();
-            
-            if (iteration.equals("Backlog")) {
-
-            	model.addRow(new Object[] { req.getId(), req.getName(), false });
-            
-            requirements.add(new RequirementEstimate(req.getId(), req.getName(), 0, false));
-            }
-        }
 
         table = new JTable(model) {
             @Override
@@ -183,5 +175,33 @@ public class SessionRequirementPanel extends JPanel {
             }
         }
         return selected;
+    }
+    
+    public void addRequirements(Requirement[] requirements) {
+    	for (Requirement r : requirements) {
+    		this.importedRequirements.add(r);
+		}
+    	for (int i = 0; i < this.importedRequirements.size(); i++) {
+            Requirement req = this.importedRequirements.get(i);
+            //String currEst = String.valueOf(req.getEstimate());
+            String iteration = req.getIteration().toString();
+            
+            boolean hasEqual = false;
+            for (RequirementEstimate requirement : displaySession.getRequirements()) {
+            	System.out.println("checking for equals");
+            	if (req.getId() == requirement.getId() && req.getName().equals(requirement.getName())) {
+            		hasEqual = true;
+            		break;
+            	}
+            }
+            if (hasEqual) continue;
+            
+            if (iteration.equals("Backlog")) {
+
+            	model.addRow(new Object[] { req.getId(), req.getName(), false });
+            
+            	this.requirements.add(new RequirementEstimate(req.getId(), req.getName(), 0, false));
+            }
+        }
     }
 }
