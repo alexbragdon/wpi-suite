@@ -1,31 +1,34 @@
+/*******************************************************************************
+ * Copyright (c) 2014 WPI-Suite
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: Team Romulus
+ ******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
-
-
 import java.awt.Component;
-import java.util.ArrayList;
 import java.util.HashMap;
-
 import javax.swing.JComponent;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionPanel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationPanel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.requirements.RequirementPanel;
 
 
 /**
  * The functionality of buttons and lists , etc goes here.
- * @author Fangming Ning
- * @contributOr Team Romulus
+ * @author Team Romulus
+ * @version Iteration-1
  */
 
 public class ViewEventController {
     private static ViewEventController instance = null;
     private MainView main = null;
     private ToolbarView toolbar = null;
-    private HashMap<PlanningPokerSession, Integer> listOfEditingSessions = new HashMap<PlanningPokerSession, Integer>();
+    private final HashMap<PlanningPokerSession, Integer> listOfEditingSessions =
+                    new HashMap<PlanningPokerSession, Integer>();
 
     /**
      * Default constructor for ViewEventController.  Is protected to prevent instantiation.
@@ -43,8 +46,6 @@ public class ViewEventController {
         return instance;
     }
 
-
-    
     /**
      * Sets the main view to the given view.
 
@@ -70,7 +71,7 @@ public class ViewEventController {
      * Opens a new tab for the creation of a session.
      */
     public void createSession() {
-        SessionPanel newSession = new SessionPanel();
+        final SessionPanel newSession = new SessionPanel();
         main.addTab("New Session", null, newSession, "Create a new session");
         main.invalidate(); //force the tabbedpane to redraw.
         main.repaint();
@@ -81,7 +82,7 @@ public class ViewEventController {
      * Find the session to edit. If the session is not opened in tab, open it.
      * @param session
      */
-    public void editSession(PlanningPokerSession session) {	    
+    public void editSession(PlanningPokerSession session) {
         boolean exists = false;
         int index = 0;
         Component component = null;
@@ -93,16 +94,16 @@ public class ViewEventController {
                 break;
             }
         }
-        
+
         if(listOfEditingSessions.containsKey(session))
         {
             exists = true;
             index = listOfEditingSessions.get(session);
         }
 
-        if (exists == false) {
-            SessionPanel sessionEditor = new SessionPanel(session);
-            String tabName = "Edit " + session.getName();
+        if (!(exists)) {
+            final SessionPanel sessionEditor = new SessionPanel(session);
+            final String tabName = "Edit " + session.getName();
             main.addTab(tabName, null, sessionEditor, "Edit this session");
             main.invalidate();
             main.repaint();
@@ -121,17 +122,18 @@ public class ViewEventController {
     public void closeSession(PlanningPokerSession session) {
         boolean exists = false;
         Component component = null;
-        
+
         for (Component c : main.getComponents()) {
-            if (c instanceof CloseSessionPanel && ((CloseSessionPanel)c).getSession().equals(session)) {
+            if (c instanceof CloseSessionPanel &&
+                            ((CloseSessionPanel)c).getSession().equals(session)) {
                 exists = true;
                 component = c;
             }
         }
-        
-        if (exists == false) {
-            CloseSessionPanel panel = new CloseSessionPanel(session, true);
-            String tabName = "Close " + session.getName();
+
+        if (!(exists)) {
+            final CloseSessionPanel panel = new CloseSessionPanel(session, true);
+            final String tabName = "Close " + session.getName();
             main.addTab(tabName, null, panel, "Close this session");
             main.invalidate();
             main.repaint();
@@ -140,7 +142,7 @@ public class ViewEventController {
             main.setSelectedComponent(component);
         }
     }
-    
+
     /**
      * Opens a panel for viewing a closed session.
      *
@@ -149,17 +151,18 @@ public class ViewEventController {
     public void viewClosedSession(PlanningPokerSession session) {
         boolean exists = false;
         Component component = null;
-        
+
         for (Component c : main.getComponents()) {
-            if (c instanceof CloseSessionPanel && ((CloseSessionPanel)c).getSession().equals(session)) {
+            if (c instanceof CloseSessionPanel &&
+                            ((CloseSessionPanel)c).getSession().equals(session)) {
                 exists = true;
                 component = c;
             }
         }
-        
-        if (exists == false) {
-            CloseSessionPanel panel = new CloseSessionPanel(session, false);
-            String tabName = "View " + session.getName();
+
+        if (!(exists)) {
+            final CloseSessionPanel panel = new CloseSessionPanel(session, false);
+            final String tabName = "View " + session.getName();
             main.addTab(tabName, null, panel, "View this session");
             main.invalidate();
             main.repaint();
@@ -168,7 +171,7 @@ public class ViewEventController {
             main.setSelectedComponent(component);
         }
     }
-    
+
     /**
      * Removes the tab for the given JComponent
      * @param comp the component to remove
@@ -184,6 +187,6 @@ public class ViewEventController {
      * Return the size of the hash map for testing code
      */
     public int getSize(){
-    	return listOfEditingSessions.size();
+        return listOfEditingSessions.size();
     }
 }

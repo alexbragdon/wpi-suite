@@ -14,21 +14,21 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 /**
  * @author Team Romulus
- *
+ * @version Iteration-3
  */
 public interface SessionButtonListener {
     /**
      * Indicate to the listener that the ok button was pressed.
      */
-    public void OKPressed();
-    
+    void OKPressed();
+
     /**
      * Indicate to the listener that the clear button was pressed.
      */
-    public void clearPressed();
-    
+    void clearPressed();
+
     /**
      * Indicate to the listener that the cancel button was pressed.
      */
-    public void cancelPressed();
+    void cancelPressed();
 }

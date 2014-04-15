@@ -16,29 +16,33 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
-
-import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 
 /**
  * @author Team Romulus
- *
+ * @version Iteration-1
  */
 @SuppressWarnings("serial")
 public class SessionButtonPanel extends JPanel implements SessionPanelListener {
-    final private SessionPanel parent;
-    final private JButton saveButton;
-    final private JButton clearButton;
-    final private JButton cancelButton;
-    final private JButton openButton;
+    private final SessionPanel parentPanel;
+    private final JButton saveButton;
+    private final JButton clearButton;
+    private final JButton cancelButton;
+    private final JButton openButton;
 
-    public SessionButtonPanel(SessionPanel sessionPanel, ViewMode viewMode, PlanningPokerSession session) {
+    /**
+     * Constructor for SessionButtonPanel.
+     * @param sessionPanel SessionPanel
+     * @param viewMode ViewMode
+     * @param session PlanningPokerSession
+     */
+    public SessionButtonPanel(SessionPanel sessionPanel,
+                    ViewMode viewMode, PlanningPokerSession session) {
         switch (viewMode) {
             case EDIT:
                 saveButton = new JButton("Update");
@@ -54,21 +58,21 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
                 openButton.setEnabled(false);
                 break;
             default:
-                throw new RuntimeException("Invalid ViewMode");
+                throw new RuntimeException("Invalid ViewMode"); // $codepro.audit.disable thrownExceptions
         }
         
-        SpringLayout layout = new SpringLayout();
+        final SpringLayout layout = new SpringLayout();
         this.setLayout(layout);
-        this.parent = sessionPanel;
+        parentPanel = sessionPanel;
 
         try {
-            Image img1  = ImageIO.read(getClass().getResource("save-icon.png"));
+            final Image img1  = ImageIO.read(getClass().getResource("save-icon.png"));
             saveButton.setIcon(new ImageIcon(img1));
-            Image img2  = ImageIO.read(getClass().getResource("clear-icon.png"));
+            final Image img2  = ImageIO.read(getClass().getResource("clear-icon.png"));
             clearButton.setIcon(new ImageIcon(img2));
-            Image img3  = ImageIO.read(getClass().getResource("cancel-icon.png"));
+            final Image img3  = ImageIO.read(getClass().getResource("cancel-icon.png"));
             cancelButton.setIcon(new ImageIcon(img3));
-            Image img4 = ImageIO.read(getClass().getResource("openSession.png"));
+            final Image img4 = ImageIO.read(getClass().getResource("openSession.png"));
             openButton.setIcon(new ImageIcon(img4));
         }catch(IOException ex){}
 
@@ -93,27 +97,27 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
     private void setupListeners(){        
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.OKPressed();
+                parentPanel.OKPressed();
             }
         });
 
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                parent.clearPressed();
+                parentPanel.clearPressed();
             }
 
         });
 
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.cancelPressed();
+                parentPanel.cancelPressed();
             }
         });
         
         openButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                parent.openPressed();
+                parentPanel.openPressed();
             }
         });
     }
