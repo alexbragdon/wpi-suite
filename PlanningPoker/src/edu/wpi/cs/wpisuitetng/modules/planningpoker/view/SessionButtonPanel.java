@@ -50,7 +50,7 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
                 saveButton = new JButton("Create");
                 clearButton = new JButton("Clear");
                 cancelButton = new JButton("Cancel");
-                openButton = new JButton("");
+                openButton = new JButton("Create and Open");
                 openButton.setEnabled(false);
                 break;
             default:
@@ -80,6 +80,7 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
             this.add(openButton);
             break;
         case CREATE:
+        	this.add(openButton);
         	this.add(clearButton);
             this.add(cancelButton);
             break;

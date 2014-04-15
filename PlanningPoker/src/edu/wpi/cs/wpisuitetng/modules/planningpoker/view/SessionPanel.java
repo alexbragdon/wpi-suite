@@ -598,7 +598,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     	if (validateFields(true)) {
     		isOpen = true;
     		PlanningPokerSession session = createSessionFromFields();
-    		EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+    		
+    		switch (viewMode) {
+            case CREATE: AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session); break;
+            case EDIT: EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session); break;
+        }
+    		
     		ViewEventController.getInstance().removeTab(this);
     	}
     }
