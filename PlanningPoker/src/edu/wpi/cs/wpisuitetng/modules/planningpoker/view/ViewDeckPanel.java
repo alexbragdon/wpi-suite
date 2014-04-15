@@ -84,13 +84,6 @@ public class ViewDeckPanel extends JPanel {
 				e.printStackTrace();
 			}
 		}
-		
-//		try {
-//			cards.put(0, loadImage("question.png"));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 	
 	/**
