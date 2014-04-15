@@ -21,7 +21,7 @@ public class DeckSet {
 	 */
 	private Map<String, int[]> decks = new HashMap<String, int[]>();
 	
-	private final int[] fibonacci = {1, 1, 2, 3, 5, 8, 13, 21};
+	private final int[] fibonacci = {0, 1, 1, 2, 3, 5, 8, 13, 21};
 	
 	private final int[] empty = {};
 	

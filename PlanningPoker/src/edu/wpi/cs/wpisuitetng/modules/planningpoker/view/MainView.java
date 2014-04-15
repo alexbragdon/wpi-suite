@@ -22,6 +22,7 @@ public class MainView extends JTabbedPane {
 	private Component lastTab = null;
 	private ToolbarView toolbarView;
 	private MySessionPanel mySession = new MySessionPanel(this);
+	private ViewDeckPanel deckPanel = ViewDeckPanel.getInstance();
 	
 
 	/**
@@ -31,6 +32,7 @@ public class MainView extends JTabbedPane {
 	    
 	    this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		this.addTab("Sessions", mySession);
+		this.addTab("View Deck", deckPanel);
 
 		// Listen for tab changes to invoke auto refresh
 		final MainView self = this;
@@ -74,7 +76,8 @@ public class MainView extends JTabbedPane {
 	public void insertTab(String title, Icon icon, Component component,
 			String tip, int index) {
 		super.insertTab(title, icon, component, tip, index);
-		if (!(component instanceof MySessionPanel)) {
+		if (!(component instanceof MySessionPanel) &&
+				!(component instanceof ViewDeckPanel)) {
 			setTabComponentAt(index, new ClosableTabComponent(this));
 		}
 	}
