@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2013 WPI-Suite
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: Team Rolling Thunder
+ ******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.Arrays;
@@ -8,6 +18,7 @@ import java.util.Map;
  * The set of all decks available for use with a Planning Poker session. This
  * class is a singleton
  * @author Romulus
+ * @version Iteration-3
  */
 public class DeckSet {
 	
@@ -19,7 +30,7 @@ public class DeckSet {
 	/**
 	 * The Map mapping names of decks to their contents
 	 */
-	private Map<String, int[]> decks = new HashMap<String, int[]>();
+	private final Map<String, int[]> decks = new HashMap<String, int[]>();
 	
 	private final int[] fibonacci = {1, 1, 2, 3, 5, 8, 13, 21};
 	
@@ -54,13 +65,13 @@ public class DeckSet {
 	 * @param forName The name of the deck whose contents to get
 	 * @return A comma-separated string of the given values in the deck
 	 */
-	public String deckToString(String forName) {
+	public String deckToString(String forName) { // $codepro.audit.disable multipleReturns
 		if (forName == null) {
 			return "";
 		}
 		
-		StringBuilder sb = new StringBuilder();
-		int[] cards = getDeck(forName);
+		final StringBuilder sb = new StringBuilder();
+		final int[] cards = getDeck(forName);
 		if (cards.length == 0) {
 			return ""; //If no deck is selected. display nothing
 		}
@@ -78,12 +89,12 @@ public class DeckSet {
 	 * @param forName The name of the deck whose contents to get
 	 * @return An integer array of the contents of the deck
 	 */
-	public int[] getDeck(String forName) {
+	public int[] getDeck(String forName) { // $codepro.audit.disable multipleReturns
 		if (forName == null) {
 			return empty;
 		}
 		
-		int[] nums = decks.get(forName);
+		final int[] nums = decks.get(forName);
 		return Arrays.copyOf(nums, nums.length);
 	}
 }

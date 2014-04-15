@@ -50,45 +50,47 @@ public class PlanningPokerNotification extends AbstractModel {
      * @param user the user to set
      */
     public void setUsername(String user) {
-        this.username = user;
+        username = user;
     }
 
     /**
      * Constructs a notification from JSON object (ie, from the Database)
      *
      * @param json
-     * @return 
+     * @return  PlanningPokerNotification
      */
     public static PlanningPokerNotification fromJson(String json) {
         final Gson parser = new Gson();
         return parser.fromJson(json, PlanningPokerNotification.class);
     }
-    
+
     /**
      * Defualt constructor for PlanningPokerNotification
      */
     public PlanningPokerNotification() {
-        super();
-        this.username = "";
-        this.notificiation = "This is a dummy Notification";
+        username = "";
+        notificiation = "This is a dummy Notification";
     }
-    
+
     /**
      * Constructor for PlanningPokerNotification
+     * @param notific
+     * @param usr
      */
     public PlanningPokerNotification(String notific, String usr) {
-        this.notificiation = notific;
-        this.username = usr;
+        notificiation = notific;
+        username = usr;
     }
-    
+
     /**
      * Copy constructor for PlanningPokerNotification
+     * @param p
      */
     public PlanningPokerNotification(PlanningPokerNotification p) {
-        this.notificiation = p.notificiation;
-        this.username = p.username;
+        notificiation = p.notificiation;
+        username = p.username;
     }
-    
+
     /**
      * @see edu.wpi.cs.wpisuitetng.modules.Model#delete()
      */
