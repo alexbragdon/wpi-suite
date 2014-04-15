@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.LinkedList;
 
 import javax.swing.AbstractButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -203,5 +204,9 @@ public class SessionRequirementPanel extends JPanel {
             	this.requirements.add(new RequirementEstimate(req.getId(), req.getName(), 0, false));
             }
         }
+    }
+    
+    public void tableUpdated() {
+    	JOptionPane.showMessageDialog(null, "This is a place");
     }
 }

@@ -544,8 +544,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			@Override
 			public void tableChanged(TableModelEvent e) {
             	updateButtonPanel();
+            	requirementsPanel.tableUpdated();
 			}
-        });
+        });   
     }
     
     /**
