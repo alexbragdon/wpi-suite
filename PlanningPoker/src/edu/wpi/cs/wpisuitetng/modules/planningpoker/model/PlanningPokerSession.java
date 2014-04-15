@@ -24,7 +24,7 @@ public class PlanningPokerSession extends AbstractModel {
 	
 	int Hour, Min;
 	
-	ArrayList<RequirementEstimate> RequirementEstimates;
+	List<RequirementEstimate> RequirementEstimates;
 	SessionType Type;
 	// True if the game is active and ready to join
 	boolean isActive;
@@ -32,6 +32,81 @@ public class PlanningPokerSession extends AbstractModel {
 	boolean isComplete;
 	
 	Date completionTime;
+	
+	public static class Builder {
+		
+		int id = -1;
+		String name = "";
+		String description = "";
+		Date date = null; 
+		int hour = -1;
+		int min = -1;
+		List<RequirementEstimate> requirementEstimations = null;
+		SessionType type = null;
+		boolean active = false;
+		boolean complete = false;
+		String moderator = "";
+		String deck = "";
+		
+		public Builder(int id) {
+			this.id = id;
+		}
+		
+		public Builder name(String name) {
+			this.name = name;
+			return this;
+		}
+		
+		public Builder description(String description) {
+			this.description = description;
+			return this;
+		}
+		
+		public Builder date(Date date) {
+			this.date = date;
+			return this;
+		}
+		
+		public Builder hour(int hour) {
+			this.hour = hour;
+			return this;
+		}
+		
+		public Builder minute(int min) {
+			this.min = min;
+			return this;
+		}
+		
+		public Builder requirementEstimations(List<RequirementEstimate> reqEsts) {
+			this.requirementEstimations = reqEsts;
+			return this;
+		}
+		
+		public Builder sessionType(SessionType type) {
+			this.type = type;
+			return this;
+		}
+		
+		public Builder active(boolean active) {
+			this.active = active;
+			return this;
+		}
+		
+		public Builder complete(boolean complete) {
+			this.complete = complete;
+			return this;
+		}
+		
+		public Builder moderator(String moderator) {
+			this.moderator = moderator;
+			return this;
+		}
+		
+		public Builder deck(String deck) {
+			this.deck = deck;
+			return this;
+		}
+	}
 	
 	public Date getCompletionTime() {
         return completionTime;
@@ -155,8 +230,7 @@ public class PlanningPokerSession extends AbstractModel {
 	/**
 	 * Default constructor for a planning Poker session
 	 */
-	public PlanningPokerSession() 
-	{
+	private PlanningPokerSession() {
 		super();
 		ID = 0;
 		Name = "";
@@ -176,21 +250,19 @@ public class PlanningPokerSession extends AbstractModel {
 	 * constructor for a planning poker Session
 	 */
 
-	public PlanningPokerSession(int id, String name, String description, Date date,int hour, int min, List<RequirementEstimate>
-			requirementestimates, SessionType type, boolean active, boolean complete, String moderator, String deck) 
+	public PlanningPokerSession(Builder b) 
 	{
-		super();
-		ID = id;
-		Description = description;
-		this.moderator = moderator;
-		this.date = date;
-		Hour = hour;
-		Min = min;
-		Name = name;
-		RequirementEstimates = new ArrayList<RequirementEstimate>(requirementestimates);
-		Type = type;
-		isActive = active;
-		this.setDeck(deck);
+		ID = b.id;
+		Description = b.description;
+		this.moderator = b.moderator;
+		this.date = b.date;
+		Hour = b.hour;
+		Min = b.min;
+		Name = b.name;
+		RequirementEstimates = b.requirementEstimations;
+		Type = b.type;
+		isActive = b.active;
+		this.deck = b.deck;
 		
 		// Prevents from adding an active, closed session
 		if (isActive) {
