@@ -41,6 +41,14 @@ public class MainView extends JTabbedPane {
                 if (selected instanceof MySessionPanel) {
                     ((MySessionPanel)selected).refresh();
                 }
+                JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+                int index = sourceTabbedPane.getSelectedIndex();
+                if(index != 0){
+                	toolbarView.GetSuperButtonPanel().getSuperButton().setVisible(false);
+                }
+                else{
+                	toolbarView.GetSuperButtonPanel().getSuperButton().setVisible(true);
+                }
             }
 		});
 
