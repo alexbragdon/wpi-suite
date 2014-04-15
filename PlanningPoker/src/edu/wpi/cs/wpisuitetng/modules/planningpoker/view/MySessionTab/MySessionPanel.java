@@ -100,28 +100,6 @@ public class MySessionPanel extends JPanel {
 
         sessions = newSessions;
 
-<<<<<<< HEAD
-        if (!hasChanges) {
-            return;
-        }
-        moderatingPanel.getTable().clear();
-        joiningPanel.getTable().clear();
-        closedPanel.getTable().clear();
-
-        final String username = ConfigManager.getConfig().getUserName();
-
-        for (PlanningPokerSession session : newSessions) {
-            if (session.isComplete()) {
-                closedPanel.getTable().addSessions(session);
-            } else if (session.isActive() && !session.getModerator().equals(username)) {
-                joiningPanel.getTable().addSessions(session);
-            } else if (session.getModerator().equals(username)) {
-                moderatingPanel.getTable().addSessions(session);
-            }
-        }
-    }
-
-=======
         if (hasChanges) {
             moderatingPanel.getTable().clear();
             joiningPanel.getTable().clear();
@@ -140,7 +118,7 @@ public class MySessionPanel extends JPanel {
             }
         }
     }
->>>>>>> 5b9eaeb4c9aa8ecbae2119da93c486fd3183f99d
+
     /**
      * Method getSelectedID.
      * @param panel int
@@ -192,12 +170,9 @@ public class MySessionPanel extends JPanel {
      * Method closeTimedOutSessions.
      * @param sessions PlanningPokerSession[]
      */
-<<<<<<< HEAD
     public void closeTimedOutSessions(PlanningPokerSession[] sessions) { // $codepro.audit.disable methodShouldBeStatic
         //this method should not be static
-=======
-    public static void closeTimedOutSessions(PlanningPokerSession[] sessions) {
->>>>>>> 5b9eaeb4c9aa8ecbae2119da93c486fd3183f99d
+
         for (PlanningPokerSession s : sessions) {
             if (s.isDateInPast() && s.getType() == SessionType.DISTRIBUTED && !(s.isComplete())) {
                 PlanningPokerSession closedSession = 
