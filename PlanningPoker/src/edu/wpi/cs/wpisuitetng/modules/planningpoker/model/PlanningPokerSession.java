@@ -1,5 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
@@ -36,6 +37,10 @@ public class PlanningPokerSession extends AbstractModel {
 
 	private Date completionTime;
 
+	/**
+	 * This class acts as a builder for {@code PlanningPokerSession} because of the number
+	 * of parameters to create a {@code PlanningPokerSession} object.
+	 */
 	public static class Builder {
 
 		int id = -1;
@@ -51,65 +56,128 @@ public class PlanningPokerSession extends AbstractModel {
 		String moderator = "";
 		String deck = "";
 
+		/**
+		 * Create a Builder
+		 * @param id The id
+		 */
 		public Builder(int id) {
 			this.id = id;
 		}
 
+		/**
+		 * Set the name
+		 * @param name The name
+		 * @return This builder
+		 */
 		public Builder name(String name) {
 			this.name = name;
 			return this;
 		}
 
+		/**
+		 * Set the description
+		 * @param description The description
+		 * @return This builder
+		 */
 		public Builder description(String description) {
 			this.description = description;
 			return this;
 		}
 
+		/**
+		 * Set the date
+		 * @param date The date
+		 * @return This builder
+		 */
 		public Builder date(Date date) {
 			this.date = date;
 			return this;
 		}
 
+		/**
+		 * Set the hour
+		 * @param hour The hour
+		 * @return This builder
+		 */
 		public Builder hour(int hour) {
 			this.hour = hour;
 			return this;
 		}
 
+		/**
+		 * Set the minute
+		 * @param min The minute
+		 * @return This builder
+		 */
 		public Builder minute(int min) {
 			this.min = min;
 			return this;
 		}
 
+		/**
+		 * Set the requirements to estimate
+		 * @param reqEsts The list of requirements
+		 * @return This builder
+		 */
 		public Builder requirementEstimates(List<RequirementEstimate> reqEsts) {
 			this.requirementEstimations = reqEsts;
 			return this;
 		}
 
+		/**
+		 * Set the session type
+		 * @param type The type
+		 * @return Thils builder
+		 */
 		public Builder sessionType(SessionType type) {
 			this.type = type;
 			return this;
 		}
 
+		/**
+		 * Set whether or not the session is active
+		 * @param active True if the session is active
+		 * @return This builder
+		 */
 		public Builder active(boolean active) {
 			this.active = active;
 			return this;
 		}
 
+		/**
+		 * Set whether or not the session is complete
+		 * @param complete True if the session is complete
+		 * @return This builder
+		 */
 		public Builder complete(boolean complete) {
 			this.complete = complete;
 			return this;
 		}
 
+		/**
+		 * Set the moderator
+		 * @param moderator the moderator
+		 * @return This builder
+		 */
 		public Builder moderator(String moderator) {
 			this.moderator = moderator;
 			return this;
 		}
 
+		/**
+		 * Set the deck (via name)
+		 * @param deck The deck
+		 * @return This builder
+		 */
 		public Builder deck(String deck) {
 			this.deck = deck;
 			return this;
 		}
 		
+		/**
+		 * Create the {@code PlanningPokerSession}
+		 * @return A {@code PlanningPokerSession} object represented by this builder
+		 */
 		public PlanningPokerSession build() {
 			return new PlanningPokerSession(this);
 		}
@@ -177,13 +245,16 @@ public class PlanningPokerSession extends AbstractModel {
 		return date;
 	}
 
+	/**
+	 * Get if the date represented by this session is in the past
+	 * @return true if in the past, false otherwise
+	 */
 	public boolean isDateInPast() {
-		Date newDate = new Date(date.getTime());
-		newDate.setHours(hour);
-		newDate.setMinutes(min);
-		Date now = new Date();
-		now.setSeconds(60);
-		return newDate.before(now);
+		Calendar now = Calendar.getInstance();
+		now.setTime(new Date());
+		Calendar thisDate = Calendar.getInstance();
+		thisDate.setTime(date);
+		return now.compareTo(thisDate) > 0;
 	}
 
 	public String getModerator(){

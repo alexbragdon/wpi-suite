@@ -59,236 +59,236 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  */
 @SuppressWarnings("serial")
 public class SessionPanel extends JPanel implements SessionButtonListener {
-    private final Border defaultBorder = (new JTextField()).getBorder();
+	private final Border defaultBorder = (new JTextField()).getBorder();
 
-    private JTextField nameField = new JTextField();
+	private JTextField nameField = new JTextField();
 
 	private JCheckBox timeEnable = new JCheckBox();
-	
-    private JTextArea desField = new JTextArea();
 
-    private final JLabel infoLabel = new JLabel("");
+	private JTextArea desField = new JTextArea();
 
-    private PlanningPokerSession displaySession;
+	private final JLabel infoLabel = new JLabel("");
 
-    private ViewMode viewMode;
+	private PlanningPokerSession displaySession;
 
-    private JSpinner hourSpin;
-    
-    private JSpinner minuteSpin;
-    
-    private Date dt;
-    
-    private boolean isOpen = false;
-    
-    /**
-     * The label that displays the chosen deck to the user.
-     */
-    private JLabel chosenSequence;
-    
-    /**
-     * All pre-defined decks available for use.    
-     */
-    private DeckSet decks = DeckSet.getInstance();
-    
-    /**
-     * The drop-down menu to select the deck
-     */
-    private JComboBox<String> deckChooser = new JComboBox<String>(decks.getNames());
-    
-    /**
-     * The currently selected deck
-     */
-    String selectedDeck = "-None-";
-    
-    boolean selectedDeckChanged = false;
-    
-    /**
-     * Goes on left, holds basic info (name, time). changed to scrollable panel
-     */
-    private ScrollablePanel infoPanel;
+	private ViewMode viewMode;
 
-    /**
-     * Goes on right, allows user to select requirements.
-     */
-    // TODO replace JPanel with something real
-    private SessionRequirementPanel requirementsPanel;
+	private JSpinner hourSpin;
 
-    /**
-     * Date chooser to select when session ends
-     */
-    JCalendar dateChooser;
+	private JSpinner minuteSpin;
 
-    /**
-     * Create, reset, cancel buttons at the bottom.
-     */
-    // TODO replace JPanel with something real
-    private SessionButtonPanel buttonPanel;
+	private Date dt;
 
-    /**
-     * Constructor for editing a requirement
-     * 
-     * @param editingSession requirement to edit
-     */
-    public SessionPanel(PlanningPokerSession session) {
-        displaySession = session;
-        viewMode = ViewMode.EDIT;
-        dt = new Date();
-        this.buildLayout();
-       
-    }
+	private boolean isOpen = false;
 
-    /**
-     * Constructor for creating a requirement
-     * 
-     * @param parentID the parent id, or -1 if no parent.
-     */
-    public SessionPanel() {
-        displaySession = new PlanningPokerSession();
-        viewMode = ViewMode.CREATE;
-        dt = new Date();
-        this.buildLayout();
-    }
+	/**
+	 * The label that displays the chosen deck to the user.
+	 */
+	private JLabel chosenSequence;
 
-    /**
-     * Validates the name and description fields and sets the error message accordingly.
-     */
-    public boolean validateFields(boolean display) {
-        boolean isNameValid;
-        boolean isDescriptionValid;
-        boolean isDateValid;
-        boolean isReqsValid;
-        int nameCharLimit = 1000000;
-        int desCharLimit = 1000000;
-        infoLabel.setForeground(Color.red);
+	/**
+	 * All pre-defined decks available for use.    
+	 */
+	private DeckSet decks = DeckSet.getInstance();
 
-        infoLabel.setText("");
+	/**
+	 * The drop-down menu to select the deck
+	 */
+	private JComboBox<String> deckChooser = new JComboBox<String>(decks.getNames());
 
-        if (nameField.getText().length() > nameCharLimit) {
-            if (display) {
-                infoLabel.setText("*The name has to be less than one million characters.");
-            }
-            isNameValid = false;
-        } else if (nameField.getText().length() == 0) {
-            if (display) {
-                infoLabel.setText("*Please enter a name.");
-            }
-            isNameValid = false;
-        } else if (nameField.getText().startsWith(" ")) {
-            if (display) {
-                infoLabel.setText("*Name cannot start with a space.");
-            }
-            isNameValid = false;
-        } else {
-            if (display) {
-                infoLabel.setText("");
-            }
-            isNameValid = true;
-        }
+	/**
+	 * The currently selected deck
+	 */
+	String selectedDeck = "-None-";
 
-        if (desField.getText().length() > desCharLimit) {
-            if (display && isNameValid) {
-                infoLabel.setText("*The description has to be less than one million characters.");
-            }
-            isDescriptionValid = false;
-        } else if (desField.getText().length() == 0) {
-            if (display && isNameValid) {
-                infoLabel.setText("*Please enter a description.");
-            }
-            isDescriptionValid = false;
-        } else if (desField.getText().startsWith(" ")) {
-            if (display && isNameValid) {
-                infoLabel.setText("*Description cannot start with a space.");
-            }
-            isDescriptionValid = false;
-        } else {
-            if (display && isNameValid) {
-                infoLabel.setText(infoLabel.getText() + "");
-            }
-            isDescriptionValid = true;
-        }
+	boolean selectedDeckChanged = false;
 
-        if (timeEnable.isSelected()) {
-        	//Get the selected date and set the time to the value set by the spinners
-        	Calendar selected = dateToCalendar(dateChooser.getDate());
-        	selected.set(Calendar.HOUR_OF_DAY, (Integer) hourSpin.getValue());
-        	selected.set(Calendar.MINUTE, (Integer) minuteSpin.getValue());
-        	Calendar now = dateToCalendar(new Date());
-        	System.out.println("calling");
-        	isDateValid = true;
-        	if (isBefore(selected, now)) {
-        		infoLabel.setText("*Date is in the past");
-        		isDateValid = false;
-        	}
-        } else {isDateValid = true;}
-        
-        isReqsValid = requirementsPanel.getSelectedRequirements().size() > 0;
-        if (!isReqsValid) {
-            infoLabel.setText("*Select at least one requirement");
-        }
-        
-        if (isOpen) {
-        	infoLabel.setText("*Cannot update an open session.");
-        }
-        
-        return isNameValid && isDescriptionValid && isDateValid && isReqsValid && !isOpen;
-    }
+	/**
+	 * Goes on left, holds basic info (name, time). changed to scrollable panel
+	 */
+	private ScrollablePanel infoPanel;
 
-    /**
-     * Check if the first date is before the second
-     * 
-     * @param first The first date
-     * @param second The second date
-     * @return True if first is before second, false otherwise
-     */
-    private boolean isBefore(Calendar first, Calendar second) {
-        return first.compareTo(second) < 0;
-    }
+	/**
+	 * Goes on right, allows user to select requirements.
+	 */
+	// TODO replace JPanel with something real
+	private SessionRequirementPanel requirementsPanel;
 
-    /**
-     * Translate the given Date to a Calendar instance
-     * 
-     * @param d The date
-     * @return A Calendar object containing the specified date
-     */
-    private Calendar dateToCalendar(Date d) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(d);
-        return c;
-    }
+	/**
+	 * Date chooser to select when session ends
+	 */
+	JCalendar dateChooser;
 
-    public boolean changed() {
-        return true;
-    }
+	/**
+	 * Create, reset, cancel buttons at the bottom.
+	 */
+	// TODO replace JPanel with something real
+	private SessionButtonPanel buttonPanel;
 
-    /**
-     * Builds the layout of the panel.
-     */
-    private void buildLayout() {
-        
-        if(viewMode == ViewMode.EDIT){
-            this.selectedDeck = displaySession.getDeck();
-        }
-    	deckChooser.setSelectedItem(selectedDeck); //default to the "-None-" deck
-    	chosenSequence = new JLabel(decks.deckToString(selectedDeck));
-    	
-        buttonPanel = new SessionButtonPanel(this, viewMode, displaySession);
-        requirementsPanel = new SessionRequirementPanel(this, viewMode, displaySession);
-        infoPanel = new ScrollablePanel();
-        infoPanel.setLayout(new MigLayout("", "", "shrink"));
-        
-        JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel,
-                        requirementsPanel);
-        // Change the info string to add info. Delete the second string
-        final JLabel nameLabel = new JLabel("Name *");
-        final JLabel desLabel = new JLabel("Description *");
-        Font boardFont = new Font(infoLabel.getFont().getName(), Font.BOLD, infoLabel.getFont()
-                        .getSize());
-		
-        Calendar calendar = Calendar.getInstance();
-        Date dt = new Date();
-        calendar.setTime(dt);
-		
+	/**
+	 * Constructor for editing a requirement
+	 * 
+	 * @param editingSession requirement to edit
+	 */
+	public SessionPanel(PlanningPokerSession session) {
+		displaySession = session;
+		viewMode = ViewMode.EDIT;
+		dt = new Date();
+		this.buildLayout();
+
+	}
+
+	/**
+	 * Constructor for creating a requirement
+	 * 
+	 * @param parentID the parent id, or -1 if no parent.
+	 */
+	public SessionPanel() {
+		displaySession = new PlanningPokerSession();
+		viewMode = ViewMode.CREATE;
+		dt = new Date();
+		this.buildLayout();
+	}
+
+	/**
+	 * Validates the name and description fields and sets the error message accordingly.
+	 */
+	public boolean validateFields(boolean display) {
+		boolean isNameValid;
+		boolean isDescriptionValid;
+		boolean isDateValid;
+		boolean isReqsValid;
+		int nameCharLimit = 1000000;
+		int desCharLimit = 1000000;
+		infoLabel.setForeground(Color.red);
+
+		infoLabel.setText("");
+
+		if (nameField.getText().length() > nameCharLimit) {
+			if (display) {
+				infoLabel.setText("*The name has to be less than one million characters.");
+			}
+			isNameValid = false;
+		} else if (nameField.getText().length() == 0) {
+			if (display) {
+				infoLabel.setText("*Please enter a name.");
+			}
+			isNameValid = false;
+		} else if (nameField.getText().startsWith(" ")) {
+			if (display) {
+				infoLabel.setText("*Name cannot start with a space.");
+			}
+			isNameValid = false;
+		} else {
+			if (display) {
+				infoLabel.setText("");
+			}
+			isNameValid = true;
+		}
+
+		if (desField.getText().length() > desCharLimit) {
+			if (display && isNameValid) {
+				infoLabel.setText("*The description has to be less than one million characters.");
+			}
+			isDescriptionValid = false;
+		} else if (desField.getText().length() == 0) {
+			if (display && isNameValid) {
+				infoLabel.setText("*Please enter a description.");
+			}
+			isDescriptionValid = false;
+		} else if (desField.getText().startsWith(" ")) {
+			if (display && isNameValid) {
+				infoLabel.setText("*Description cannot start with a space.");
+			}
+			isDescriptionValid = false;
+		} else {
+			if (display && isNameValid) {
+				infoLabel.setText(infoLabel.getText() + "");
+			}
+			isDescriptionValid = true;
+		}
+
+		if (timeEnable.isSelected()) {
+			//Get the selected date and set the time to the value set by the spinners
+			Calendar selected = dateToCalendar(dateChooser.getDate());
+			selected.set(Calendar.HOUR_OF_DAY, (Integer) hourSpin.getValue());
+			selected.set(Calendar.MINUTE, (Integer) minuteSpin.getValue());
+			Calendar now = dateToCalendar(new Date());
+			System.out.println("calling");
+			isDateValid = true;
+			if (isBefore(selected, now)) {
+				infoLabel.setText("*Date is in the past");
+				isDateValid = false;
+			}
+		} else {isDateValid = true;}
+
+		isReqsValid = requirementsPanel.getSelectedRequirements().size() > 0;
+		if (!isReqsValid) {
+			infoLabel.setText("*Select at least one requirement");
+		}
+
+		if (isOpen) {
+			infoLabel.setText("*Cannot update an open session.");
+		}
+
+		return isNameValid && isDescriptionValid && isDateValid && isReqsValid && !isOpen;
+	}
+
+	/**
+	 * Check if the first date is before the second
+	 * 
+	 * @param first The first date
+	 * @param second The second date
+	 * @return True if first is before second, false otherwise
+	 */
+	private boolean isBefore(Calendar first, Calendar second) {
+		return first.compareTo(second) < 0;
+	}
+
+	/**
+	 * Translate the given Date to a Calendar instance
+	 * 
+	 * @param d The date
+	 * @return A Calendar object containing the specified date
+	 */
+	private Calendar dateToCalendar(Date d) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(d);
+		return c;
+	}
+
+	public boolean changed() {
+		return true;
+	}
+
+	/**
+	 * Builds the layout of the panel.
+	 */
+	private void buildLayout() {
+
+		if(viewMode == ViewMode.EDIT){
+			this.selectedDeck = displaySession.getDeck();
+		}
+		deckChooser.setSelectedItem(selectedDeck); //default to the "-None-" deck
+		chosenSequence = new JLabel(decks.deckToString(selectedDeck));
+
+		buttonPanel = new SessionButtonPanel(this, viewMode, displaySession);
+		requirementsPanel = new SessionRequirementPanel(this, viewMode, displaySession);
+		infoPanel = new ScrollablePanel();
+		infoPanel.setLayout(new MigLayout("", "", "shrink"));
+
+		JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel,
+				requirementsPanel);
+		// Change the info string to add info. Delete the second string
+		final JLabel nameLabel = new JLabel("Name *");
+		final JLabel desLabel = new JLabel("Description *");
+		Font boardFont = new Font(infoLabel.getFont().getName(), Font.BOLD, infoLabel.getFont()
+				.getSize());
+
+		Calendar calendar = Calendar.getInstance();
+		Date dt = new Date();
+		calendar.setTime(dt);
+
 		int currentYear = calendar.get(Calendar.YEAR) - 1900;
 		int currentMonth = calendar.get(Calendar.MONTH);
 		int currentDay = calendar.get(Calendar.DAY_OF_MONTH);

@@ -175,12 +175,18 @@ public class MySessionPanel extends JPanel {
     public void closeTimedOutSessions(PlanningPokerSession[] sessions) {
     	for (PlanningPokerSession s : sessions) {
     		if (s.isDateInPast() && s.getType() == SessionType.DISTRIBUTED && s.isComplete() == false) {
-    			PlanningPokerSession closedSession = new PlanningPokerSession(s.getID(), s.getName(),
-		                s.getDescription(), s.getDate(),
-		                s.getHour(),
-		                s.getMin(),
-		                s.getRequirements(), s.getType(), false,
-		                true, s.getModerator(), s.getDeck());
+    			PlanningPokerSession closedSession = new PlanningPokerSession.Builder(s.getID())
+    			.name(s.getName())
+    			.description(s.getDescription())
+    			.date(s.getDate())
+    			.hour(s.getHour())
+    			.minute(s.getMin())
+		        .requirementEstimates(s.getRequirements())
+		        .sessionType(s.getType())
+		        .active(false)
+		        .complete(true)
+		        .moderator(s.getModerator())
+		        .deck(s.getDeck()).build();
     			closedSession.setCompletionTime(new Date());
     			EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(closedSession);
     		}
