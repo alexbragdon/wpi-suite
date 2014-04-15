@@ -14,27 +14,30 @@ public class PlanningPokerSession extends AbstractModel {
 	/**
 	 * Members of type PlanningPokerSession
 	 */
-	int ID;
-	String Name;
-	String Description;
-	Date date;
+	private int id;
+	private String name;
+	private String Description;
+	private Date date;
 	private String moderator;
 	private String deck;
+
+
+	private int hour;
+	private int min;
+
+	private List<RequirementEstimate> RequirementEstimates;
+	private SessionType Type;
 	
-	
-	int Hour, Min;
-	
-	List<RequirementEstimate> RequirementEstimates;
-	SessionType Type;
 	// True if the game is active and ready to join
-	boolean isActive;
+	private boolean isActive;
+
 	// True if the game is complete and cannot be played 
-	boolean isComplete;
-	
-	Date completionTime;
-	
+	private boolean isComplete;
+
+	private Date completionTime;
+
 	public static class Builder {
-		
+
 		int id = -1;
 		String name = "";
 		String description = "";
@@ -47,154 +50,158 @@ public class PlanningPokerSession extends AbstractModel {
 		boolean complete = false;
 		String moderator = "";
 		String deck = "";
-		
+
 		public Builder(int id) {
 			this.id = id;
 		}
-		
+
 		public Builder name(String name) {
 			this.name = name;
 			return this;
 		}
-		
+
 		public Builder description(String description) {
 			this.description = description;
 			return this;
 		}
-		
+
 		public Builder date(Date date) {
 			this.date = date;
 			return this;
 		}
-		
+
 		public Builder hour(int hour) {
 			this.hour = hour;
 			return this;
 		}
-		
+
 		public Builder minute(int min) {
 			this.min = min;
 			return this;
 		}
-		
+
 		public Builder requirementEstimations(List<RequirementEstimate> reqEsts) {
 			this.requirementEstimations = reqEsts;
 			return this;
 		}
-		
+
 		public Builder sessionType(SessionType type) {
 			this.type = type;
 			return this;
 		}
-		
+
 		public Builder active(boolean active) {
 			this.active = active;
 			return this;
 		}
-		
+
 		public Builder complete(boolean complete) {
 			this.complete = complete;
 			return this;
 		}
-		
+
 		public Builder moderator(String moderator) {
 			this.moderator = moderator;
 			return this;
 		}
-		
+
 		public Builder deck(String deck) {
 			this.deck = deck;
 			return this;
 		}
+		
+		public PlanningPokerSession build() {
+			return new PlanningPokerSession(this);
+		}
 	}
-	
+
 	public Date getCompletionTime() {
-        return completionTime;
-    }
+		return completionTime;
+	}
 
-    public void setCompletionTime(Date completionTime) {
-        this.completionTime = completionTime;
-    }
+	public void setCompletionTime(Date completionTime) {
+		this.completionTime = completionTime;
+	}
 
-    /**
+	/**
 	 * Generated getters and setters via Eclipse
 	 */
 	public int getID() 
 	{
-		return ID;
+		return id;
 	}
 
 	public void setID(int iD) 
 	{
-		ID = iD;
+		id = iD;
 	}
-	
+
 	public int getHour() 
 	{
-	    return Hour;
+		return hour;
 	}
 
 	public void setHour(int hour) 
 	{
-        Hour = hour;
+		hour = hour;
 	}
-	    
+
 	public int getMin() 
 	{
-        return Min;
-    }
+		return min;
+	}
 
-    public void setMin(int min) 
-    {
-        Min = min;
-    }
-	    
+	public void setMin(int min) 
+	{
+		min = min;
+	}
+
 	public void setDescription(String description) 
-    {
-       Description = description;
-    }
+	{
+		Description = description;
+	}
 
 	public String getName() 
 	{
-		return Name;
+		return name;
 	}
 
 
-    public String getDescription() 
-    {
-        return Description;
-    }
-    
-    public Date getDate() 
-    {
-        return date;
-    }
-    
-    public boolean isDateInPast() {
-    	Date newDate = new Date(date.getTime());
-    	newDate.setHours(Hour);
-    	newDate.setMinutes(Min);
-    	Date now = new Date();
-    	now.setSeconds(60);
-    	return newDate.before(now);
-    }
-    
-    public String getModerator(){
-        return moderator;
-    }
-    
-    public void setModerator(String newModerator){
-        this.moderator = newModerator;
-    }
-    
-    public void setDate(Date date) 
-    {
-        this.date = date;
-    }
-    
+	public String getDescription() 
+	{
+		return Description;
+	}
+
+	public Date getDate() 
+	{
+		return date;
+	}
+
+	public boolean isDateInPast() {
+		Date newDate = new Date(date.getTime());
+		newDate.setHours(hour);
+		newDate.setMinutes(min);
+		Date now = new Date();
+		now.setSeconds(60);
+		return newDate.before(now);
+	}
+
+	public String getModerator(){
+		return moderator;
+	}
+
+	public void setModerator(String newModerator){
+		this.moderator = newModerator;
+	}
+
+	public void setDate(Date date) 
+	{
+		this.date = date;
+	}
+
 	public void setName(String name) 
 	{
-		Name = name;
+		name = name;
 	}
 
 	public SessionType getType() 
@@ -226,227 +233,227 @@ public class PlanningPokerSession extends AbstractModel {
 	{
 		this.isComplete = isComplete;
 	}
-	
+
 	/**
 	 * Default constructor for a planning Poker session
 	 */
-	private PlanningPokerSession() {
-		super();
-		ID = 0;
-		Name = "";
-		Description = "";
-		moderator = "";
-		date = new Date();
-		Hour = 0;
-		Min = 0;
-		RequirementEstimates = new ArrayList<RequirementEstimate>();
-		Type = SessionType.REALTIME;
-		isActive = false;
-		isComplete = false;
-		setDeck("-None-");
-	}
+	 private PlanningPokerSession() {
+		 super();
+		 id = 0;
+		 name = "";
+		 Description = "";
+		 moderator = "";
+		 date = new Date();
+		 hour = 0;
+		 min = 0;
+		 RequirementEstimates = new ArrayList<RequirementEstimate>();
+		 Type = SessionType.REALTIME;
+		 isActive = false;
+		 isComplete = false;
+		 setDeck("-None-");
+	 }
 
-	/**
-	 * constructor for a planning poker Session
-	 */
+	 /**
+	  * constructor for a planning poker Session
+	  */
 
-	public PlanningPokerSession(Builder b) 
-	{
-		ID = b.id;
-		Description = b.description;
-		this.moderator = b.moderator;
-		this.date = b.date;
-		Hour = b.hour;
-		Min = b.min;
-		Name = b.name;
-		RequirementEstimates = b.requirementEstimations;
-		Type = b.type;
-		isActive = b.active;
-		this.deck = b.deck;
-		
-		// Prevents from adding an active, closed session
-		if (isActive) {
-			isComplete = false;
-		} else {
-			isComplete = complete;
-		}
-	}
-	
-	public static PlanningPokerSession fromJson(String json) {
-		final Gson parser = new Gson();
-		return parser.fromJson(json, PlanningPokerSession.class);
-	}
-	
-	public static PlanningPokerSession[] fromJsonArray(String json) {
-		final Gson parser = new Gson();
-		return parser.fromJson(json, PlanningPokerSession[].class);
-	}
-	
-	public List<RequirementEstimate> getRequirements() 
-	{
-		return RequirementEstimates;
-	}
-	
-	/**
-	 * Default Model methods: not required
-	 */
-	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-	}
+	 public PlanningPokerSession(Builder b) 
+	 {
+		 id = b.id;
+		 Description = b.description;
+		 this.moderator = b.moderator;
+		 this.date = b.date;
+		 hour = b.hour;
+		 min = b.min;
+		 name = b.name;
+		 RequirementEstimates = b.requirementEstimations;
+		 Type = b.type;
+		 isActive = b.active;
+		 this.deck = b.deck;
 
-	@Override
-	public Boolean identify(Object arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		 // Prevents from adding an active, closed session
+		 if (isActive) {
+			 isComplete = false;
+		 } else {
+			 isComplete = b.complete;
+		 }
+	 }
 
-	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-	}
+	 public static PlanningPokerSession fromJson(String json) {
+		 final Gson parser = new Gson();
+		 return parser.fromJson(json, PlanningPokerSession.class);
+	 }
 
-	@Override
-	/**
-	 * Converts object to JSON for going into the network and database
-	 */
-	public String toJSON() {
-		return new Gson().toJson(this, PlanningPokerSession.class);
-	}
+	 public static PlanningPokerSession[] fromJsonArray(String json) {
+		 final Gson parser = new Gson();
+		 return parser.fromJson(json, PlanningPokerSession[].class);
+	 }
 
-	public void copyFrom(PlanningPokerSession updatedSession) {
-        this.ID = updatedSession.ID;
-        this.Name = updatedSession.Name;
-        this.Description = updatedSession.Description;
-        this.date = updatedSession.date;
-        this.deck = updatedSession.deck;
-        this.Hour = updatedSession.Hour;
-        this.Min = updatedSession.Min;
-        this.RequirementEstimates = updatedSession.RequirementEstimates;
-        this.Type = updatedSession.Type;
-        this.isActive = updatedSession.isActive;
-        this.isComplete = updatedSession.isComplete;
-		this.moderator = updatedSession.moderator;
-		this.completionTime = updatedSession.completionTime;
-	}
+	 public List<RequirementEstimate> getRequirements() 
+	 {
+		 return RequirementEstimates;
+	 }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((Description == null) ? 0 : Description.hashCode());
-		result = prime * result + Hour;
-		result = prime * result + ID;
-		result = prime * result + Min;
-		result = prime * result + ((Name == null) ? 0 : Name.hashCode());
-		result = prime
-				* result
-				+ ((RequirementEstimates == null) ? 0 : RequirementEstimates
-						.hashCode());
-		result = prime * result + ((Type == null) ? 0 : Type.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + (isActive ? 1231 : 1237);
-		result = prime * result + (isComplete ? 1231 : 1237);
-		result = prime * result + ((deck == null) ? 0 : deck.hashCode());
-		return result;
-	}
+	 /**
+	  * Default Model methods: not required
+	  */
+	 @Override
+	 public void delete() {
+		 // TODO Auto-generated method stub
+	 }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof PlanningPokerSession)) {
-			return false;
-		}
-		PlanningPokerSession other = (PlanningPokerSession) obj;
-		if (!Description.equals(other.Description)) {
-			return false;
-		}
-		if (Hour != other.Hour) {
-			return false;
-		}
-		if (ID != other.ID) {
-			return false;
-		}
-		
-		if (deck == null) {
-		    if (other.deck != null) {
-		        return false;
-		    }
-		}
-		
-		if (!(other.deck == null && deck == null)) {		
-		    //check if equal
-		    if (!this.deck.equals(other.deck)) {
-		        return false;
-		    }
-		}
-		
-		if (Min != other.Min) {
-			return false;
-		}
-		if (!Name.equals(other.Name)) {
-			return false;
-		}
-		boolean reqsEqual = true;
-		if (RequirementEstimates.size() == other.RequirementEstimates.size()) {
-			for (int i = 0; i < RequirementEstimates.size(); i++) {
-				if (other.RequirementEstimates.get(i).getId() != RequirementEstimates.get(i).getId()) {
-					reqsEqual = false;
-				}
-			}
-		} else {
-			reqsEqual = false;
-		}
-		if (!reqsEqual) return false;
-		if (Type != other.Type) {
-			return false;
-		}
-		if (Type == SessionType.DISTRIBUTED) {
-    		if (!date.equals(other.date)) {
-    			return false;
-    		}
-		}
-		if (isActive != other.isActive) {
-			return false;
-		}
-		if (isComplete != other.isComplete) {
-			return false;
-		}
-		if (completionTime != null) {
-		    if (!completionTime.equals(other.completionTime)) {
-		        return false;
-		    }
-		} else if (other.completionTime != null) {
-		    return false;
-		}
-		return true;
-	}
-	
+	 @Override
+	 public Boolean identify(Object arg0) {
+		 // TODO Auto-generated method stub
+		 return null;
+	 }
 
-    /**
-     * @return the deck
-     */
-    public String getDeck() {
-        return deck;
-    }
+	 @Override
+	 public void save() {
+		 // TODO Auto-generated method stub
+	 }
 
-    /**
-     * @param deck the deck to set
-     */
-    public void setDeck(String deck) {
-        this.deck = deck;
-    }
+	 @Override
+	 /**
+	  * Converts object to JSON for going into the network and database
+	  */
+	 public String toJSON() {
+		 return new Gson().toJson(this, PlanningPokerSession.class);
+	 }
+
+	 public void copyFrom(PlanningPokerSession updatedSession) {
+		 this.id = updatedSession.id;
+		 this.name = updatedSession.name;
+		 this.Description = updatedSession.Description;
+		 this.date = updatedSession.date;
+		 this.deck = updatedSession.deck;
+		 this.hour = updatedSession.hour;
+		 this.min = updatedSession.min;
+		 this.RequirementEstimates = updatedSession.RequirementEstimates;
+		 this.Type = updatedSession.Type;
+		 this.isActive = updatedSession.isActive;
+		 this.isComplete = updatedSession.isComplete;
+		 this.moderator = updatedSession.moderator;
+		 this.completionTime = updatedSession.completionTime;
+	 }
+
+	 /* (non-Javadoc)
+	  * @see java.lang.Object#hashCode()
+	  */
+	 @Override
+	 public int hashCode() {
+		 final int prime = 31;
+		 int result = 1;
+		 result = prime * result
+				 + ((Description == null) ? 0 : Description.hashCode());
+		 result = prime * result + hour;
+		 result = prime * result + id;
+		 result = prime * result + min;
+		 result = prime * result + ((name == null) ? 0 : name.hashCode());
+		 result = prime
+				 * result
+				 + ((RequirementEstimates == null) ? 0 : RequirementEstimates
+						 .hashCode());
+		 result = prime * result + ((Type == null) ? 0 : Type.hashCode());
+		 result = prime * result + ((date == null) ? 0 : date.hashCode());
+		 result = prime * result + (isActive ? 1231 : 1237);
+		 result = prime * result + (isComplete ? 1231 : 1237);
+		 result = prime * result + ((deck == null) ? 0 : deck.hashCode());
+		 return result;
+	 }
+
+	 /* (non-Javadoc)
+	  * @see java.lang.Object#equals(java.lang.Object)
+	  */
+	 @Override
+	 public boolean equals(Object obj) {
+		 if (this == obj) {
+			 return true;
+		 }
+		 if (obj == null) {
+			 return false;
+		 }
+		 if (!(obj instanceof PlanningPokerSession)) {
+			 return false;
+		 }
+		 PlanningPokerSession other = (PlanningPokerSession) obj;
+		 if (!Description.equals(other.Description)) {
+			 return false;
+		 }
+		 if (hour != other.hour) {
+			 return false;
+		 }
+		 if (id != other.id) {
+			 return false;
+		 }
+
+		 if (deck == null) {
+			 if (other.deck != null) {
+				 return false;
+			 }
+		 }
+
+		 if (!(other.deck == null && deck == null)) {		
+			 //check if equal
+			 if (!this.deck.equals(other.deck)) {
+				 return false;
+			 }
+		 }
+
+		 if (min != other.min) {
+			 return false;
+		 }
+		 if (!name.equals(other.name)) {
+			 return false;
+		 }
+		 boolean reqsEqual = true;
+		 if (RequirementEstimates.size() == other.RequirementEstimates.size()) {
+			 for (int i = 0; i < RequirementEstimates.size(); i++) {
+				 if (other.RequirementEstimates.get(i).getId() != RequirementEstimates.get(i).getId()) {
+					 reqsEqual = false;
+				 }
+			 }
+		 } else {
+			 reqsEqual = false;
+		 }
+		 if (!reqsEqual) return false;
+		 if (Type != other.Type) {
+			 return false;
+		 }
+		 if (Type == SessionType.DISTRIBUTED) {
+			 if (!date.equals(other.date)) {
+				 return false;
+			 }
+		 }
+		 if (isActive != other.isActive) {
+			 return false;
+		 }
+		 if (isComplete != other.isComplete) {
+			 return false;
+		 }
+		 if (completionTime != null) {
+			 if (!completionTime.equals(other.completionTime)) {
+				 return false;
+			 }
+		 } else if (other.completionTime != null) {
+			 return false;
+		 }
+		 return true;
+	 }
+
+
+	 /**
+	  * @return the deck
+	  */
+	 public String getDeck() {
+		 return deck;
+	 }
+
+	 /**
+	  * @param deck the deck to set
+	  */
+	 public void setDeck(String deck) {
+		 this.deck = deck;
+	 }
 
 }

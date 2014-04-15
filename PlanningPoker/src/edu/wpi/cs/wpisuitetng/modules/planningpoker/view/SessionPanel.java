@@ -610,12 +610,16 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
 	public PlanningPokerSession createSessionFromFields() {
 		SessionType type = timeEnable.isSelected() ? SessionType.DISTRIBUTED : SessionType.REALTIME;
-		PlanningPokerSession session = new PlanningPokerSession(displaySession.getID(), nameField.getText(),
-		                desField.getText(), dateChooser.getDate(),
-		                Integer.parseInt(hourSpin.getValue().toString()),
-		                Integer.parseInt(minuteSpin.getValue().toString()),
-		                requirementsPanel.getSelectedRequirements(), type, isOpen,
-		                false, ConfigManager.getConfig().getUserName(),
+		PlanningPokerSession session = new PlanningPokerSession.Builder(displaySession.getID())
+					.name(nameField.getText()).build();
+					.descrtption(desField.getText())
+					.date(dateChooser.getDate())
+					.hour(Integer.parseInt(hourSpin.getValue().toString()))
+					.min(Integer.parseInt(minuteSpin.getValue().toString()))
+		            .requirementEstimates(requirementsPanel.getSelectedRequirements())
+		            .type(type)
+		            .active(isOpen)
+		            .complete(false), ConfigManager.getConfig().getUserName(),
 		                (String) deckChooser.getSelectedItem());
 		return session;
 	}
