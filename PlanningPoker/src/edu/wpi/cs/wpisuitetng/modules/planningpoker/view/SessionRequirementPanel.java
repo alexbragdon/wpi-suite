@@ -207,6 +207,20 @@ public class SessionRequirementPanel extends JPanel {
     }
     
     public void tableUpdated() {
-    	JOptionPane.showMessageDialog(null, "This is a place");
+        boolean allChecked = true;
+    	for (int i = 0; i< this.importedRequirements.size(); i++) {
+    	    if (!((Boolean) model.getValueAt(i, 2))) {
+    	        allChecked = false;
+    	    }
+    	}
+    	
+    	System.out.println("All things Checked? " + allChecked + "\n");
+    	
+    	/*
+    	 * Penn: The logic works but we need a way to update the actual checkbox in the header.
+    	 * The code below does not do this. 
+    	 */
+    	TableColumn tc = table.getColumnModel().getColumn(2);
+    	tc.setHeaderRenderer(new CheckBoxHeader(new MyItemListener(), allChecked));
     }
 }
