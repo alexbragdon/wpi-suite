@@ -81,7 +81,7 @@ public class SuperButton extends JButton {
             this.setEnabled(true);
             parent.setSelectedPanelIndex(0);
             
-            this.setText("<html>Review<br />Session<br />Results</html>");
+            this.setText("<html>Review<br />Session<br />Progress</html>");
             this.setIcon(new ImageIcon(closeImg));
             this.setToolTipText("Review the results of voting so far, enter final estimates, and choose to close the session");
         }
