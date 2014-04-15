@@ -31,11 +31,23 @@ public class MainView extends JTabbedPane {
 	public MainView() {
 	    
 	    this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		this.addTab("Sessions", mySession);
 		this.addTab("View Deck", deckPanel);
+		this.addTab("Sessions", mySession);
+		
 
 		// Listen for tab changes to invoke auto refresh
 		final MainView self = this;
+		
+		JComponent selected = (JComponent) self.getSelectedComponent();
+		if (indexOfComponent(selected) == 0)
+		{
+			setSelectedIndex(1);
+		}
+		else if(indexOfComponent(selected) == 1)
+		{
+			setSelectedIndex(0);
+		}
+		
 		this.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent arg0) {
