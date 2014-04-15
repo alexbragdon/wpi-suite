@@ -80,7 +80,7 @@ public class PlanningPokerSession extends AbstractModel {
 			return this;
 		}
 
-		public Builder requirementEstimations(List<RequirementEstimate> reqEsts) {
+		public Builder requirementEstimates(List<RequirementEstimate> reqEsts) {
 			this.requirementEstimations = reqEsts;
 			return this;
 		}
@@ -143,7 +143,7 @@ public class PlanningPokerSession extends AbstractModel {
 
 	public void setHour(int hour) 
 	{
-		hour = hour;
+		this.hour = hour;
 	}
 
 	public int getMin() 
@@ -153,7 +153,7 @@ public class PlanningPokerSession extends AbstractModel {
 
 	public void setMin(int min) 
 	{
-		min = min;
+		this.min = min;
 	}
 
 	public void setDescription(String description) 
@@ -201,7 +201,7 @@ public class PlanningPokerSession extends AbstractModel {
 
 	public void setName(String name) 
 	{
-		name = name;
+		this.name = name;
 	}
 
 	public SessionType getType() 
@@ -237,7 +237,7 @@ public class PlanningPokerSession extends AbstractModel {
 	/**
 	 * Default constructor for a planning Poker session
 	 */
-	 private PlanningPokerSession() {
+	 public PlanningPokerSession() {
 		 super();
 		 id = 0;
 		 name = "";
