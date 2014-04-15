@@ -9,12 +9,9 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -23,23 +20,29 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 /**
  * Description
  *
- * @author rafaelangelo
+ * @author Team Romulus
  * @version Apr 7, 2014
  */
+@SuppressWarnings("serial")
 public class JoiningSessionPanel extends JPanel {
     JoiningSessionTable table;
-    private MainView parent;
+    private final MainView parentView;
 
+    /**
+     * Constructor for JoiningSessionPanel.
+     * @param mainView MainView
+     * @param mySessionPanel MySessionPanel
+     */
     public JoiningSessionPanel(MainView mainView, final MySessionPanel mySessionPanel)
     {
-        parent = mainView;
-        String[] columnNames = {"ID", "Name", "End Time"};
+        parentView = mainView;
+        final String[] columnNames = {"ID", "Name", "End Time"};
 
-        Object[][] data = {};
+        final Object[][] data = {};
 
         table = new JoiningSessionTable(data, columnNames);
 
-        JScrollPane tablePanel = new JScrollPane(table);
+        final JScrollPane tablePanel = new JScrollPane(table);
 
         table.getColumnModel().getColumn(0).setMinWidth(0);
         table.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -52,12 +55,12 @@ public class JoiningSessionPanel extends JPanel {
 
         this.setLayout(new BorderLayout());
 
-        JPanel panel = new JPanel();
-        JPanel blankPanel = new JPanel();
-        JPanel blankPanel2 = new JPanel();
-        JPanel blankPanel3 = new JPanel();
-        JPanel topPanel = new JPanel();
-        JPanel bottomPanel = new JPanel();
+        final JPanel panel = new JPanel();
+        final JPanel blankPanel = new JPanel();
+        final JPanel blankPanel2 = new JPanel();
+        final JPanel blankPanel3 = new JPanel();
+        final JPanel topPanel = new JPanel();
+        final JPanel bottomPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
         panel.setLayout(new BorderLayout());
         topPanel.add(blankPanel3, BorderLayout.NORTH);
@@ -74,9 +77,9 @@ public class JoiningSessionPanel extends JPanel {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if(table.getSelectedRow() != -1){
-                    parent.getToolbarView().GetSuperButtonPanel().getSuperButton().Update(1, false);
-                    parent.getMySession().getModeratingPanel().getTable().clearSelection();
-                    parent.getMySession().getClosedPanel().getTable().clearSelection();
+                    parentView.getToolbarView().GetSuperButtonPanel().getSuperButton().Update(1, false);
+                    parentView.getMySession().getModeratingPanel().getTable().clearSelection();
+                    parentView.getMySession().getClosedPanel().getTable().clearSelection();
                 }
             }
         });

@@ -11,7 +11,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
@@ -23,7 +22,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 
 /**
  * Description
@@ -31,14 +29,20 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
  * @author rafaelangelo
  * @version Apr 7, 2014
  */
+
 public class ClosedSessionTable extends JTable {
 
     private DefaultTableModel tableModel = null;
-    private Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
+    private final Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
 
+    /**
+     * Constructor for ClosedSessionTable.
+     * @param data Object[][]
+     * @param columnNames String[]
+     */
     public ClosedSessionTable(Object[][] data, String[] columnNames)
     {
-        this.tableModel = new DefaultTableModel(data, columnNames);
+        tableModel = new DefaultTableModel(data, columnNames);
         this.setModel(tableModel);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setDropMode(DropMode.ON);
@@ -47,11 +51,17 @@ public class ClosedSessionTable extends JTable {
         setFillsViewportHeight(true);
 
     }
-    public int getSelectedID() {
+    /**
+     * 
+     * Description goes here.
+     *
+     * @return seleted ID
+     */
+    public int getSelectedID() {// $codepro.audit.disable multipleReturns
+        // we really need such multiple returns
         if (getSelectedRow() == -1) {
             return -1;
         }
-
         return Integer.parseInt((String) tableModel.getValueAt(getSelectedRow(), 0));
     }
 
@@ -86,7 +96,7 @@ public class ClosedSessionTable extends JTable {
      */
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-        Component comp = super.prepareRenderer(renderer, row, column);
+        final Component comp = super.prepareRenderer(renderer, row, column);
 
         if (JComponent.class.isInstance(comp)){
             ((JComponent)comp).setBorder(paddingBorder);
@@ -95,19 +105,31 @@ public class ClosedSessionTable extends JTable {
 
     }
 
+    /**
+     * Method clear.
+     */
     public void clear() {
         for (int i = tableModel.getRowCount() - 1; i >= 0; i--) {
             tableModel.removeRow(i);
         }
     }
 
-    
+
+    /**
+     * Method addSessions.
+     * @param session PlanningPokerSession
+     */
     public void addSessions(PlanningPokerSession session) {
         if (session.getCompletionTime() != null) {
-            String date = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(session.getCompletionTime());
-            tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), date });
+            final String date =
+                            new SimpleDateFormat("MM/dd/yyyy HH:mm").format(session.getCompletionTime());
+            tableModel.addRow(new String[] {
+                            String.valueOf(session.getID()), session.getName(), date
+            });
         } else {
-            tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), "--" });
+            tableModel.addRow(new String[] {
+                            String.valueOf(session.getID()), session.getName(), "--"
+            });
         }
 
     }
