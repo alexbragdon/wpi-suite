@@ -74,6 +74,7 @@ public class SuperButton extends JButton {
             
             this.setText("<html>Edit<br />Session</html>");
             this.setIcon(new ImageIcon(editImg));
+            this.setToolTipText("Edit the selected session");
         }
         
         if (selectedIndex == 0 && isActive) {
@@ -82,6 +83,7 @@ public class SuperButton extends JButton {
             
             this.setText("<html>Review<br />Session<br />Results</html>");
             this.setIcon(new ImageIcon(closeImg));
+            this.setToolTipText("Review the results of voting so far, enter final estimates, and choose to close the session");
         }
 
         // Vote session
@@ -89,6 +91,7 @@ public class SuperButton extends JButton {
             this.setText("<html>Vote in<br />Session</html>");
             this.setIcon(new ImageIcon(voteImg));
             parent.setSelectedPanelIndex(1);
+            this.setToolTipText("Vote in the selected session");
             // TODO: Make this button do something
             this.setEnabled(false);
         }
@@ -97,6 +100,7 @@ public class SuperButton extends JButton {
         if(selectedIndex == 2){
             this.setText("<html>View<br />Results</html>");
             this.setIcon(new ImageIcon(viewImg));
+            this.setToolTipText("View Planning Poker results for selected session");
             parent.setSelectedPanelIndex(2);
         }
     }
