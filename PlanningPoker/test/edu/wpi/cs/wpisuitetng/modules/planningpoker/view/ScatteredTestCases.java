@@ -29,7 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.icons.PokerIcons;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.icons.PokerIcon;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
@@ -48,7 +48,7 @@ public class ScatteredTestCases {
 	private PlanningPokerSession ses;
 	private SessionButtonPanel sbp;
 	private ViewMode vm;
-	private PokerIcons pi;
+	private PokerIcon pi;
 	private planningpoker pp;
 
 	
@@ -60,7 +60,7 @@ public class ScatteredTestCases {
 				new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "admin", null);
 		vm =  ViewMode.EDIT;
 		sbp = new SessionButtonPanel(parent, vm, ses);
-		pi = new PokerIcons();
+		pi = new PokerIcon();
 		pp = new planningpoker();
 	}
 	

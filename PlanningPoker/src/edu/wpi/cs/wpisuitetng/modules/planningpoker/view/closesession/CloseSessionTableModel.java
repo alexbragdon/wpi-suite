@@ -1,3 +1,4 @@
+// $codepro.audit.disable multipleReturns
 /*******************************************************************************
  * Copyright (c) 2012-2014 -- WPI Suite
  *
@@ -14,23 +15,26 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 
 /**
  * This models the table displayed in the close session tab.
+ * @author Team Romulus
+ * @version Iteration-2
  */
 @SuppressWarnings("serial")
 public class CloseSessionTableModel extends AbstractTableModel {
-    private PlanningPokerSession session;
-    private boolean isEditable;
-    private String[] columns = { "Requirement Name", "Mean", "Median", "Final Estimate" };
-    
+    private final PlanningPokerSession session;
+    private final boolean isEditable;
+    private final String[] columns = { "Requirement Name", "Mean", "Median", "Final Estimate" };
+
     /**
      * Creates a new table model for the given session.
      *
      * @param session the session to model
+     * @param isEditable
      */
     public CloseSessionTableModel(PlanningPokerSession session, boolean isEditable) {
         this.session = session;
         this.isEditable = isEditable;
     }
-    
+
     /*
      * @see javax.swing.table.TableModel#getColumnCount()
      */
@@ -46,7 +50,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
     public int getRowCount() {
         return session.getRequirements().size();
     }
-    
+
     /*
      * @see javax.swing.table.AbstractTableModel#getColumnName(int)
      */
@@ -59,7 +63,8 @@ public class CloseSessionTableModel extends AbstractTableModel {
      * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
      */
     @Override
-    public Class<?> getColumnClass(int columnIndex) {
+    public Class<?> getColumnClass(int columnIndex) { // $codepro.audit.disable multipleReturns
+        //multiple returns makes code much clean in this case
         switch (columnIndex) {
             case 0: return String.class;
             case 1: return String.class;
@@ -68,7 +73,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
             default: throw new RuntimeException("Invalid column index");
         }
     }
-    
+
     /*
      * @see javax.swing.table.AbstractTableModel#isCellEditable(int, int)
      */
@@ -76,12 +81,13 @@ public class CloseSessionTableModel extends AbstractTableModel {
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return isEditable && columnIndex == 3;
     }
-    
+
     /*
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
-    public Object getValueAt(int row, int column) {
+    public Object getValueAt(int row, int column) { // $codepro.audit.disable multipleReturns
+        //multiple returns makes code much clean in this case
         switch (column) {
             case 0:
                 return session.getRequirements().get(row).getName();
@@ -94,17 +100,18 @@ public class CloseSessionTableModel extends AbstractTableModel {
                 throw new RuntimeException("Invalid column");
         }
     }
-    
+
     /*
      * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
      */
     @Override
-    public void setValueAt(Object value, int row, int column) {
+    public void setValueAt(Object value, int row, int column) { // $codepro.audit.disable multipleReturns
+        //multiple returns makes code much clean in this case
         if (column != 3) {
             throw new RuntimeException("Invalid column index");
         }
-        
-        int estimate = (Integer)value;
+
+        final int estimate = (Integer)value;
         if (estimate < 0) return;
         session.getRequirements().get(row).setFinalEstimate(estimate);
         fireTableCellUpdated(row, column);

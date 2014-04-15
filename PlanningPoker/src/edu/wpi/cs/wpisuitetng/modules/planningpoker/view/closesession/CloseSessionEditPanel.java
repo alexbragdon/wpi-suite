@@ -14,15 +14,17 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 
 /**
  * The panel where the moderator can edit final estimates before closing a session.
+ * @author Team Romulus
+ * @version Iteration-2
  */
 public class CloseSessionEditPanel extends JPanel {
-    
+
     /**
      * Creates the panel for the given session.
      *
      * @param session the session to close
      */
     public CloseSessionEditPanel(PlanningPokerSession session) {
-        
+
     }
 }
