@@ -96,7 +96,8 @@ public class EmailButtonPanel extends ToolbarGroupView {
 		topPanel.add(emailField,"width 100px, height 20px, wmin 10");
 		topPanel.add(infoLabel, "height 20px");
 
-		emailButtonPanel.setLayout(new MigLayout("insets 15 10 0 10"));
+		emailButtonPanel.setLayout(new MigLayout("insets 15 175 0 0"));
+		//emailButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		emailButtonPanel.add(emailButton);
 
 		//emailPanel.setBorder(BorderFactory.createEmptyBorder());
