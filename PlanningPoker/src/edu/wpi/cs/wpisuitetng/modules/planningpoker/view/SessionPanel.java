@@ -599,6 +599,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     		isOpen = true;
     		PlanningPokerSession session = createSessionFromFields();
     		
+    		session.setDeck(selectedDeck);
+    		
     		switch (viewMode) {
             case CREATE: AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session); break;
             case EDIT: EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session); break;
