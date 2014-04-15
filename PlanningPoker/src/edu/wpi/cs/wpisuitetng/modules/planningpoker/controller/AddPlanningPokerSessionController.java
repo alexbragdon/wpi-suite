@@ -23,42 +23,44 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author Team Romulus
  */
 public class AddPlanningPokerSessionController{
-	
-	private static AddPlanningPokerSessionController instance;
-	private AddPlanningPokerSessionRequestObserver observer;
-	
-	/**
-	 * Construct an AddRequirementController for the given model, view pair
-	
-	
-	 */
-	private AddPlanningPokerSessionController() {
-		observer = new AddPlanningPokerSessionRequestObserver(this);
-	}
-	
-	/**
-	
-	 * @return the instance of the AddRequirementController or creates one if it does not
-	 * exist. */
-	public static AddPlanningPokerSessionController getInstance()
-	{
-		if(instance == null)
-		{
-			instance = new AddPlanningPokerSessionController();
-		}
-		
-		return instance;
-	}
+    private static AddPlanningPokerSessionController instance = null;
+    private final AddPlanningPokerSessionRequestObserver observer;
 
-	/**
-	 * This method adds a requirement to the server.
-	 * @param newSession is the requirement to be added to the server.
-	 */
-	public void addPlanningPokerSession(PlanningPokerSession newSession) 
-	{
-		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokersession", HttpMethod.PUT); // PUT == create
-		request.setBody(newSession.toJSON()); // put the new requirement in the body of the request
-		request.addObserver(observer); // add an observer to process the response
-		request.send();
-	}	
+    /**
+     * Construct an AddRequirementController for the given model, view pair
+
+
+     */
+    private AddPlanningPokerSessionController() {
+        observer = new AddPlanningPokerSessionRequestObserver(this);
+    }
+
+    /**
+
+     * @return the instance of the AddRequirementController or creates one if it does not
+     * exist. */
+    public static AddPlanningPokerSessionController getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new AddPlanningPokerSessionController();
+        }
+
+        return instance;
+    }
+
+    /**
+     * This method adds a requirement to the server.
+     * @param newSession is the requirement to be added to the server.
+     */
+    public void addPlanningPokerSession(PlanningPokerSession newSession) 
+    {
+        // PUT means create
+        final Request request = 
+                        Network.getInstance().makeRequest("planningpoker/planningpokersession", HttpMethod.PUT);
+
+        request.setBody(newSession.toJSON()); // put the new requirement in the body of the request
+        request.addObserver(observer); // add an observer to process the response
+        request.send();
+    }
 }

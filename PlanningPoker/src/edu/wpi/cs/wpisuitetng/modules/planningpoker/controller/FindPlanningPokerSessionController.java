@@ -8,8 +8,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import java.awt.event.ActionEvent;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -22,26 +20,25 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @version Mar 31, 2014
  */
 public class FindPlanningPokerSessionController {
-    private static FindPlanningPokerSessionController instance;
-    private FindPlanningPokerSessionObserver observer;
-    //private EditSessionPanel model;
+    private static final FindPlanningPokerSessionController instance = null;
+    private final FindPlanningPokerSessionObserver observer;
     
     /**
      * Construct an FindPlanningPokerSessionController    
      */
     public FindPlanningPokerSessionController(/*EditSessionPanel anEditSessionPanel*/) {
-        //this.model = anEditSessionPanel;
         observer = new FindPlanningPokerSessionObserver(this);
     }
     
 
     /**
      * This method adds a requirement to the server.
-     * @param newSession is the requirement to be added to the server.
+     * @param ID
      */
     public void findPlanningPokerSessionbyID(int ID) 
     {
-        final Request request = Network.getInstance().makeRequest("planningpoker/planningpokersession/" + String.valueOf(ID), HttpMethod.GET);
+        final Request request = 
+                        Network.getInstance().makeRequest("planningpoker/planningpokersession/" + String.valueOf(ID), HttpMethod.GET);
         request.addObserver(observer);
         request.send();
     }
@@ -50,21 +47,9 @@ public class FindPlanningPokerSessionController {
     /**
      * Add the given messages to the local model (they were received from the core).
      * This method is called by the GetMessagesRequestObserver
-     * 
-     * @param messages an array of messages received from the server
+     * @param session 
      */
-    public void receivedMessages(PlanningPokerSession session) {
-        /*if (model == null){
-            System.out.println("model is null!");
-        }else{
-        // Make sure the response was not null
-        if (session != null) {
-            System.out.println("Find Session Success!");
-            model.addDisplaySession(session);
-           System.out.println("Draw panel Success!");
-        }else{
-            System.out.println("Find Session Fail!");
-        }
-        }*/
+    public void receivedMessages(PlanningPokerSession session) { // $codepro.audit.disable methodShouldBeStatic
+
     }
 }
