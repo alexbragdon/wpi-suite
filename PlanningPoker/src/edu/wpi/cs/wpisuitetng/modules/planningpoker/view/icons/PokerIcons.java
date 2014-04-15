@@ -6,17 +6,19 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.icons;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 /**
- * @author Team Romulus
- * @version iteration-2
+ * @author rafaelangelo
+ *
  */
-public class PokerIcon {
+public class PokerIcons {
 	
-	private final int height;
-	private final int width;
+	private int height;
+	private int width;
 	
-	public PokerIcon(){
+	public PokerIcons(){
 		height = 5;
 		width = 5;
 	}
@@ -46,11 +48,14 @@ public class PokerIcon {
 	 * @param c Component
 	 * @param g Graphics
 	 * @param x int
-	 * @param y int	
-	 * @see javax.swing.Icon#paintIcon(Component, Graphics, int, int) 
-	 */
+	 * @param y int
+	
+	 * @see javax.swing.Icon#paintIcon(Component, Graphics, int, int) */
 	public void paintIcon(Component c, Graphics g, int x, int y) {
 		g.setColor(new Color(255, 127, 0));
 		g.fillOval(x, y, width, height);
 	}
+	
+	
+
 }
