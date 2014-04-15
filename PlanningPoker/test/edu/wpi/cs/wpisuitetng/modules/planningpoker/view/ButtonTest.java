@@ -61,7 +61,7 @@ public class ButtonTest {
 	public void testEditSession(){
 		sb.EditSession(mv);
 		sb.VoteSession();
-		sb.ViewSession();
+		sb.ViewSession(mv);
 	}
 	@Test
 	public void testButtonsPanel(){
