@@ -6,8 +6,8 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Janeway"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Network"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/WPISuite-Interfaces"/>
-	<classpathentry kind="lib" path="jcalendar-1.4.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/RequirementManager"/>
-	<classpathentry kind="lib" path="/home/mike/workspace/SoftEng/wpi-suite/PlanningPoker/mail.jar"/>
+	<classpathentry exported="true" kind="lib" path="jcalendar-1.4.jar"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/RequirementManager"/>
+	<classpathentry exported="true" kind="lib" path="/home/mike/workspace/SoftEng/wpi-suite/PlanningPoker/mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

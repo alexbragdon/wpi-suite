@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +25,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.ClosedSessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.JoiningSessionPanel;
@@ -90,7 +93,7 @@ public class MySessionPanel extends JPanel {
     }
     
     public void populateTables(PlanningPokerSession[] newSessions) {        
-        boolean hasChanges = false;
+        boolean hasChanges = false;    
         if (sessions.length != newSessions.length) {
             hasChanges = true;
         } else {
@@ -167,6 +170,21 @@ public class MySessionPanel extends JPanel {
             }
         }
         return null;
+    }
+    
+    public void closeTimedOutSessions(PlanningPokerSession[] sessions) {
+    	for (PlanningPokerSession s : sessions) {
+    		if (s.isDateInPast() && s.getType() == SessionType.DISTRIBUTED && s.isComplete() == false) {
+    			PlanningPokerSession closedSession = new PlanningPokerSession(s.getID(), s.getName(),
+		                s.getDescription(), s.getDate(),
+		                s.getHour(),
+		                s.getMin(),
+		                s.getRequirements(), s.getType(), false,
+		                true, s.getModerator(), s.getDeck());
+    			closedSession.setCompletionTime(new Date());
+    			EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(closedSession);
+    		}
+    	}
     }
 
 }

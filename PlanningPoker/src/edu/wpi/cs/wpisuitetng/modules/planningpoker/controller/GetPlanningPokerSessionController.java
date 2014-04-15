@@ -68,6 +68,7 @@ public class GetPlanningPokerSessionController implements ActionListener {
      * @param messages an array of messages received from the server
      */
     public void receivedMessages(PlanningPokerSession[] sessions) {
+    	panel.closeTimedOutSessions(sessions);
         panel.populateTables(sessions);
     }
 }
