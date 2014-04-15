@@ -131,7 +131,7 @@ public class ViewEventController {
         
         if (exists == false) {
             CloseSessionPanel panel = new CloseSessionPanel(session, true);
-            String tabName = "Close " + session.getName();
+            String tabName = "Review " + session.getName();
             main.addTab(tabName, null, panel, "Close this session");
             main.invalidate();
             main.repaint();

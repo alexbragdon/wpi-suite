@@ -80,7 +80,7 @@ public class SuperButton extends JButton {
             this.setEnabled(true);
             parent.setSelectedPanelIndex(0);
             
-            this.setText("<html>Close<br />Session</html>");
+            this.setText("<html>Review<br />Session<br />Results</html>");
             this.setIcon(new ImageIcon(closeImg));
         }
 
