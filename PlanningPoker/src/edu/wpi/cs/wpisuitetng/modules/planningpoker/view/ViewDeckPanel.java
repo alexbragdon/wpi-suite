@@ -1,6 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.IOException;
@@ -29,6 +30,9 @@ public class ViewDeckPanel extends JPanel {
 	 */
 	Map<Integer, Image> cards = new HashMap<Integer, Image>();
 	
+	private static final int WIDTH = 4;
+	private static final int HEIGHT = 2;
+	
 	private ViewDeckPanel() {
 		
 		//TODO: When more decks are added, make this more robust.
@@ -38,7 +42,7 @@ public class ViewDeckPanel extends JPanel {
 		initializeMap(cardValues);
 		
 		//set up panel and layout
-		this.setLayout(new GridLayout(2, 4));
+		this.setLayout(new GridLayout(HEIGHT, WIDTH));
 		JLabel[] cardLabels = getLabels(cardValues);
 		int index = 0;
 		for (JLabel label : cardLabels) {
@@ -49,6 +53,9 @@ public class ViewDeckPanel extends JPanel {
 			label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			add(label);
 		}
+		
+		Dimension size = new Dimension(WIDTH, HEIGHT);
+		this.setPreferredSize(preferredSize);
 	}
 	
 	private JLabel[] getLabels(int[] cardValues) {
