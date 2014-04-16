@@ -56,10 +56,8 @@ public class ViewDeckPanel extends JPanel {
 			cardsPanel.add(label);
 		}
 		
-		JLabel titleLabel = new JLabel("Fibonacci Deck");
 		JScrollPane scrPanel = new JScrollPane(cardsPanel);
 		this.add(scrPanel, BorderLayout.CENTER);
-		this.add(titleLabel, BorderLayout.NORTH);
 	}
 	
 	private JLabel[] getLabels(int[] cardValues) {
