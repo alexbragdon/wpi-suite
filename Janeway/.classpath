@@ -13,6 +13,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/jfreechart-1.0.14.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/miglayout-4.0-swing.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/swingx-all-1.6.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/rafaelangelo/wpi-suite/PlanningPoker/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="/Users/fangmingning/Data/wpi-suite/PlanningPoker/jcalendar-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
