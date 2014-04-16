@@ -408,7 +408,14 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		timeCheck.add(timeEnable);
 		timeCheck.add(new JLabel("Set an end time?"));
 		infoPanel.add(showDeck, "wrap");
-		showDeck.setEnabled(false);
+		if (!(selectedDeck.equals("-None-")))
+		{
+			showDeck.setEnabled(true);
+		}
+		else
+		{
+			showDeck.setEnabled(false);
+		}
 		infoPanel.add(timeCheck, "wrap");
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         infoLabel.setText("");
