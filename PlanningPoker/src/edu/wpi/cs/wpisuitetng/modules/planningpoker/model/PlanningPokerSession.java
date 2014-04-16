@@ -108,20 +108,23 @@ public class PlanningPokerSession extends AbstractModel {
     {
         return date;
     }
-    
+
     /**
      * check whether the end-date of a planningpokersession is in past 
      * @return true if is in the past
      */
     public boolean isDateInPast() {
-        final Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR, Hour);
-        cal.set(Calendar.MINUTE, Min);
-        final Date newDate = cal.getTime();
-        final Calendar newcal = Calendar.getInstance();
-        newcal.set(Calendar.SECOND, 60);
-        final Date now = newcal.getTime();
-        return newDate.before(now);
+        final Calendar calendar = Calendar.getInstance();
+        
+        calendar.set(Calendar.SECOND, 60);
+        final Date now = calendar.getTime();
+  
+        calendar.set(Calendar.HOUR_OF_DAY, Hour);
+        calendar.set(Calendar.MINUTE, Min); 
+        final Date setdate = calendar.getTime();
+        
+        return setdate.before(now);
+
     }
 
     public String getModerator(){

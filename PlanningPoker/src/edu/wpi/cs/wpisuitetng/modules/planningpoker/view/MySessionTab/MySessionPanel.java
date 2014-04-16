@@ -174,18 +174,21 @@ public class MySessionPanel extends JPanel {
         //this method should not be static
 
         for (PlanningPokerSession s : sessions) {
-            if (s.isDateInPast() && s.getType() == SessionType.DISTRIBUTED && !(s.isComplete())) {
-                PlanningPokerSession closedSession = 
-                                new PlanningPokerSession(s.getID(), s.getName(),
-                                                s.getDescription(), s.getDate(),
-                                                s.getHour(),
-                                                s.getMin(),
-                                                s.getRequirements(), s.getType(), false,
-                                                true, s.getModerator(), s.getDeck());
-                closedSession.setCompletionTime(new Date());
-                EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(closedSession);
+            if(s.getName().equals(":)")){
+                if (s.isDateInPast() && s.getType() == SessionType.DISTRIBUTED && (!(s.isComplete()))) {
+                    PlanningPokerSession closedSession = 
+                                    new PlanningPokerSession(s.getID(), s.getName(),
+                                                    s.getDescription(), s.getDate(),
+                                                    s.getHour(),
+                                                    s.getMin(),
+                                                    s.getRequirements(), s.getType(), false,
+                                                    true, s.getModerator(), s.getDeck());
+                    closedSession.setCompletionTime(new Date());
+                    EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(closedSession);
+                }
             }
         }
     }
+
 
 }
