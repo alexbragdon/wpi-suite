@@ -30,6 +30,8 @@ public class UserSerializer implements JsonSerializer<User> {
 		deflated.addProperty("username", u.getUsername());
 		deflated.addProperty("name", u.getName());
 		deflated.addProperty("role", u.getRole().toString());
+		deflated.addProperty("email", u.getEmail());
+		deflated.addProperty("hasNotificationsEnabled", u.getHasNotificationsEnabled());
 		
 		return deflated;
 	}

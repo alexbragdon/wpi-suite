@@ -16,6 +16,7 @@ package edu.wpi.cs.wpisuitetng.modules.core.models;
 import com.google.gson.*;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+
 /**
  * The Data Model representation of a User. Implements
  * 	database interaction and serializing.
@@ -29,6 +30,7 @@ public class User extends AbstractModel
 	private int idNum;
 	private Role role;
 	private String email;
+	private boolean hasNotificationsEnabled;
 	
 	transient private String password; // excluded from serialization, still stored.
 	
@@ -45,6 +47,8 @@ public class User extends AbstractModel
 		this.password = password;
 		this.idNum = idNum;
 		this.role = Role.USER;
+		this.email = "";
+		this.hasNotificationsEnabled = true;
 	}
 	
 	@Override
@@ -74,6 +78,16 @@ public class User extends AbstractModel
 					return false;
 				}
 				
+				if(this.email != null && !this.email.equals(((User)other).email))
+                {
+                    return false;
+                }
+				
+				if(this.hasNotificationsEnabled != ((User)other).hasNotificationsEnabled)
+                {
+                    return false;
+                }
+				
 				return true;
 			}
 		}
@@ -81,6 +95,20 @@ public class User extends AbstractModel
 	}
 	
 	/**
+     * @return the hasNotificationsEnabled
+     */
+    public boolean getHasNotificationsEnabled() {
+        return hasNotificationsEnabled;
+    }
+
+    /**
+     * @param hasNotificationsEnabled the hasNotificationsEnabled to set
+     */
+    public void setHasNotificationsEnabled(boolean hasNotificationsEnabled) {
+        this.hasNotificationsEnabled = hasNotificationsEnabled;
+    }
+
+    /**
 	 * Performs password checking logic. Fails if password field is null, which happens
 	 * 	when User is deserialized so as to protect the password.
 	 * @param pass	the password String to compare
@@ -120,6 +148,20 @@ public class User extends AbstractModel
 	{
 		return username;
 	}
+	
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
 	
 	/* database interaction */
 	public void save()
@@ -245,6 +287,11 @@ public class User extends AbstractModel
 		
 		return gson.fromJson(json, User.class);
 	}
+	
+	public static User[] fromJsonArray(String json) {
+        final Gson parser = new Gson();
+        return parser.fromJson(json, User[].class);
+    }
 
 	@Override
 	public Project getProject() {
@@ -255,18 +302,4 @@ public class User extends AbstractModel
 	public void setProject(Project aProject){
 		//Users are not currently Associated with projects directly 
 	}
-	
-	/**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

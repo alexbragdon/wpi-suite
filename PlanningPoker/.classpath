@@ -8,5 +8,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/WPISuite-Interfaces"/>
 	<classpathentry exported="true" kind="lib" path="jcalendar-1.4.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/RequirementManager"/>
+	<classpathentry exported="true" kind="lib" path="/home/mike/workspace/SoftEng/wpi-suite/PlanningPoker/mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

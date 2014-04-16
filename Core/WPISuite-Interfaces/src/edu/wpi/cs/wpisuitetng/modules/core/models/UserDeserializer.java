@@ -72,12 +72,27 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		 }
 		 
 		 User inflated = new User(name, username, password, idNum);
+         
+		 if(deflated.has("hasNotificationsEnabled")){
+		     inflated.setHasNotificationsEnabled(deflated.get("hasNotificationsEnabled").getAsBoolean());
+		 }
+		 
+         if(deflated.has("email") && !deflated.get("email").getAsString().equals(""))
+         {
+             String e = deflated.get("email").getAsString();
+             inflated.setEmail(e);
+         }
+         
+         else {
+             inflated.setEmail("");
+         }
 		 
 		 if(deflated.has("role")  && !deflated.get("role").getAsString().equals(""))
 		 {
 			 Role r = Role.valueOf(deflated.get("role").getAsString());
 			 inflated.setRole(r);
 		 }
+		 
 		 else {
 			 inflated.setRole(null);
 		 }
