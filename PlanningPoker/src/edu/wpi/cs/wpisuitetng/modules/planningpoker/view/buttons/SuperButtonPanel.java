@@ -12,46 +12,38 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.FindPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
  * @author Team Romulus
  *
+ * @version Iteration-3
  */
 public class SuperButtonPanel extends ToolbarGroupView {
-    private SuperButton superButton = new SuperButton(this);
+    private final SuperButton superButton = new SuperButton(this);
     private final JPanel contentPanel = new JPanel();
     private int selectedPanelIndex = -1;
     private boolean isSessionActive = false;
 
+    /**
+     * Constructor for SuperButtonPanel.
+     * @param parent MainView
+     */
     public SuperButtonPanel(final MainView parent) {
         super("");
 
-        this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         //change this to 450 when we have three buttons
         this.setPreferredWidth(150);
         
         superButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                // ViewEventController.getInstance().createSession();
-                
+            public void actionPerformed(ActionEvent e) {            
                 // Edit session
                 if(selectedPanelIndex == 0 && !isSessionActive){
                     superButton.EditSession(parent);

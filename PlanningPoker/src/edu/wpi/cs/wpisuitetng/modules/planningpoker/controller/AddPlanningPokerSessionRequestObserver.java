@@ -12,49 +12,51 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-//import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardMessage;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
- * @author Ben
+ * @author Team Romulus
+ * @version Iteration-1
  * 
  */
 public class AddPlanningPokerSessionRequestObserver implements RequestObserver {
-	private final AddPlanningPokerSessionController controller;
+    private final AddPlanningPokerSessionController controller;
 
     /**
      * Makes the thing.
+     * @param addSessionController
      */
-    public AddPlanningPokerSessionRequestObserver(AddPlanningPokerSessionController addSessionController) {
-        this.controller = addSessionController;
+    public AddPlanningPokerSessionRequestObserver(
+                    AddPlanningPokerSessionController addSessionController) {
+        controller = addSessionController;
     }
 
-    /* (non-Javadoc)
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+    /**
+     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver
+     * #responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
     @Override
     public void responseSuccess(IRequest iReq) {
-    	System.out.println("Request succeeded: " + iReq.getResponse().getBody());
-        //controller.addMessageToModel(PostBoardMessage.fromJSON(iReq.getResponse().getBody()));
+        System.out.println("Request succeeded: " + iReq.getResponse().getBody());
     }
 
-    /* (non-Javadoc)
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+    /**
+     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver
+     * #responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
     @Override
     public void responseError(IRequest iReq) {
-    	System.out.println("Request error: " + iReq.getResponse().getBody());
-        //controller.addMessageToModel(new PostBoardMessage("The request to add a message failed."));
+        System.out.println("Request error: " + iReq.getResponse().getBody());
     }
 
-    /* (non-Javadoc)
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
+    /**
+     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver
+     * #fail(edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
      */
     @Override
     public void fail(IRequest iReq, Exception exception) {
-    	System.out.println("Request fail: " + iReq.getResponse().getBody());
-        //controller.addMessageToModel(new PostBoardMessage("The request to add a message failed."));
+        System.out.println("Request fail: " + iReq.getResponse().getBody());
     }
 
 }

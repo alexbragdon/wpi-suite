@@ -15,11 +15,24 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 /**
  * @author Team Romulus
  *
+ * @version Iteration-3
  */
 public interface SessionPanelListener {
-    public void fireValid(boolean b);
+    /**
+     * Method fireValid.
+     * @param b boolean
+     */
+    void fireValid(boolean b);
 
-    public void fireChanges(boolean b);
+    /**
+     * Method fireChanges.
+     * @param b boolean
+     */
+    void fireChanges(boolean b);
 
-    public void fireRefresh(boolean b);
+    /**
+     * Method fireRefresh.
+     * @param b boolean
+     */
+    void fireRefresh(boolean b);
 }

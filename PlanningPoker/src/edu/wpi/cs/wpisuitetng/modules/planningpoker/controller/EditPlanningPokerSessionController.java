@@ -20,41 +20,43 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @version Mar 29, 2014
  */
 public class EditPlanningPokerSessionController {
-        
-        private static EditPlanningPokerSessionController instance;
-        private EditPlanningPokerSessionObserver observer;
-        
-        /**
-         * Construct an EditPlanningPorkerSessionController for the given model, view pair
-         */
-        private EditPlanningPokerSessionController() {
-            observer = new EditPlanningPokerSessionObserver(this);
-        }
-        
-        /**
-         * @return the instance of the EditPlanningPorkerSessionController or creates one if it does not
-         * exist. */
-        public static EditPlanningPokerSessionController getInstance()
+
+    private static EditPlanningPokerSessionController instance = null;
+    private final EditPlanningPokerSessionObserver observer;
+
+    /**
+     * Construct an EditPlanningPorkerSessionController for the given model, view pair
+     */
+    private EditPlanningPokerSessionController() {
+        observer = new EditPlanningPokerSessionObserver(this);
+    }
+
+    /**
+     * @return the instance of the EditPlanningPorkerSessionController or creates one if it does not
+     * exist. */
+    public static EditPlanningPokerSessionController getInstance()
+    {
+        if(instance == null)
         {
-            if(instance == null)
-            {
-                instance = new EditPlanningPokerSessionController();
-            }
-            
-            return instance;
+            instance = new EditPlanningPokerSessionController();
         }
 
-        /**
-         * This method edit a session to the server.
-         * @param newSession is the requirement to be added to the server.
-         */
-        public void editPlanningPokerSession(PlanningPokerSession newSession) 
-        {
-            final Request request = Network.getInstance().makeRequest("planningpoker/planningpokersession/", HttpMethod.POST); // POST == update
-            request.setBody(newSession.toJSON()); // put the new requirement in the body of the request
-            System.out.println("Edit JSON body: " + request.getBody());
-            request.addObserver(observer); // add an observer to process the response
-            request.send(); 
-        }
+        return instance;
+    }
+
+    /**
+     * This method edit a session to the server.
+     * @param newSession is the requirement to be added to the server.
+     */
+    public void editPlanningPokerSession(PlanningPokerSession newSession) 
+    {
+        // POST means update
+        final Request request =
+                        Network.getInstance().makeRequest("planningpoker/planningpokersession/", HttpMethod.POST);
+        request.setBody(newSession.toJSON()); // put the new requirement in the body of the request
+        System.out.println("Edit JSON body: " + request.getBody());
+        request.addObserver(observer); // add an observer to process the response
+        request.send(); 
+    }
 
 }

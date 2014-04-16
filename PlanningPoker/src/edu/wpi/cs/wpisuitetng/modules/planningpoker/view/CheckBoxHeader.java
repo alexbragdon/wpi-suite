@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * Copyright (c) 2014 WPI-Suite
  * All rights reserved. This program and the accompanying materials
@@ -12,7 +11,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.*;  
-
 import javax.swing.*;  
 import javax.swing.table.*;  
 
@@ -20,9 +18,8 @@ import java.awt.event.*;
 
 /**
  * This is the check box header on the requirement table.
- * 
  * @author Team Romulus
- * 
+ * @version Iteration-3
  */
 
 class CheckBoxHeader implements TableCellRenderer {  

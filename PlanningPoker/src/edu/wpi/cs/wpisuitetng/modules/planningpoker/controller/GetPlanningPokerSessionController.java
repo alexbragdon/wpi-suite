@@ -14,13 +14,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.ModeratingSessionTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.MySessionPanel;
-//import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardMessage;
-//import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PostBoardModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -30,12 +25,12 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * called when the user clicks the refresh button.
  * 
  * @author Team Romulus
- * 
+ * @version Iteration-3
  */
 public class GetPlanningPokerSessionController implements ActionListener {
 
-    private MySessionPanel panel;
-    
+    private final MySessionPanel panel;
+
     /**
      * Makes a MySessionPanel.
      *
@@ -53,8 +48,9 @@ public class GetPlanningPokerSessionController implements ActionListener {
 
             // Send a request to the core to save this message
             final Request request = Network.getInstance().makeRequest(
-                            "planningpoker/planningpokersession", HttpMethod.GET); // GET == read
-            request.addObserver(new GetPlanningPokerSessionRequestObserver(this)); // add an observer to process the response
+                            "planningpoker/planningpokersession", HttpMethod.GET); // GET means read
+            // add an observer to process the response
+            request.addObserver(new GetPlanningPokerSessionRequestObserver(this)); 
             request.send(); // send the request
         } catch (RuntimeException ex) {
             // The network hasn't been configured yet, but that's not a problem
@@ -62,13 +58,10 @@ public class GetPlanningPokerSessionController implements ActionListener {
     }
 
     /**
-     * Add the given messages to the local model (they were received from the core). This method is
-     * called by the GetMessagesRequestObserver
-     * 
-     * @param messages an array of messages received from the server
+     * @param sessions
      */
     public void receivedMessages(PlanningPokerSession[] sessions) {
-    	panel.closeTimedOutSessions(sessions);
+        panel.closeTimedOutSessions(sessions);
         panel.populateTables(sessions);
     }
 }

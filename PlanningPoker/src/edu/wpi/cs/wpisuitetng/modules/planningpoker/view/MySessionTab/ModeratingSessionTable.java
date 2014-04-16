@@ -1,3 +1,4 @@
+// $codepro.audit.disable multipleReturns
 /*******************************************************************************
  * Copyright (c) 2012-2014 -- WPI Suite
  *
@@ -33,9 +34,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
  * @version Apr 7, 2014
  */
 public class ModeratingSessionTable extends JTable {
-    
+
     private DefaultTableModel tableModel = null;
-    private Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
+    private final Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
     /**
      * Sets initial table view
      * 
@@ -44,7 +45,7 @@ public class ModeratingSessionTable extends JTable {
      */
     public ModeratingSessionTable(Object[][] data, String[] columnNames)
     {
-        this.tableModel = new DefaultTableModel(data, columnNames);
+        tableModel = new DefaultTableModel(data, columnNames);
         this.setModel(tableModel);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setDropMode(DropMode.ON);
@@ -54,77 +55,87 @@ public class ModeratingSessionTable extends JTable {
 
     }
 
-	public int getSelectedID() {
-	    if (getSelectedRow() == -1) {
-	        return -1;
-	    }
-	    
-	    return Integer.parseInt((String) tableModel.getValueAt(getSelectedRow(), 0));
-	}
-	
-	/**
-	 * Overrides the isCellEditable method to ensure no cells are editable.
-	 * @return boolean */
-	@Override
-	public boolean isCellEditable(int row, int col)
-	{
-		return false;
-	}
+    public int getSelectedID() { // $codepro.audit.disable
+        //it is more easier to have multiple returns here
+        if (getSelectedRow() == -1) {
+            return -1;
+        }
 
-	/**
-	 * Overrides the paintComponent method to retrieve the requirements on the first painting.
-	 * 
-	 * @param g	The component object to paint
-	 */
-	@Override
-	public void paintComponent(Graphics g)
-	{
+        return Integer.parseInt((String) tableModel.getValueAt(getSelectedRow(), 0));
+    }
+
+    /**
+     * Overrides the isCellEditable method to ensure no cells are editable.
+     * @return boolean */
+    @Override
+    public boolean isCellEditable(int row, int col)
+    {
+        return false;
+    }
+
+    /**
+     * Overrides the paintComponent method to retrieve the requirements on the first painting.
+     * 
+     * @param g	The component object to paint
+     */
+    @Override
+    public void paintComponent(Graphics g)
+    {
 
 
-		super.paintComponent(g);
-	}
+        super.paintComponent(g);
+    }
 
-	/**
-	 * Method prepareRenderer.
-	 * @param renderer TableCellRenderer
-	 * @param row int
-	 * @param column int
-	 * @return Component
-	 */
-	@Override
+    /**
+     * Method prepareRenderer.
+     * @param renderer TableCellRenderer
+     * @param row int
+     * @param column int
+     * @return Component
+     */
+    @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-        Component comp = super.prepareRenderer(renderer, row, column);
+        final Component comp = super.prepareRenderer(renderer, row, column);
 
         if (JComponent.class.isInstance(comp)){
             ((JComponent)comp).setBorder(paddingBorder);
         }
-		return comp;
+        return comp;
 
     }
+    /**
+     * Method clear.
+     */
     public void clear() {
         for (int i = tableModel.getRowCount() - 1; i >= 0; i--) {
             tableModel.removeRow(i);
         }
     }
-    
+
+    /**
+     * Method addSessions.
+     * @param session PlanningPokerSession
+     */
     public void addSessions(PlanningPokerSession session) {
-            Date date = new Date(session.getDate().getTime());
-            String dateString = "--";
-            if (session.getType() == SessionType.DISTRIBUTED) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(date);
-                calendar.set(Calendar.HOUR_OF_DAY, session.getHour());
-                calendar.set(Calendar.MINUTE, session.getMin());
-                date = calendar.getTime();
-                dateString = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(date);
-            }
-            
-            String statusString = "New";
-            if (session.isActive()) {
-                statusString = "Active";
-            }
-                tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(), dateString, statusString });
-        
+        Date date = new Date(session.getDate().getTime());
+        String dateString = "--";
+        if (session.getType() == SessionType.DISTRIBUTED) {
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.set(Calendar.HOUR_OF_DAY, session.getHour());
+            calendar.set(Calendar.MINUTE, session.getMin());
+            date = calendar.getTime();
+            dateString = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(date);
+        }
+
+        String statusString = "New";
+        if (session.isActive()) {
+            statusString = "Active";
+        }
+        tableModel.addRow(new String[] {
+                        String.valueOf(session.getID()), session.getName(), dateString, statusString
+        });
+
     }
 
 }
