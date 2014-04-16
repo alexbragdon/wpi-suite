@@ -646,6 +646,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     	if (validateFields(true)) {
     		isOpen = true;
     		PlanningPokerSession session = createSessionFromFields();
+    		displaySession = session;
     		session.setDeck(selectedDeck);
     		switch (viewMode) {
             case CREATE:
@@ -792,7 +793,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         String deadlineString = "";
 
         for(RequirementEstimate r : displaySession.getRequirements()){
-            requirementsString += "- " + r.getName();   
+            requirementsString += "- " + r.getName() + "\n";   
         }
 
         if(displaySession.getType() == SessionType.DISTRIBUTED){
@@ -822,7 +823,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                                 "\n\n" + displaySession.getModerator() + " has begun planning poker session " + 
                                 "\"" + displaySession.getName() + "\"." + "\n\n" + "Description:" + "\n   " +
                                 displaySession.getDescription() + "\n\n" + "Requirements:" + "\n" +
-                                requirementsString + "\n\n" +
+                                requirementsString + "\n" +
                                 deadlineString +
                                 "Enjoy your game of planning poker!" + "\n\n" +
                                 "-----------------------------------------------------\n" +
