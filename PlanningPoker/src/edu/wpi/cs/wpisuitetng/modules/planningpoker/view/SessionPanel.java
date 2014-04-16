@@ -617,7 +617,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      *
      * @return true if the user has made changes
      */
-    private boolean hasChanges() {
+    public boolean hasChanges() {
         PlanningPokerSession session = createSessionFromFields();
         return !session.equals(displaySession);
     }

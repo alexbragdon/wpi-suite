@@ -19,6 +19,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -68,9 +69,29 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
      * @see java.awt.event.ActionListener#actionPerformed(ActionEvent) */
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        // close this tab when close button is clicked
+        //close this tab when close button is clicked
         final int index = tabbedPane.indexOfTabComponent(this);
         if(index > -1) {
+        	if (tabbedPane.getComponentAt(index) instanceof SessionPanel)
+        	{
+        		SessionPanel panel = (SessionPanel)tabbedPane.getComponentAt(index);
+        		if (!panel.hasChanges()) {
+        			ViewEventController.getInstance().removeTab((JComponent)tabbedPane.getComponentAt(index));
+        			return;
+        		}
+	            int dialogButton = JOptionPane.YES_NO_OPTION;
+	            int dialogResult = JOptionPane.showConfirmDialog(null, 
+	            		"There are unsaved changes. Close anyway?", "Warning", dialogButton);
+	            if (dialogResult == JOptionPane.YES_OPTION)
+	            {
+	            	ViewEventController.getInstance().removeTab((JComponent)tabbedPane.getComponentAt(index));
+	
+	            }
+	            else
+	            {
+	            	return;
+	            }
+        	}
             ViewEventController.getInstance().removeTab((JComponent)tabbedPane.getComponentAt(index));
         }
     }
