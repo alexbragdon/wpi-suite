@@ -18,7 +18,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionButtonsPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionEditPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionTableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
@@ -35,7 +34,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
 public class CloseSessionPanelTest {
 	private PlanningPokerSession ses;
 	private CloseSessionPanel csp;
-	private CloseSessionEditPanel csep;
 	private CloseSessionButtonsPanel csbp;
 	private CloseSessionTableModel cstm;
 	private ArrayList<RequirementEstimate> reqList;
@@ -59,11 +57,6 @@ public class CloseSessionPanelTest {
 	public void testOtherFunctions(){
 		assertEquals(ses,csp.getSession());
 		csp.cancelPressed();
-	}
-	@Test
-	public void testConstructCloseSessionEditPanel(){
-		//Since we haven't implemented this yet, this only new a object that class
-		csep = new CloseSessionEditPanel(ses);
 	}
 	@Test
 	public void testBuildButtons(){
