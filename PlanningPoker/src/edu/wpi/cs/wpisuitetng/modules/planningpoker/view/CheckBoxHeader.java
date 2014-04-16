@@ -15,6 +15,7 @@ import java.awt.*;
 
 import javax.swing.*;  
 import javax.swing.table.*;  
+
 import java.awt.event.*;
 
 /**
@@ -24,71 +25,73 @@ import java.awt.event.*;
  * 
  */
 
-@SuppressWarnings("serial")
-public class CheckBoxHeader extends JCheckBox  implements TableCellRenderer, MouseListener {  
-	  protected CheckBoxHeader rendererComponent;  
-	  protected int column;  
-	  protected boolean mousePressed = false; 
+class CheckBoxHeader implements TableCellRenderer {  
 	  
-	  public CheckBoxHeader(ItemListener itemListener, boolean isChecked) {
-	    setSelected(isChecked);
-	    rendererComponent = this;  
-	    rendererComponent.addItemListener(itemListener);  
-		setHorizontalAlignment(JLabel.CENTER);
-		setBorderPaintedFlat(true);
-		setBorderPainted(true);
-	  }  
-	  
-	  public Component getTableCellRendererComponent(  
-	      JTable table, Object value,  
-	      boolean isSelected, boolean hasFocus, int row, int column) {  
-		  	if (table != null) {  
-		  		JTableHeader header = table.getTableHeader();  
-		  		if (header != null) {  
-			  		//rendererComponent.setForeground(header.getForeground());  
-			  		//rendererComponent.setBackground(header.getBackground());  
-			  		//rendererComponent.setFont(header.getFont());  
-			  		header.addMouseListener(rendererComponent);  
-		  		}  
-		  	}  
-		  	setColumn(column);  
-		  	rendererComponent.setText("Check All");  
-		  	setBorder(UIManager.getBorder("TableHeader.cellBorder"));  
-		  	return rendererComponent;  
-	  	};
-	  
-	  protected void setColumn(int column) {  
-	    this.column = column;  
-	  }  
-	  
-	  public int getColumn() {  
-	    return column;  
-	  }
-	  
-	  protected void handleClickEvent(MouseEvent e) {  
-	    if (mousePressed) {  
-	      mousePressed=false;  
-	      JTableHeader header = (JTableHeader)(e.getSource());  
-	      JTable tableView = header.getTable();  
-	      TableColumnModel columnModel = tableView.getColumnModel();  
-	      int viewColumn = columnModel.getColumnIndexAtX(e.getX());  
-	      int column = tableView.convertColumnIndexToModel(viewColumn);  
-	      if (viewColumn == this.column && e.getClickCount() == 1 && column != -1) {  
-	        doClick();  
-	      }  
-	    }  
-	  }  
-	  public void mouseClicked(MouseEvent e) {  
-	    handleClickEvent(e);  
-	    ((JTableHeader)e.getSource()).repaint();  
-	  }  
-	  public void mousePressed(MouseEvent e) {  
-	    mousePressed = true;  
-	  }  
-	  public void mouseReleased(MouseEvent e) {  
-	  }  
-	  public void mouseEntered(MouseEvent e) {  
-	  }  
-	  public void mouseExited(MouseEvent e) {  
-	  }  
-	}  
+    private final JCheckBox check = new JCheckBox();  
+  
+    public CheckBoxHeader(JTableHeader header) {  
+        check.setOpaque(false);  
+        check.setFont(header.getFont());
+        check.setSelected(false);
+        header.addMouseListener(new MouseAdapter() {  
+  
+            @Override  
+            public void mouseClicked(MouseEvent e) {  
+                JTable table = ((JTableHeader) e.getSource()).getTable();  
+                TableColumnModel columnModel = table.getColumnModel();  
+                int viewColumn = columnModel.getColumnIndexAtX(e.getX());  
+                int modelColumn = table.convertColumnIndexToModel(viewColumn);  
+                if (viewColumn == modelColumn) {  
+                    check.setSelected(!check.isSelected());  
+                    TableModel m = table.getModel();  
+                    Boolean f = check.isSelected();  
+                    for (int i = 0; i < m.getRowCount(); i++) {  
+                        m.setValueAt(f, i, modelColumn);  
+                    }  
+                    ((JTableHeader) e.getSource()).repaint();  
+                }  
+            }  
+        });  
+    }  
+  
+    @Override  
+    public Component getTableCellRendererComponent(  
+            JTable tbl, Object val, boolean isS, boolean hasF, int row, int col) {  
+        TableCellRenderer r = tbl.getTableHeader().getDefaultRenderer();  
+        JLabel l = (JLabel) r.getTableCellRendererComponent(tbl, val, isS, hasF, row, col);  
+        l.setIcon(new CheckBoxIcon(check));  
+        l.setText("Check All");
+        return l;  
+    }  
+    
+    public void setCheck(boolean value, JTableHeader tabelHeader){
+    	this.check.setSelected(value);
+    	this.check.repaint();
+    	tabelHeader.repaint();
+    }
+  
+    private static class CheckBoxIcon implements Icon {  
+  
+        private final JCheckBox check;  
+  
+        public CheckBoxIcon(JCheckBox check) {  
+            this.check = check;  
+        }  
+  
+        @Override  
+        public int getIconWidth() {  
+            return check.getPreferredSize().width;  
+        }  
+  
+        @Override  
+        public int getIconHeight() {  
+            return check.getPreferredSize().height;  
+        }  
+  
+        @Override  
+        public void paintIcon(Component c, Graphics g, int x, int y) {  
+            SwingUtilities.paintComponent(  
+                    g, check, (Container) c, x, y, getIconWidth(), getIconHeight());  
+        }  
+    }  
+}  

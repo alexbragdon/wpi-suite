@@ -11,6 +11,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -26,6 +27,7 @@ import javax.swing.JTable;
 import javax.swing.Timer;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
@@ -57,6 +59,8 @@ public class SessionRequirementPanel extends JPanel {
     List<Requirement> importedRequirements = new ArrayList<Requirement>();
     
     JTable table;
+    
+    CheckBoxHeader checkBox;
 
     /**
      * Sets up directory table of requirements in system
@@ -118,12 +122,9 @@ public class SessionRequirementPanel extends JPanel {
             refreshRequirementSelection();
         }
         
-        
-        boolean allChecked = true;
-        for (int i = 0; i < model.getRowCount(); i++) {
-            allChecked &= (boolean)model.getValueAt(i, 2);
-        }
-        tc.setHeaderRenderer(new CheckBoxHeader(new MyItemListener(), allChecked));
+        checkBox = new CheckBoxHeader(table.getTableHeader());
+        tc.setHeaderRenderer(checkBox);
+        tableUpdated();
     }
     
     class MyItemListener implements ItemListener  
@@ -155,7 +156,7 @@ public class SessionRequirementPanel extends JPanel {
 		    if (!exists) {
 		        requirements.add(displayRequirement);
 		        model.addRow(new Object[] { displayRequirement.getId(), displayRequirement.getName(), true });
-		    }
+		    }  
 		}
 	}
 
@@ -204,23 +205,20 @@ public class SessionRequirementPanel extends JPanel {
             	this.requirements.add(new RequirementEstimate(req.getId(), req.getName(), 0, false));
             }
         }
+    	tableUpdated();
     }
     
     public void tableUpdated() {
-        boolean allChecked = true;
-    	for (int i = 0; i< this.importedRequirements.size(); i++) {
-    	    if (!((Boolean) model.getValueAt(i, 2))) {
-    	        allChecked = false;
-    	    }
-    	}
-    	
-    	System.out.println("All things Checked? " + allChecked + "\n");
-    	
-    	/*
-    	 * Penn: The logic works but we need a way to update the actual checkbox in the header.
-    	 * The code below does not do this. 
-    	 */
-    	TableColumn tc = table.getColumnModel().getColumn(2);
-    	tc.setHeaderRenderer(new CheckBoxHeader(new MyItemListener(), allChecked));
+    	boolean allChecked = true;
+       
+    	if (model.getRowCount() != 0) {
+    		for (int i = 0; i < model.getRowCount(); i++) {
+    			if ((boolean)model.getValueAt(i, 2)){
+    			} else{allChecked = false;}
+    		}   
+    	} else{allChecked = false;}
+          
+        checkBox.setCheck(allChecked, table.getTableHeader());
+        
     }
 }
