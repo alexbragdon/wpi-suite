@@ -109,9 +109,9 @@ public class SessionPanelTest {
 		sesPan.setTimeDisabled();
 		ses = new PlanningPokerSession(21345, "Test Session", "Hello The World", new Date(), 23, 59,
 				new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "admin", null);
-		sesPan = new SessionPanel(ses);
-		assertFalse(sesPan.validateFields(true));
-		assertEquals("*Select at least one requirement",sesPan.getInfoLabel());
+		//sesPan = new SessionPanel(ses);
+		assertTrue(sesPan.validateFields(true));
+		assertEquals("",sesPan.getInfoLabel());
 	}
 	@Test
 	public void testTheValidateFieldsMethodWhenCreatingNewSession() {
@@ -204,6 +204,6 @@ public class SessionPanelTest {
 		sesPan.setDesField("Test Description");
 		sesPan.setTimeDisabled();
 		sesPan.openPressed();
-		assertEquals(1,vec.getSize());
+		assertEquals(0,vec.getSize());
 	}
 }
