@@ -61,7 +61,7 @@ public class ButtonsPanel extends ToolbarGroupView {
             }
         });
         
-        this.createButton.setToolTipText("Create a new Planning Poker session");
+        createButton.setToolTipText("Create a new Planning Poker session");
 
         contentPanel.add(createButton);
         contentPanel.setOpaque(false);

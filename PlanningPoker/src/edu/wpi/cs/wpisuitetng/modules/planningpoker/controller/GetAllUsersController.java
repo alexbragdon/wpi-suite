@@ -12,8 +12,6 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import javax.swing.JOptionPane;
-
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -62,11 +60,11 @@ public class GetAllUsersController {
 
     public void sendToPanel(User[] users){
         if(sp != null){
-            this.sp.sendEmail(users);
+            sp.sendEmail(users);
         }
 
         if(ebp != null){
-            this.ebp.setUser(users[0]);
+            ebp.setUser(users[0]);
         }
     }
 }

@@ -11,26 +11,20 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
-
 import javax.swing.AbstractButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.Timer;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
@@ -131,11 +125,11 @@ public class SessionRequirementPanel extends JPanel {
     {
       public void itemStateChanged(ItemEvent e) {  
         Object source = e.getSource();  
-        if (source instanceof AbstractButton == false) return;  
+        if (!(source instanceof AbstractButton)) return;  
         boolean checked = e.getStateChange() == ItemEvent.SELECTED;  
         for(int x = 0, y = table.getRowCount(); x < y; x++)  
         {  
-          table.setValueAt(new Boolean(checked),x,2);  
+          table.setValueAt(Boolean.valueOf(checked), x, 2);  
         }  
       }   
     }
@@ -181,10 +175,10 @@ public class SessionRequirementPanel extends JPanel {
     
     public void addRequirements(Requirement[] requirements) {
     	for (Requirement r : requirements) {
-    		this.importedRequirements.add(r);
+    		importedRequirements.add(r);
 		}
-    	for (int i = 0; i < this.importedRequirements.size(); i++) {
-            Requirement req = this.importedRequirements.get(i);
+    	for (int i = 0; i < importedRequirements.size(); i++) {
+            Requirement req = importedRequirements.get(i);
             //String currEst = String.valueOf(req.getEstimate());
             String iteration = req.getIteration().toString();
             

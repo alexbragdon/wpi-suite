@@ -62,8 +62,8 @@ class CheckBoxHeader implements TableCellRenderer {
     }  
     
     public void setCheck(boolean value, JTableHeader tabelHeader){
-    	this.check.setSelected(value);
-    	this.check.repaint();
+    	check.setSelected(value);
+    	check.repaint();
     	tabelHeader.repaint();
     }
   

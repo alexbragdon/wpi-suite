@@ -29,7 +29,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -58,22 +57,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonListener;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
-import edu.wpi.cs.wpisuitetng.network.Network;
-import edu.wpi.cs.wpisuitetng.network.Request;
-import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -96,7 +84,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     private final JLabel infoLabel = new JLabel("");
 
     private PlanningPokerSession displaySession;
-    
+
     private JButton showDeck = new JButton("Show Deck");
 
     private ViewMode viewMode;
@@ -152,7 +140,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      */
     // TODO replace JPanel with something real
     private SessionButtonPanel buttonPanel;
-    
+
 
     /**
      * Constructor for editing a requirement
@@ -203,7 +191,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 infoLabel.setText("*Please enter a name.");
             }
             isNameValid = false;
-        } else if (nameField.getText().startsWith(" ")) {
+        } else if (nameField.getText().length() > 0 && nameField.getText().charAt(0) == ' ') {
             if (display) {
                 infoLabel.setText("*Name cannot start with a space.");
             }
@@ -225,7 +213,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 infoLabel.setText("*Please enter a description.");
             }
             isDescriptionValid = false;
-        } else if (desField.getText().startsWith(" ")) {
+        } else if (desField.getText().length() > 0 && desField.getText().charAt(0) == ' ') {
             if (display && isNameValid) {
                 infoLabel.setText("*Description cannot start with a space.");
             }
@@ -249,7 +237,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 infoLabel.setText("*Date is in the past");
                 isDateValid = false;
             }
-        } else {isDateValid = true;}
+        } else {
+            isDateValid = true;
+        }
 
         isReqsValid = requirementsPanel.getSelectedRequirements().size() > 0;
         if (!isReqsValid) {
@@ -296,7 +286,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     private void buildLayout() {
 
         if(viewMode == ViewMode.EDIT){
-            this.selectedDeck = displaySession.getDeck();
+            selectedDeck = displaySession.getDeck();
         }
         deckChooser.setSelectedItem(selectedDeck); //default to the "-None-" deck
         chosenSequence = new JLabel(decks.deckToString(selectedDeck));
@@ -420,27 +410,27 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         infoPanel.add(nameField, "growx, pushx, shrinkx, span, wrap");
         infoPanel.add(desLabel, "wrap");
         infoPanel.add(desFieldContainer, "growx, pushx, shrinkx, span, height 200px, wmin 10, wrap");
-		infoPanel.add(timeEnable);
-		
-		JPanel deckChooserPanel = new JPanel(new BorderLayout());
-		deckChooserPanel.add(new JLabel("Deck: "), BorderLayout.WEST);
-		deckChooserPanel.add(deckChooser, BorderLayout.CENTER);
-		deckChooserPanel.add(chosenSequence, BorderLayout.EAST); //Show contents of currently selected deck
-		infoPanel.add(deckChooserPanel);
-		
-		JPanel timeCheck = new JPanel();
-		timeCheck.add(timeEnable);
-		timeCheck.add(new JLabel("Set an end time?"));
-		infoPanel.add(showDeck, "wrap");
-		if (!(selectedDeck.equals("-None-")))
-		{
-			showDeck.setEnabled(true);
-		}
-		else
-		{
-			showDeck.setEnabled(false);
-		}
-		infoPanel.add(timeCheck, "wrap");
+        infoPanel.add(timeEnable);
+
+        JPanel deckChooserPanel = new JPanel(new BorderLayout());
+        deckChooserPanel.add(new JLabel("Deck: "), BorderLayout.WEST);
+        deckChooserPanel.add(deckChooser, BorderLayout.CENTER);
+        deckChooserPanel.add(chosenSequence, BorderLayout.EAST); //Show contents of currently selected deck
+        infoPanel.add(deckChooserPanel);
+
+        JPanel timeCheck = new JPanel();
+        timeCheck.add(timeEnable);
+        timeCheck.add(new JLabel("Set an end time?"));
+        infoPanel.add(showDeck, "wrap");
+        if (!(selectedDeck.equals("-None-")))
+        {
+            showDeck.setEnabled(true);
+        }
+        else
+        {
+            showDeck.setEnabled(false);
+        }
+        infoPanel.add(timeCheck, "wrap");
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         infoLabel.setText("");
         infoLabel.setForeground(Color.red);
@@ -511,52 +501,52 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
     // Listeners for the text boxes
     private void setupListeners() {
-    	
-    	deckChooser.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-				if (arg0.getStateChange() == ItemEvent.SELECTED) {
-					selectedDeckChanged = !selectedDeckChanged;
-					selectedDeck = deckChooser.getSelectedItem().toString();
-					if (!(selectedDeck.equals("-None-")))
-					{
-						showDeck.setEnabled(true);
-					}
-					else
-					{
-						showDeck.setEnabled(false);
-					}
-					System.out.println("Item state changed to: " + selectedDeck);
-					chosenSequence.setText("  " + decks.deckToString(selectedDeck)); //Add space for better display
-					updateButtonPanel();
-				}
-			}
-    	});
-    	
-    	showDeck.addActionListener(new ActionListener(){
-    		@Override
-    		public void actionPerformed(ActionEvent e) {
-    			ViewEventController.getInstance().viewDeck();
-    		}
-    	});
-    	
-    	timeEnable.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (timeEnable.isSelected()) {
-				    dateChooser.setEnabled(true);
-					hourSpin.setEnabled(true);
-					minuteSpin.setEnabled(true);
-				} else {
-					dateChooser.setEnabled(false);
-					hourSpin.setEnabled(false);
-    				minuteSpin.setEnabled(false);
-				}
-            	updateButtonPanel();
-			}
+
+        deckChooser.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent arg0) {
+                if (arg0.getStateChange() == ItemEvent.SELECTED) {
+                    selectedDeckChanged = !selectedDeckChanged;
+                    selectedDeck = deckChooser.getSelectedItem().toString();
+                    if (!(selectedDeck.equals("-None-")))
+                    {
+                        showDeck.setEnabled(true);
+                    }
+                    else
+                    {
+                        showDeck.setEnabled(false);
+                    }
+                    System.out.println("Item state changed to: " + selectedDeck);
+                    chosenSequence.setText("  " + decks.deckToString(selectedDeck)); //Add space for better display
+                    updateButtonPanel();
+                }
+            }
         });
-    	
-    	
+
+        showDeck.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ViewEventController.getInstance().viewDeck();
+            }
+        });
+
+        timeEnable.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (timeEnable.isSelected()) {
+                    dateChooser.setEnabled(true);
+                    hourSpin.setEnabled(true);
+                    minuteSpin.setEnabled(true);
+                } else {
+                    dateChooser.setEnabled(false);
+                    hourSpin.setEnabled(false);
+                    minuteSpin.setEnabled(false);
+                }
+                updateButtonPanel();
+            }
+        });
+
+
         ChangeListener buttonsChangeListener = new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -595,11 +585,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         desField.getDocument().addDocumentListener(buttonsDocumentListener);
 
         requirementsPanel.addListener(new TableModelListener() {
-			@Override
-			public void tableChanged(TableModelEvent e) {
-            	updateButtonPanel();
-            	requirementsPanel.tableUpdated();
-			}
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                updateButtonPanel();
+                requirementsPanel.tableUpdated();
+            }
         });   
     }
 
@@ -648,27 +638,27 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             ViewEventController.getInstance().removeTab(this);
         }
     }
-    
-    
+
+
     public void openPressed() {
-    	if (validateFields(true)) {
-    		isOpen = true;
-    		PlanningPokerSession session = createSessionFromFields();
-    		displaySession = session;
-    		session.setDeck(selectedDeck);
-    		switch (viewMode) {
-            case CREATE:
+        if (validateFields(true)) {
+            isOpen = true;
+            PlanningPokerSession session = createSessionFromFields();
+            displaySession = session;
+            session.setDeck(selectedDeck);
+            switch (viewMode) {
+                case CREATE:
                     AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
                     new GetAllUsersController().getAllUsers(this); // Send email to all users
                     break;
-            case EDIT:
+                case EDIT:
                     EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
                     new GetAllUsersController().getAllUsers(this); // Send email to all users
                     break;
+            }
+
+            ViewEventController.getInstance().removeTab(this);
         }
-    		
-    		ViewEventController.getInstance().removeTab(this);
-    	}
     }
 
     public PlanningPokerSession createSessionFromFields() {
@@ -696,7 +686,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 selectedIndex = 1;
             } else {
                 selectedIndex = 0;
-            }   	
+            }
             deckChooser.setSelectedIndex(selectedIndex);
         }
 
@@ -820,7 +810,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             if(u.getEmail() == null || u.getEmail().equals("") || !u.getHasNotificationsEnabled()){
                 break;
             }
-            
+
             try {
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(username));

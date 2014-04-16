@@ -96,8 +96,8 @@ public class MainView extends JTabbedPane {
 	public void removeTabAt(int i){
 		super.removeTabAt(i);
 		try{
-			if (this.lastTab != null){
-				setSelectedComponent(this.lastTab);}
+			if (lastTab != null){
+				setSelectedComponent(lastTab);}
 		} catch (IllegalArgumentException e){}
 	}
 

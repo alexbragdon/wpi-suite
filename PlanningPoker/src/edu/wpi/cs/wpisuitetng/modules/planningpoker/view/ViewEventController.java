@@ -11,15 +11,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 
 import java.awt.Component;
-import java.util.ArrayList;
 import java.util.HashMap;
-
 import javax.swing.JComponent;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionPanel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationPanel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.requirements.RequirementPanel;
 
 
 /**
@@ -103,7 +98,7 @@ public class ViewEventController {
      * Find the session to edit. If the session is not opened in tab, open it.
      * @param session
      */
-    public void editSession(PlanningPokerSession session) {	    
+    public void editSession(PlanningPokerSession session) {
         boolean exists = false;
         int index = 0;
         Component component = null;
@@ -122,7 +117,7 @@ public class ViewEventController {
             index = listOfEditingSessions.get(session);
         }
 
-        if (exists == false) {
+        if (!(exists)) {
             SessionPanel sessionEditor = new SessionPanel(session);
             String tabName = "Edit " + session.getName();
             main.addTab(tabName, null, sessionEditor, "Edit this session");
@@ -151,7 +146,7 @@ public class ViewEventController {
             }
         }
         
-        if (exists == false) {
+        if (!(exists)) {
             CloseSessionPanel panel = new CloseSessionPanel(session, true);
             String tabName = "Review " + session.getName();
             main.addTab(tabName, null, panel, "Close this session");
@@ -179,7 +174,7 @@ public class ViewEventController {
             }
         }
         
-        if (exists == false) {
+        if (!(exists)) {
             CloseSessionPanel panel = new CloseSessionPanel(session, false);
             String tabName = "View " + session.getName();
             main.addTab(tabName, null, panel, "View this session");

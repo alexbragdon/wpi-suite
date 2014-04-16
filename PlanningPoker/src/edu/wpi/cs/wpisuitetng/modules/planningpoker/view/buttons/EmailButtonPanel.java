@@ -11,40 +11,30 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetAllUsersController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 
 /**
@@ -75,7 +65,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         // Email settings button
         try {
             Image img = ImageIO.read(getClass().getResource("emailButton.png"));
-            this.emailButton.setIcon(new ImageIcon(img));
+            emailButton.setIcon(new ImageIcon(img));
         } catch (IOException ex) {
         }
 
@@ -100,7 +90,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         buttonPanel.add(submitButton);
         buttonPanel.add(cancelButton);
         topPanel.setLayout(new MigLayout("insets 0 10 0 10"));
-        topPanel.add(emailField,"width 100px, height 20px, wmin 10");
+        topPanel.add(emailField, "width 100px, height 20px, wmin 10");
         topPanel.add(infoLabel, "height 20px");
 
 		emailButtonPanel.setLayout(new MigLayout("insets 15 175 0 0"));
@@ -198,7 +188,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         if (emailField.getText().length() == 0) {
             infoLabel.setText("*Please enter your email");
             valid = false;
-        } else if (emailField.getText().startsWith(" ")) {
+        } else if (emailField.getText().length() > 0 && emailField.getText().charAt(0) == ' ') {
             infoLabel.setText("*Email cannot start with space");
             valid = false;
         } else if (!emailField.getText().matches(".+@.+\\.[a-z]+")) {
