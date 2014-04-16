@@ -588,11 +588,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         desField.getDocument().addDocumentListener(buttonsDocumentListener);
 
         requirementsPanel.addListener(new TableModelListener() {
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                updateButtonPanel();
-            }
-        });
+			@Override
+			public void tableChanged(TableModelEvent e) {
+            	updateButtonPanel();
+            	requirementsPanel.tableUpdated();
+			}
+        });   
     }
 
     /**
