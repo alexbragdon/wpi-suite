@@ -119,5 +119,16 @@ public class PlanningPokerSessionTests {
 		assertFalse(testSession.equals(""));
 		assertFalse(testSession.equals(new JTable()));
 	}
+	@Test
+	public void testOtherFunctionalities(){
+		testSession.fromJson("");
+		testSession.fromJsonArray("");
+		testSession.delete();
+		testSession.save();
+		assertNull(testSession.identify(""));
+		testSession.setCompletionTime(new Date());
+		//114 + 1900 = 2014 
+		assertEquals(114,testSession.getCompletionTime().getYear());
+	}
 
 }
