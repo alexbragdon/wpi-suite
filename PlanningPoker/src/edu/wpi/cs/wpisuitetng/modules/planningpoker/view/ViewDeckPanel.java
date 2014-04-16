@@ -102,9 +102,9 @@ public class ViewDeckPanel extends JPanel {
 	 * @return The sole instance of this class
 	 */
 	public static ViewDeckPanel getInstance() {
-		if (INSTANCE == null) {
 			INSTANCE = new ViewDeckPanel();
-		}
+		
+		
 		
 		return INSTANCE;
 	}

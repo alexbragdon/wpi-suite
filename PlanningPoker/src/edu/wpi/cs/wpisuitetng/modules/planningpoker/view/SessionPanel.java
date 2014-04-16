@@ -128,7 +128,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     // TODO replace JPanel with something real
     private SessionButtonPanel buttonPanel;
     
-    private SessionPanel parent;
 
     /**
      * Constructor for editing a requirement
