@@ -246,7 +246,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      * @param second The second date
      * @return True if first is before second, false otherwise
      */
-    private boolean isBefore(Calendar first, Calendar second) {
+    private static boolean isBefore(Calendar first, Calendar second) {
         return first.compareTo(second) < 0;
     }
 
@@ -256,7 +256,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      * @param d The date
      * @return A Calendar object containing the specified date
      */
-    private Calendar dateToCalendar(Date d) {
+    private static Calendar dateToCalendar(Date d) {
         final Calendar c = Calendar.getInstance();
         c.setTime(d);
         return c;
@@ -266,7 +266,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      * Method changed.
 
      * @return boolean */
-    public boolean isChanged() {
+    public static boolean isChanged() {
         return true;
     }
 
@@ -720,12 +720,14 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         desField.setText(text);
     }
 
-    public void setTimeDisabled(boolean status){ // $codepro.audit.disable methodJavadoc
-        timeEnable.setSelected(status);
+    public void setTimeDisabled(){ // $codepro.audit.disable methodJavadoc, accessorMethodNamingConvention
+        //it is not a setter
+        timeEnable.setSelected(false);
     }
 
-    public void setTimeEnabled(boolean status){ // $codepro.audit.disable methodJavadoc
-        timeEnable.setSelected(status);
+    public void setTimeEnabled(){ // $codepro.audit.disable methodJavadoc, accessorMethodNamingConvention
+        //it is not a setter, too
+        timeEnable.setSelected(true);
     }
 
     public void setSpinTime(int hour, int min){ // $codepro.audit.disable methodJavadoc

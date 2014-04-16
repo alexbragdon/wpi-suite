@@ -155,7 +155,7 @@ public class SuperButton extends JButton {
      * @param panel the panel index to select
      * @return selected session, or null if no session is selected
      */
-    private PlanningPokerSession getSelectedSession(final MainView parent, final int panel) { // $codepro.audit.disable multipleReturns
+    private static PlanningPokerSession getSelectedSession(final MainView parent, final int panel) { // $codepro.audit.disable multipleReturns
         final int id = parent.getMySession().getSelectedID(panel);
         if (id != -1) {
             final PlanningPokerSession session = parent.getMySession().getSessionById(id);
