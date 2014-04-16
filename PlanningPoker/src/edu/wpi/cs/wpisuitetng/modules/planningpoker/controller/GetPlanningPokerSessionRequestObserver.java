@@ -23,29 +23,35 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * 
  * @author Chris Casola
  *
+ * @version $Revision: 1.0 $
  */
 public class GetPlanningPokerSessionRequestObserver implements RequestObserver {
 	
-	public GetPlanningPokerSessionController controller;
+	private final GetPlanningPokerSessionController controller;
 	
+	/**
+	 * Constructor for GetPlanningPokerSessionRequestObserver.
+	 * @param controller GetPlanningPokerSessionController
+	 */
 	public GetPlanningPokerSessionRequestObserver(GetPlanningPokerSessionController controller) {
 		this.controller = controller;
 	}
 
-	/*
+	/**
 	 * Parse the messages out of the response body and pass them to the controller
-	 * 
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver
+	 * #responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
-		PlanningPokerSession[] messages = PlanningPokerSession.fromJsonArray(iReq.getResponse().getBody());
-		//System.out.println("Get success: "  + iReq.getResponse().getBody());
+		final PlanningPokerSession[] messages =
+		                PlanningPokerSession.fromJsonArray(iReq.getResponse().getBody());
 		controller.receivedMessages(messages);
 	}
 
-	/*
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+	/**
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver
+	 * #responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
 	@Override
 	public void responseError(IRequest iReq) {

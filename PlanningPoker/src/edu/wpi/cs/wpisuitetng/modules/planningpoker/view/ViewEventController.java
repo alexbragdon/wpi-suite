@@ -1,4 +1,11 @@
-
+/*******************************************************************************
+ * Copyright (c) 2012-2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 
@@ -78,11 +85,18 @@ public class ViewEventController {
     }
     
     public void viewDeck() {
-    	ViewDeckPanel newDeck = ViewDeckPanel.getInstance(); 
-    	main.addTab("View Deck", null, newDeck, "View Chosen Deck");
-    	main.invalidate();
-    	main.repaint();
-    	main.setSelectedComponent(newDeck);
+    	if (main.indexOfTab("Fibonacci Deck") == -1)
+    	{
+    		ViewDeckPanel newDeck = ViewDeckPanel.getInstance(); 
+    		main.addTab("Fibonacci Deck", null, newDeck, "View Chosen Deck");
+    		main.invalidate();
+    		main.repaint();
+    		main.setSelectedComponent(newDeck);
+    	}
+    	else
+    	{
+    		main.setSelectedIndex(main.indexOfTab("Fibonacci Deck"));
+    	}
     }
 
     /**
@@ -186,6 +200,7 @@ public class ViewEventController {
         if (comp instanceof SessionPanel) {
             listOfEditingSessions.remove(((SessionPanel) comp).getSession());
         }
+        main.setSelectedIndex(0);
         main.remove(comp);
     }
     /**

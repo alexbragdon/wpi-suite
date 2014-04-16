@@ -13,9 +13,12 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A RequirementEstimate represents the estimates associated with one requirement.
+ * @author Team Romulus
+ * @version Iteration-1
  */
 public class RequirementEstimate {
     /**
@@ -43,6 +46,13 @@ public class RequirementEstimate {
      */
     private boolean isExported;
 
+    /**
+     * Constructor for RequirementEstimate.
+     * @param id int
+     * @param name String
+     * @param finalEstimate int
+     * @param isExported boolean
+     */
     public RequirementEstimate(int id, String name, int finalEstimate, boolean isExported) {
         votes = new HashMap<String, Integer>();
         this.id = id;
@@ -74,7 +84,7 @@ public class RequirementEstimate {
         this.isExported = isExported;
     }
 
-    public HashMap<String, Integer> getVotes() {
+    public Map<String,Integer> getVotes() {
         return votes;
     }
 

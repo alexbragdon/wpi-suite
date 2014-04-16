@@ -32,7 +32,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.CheckBoxHeader;
  * tests the functionality of the SessionPanel.java source file
  * @author Team Romulus
  */
-
+/*
 public class CheckBoxHeaderTest {
 	private CheckBoxHeader cbh;
 	private ItemListener itemListener;
@@ -65,3 +65,4 @@ public class CheckBoxHeaderTest {
 	}
 
 }
+*/

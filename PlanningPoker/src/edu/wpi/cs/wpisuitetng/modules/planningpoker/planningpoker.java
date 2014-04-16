@@ -27,52 +27,52 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  */
 public class planningpoker implements IJanewayModule {
 
-	private List<JanewayTabModel> tabs;
-	
-	/** 
-	 * Constructor for Requirement Manager. Creates a main view that contains a
-	 *  toolbar on the top for each sub-tab. 
-	 */
-	public planningpoker() {
-		
-		tabs = new ArrayList<JanewayTabModel>();
+    private final List<JanewayTabModel> tabs;
 
-		MainView mainPanel = new MainView();
-		ToolbarView toolBar = new ToolbarView(true, mainPanel);
-		mainPanel.setToolbarView(toolBar);
+    /** 
+     * Constructor for Requirement Manager. Creates a main view that contains a
+     *  toolbar on the top for each sub-tab. 
+     */
+    public planningpoker() {
 
-		ViewEventController.getInstance().setMainView(mainPanel);
-		ViewEventController.getInstance().setToolBar(toolBar);
-		
+        tabs = new ArrayList<JanewayTabModel>();
 
-		// Create a tab model that contains the toolbar panel and the main content panel
-		JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolBar, mainPanel);
+        final MainView mainPanel = new MainView();
+        final ToolbarView toolBar = new ToolbarView(true, mainPanel);
+        mainPanel.setToolbarView(toolBar);
 
-		// Add the tab to the list of tabs owned by this module
-		tabs.add(tab1);
-	}
-	
-	/**
-	 * Returns the name of the Requirement manager tab.
-	
-	
-	 * @return String * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName() * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName()
-	 */
-	@Override
-	public String getName() {
-		return "Planning Poker";
-	}
+        ViewEventController.getInstance().setMainView(mainPanel);
+        ViewEventController.getInstance().setToolBar(toolBar);
 
-	/**
-	 * Returns the tabs that make up the requirement manager.
-	
-	
-	 * @return List<JanewayTabModel> * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs() * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs()
-	 */
-	@Override
-	public List<JanewayTabModel> getTabs() {
-		return tabs;
-	}
+
+        // Create a tab model that contains the toolbar panel and the main content panel
+        final JanewayTabModel tab1 = 
+                        new JanewayTabModel(getName(), new ImageIcon(), toolBar, mainPanel);
+
+        // Add the tab to the list of tabs owned by this module
+        tabs.add(tab1);
+    }
+
+    /**
+     * Returns the name of the Requirement manager tab.
+
+     * @return String
+     * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName()
+     */
+    @Override
+    public String getName() {
+        return "Planning Poker";
+    }
+
+    /**
+     * Returns the tabs that make up the requirement manager.
+     * @return List<JanewayTabModel> 
+     * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs()
+     */
+    @Override
+    public List<JanewayTabModel> getTabs() {
+        return tabs;
+    }
 
 }
 

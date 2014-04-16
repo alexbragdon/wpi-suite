@@ -22,7 +22,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.JoiningSes
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.ModeratingSessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.MySessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionButtonsPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionEditPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionTableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;

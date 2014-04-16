@@ -1,4 +1,11 @@
-
+/*******************************************************************************
+ * Copyright (c) 2012-2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
@@ -588,11 +595,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         desField.getDocument().addDocumentListener(buttonsDocumentListener);
 
         requirementsPanel.addListener(new TableModelListener() {
-            @Override
-            public void tableChanged(TableModelEvent e) {
-                updateButtonPanel();
-            }
-        });
+			@Override
+			public void tableChanged(TableModelEvent e) {
+            	updateButtonPanel();
+            	requirementsPanel.tableUpdated();
+			}
+        });   
     }
 
     /**
