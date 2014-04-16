@@ -32,37 +32,21 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.CheckBoxHeader;
  * tests the functionality of the SessionPanel.java source file
  * @author Team Romulus
  */
-/*
+
 public class CheckBoxHeaderTest {
 	private CheckBoxHeader cbh;
-	private ItemListener itemListener;
 	
 	@Before
 	public void setUp() throws Exception {
-		cbh = new CheckBoxHeader(itemListener, true);
+		cbh = new CheckBoxHeader(new JTableHeader());
 	}
 	@Test
 	public void testSetGetColumn(){
-		cbh.setColumn(5);
-		assertEquals(5, cbh.getColumn());
-		cbh.getTableCellRendererComponent(new JTable(), new Object(),true, true, 1, 5);
-		JTableHeader jb = new JTableHeader();
-		final TableColumnModel tcm = new DefaultTableColumnModel();
-		jb.setColumnModel(tcm);
-		MouseEvent me = new MouseEvent(jb, // which
-		    MouseEvent.MOUSE_PRESSED, // what
-		    System.currentTimeMillis(), // when
-		    1, // no modifiers
-		    10, 10, // where: at (10, 10}
-		    1, // only 1 click 
-		    true);
-		cbh.mouseClicked(me);
-		cbh.mousePressed(me);
-		cbh.mouseReleased(me);
-		cbh.mouseEntered(me);
-		cbh.mouseExited(me);
-		//cbh.handleClickEvent(me);
+		cbh.setCheck(true, new JTableHeader());	
+	}
+	@Test
+	public void testCheckBox(){
+		cbh.getTableCellRendererComponent(new JTable(), new JButton(),true, true, 0, 0);
 	}
 
 }
-*/
