@@ -11,21 +11,27 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -37,146 +43,170 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 
 /**
- * @author Fangming	Ning
- *
+ * @author Fangming Ning
+ * 
  */
 @SuppressWarnings("serial")
-public class EmailButtonPanel extends ToolbarGroupView{
-	private JButton emailButton = new JButton("<html>Email<br />Settings</html>");
-    private final ScrollablePanel emailPanel = new ScrollablePanel();
-    private JTextField emailField;
-    private JButton submitButton;
+public class EmailButtonPanel extends ToolbarGroupView {
+	private JButton emailButton = new JButton(
+			"<html>Email<br />Settings</html>");
+	private final ScrollablePanel emailButtonPanel = new ScrollablePanel();
+	private final ScrollablePanel emailPanel = new ScrollablePanel();
+	private final JPanel buttonPanel = new JPanel();
+	private final ScrollablePanel topPanel = new ScrollablePanel();
+	private JTextField emailField;
+	private JButton submitButton;
 	private JButton cancelButton;
 	private JLabel infoLabel;
-    
-    public EmailButtonPanel(final MainView parent) {
-        super("");
-        this.emailPanel.setLayout(new BoxLayout(emailPanel, BoxLayout.Y_AXIS));
-        this.setPreferredWidth(200);
-        
-        // Email settings button
-        this.emailButton.setHorizontalAlignment(SwingConstants.CENTER);
-        try {
-            Image img = ImageIO.read(getClass().getResource("emailButton.png"));
-            this.emailButton.setIcon(new ImageIcon(img));
-        } catch (IOException ex) {}
-        
-        // Field for entering email
-        emailField = new JTextField();
-        emailField.setPreferredSize(new Dimension(150, 25));
-        
-        // Button for submitting new email
-        submitButton = new JButton("Submit");
-        submitButton.setEnabled(false);
-        
-        // Button for cancelling an email address
-        cancelButton = new JButton("Cancel");
-        
-        // Validation label
-        infoLabel  = new JLabel("");
-        infoLabel.setText("");// Delete this after creating validator.
-        infoLabel.setForeground(Color.red);
-        
-        emailPanel.add(submitButton);
-        emailPanel.add(cancelButton);
-        emailPanel.add(infoLabel);
-        emailPanel.add(emailField);
-        emailPanel.add(emailButton);
-        //emailPanel.setLayout(new MigLayout("", "", "shrink"));
-        
-        emailButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	emailField.setVisible(true);
-            	submitButton.setVisible(true);
-            	cancelButton.setVisible(true);
-            	infoLabel.setVisible(true);
-            	emailButton.setVisible(false);        		
-            }
-        });
-        
+	private JCheckBox checkBox;
+
+	public EmailButtonPanel(final MainView parent) {
+		super("");
+		this.setPreferredWidth(350);
+		setLayout(new FlowLayout(FlowLayout.LEFT));
+
+		// Email settings button
+		try {
+			Image img = ImageIO.read(getClass().getResource("emailButton.png"));
+			this.emailButton.setIcon(new ImageIcon(img));
+		} catch (IOException ex) {
+		}
+
+		// Field for entering email
+		emailField = new JTextField();
+		emailField.setSize(new Dimension(200, 25));
+
+		// Button for submitting new email
+		submitButton = new JButton("Submit");
+		submitButton.setEnabled(false);
+
+		// Button for cancelling an email address
+		cancelButton = new JButton("Cancel");
+
+		// Validation label
+		infoLabel = new JLabel(" ");
+		infoLabel.setForeground(Color.red);
+		checkBox = new JCheckBox();
+
+		buttonPanel.add(checkBox);
+		buttonPanel.add(new JLabel("Email notification?"));
+		buttonPanel.add(submitButton);
+		buttonPanel.add(cancelButton);
+		topPanel.setLayout(new MigLayout("insets 0 10 0 10"));
+		topPanel.add(emailField,"width 100px, height 20px, wmin 10");
+		topPanel.add(infoLabel, "height 20px");
+
+		emailButtonPanel.setLayout(new MigLayout("insets 15 175 0 0"));
+		//emailButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		emailButtonPanel.add(emailButton);
+
+		//emailPanel.setBorder(BorderFactory.createEmptyBorder());
+		emailPanel.setLayout(new MigLayout("insets 0 10 0 10"));
+		
+//		emailPanel.add(emailField,"width 200px, height 20px, wmin 10");
+//		emailPanel.add(infoLabel, "wrap, height 18px");
+		emailPanel.add(topPanel, "wrap");
+		emailPanel.add(buttonPanel, "height 18px");
+
+		emailButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				emailButtonPanel.setVisible(false);
+				emailPanel.setVisible(true);
+				validateEmail();
+				if (infoLabel.getText().equals(" ") && !validateEmail()) {
+					infoLabel.setText("*Email format incorrect");
+				}
+			}
+		});
+
 		submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (validateEmail()) {
-				    emailField.setVisible(false);
-	                submitButton.setVisible(false);
-	                cancelButton.setVisible(false);
-	                infoLabel.setVisible(false);
-	                emailButton.setVisible(true);
-				}else{
-					infoLabel.setText("Email format incorrect!");
+					emailButtonPanel.setVisible(true);
+					emailPanel.setVisible(false);
+				} else {
+					infoLabel.setText("*Email format incorrect");
 				}
 			}
 		});
-        
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                emailField.setVisible(false);
-                submitButton.setVisible(false);
-                cancelButton.setVisible(false);
-                infoLabel.setVisible(false);
-                emailButton.setVisible(true);  		
-            }
-        });
-        
-        emailField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-            	if(validateEmail()){
-            		submitButton.setEnabled(true);
-            	}else{
-            		infoLabel.setText("Please check the form of email!");
-            		submitButton.setEnabled(false);
-            	}
-            }
 
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-            	if(validateEmail()){
-            		submitButton.setEnabled(true);
-            	}else{
-            		infoLabel.setText("Please check the form of email!");
-            		submitButton.setEnabled(false);
-            	}
-            }
+		cancelButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				emailButtonPanel.setVisible(true);
+				emailPanel.setVisible(false);
+				infoLabel.setText(" ");
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-            	if(validateEmail()){
-            		submitButton.setEnabled(true);
-            	}else{
-            		infoLabel.setText("Please check the form of email!");
-            		submitButton.setEnabled(false);
-            	}
-            }
-        });
-        
-        emailPanel.setOpaque(false);
-        
-        emailField.setVisible(false);
-        submitButton.setVisible(false);
-        cancelButton.setVisible(false);
-        infoLabel.setVisible(false);
-        emailButton.setVisible(true);
-        
-        this.add(emailPanel);
-    }
+			}
+		});
 
-    public boolean validateEmail(){
-    	boolean valid = false;
-    	if (emailField.getText().length() == 0) {
-    		infoLabel.setText("Please enter your email.");
-    		valid = false;
-    	}else if (emailField.getText().startsWith(" ")) {
-    		infoLabel.setText("Email cannot start with a space.");
-    		valid = false;
-    	}else if(emailField.getText().matches(".+@.+\\.[a-z]+")){
-    		infoLabel.setText("");
-    		valid = true;
-    	}
-    	return valid;
-    }
+		emailField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				if (validateEmail()) {
+					submitButton.setEnabled(true);
+				} else {
+					infoLabel.setText("*Email format incorrect");
+					submitButton.setEnabled(false);
+				}
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				if (validateEmail()) {
+					submitButton.setEnabled(true);
+				} else {
+					validateEmail();
+					// infoLabel.setText("Email format incorrect!");
+					submitButton.setEnabled(false);
+					if (infoLabel.getText().equals("")) {
+						infoLabel.setText("*Email format incorrect");
+					}
+				}
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				if (validateEmail()) {
+					submitButton.setEnabled(true);
+				} else {
+					validateEmail();
+					// infoLabel.setText("Email format incorrect!");
+					submitButton.setEnabled(false);
+					if (infoLabel.getText().equals("")) {
+						infoLabel.setText("*Email format incorrect");
+					}
+				}
+			}
+		});
+
+		emailPanel.setOpaque(false);
+		emailButtonPanel.setOpaque(false);
+		buttonPanel.setOpaque(false);
+		checkBox.setOpaque(false);
+		topPanel.setOpaque(false);
+		emailButtonPanel.setVisible(true);
+		emailPanel.setVisible(false);
+
+		this.add(emailPanel);
+		this.add(emailButtonPanel);
+	}
+
+	public boolean validateEmail() {
+		boolean valid = false;
+		if (emailField.getText().length() == 0) {
+			infoLabel.setText("*Please enter your email");
+			valid = false;
+		} else if (emailField.getText().startsWith(" ")) {
+			infoLabel.setText("*Email can't start with space");
+			valid = false;
+		} else if (emailField.getText().matches(".+@.+\\.[a-z]+")) {
+			infoLabel.setText("");
+			valid = true;
+		}
+		return valid;
+	}
 
 }
