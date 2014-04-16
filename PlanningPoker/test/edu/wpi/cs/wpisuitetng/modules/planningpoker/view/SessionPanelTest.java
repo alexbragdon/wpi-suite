@@ -27,6 +27,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
@@ -42,9 +43,11 @@ public class SessionPanelTest {
 	private ToolbarView tbv;
 	private ViewEventController vec;
 	private SessionPanel sesPan;
+	private SessionRequirementPanel sesReqPan;
 	private PlanningPokerSession ses;
 	private PlanningPokerSession disturbedses;
 	private ArrayList<RequirementEstimate> reqList;
+	private Requirement[] reqs = {new Requirement(20, "name", "description")};
 	
 	
 	/**
@@ -65,6 +68,7 @@ public class SessionPanelTest {
 		mv.setToolbarView(tbv);
 		vec = ViewEventController.getInstance();
 		vec.setMainView(mv);
+		sesReqPan = new SessionRequirementPanel(sesPan,ViewMode.CREATE,ses);
 	}
 
 	@Test
@@ -180,7 +184,7 @@ public class SessionPanelTest {
 		sesPan.buildLY();
 		sesPan.setDateTime(2011, 1, 22, 23, 30);
 		sesPan.buildLY();
-
+		sesReqPan.addRequirements(reqs);
 	}
 	@Test
 	public void testIncreasmentOfOneHour3(){
@@ -193,5 +197,13 @@ public class SessionPanelTest {
 		sesPan.buildLY();
 		sesPan.setDateTime(2015, 12, 31, 23, 30);
 		sesPan.buildLY();
+	}
+	@Test
+	public void testOpenPressed(){
+		sesPan.setNameField("Test Name");
+		sesPan.setDesField("Test Description");
+		sesPan.setTimeDisabled();
+		sesPan.openPressed();
+		assertEquals(1,vec.getSize());
 	}
 }

@@ -17,11 +17,14 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
  * This is a test for basic functionality of the ViewEventController.java source file
@@ -36,6 +39,9 @@ public class ViewEventControllerTest {
 	
 	@Before
 	public void setUp() throws Exception {	
+		Network.initNetwork(new MockNetwork());
+		Network.getInstance().setDefaultNetworkConfiguration(
+				new NetworkConfiguration("http://wpisuitetng"));
 		mv = new MainView();
 		tbv = new ToolbarView(true, mv);
 		mv.setToolbarView(tbv);
@@ -65,6 +71,24 @@ public class ViewEventControllerTest {
 		vec.editSession(ses);
 		assertEquals(prevHashSize + 1, vec.getSize());
 	}
-	
+	@Test
+	public void testViewClosedSession(){
+		int prevTabCount = mv.getTabCount();
+		vec.viewClosedSession(ses);
+		assertEquals(prevTabCount +1, mv.getTabCount());
+	}
+	@Test
+	public void testViwDeck(){
+		int prevTabCount = mv.getTabCount();
+		vec.viewDeck();
+		assertEquals(prevTabCount +1, mv.getTabCount());
+	}
+	@Test
+	public void testCloseSession(){
+		int prevTabCount = mv.getTabCount();
+		vec.closeSession(ses);
+		assertEquals(prevTabCount +1, mv.getTabCount());
+		
+	}
 
 }
