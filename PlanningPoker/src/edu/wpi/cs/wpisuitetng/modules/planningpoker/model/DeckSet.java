@@ -30,7 +30,7 @@ public class DeckSet {
 	 */
 	private DeckSet() {
 		decks.put("-None-", empty); //"none" deck is empty
-		decks.put("Fibonacci", fibonacci);
+		decks.put("Default", fibonacci);
 	}
 	
 	/**
