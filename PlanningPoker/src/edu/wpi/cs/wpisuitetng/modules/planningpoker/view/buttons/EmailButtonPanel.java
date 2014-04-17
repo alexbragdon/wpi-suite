@@ -48,7 +48,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
     private final ScrollablePanel emailButtonPanel = new ScrollablePanel();
     private final ScrollablePanel emailPanel = new ScrollablePanel();
     private final JPanel buttonPanel = new JPanel();
-    private final ScrollablePanel topPanel = new ScrollablePanel();
+    //private final ScrollablePanel topPanel = new ScrollablePanel();
     private JTextField emailField;
     private JButton submitButton;
     private JButton cancelButton;
@@ -89,9 +89,9 @@ public class EmailButtonPanel extends ToolbarGroupView {
         buttonPanel.add(new JLabel("Email notification?"));
         buttonPanel.add(submitButton);
         buttonPanel.add(cancelButton);
-        topPanel.setLayout(new MigLayout("insets 0 10 0 10"));
-        topPanel.add(emailField, "width 100px, height 20px, wmin 10");
-        topPanel.add(infoLabel, "height 20px");
+//        topPanel.setLayout(new MigLayout("insets 0 10 0 10"));
+//        topPanel.add(emailField, "width 100px, height 20px, wmin 10");
+//        topPanel.add(infoLabel, "height 20px");
 
 		emailButtonPanel.setLayout(new MigLayout("insets 15 175 0 0"));
 		//emailButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -100,9 +100,9 @@ public class EmailButtonPanel extends ToolbarGroupView {
 		//emailPanel.setBorder(BorderFactory.createEmptyBorder());
 		emailPanel.setLayout(new MigLayout("insets 0 10 0 10"));
 		
-//		emailPanel.add(emailField,"width 200px, height 20px, wmin 10");
-//		emailPanel.add(infoLabel, "wrap, height 18px");
-		emailPanel.add(topPanel, "wrap");
+		
+		emailPanel.add(emailField, "width 300px, height 20px, wmin 10, wrap");
+		emailPanel.add(infoLabel, "height 20px,wrap");
 		emailPanel.add(buttonPanel, "height 18px");
 
         emailButton.addActionListener(new ActionListener() {
@@ -167,7 +167,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         emailButtonPanel.setOpaque(false);
         buttonPanel.setOpaque(false);
         checkBox.setOpaque(false);
-        topPanel.setOpaque(false);
+        //topPanel.setOpaque(false);
         emailButtonPanel.setVisible(true);
         emailPanel.setVisible(false);
 
