@@ -14,6 +14,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.INotificationTemplate;
 
+// $codepro.audit.disable lineLength
+
 /**
  * A template for email notifications as sessions are opened.
  *
@@ -24,7 +26,7 @@ public class SessionOpenedEmailTemplate implements INotificationTemplate<EmailMe
     /**
      * The session that was opened
      */
-    private PlanningPokerSession session;
+    private final PlanningPokerSession session;
     
     /**
      * Creates an email template for the given session.
@@ -52,11 +54,11 @@ public class SessionOpenedEmailTemplate implements INotificationTemplate<EmailMe
      */
     @Override
     public EmailMessage generateMessage(User user) {
-        String from = "planningpokerwpi@gmail.com";
-        String to = user.getEmail();
-        String subject = "New planning poker session " + session.getName();
+        final String from = "planningpokerwpi@gmail.com";
+        final String to = user.getEmail();
+        final String subject = "New planning poker session " + session.getName();
         
-        StringBuilder body = new StringBuilder();
+        final StringBuilder body = new StringBuilder();
         
         body.append("Hello ");
         body.append(user.getName());
@@ -71,19 +73,19 @@ public class SessionOpenedEmailTemplate implements INotificationTemplate<EmailMe
         body.append("Requirements:\n");
         
         for (RequirementEstimate requirement : session.getRequirements()) {
-            body.append("\t");
+            body.append('\t');
             body.append(requirement.getName());
-            body.append("\n");
+            body.append('\n');
         }
         
-        body.append("\n");
+        body.append('\n');
         
         if (session.getType() == SessionType.DISTRIBUTED) {
             body.append("Voting ends on ");
             body.append(session.getDate().toString());
-            body.append(" ");
+            body.append(' ');
             body.append(session.getHour());
-            body.append(":");
+            body.append(':');
             body.append(session.getMin());
             body.append(".\n\n");
         }

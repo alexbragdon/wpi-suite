@@ -12,7 +12,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * Provides a way to send notifications.
- *
+ * 
  * @author Team Romulus
  * @version Apr 16, 2014
  */
@@ -22,5 +22,5 @@ public interface INotificationSender {
      *
      * @param user the user
      */
-    public void send(User user);
+    void send(User user);
 }

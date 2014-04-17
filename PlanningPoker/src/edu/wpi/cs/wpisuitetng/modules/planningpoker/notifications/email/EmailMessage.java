@@ -20,6 +20,14 @@ public class EmailMessage {
     private final String subject;
     private final String body;
     
+    /**
+     * Creates an EmailMessage with the given parameters.
+     *
+     * @param fromAddress address sent from
+     * @param toAddress address sent to
+     * @param subject email subject
+     * @param body email body
+     */
     public EmailMessage(String fromAddress, String toAddress, String subject, String body) {
         this.fromAddress = fromAddress;
         this.toAddress = toAddress;

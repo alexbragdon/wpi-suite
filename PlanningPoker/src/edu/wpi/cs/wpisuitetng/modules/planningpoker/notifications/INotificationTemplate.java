@@ -24,7 +24,7 @@ public interface INotificationTemplate<T> {
      * @param user user to test
      * @return true if user should get notifications
      */
-    public boolean shouldReceiveNotifications(User user);
+    boolean shouldReceiveNotifications(User user);
     
     /**
      * Returns the personalized message for the given user.
@@ -32,5 +32,5 @@ public interface INotificationTemplate<T> {
      * @param user user to generate message for
      * @return the message
      */
-    public T generateMessage(User user);
+    T generateMessage(User user);
 }
