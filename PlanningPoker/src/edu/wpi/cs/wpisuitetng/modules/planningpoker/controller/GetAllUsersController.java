@@ -26,7 +26,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.EmailButtonPane
 public class GetAllUsersController {
     private static GetAllUsersController instance;
     private GetAllUsersObserver observer;
-    private SessionPanel sp;
     private EmailButtonPanel ebp;
 
     /**
@@ -47,22 +46,7 @@ public class GetAllUsersController {
         request.send();
     }
 
-    /**
-     * Gets all requirements from the database
-     */
-    public void getAllUsers(SessionPanel sp) 
-    {
-        this.sp = sp;
-        final Request request = Network.getInstance().makeRequest("core/user", HttpMethod.GET);
-        request.addObserver(observer); // add an observer to process the response
-        request.send();
-    }
-
     public void sendToPanel(User[] users){
-        if(sp != null){
-            sp.sendEmail(users);
-        }
-
         if(ebp != null){
             ebp.setUser(users[0]);
         }
