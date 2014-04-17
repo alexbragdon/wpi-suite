@@ -123,11 +123,11 @@ public class ClosedSessionTable extends JTable {
         if (session.getCompletionTime() != null) {
             final String date =
                             new SimpleDateFormat("MM/dd/yyyy HH:mm").format(session.getCompletionTime());
-            tableModel.addRow(new String[] {
+            tableModel.insertRow(0, new String[] {
                             String.valueOf(session.getID()), session.getName(), date
             });
         } else {
-            tableModel.addRow(new String[] {
+            tableModel.insertRow(0, new String[] {
                             String.valueOf(session.getID()), session.getName(), "--"
             });
         }
