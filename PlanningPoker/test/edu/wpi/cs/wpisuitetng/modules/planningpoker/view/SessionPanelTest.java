@@ -207,12 +207,5 @@ public class SessionPanelTest {
 		sesPan.openPressed();
 		assertEquals(0,vec.getSize());
 	}
-	@Test
-	public void testSendEmail(){
-		sesPan.sendEmail(null);
-		User SampleUsr = new User("name","usrname","psw",55);
-		SampleUsr.setEmail("sample@sample.com");
-		User[] usr = {SampleUsr};
-		sesPan.sendEmail(usr);
-	}
+	
 }
