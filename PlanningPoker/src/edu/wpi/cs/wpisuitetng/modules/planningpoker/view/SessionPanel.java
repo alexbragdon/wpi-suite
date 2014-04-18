@@ -57,6 +57,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -649,14 +653,14 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             switch (viewMode) {
                 case CREATE:
                     AddPlanningPokerSessionController.getInstance().addPlanningPokerSession(session);
-                    new GetAllUsersController().getAllUsers(this); // Send email to all users
                     break;
                 case EDIT:
                     EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
-                    new GetAllUsersController().getAllUsers(this); // Send email to all users
                     break;
             }
 
+            sendEmail(session);
+            
             ViewEventController.getInstance().removeTab(this);
         }
     }
@@ -774,64 +778,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         this.buildLayout();
     }
 
-    public void sendEmail(User[] users){        
-        if(users == null){
-            return;
-        }
-
-        Properties properties = System.getProperties();
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
-
-        final String username = "planningpokerwpi@gmail.com";
-        final String password = "team3romulus";
-        String requirementsString = "";
-        String deadlineString = "";
-
-        for(RequirementEstimate r : displaySession.getRequirements()){
-            requirementsString += "- " + r.getName() + "\n";   
-        }
-
-        if(displaySession.getType() == SessionType.DISTRIBUTED){
-            deadlineString = "Voting ends on " + displaySession.getDate().toString() + " " +
-                            displaySession.getHour() + ":" + displaySession.getMin() + ".\n\n";
-        }
-
-        Session session = Session.getInstance(properties,
-                        new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
-
-        for(User u : users){
-            if(u.getEmail() == null || u.getEmail().equals("") || !u.getHasNotificationsEnabled()){
-                break;
-            }
-
-            try {
-                Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress(username));
-                message.setRecipients(Message.RecipientType.TO,
-                                InternetAddress.parse(u.getEmail()));
-                message.setSubject("New Planning Poker Session " + displaySession.getName());
-                message.setText("Hello " + u.getName() + "," +
-                                "\n\n" + displaySession.getModerator() + " has begun planning poker session " + 
-                                "\"" + displaySession.getName() + "\"." + "\n\n" + "Description:" + "\n   " +
-                                displaySession.getDescription() + "\n\n" + "Requirements:" + "\n" +
-                                requirementsString + "\n" +
-                                deadlineString +
-                                "Enjoy your game of planning poker!" + "\n\n" +
-                                "-----------------------------------------------------\n" +
-                                "-The Planning Poker Team-"
-                                );
-
-                Transport.send(message);
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
-            }
-        }
+    public void sendEmail(PlanningPokerSession session) {
+        Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/open", HttpMethod.POST);
+        request.setBody(session.toJSON());
+        request.send();
     }
 }

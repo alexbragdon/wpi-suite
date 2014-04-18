@@ -8,6 +8,8 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email;
 
+import java.text.SimpleDateFormat;
+
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
@@ -82,8 +84,8 @@ public class SessionOpenedEmailTemplate implements INotificationTemplate<EmailMe
         
         if (session.getType() == SessionType.DISTRIBUTED) {
             body.append("Voting ends on ");
-            body.append(session.getDate().toString());
-            body.append(' ');
+            body.append(new SimpleDateFormat("EEEE, MMMM d").format(session.getDate()));
+            body.append(" at ");
             body.append(session.getHour());
             body.append(':');
             body.append(session.getMin());
