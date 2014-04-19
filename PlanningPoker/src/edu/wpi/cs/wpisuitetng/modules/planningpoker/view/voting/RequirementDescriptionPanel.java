@@ -8,14 +8,19 @@ import javax.swing.JTextArea;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
+/**
+ * This class is a {@code JPanel} to contain the description of a {@code Requirment}.
+ * 
+ */
 public final class RequirementDescriptionPanel extends JPanel {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	JLabel titleLabel = new JLabel("Requirement Description:");
-	
+	JTextArea description;
+
 	private final Requirement req;
-	
+
 	/**
 	 * Create a RequirementDescriptionPanel from the specified requirment
 	 * @param req The Requirement to use
@@ -24,21 +29,22 @@ public final class RequirementDescriptionPanel extends JPanel {
 		this.req = req;
 		this.setLayout(new BorderLayout());
 		this.add(titleLabel, BorderLayout.NORTH);
-		
+
 		//Initialize JTextArea and its properties
-		JTextArea description = new JTextArea();
+		description = new JTextArea();
 		description.setLineWrap(true); //Wrap the lines
 		description.setWrapStyleWord(true); //Wrap text only at word boundaries
+		description.setEditable(false);
 		
 		description.setText(this.req.getDescription());
-		
+
 		this.add(description, BorderLayout.CENTER);
 	}	
-	
+
 	/**
-	 * Update the description for the requirement
+	 * Update the panel's text of the requirement
 	 */
 	public void update() {
-		this.repaint();
+		description.setText(this.req.getDescription());
 	}
 }
