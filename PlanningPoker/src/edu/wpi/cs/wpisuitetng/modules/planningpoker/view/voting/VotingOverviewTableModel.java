@@ -8,7 +8,11 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
+import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
 /**
  * Models the table used in the voting overview part of the estimation tab.
@@ -16,6 +20,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Team Romulus
  * @version Apr 18, 2014
  */
+@SuppressWarnings("serial")
 public class VotingOverviewTableModel extends AbstractTableModel {
     
     private static final String[] COLUMNS = { "Voted", "Name", "Type", "My Estimate", "Team Progress" };
@@ -25,6 +30,15 @@ public class VotingOverviewTableModel extends AbstractTableModel {
     private static final int ESTIMATE_COLUMN = 3;
     private static final int PROGRESS_COLUMN = 4;
     
+    private List<RequirementEstimate> requirements;
+    private int teamCount;
+    private String user;
+    
+    public VotingOverviewTableModel(List<RequirementEstimate> requirements, int teamCount, String user) {
+        this.requirements = requirements;
+        this.teamCount = teamCount;
+        this.user = user;
+    }
     
     /*
      * @see javax.swing.table.TableModel#getColumnCount()
@@ -39,7 +53,7 @@ public class VotingOverviewTableModel extends AbstractTableModel {
      */
     @Override
     public int getRowCount() {
-        return 50;
+        return requirements.size();
     }
 
     /*
@@ -71,26 +85,19 @@ public class VotingOverviewTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int row, int column) {
         java.util.Random random = new java.util.Random();
-        String[] names = { "Nam tempor commodo metus",
-                        "Lorem ipsum dolor sit amet",
-                        "Nunc tristique ligula vel erat aliquam posuere",
-                        "Cras ornare ullamcorper lectus",
-                        "Fusce non feugiat nibh",
-                        "Morbi id enim eget dui dapibus cursus",
-                        "Aliquam placerat tellus mattis",
-                        "Pellentesque at lacus ac libero feugiat interdum",
-                        "Fusce in lobortis erat",
-                        "Nam nisl sapien" };
         String[] types = { "User Story", "Theme", "Epic" };
         
+        
+        RequirementEstimate requirement = requirements.get(row);
+        boolean voted = requirement.getVotes().containsKey(user);
+        
         switch (column) {
-            case VOTED_COLUMN: return random.nextInt(2) == 1 ? "\u2713" : "";
-            case NAME_COLUMN: return names[random.nextInt(names.length)];
+            case VOTED_COLUMN: return voted ? "\u2713" : "";
+            case NAME_COLUMN: return requirement.getName();
             case TYPE_COLUMN: return types[random.nextInt(types.length)];
-            case ESTIMATE_COLUMN: return random.nextInt(2) == 1 ? random.nextInt(20) : "--";
-            case PROGRESS_COLUMN: return new Fraction(random.nextInt(20), 20);
+            case ESTIMATE_COLUMN: return voted ? requirement.getVotes().get(user) : "--";
+            case PROGRESS_COLUMN: return new Fraction(requirement.getVotes().size(), teamCount);
             default: throw new RuntimeException("Invalid column index");
         }
     }
-
 }

@@ -11,12 +11,16 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableModel;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
 /**
  * Displays all requirements associated with a given game, along with their progress.
@@ -24,15 +28,50 @@ import javax.swing.JTable;
  * @author Team Romulus
  * @version Apr 18, 2014
  */
+@SuppressWarnings("serial")
 public class VotingOverviewPanel extends JPanel {
-    public VotingOverviewPanel() {
+    
+    VotingOverviewTable table;
+    List<RequirementEstimate> requirements;
+    
+    /**
+     * Creates a overview panel for voting with the given model.
+     *
+     * @param requirements requirements to vote on
+     * @param teamCount number of members on the team
+     * @param user the currently logged in user
+     */
+    public VotingOverviewPanel(List<RequirementEstimate> requirements, int teamCount, String user) {
+        this.requirements = requirements;
+        
         setLayout(new BorderLayout());
         
         JProgressBar overallProgress = new JProgressBar(0, 1000);
-        overallProgress.setValue(643);
+        int votes = 0;
+        for (RequirementEstimate requirement : requirements) {
+            if (requirement.getVotes().containsKey(user)) {
+                votes++;
+            }
+        }
+        overallProgress.setValue(votes * 1000 / requirements.size());
         
-        JTable table = new VotingOverviewTable();
+        table = new VotingOverviewTable(new VotingOverviewTableModel(requirements, teamCount, user));
         add(overallProgress, BorderLayout.NORTH);
         add(new JScrollPane(table), BorderLayout.CENTER);
+    }
+    
+    /**
+     * Gets the selected requirement.
+     *
+     * @return selected requirement, or null if no requirement is selected
+     */
+    public RequirementEstimate getSelectedRequirement() {
+        int row = table.getSelectedRow();
+        if (row != -1) {
+            row = table.convertRowIndexToModel(row);
+            return requirements.get(row);
+        } else {
+            return null;
+        }
     }
 }
