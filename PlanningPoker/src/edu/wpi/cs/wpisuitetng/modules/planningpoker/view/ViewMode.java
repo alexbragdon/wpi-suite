@@ -16,5 +16,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
  */
 public enum ViewMode {
     CREATE,
-    EDIT
+    EDIT,
+    WITHDECK,
+    WITHOUTDECK
 }
