@@ -38,7 +38,7 @@ public final class RequirementDescriptionPanel extends JPanel {
 		
 		descriptionArea.setText(this.req.getDescription());
 
-		JScrollPane scrollPanel = new JScrollPane(descriptionArea);
+		JScrollPane scrollPanel = new JScrollPane(descriptionArea); //Put panel in a ScrollPane
 		this.add(scrollPanel, BorderLayout.CENTER);
 	}	
 
