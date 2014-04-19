@@ -23,7 +23,7 @@ public final class RequirementDescriptionPanel extends JPanel {
 
 	/**
 	 * Create a RequirementDescriptionPanel from the specified requirement
-	 * @param req The Requirement to use
+	 * @param req The RequirementEstimate to use
 	 */
 	public RequirementDescriptionPanel(RequirementEstimate req) {
 		this.req = req;
