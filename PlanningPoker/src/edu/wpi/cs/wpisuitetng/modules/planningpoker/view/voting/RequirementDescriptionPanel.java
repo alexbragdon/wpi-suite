@@ -16,7 +16,7 @@ public final class RequirementDescriptionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private final JLabel titleLabel = new JLabel("Requirement Description:");
-	private final JTextArea description;
+	private final JTextArea descriptionArea;
 
 	private final Requirement req;
 
@@ -30,14 +30,14 @@ public final class RequirementDescriptionPanel extends JPanel {
 		this.add(titleLabel, BorderLayout.NORTH);
 
 		//Initialize JTextArea and its properties
-		description = new JTextArea();
-		description.setLineWrap(true); //Wrap the lines
-		description.setWrapStyleWord(true); //Wrap text only at word boundaries
-		description.setEditable(false);
+		descriptionArea = new JTextArea();
+		descriptionArea.setLineWrap(true); //Wrap the lines
+		descriptionArea.setWrapStyleWord(true); //Wrap text only at word boundaries
+		descriptionArea.setEditable(false);
 		
-		description.setText(this.req.getDescription());
+		descriptionArea.setText(this.req.getDescription());
 
-		this.add(description, BorderLayout.CENTER);
+		this.add(descriptionArea, BorderLayout.CENTER);
 	}	
 
 	/**
@@ -45,6 +45,14 @@ public final class RequirementDescriptionPanel extends JPanel {
 	 * needs to be used if Requirement description changes.
 	 */
 	public void update() {
-		description.setText(this.req.getDescription());
+		descriptionArea.setText(this.req.getDescription());
+	}
+	
+	/**
+	 * Manually set the text of the Panel
+	 * @param text The text to display
+	 */
+	public void setText(String text) {
+		descriptionArea.setText(text);
 	}
 }
