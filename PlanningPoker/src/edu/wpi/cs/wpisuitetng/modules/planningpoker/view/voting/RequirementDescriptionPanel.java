@@ -16,12 +16,29 @@ public final class RequirementDescriptionPanel extends JPanel {
 	
 	private final Requirement req;
 	
+	/**
+	 * Create a RequirementDescriptionPanel from the specified requirment
+	 * @param req The Requirement to use
+	 */
 	public RequirementDescriptionPanel(Requirement req) {
 		this.req = req;
 		this.setLayout(new BorderLayout());
 		this.add(titleLabel, BorderLayout.NORTH);
 		
+		//Initialize JTextArea and its properties
 		JTextArea description = new JTextArea();
-		description.setText(req.getDescription());
+		description.setLineWrap(true); //Wrap the lines
+		description.setWrapStyleWord(true); //Wrap text only at word boundaries
+		
+		description.setText(this.req.getDescription());
+		
+		this.add(description, BorderLayout.CENTER);
 	}	
+	
+	/**
+	 * Update the description for the requirement
+	 */
+	public void update() {
+		this.repaint();
+	}
 }
