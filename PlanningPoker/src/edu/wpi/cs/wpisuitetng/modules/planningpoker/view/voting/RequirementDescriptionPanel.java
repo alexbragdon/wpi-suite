@@ -7,10 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
 /**
- * This class is a {@code JPanel} to contain the description of a {@code Requirment}.
+ * This class is a {@code JPanel} to contain the description of a {@code RequirmentEstimate}.
  */
 public final class RequirementDescriptionPanel extends JPanel {
 
@@ -19,13 +19,13 @@ public final class RequirementDescriptionPanel extends JPanel {
 	private final JLabel titleLabel = new JLabel("Requirement Description:");
 	private final JTextArea descriptionArea;
 
-	private final Requirement req;
+	private final RequirementEstimate req;
 
 	/**
 	 * Create a RequirementDescriptionPanel from the specified requirement
 	 * @param req The Requirement to use
 	 */
-	public RequirementDescriptionPanel(Requirement req) {
+	public RequirementDescriptionPanel(RequirementEstimate req) {
 		this.req = req;
 		this.setLayout(new BorderLayout());
 		this.add(titleLabel, BorderLayout.NORTH);
