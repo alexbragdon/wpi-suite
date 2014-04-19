@@ -24,7 +24,7 @@ public final class RequirementDescriptionPanel extends JPanel {
 	private final Requirement req;
 
 	/**
-	 * Create a RequirementDescriptionPanel from the specified requirment
+	 * Create a RequirementDescriptionPanel from the specified requirement
 	 * @param req The Requirement to use
 	 */
 	public RequirementDescriptionPanel(Requirement req) {
