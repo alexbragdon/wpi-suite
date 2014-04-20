@@ -4,6 +4,7 @@
 .metadata\*
 .metadata/*
 .metadata\.plugins\*
+Servers/
 Servers\.settings\*
 Servers\.settings
 javadoc
