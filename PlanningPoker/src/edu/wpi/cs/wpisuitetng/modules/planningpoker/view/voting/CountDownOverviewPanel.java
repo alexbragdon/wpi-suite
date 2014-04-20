@@ -56,7 +56,7 @@ public class CountDownOverviewPanel extends JPanel {
         
         final Timer t = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	long time = getRemaingSessionTime(session);
+            	long time = getRemainingSessionTime(session);
                 if (time >= 0) {
                     long s = ((time / 1000) % 60);
                     long m = (((time / 1000) / 60) % 60);
@@ -78,7 +78,7 @@ public class CountDownOverviewPanel extends JPanel {
      * @param session the session to get the long format time reaming on.
      * @return the number of milliseconds until the session is over.
      */
-    private long getRemaingSessionTime(PlanningPokerSession session) {
+    private long getRemainingSessionTime(PlanningPokerSession session) {
     	long time = session.getDate().getTime();
     	time = time + (session.getHour() * 1000 * 60 * 60);
     	time = time + (session.getMin() * 1000 * 60);
