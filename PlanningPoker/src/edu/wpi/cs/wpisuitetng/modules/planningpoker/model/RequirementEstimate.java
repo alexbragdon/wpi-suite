@@ -32,6 +32,11 @@ public class RequirementEstimate {
     private final String name;
     
     /**
+     * The description for the requirement
+     */
+    private String description;
+    
+    /**
      * A mapping of usernames to that users estimate.
      */
     private final HashMap<String, Integer> votes;
@@ -59,6 +64,14 @@ public class RequirementEstimate {
         this.name = name;
         this.finalEstimate = finalEstimate;
         this.isExported = isExported;
+    }
+    
+    public void setDescription(String description) {
+    	this.description = description;
+    }
+    
+    public String getDescription() {
+    	return description;
     }
 
     public int getId() {
