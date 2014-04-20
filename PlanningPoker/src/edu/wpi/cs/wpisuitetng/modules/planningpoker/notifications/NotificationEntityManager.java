@@ -15,16 +15,13 @@ import java.util.Locale;
 
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.database.Data;
-
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
-
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
-
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email.EmailMessage;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email.EmailSender;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email.SessionClosedEmailTemplate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email.SessionOpenedEmailTemplate;
 
 // $codepro.audit.disable lineLength
@@ -77,9 +74,10 @@ public class NotificationEntityManager implements EntityManager<AbstractModel> {
 
         switch (type) {
             case "open":
-                final INotificationTemplate<EmailMessage> template = new SessionOpenedEmailTemplate(
-                                session);
-                senders.add(new EmailSender(template));
+                senders.add(new EmailSender(new SessionOpenedEmailTemplate(session)));
+                break;
+            case "close":
+                senders.add(new EmailSender(new SessionClosedEmailTemplate(session)));
                 break;
             default:
                 throw new NotFoundException("There is no " + string + " notification.");
