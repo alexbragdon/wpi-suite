@@ -50,7 +50,7 @@ public class VotingButtonDemo {
         JFrame f = new JFrame("Demo");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(300, 200);
-        f.getContentPane().add(new VotingButtonPanel(ViewMode.WITHOUTDECK), BorderLayout.CENTER);
+        f.getContentPane().add(new VotingButtonPanel(ViewMode.WITHDECK), BorderLayout.CENTER);
         f.setVisible(true);
         
     }

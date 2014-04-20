@@ -17,9 +17,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.NumberFormatter;
 
 import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
@@ -48,19 +52,22 @@ public class VotingButtonPanel extends JPanel{
 	private void buildLayoutWithoutDeck() {
 		// TODO Auto-generated method stub
 		JLabel infoLabel = new JLabel("  Enter estimate  ");
-		JSpinner estimateSpin = new JSpinner();
+		JSpinner estimateSpin = new JSpinner(new SpinnerNumberModel(23, 0, 99, 1));
 		JButton voteButton = new JButton("Vote");
 		
-		estimateSpin.setPreferredSize(new Dimension(130, 100));
+		estimateSpin.setPreferredSize(new Dimension(100, 100));
 		estimateSpin.getComponent(0).setPreferredSize(new Dimension(75,75));
 		((JSpinner.NumberEditor) estimateSpin.getEditor()).getTextField().setFont(new Font("default", Font.BOLD, 72));
+		JFormattedTextField estimateNum = ((JSpinner.NumberEditor) estimateSpin.getEditor()).getTextField();
+        ((NumberFormatter) estimateNum.getFormatter()).setAllowsInvalid(false);
+        estimateNum.setEditable(true);
 		voteButton.setPreferredSize(new Dimension(140, 180));
 		
 		try {
             Image img = ImageIO.read(getClass().getResource("vote-button.png"));
             voteButton.setIcon(new ImageIcon(img));
         } catch (IOException ex) {
-        }		
+        }
 		
 		add(infoLabel);
 		add(voteButton, "span 1 2,wrap");
