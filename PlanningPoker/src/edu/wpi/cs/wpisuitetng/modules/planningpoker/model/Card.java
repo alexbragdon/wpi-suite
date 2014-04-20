@@ -41,9 +41,11 @@ public class Card extends JPanel {
 	private final JLabel numLabel;
 	private final JLabel imgLabel;
 	private boolean selected;
+	private CardPanel parent;
 
-	public Card(int cardNum){
+	public Card(int cardNum, CardPanel parent){
 		this.cardNum = cardNum;
+		this.parent = parent;
 		numLabel = new JLabel();
 		imgLabel = new JLabel();
 		imgLabel.setLayout(new BorderLayout());
@@ -54,7 +56,7 @@ public class Card extends JPanel {
 		} catch (IOException ex) {}
 
 		numLabel.setText(Integer.toString(cardNum));
-		numLabel.setFont(numLabel.getFont().deriveFont(Font.BOLD, 48));
+		numLabel.setFont(numLabel.getFont().deriveFont(Font.BOLD, 64));
 		numLabel.setHorizontalAlignment(JLabel.CENTER);
 		
 		imgLabel.addMouseListener(new MouseListener(){
@@ -123,12 +125,14 @@ public class Card extends JPanel {
 	public void setCardSelected(){
 		if(!selected){
 			selected = true;
-			imgLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+			imgLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3, true));
+			parent.updateSelectedIndices();
 		}
 		
 		else{
 			selected = false;
 			imgLabel.setBorder(null);
+			parent.updateSelectedIndices();
 		}
 	}
 	
