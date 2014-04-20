@@ -12,7 +12,10 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -43,6 +46,7 @@ public class Card extends JPanel {
 		this.cardNum = cardNum;
 		numLabel = new JLabel();
 		imgLabel = new JLabel();
+		imgLabel.setLayout(new BorderLayout());
 		selected = false;
 
 		try {
@@ -50,8 +54,10 @@ public class Card extends JPanel {
 		} catch (IOException ex) {}
 
 		numLabel.setText(Integer.toString(cardNum));
+		numLabel.setFont(numLabel.getFont().deriveFont(Font.BOLD, 48));
+		numLabel.setHorizontalAlignment(JLabel.CENTER);
 		
-		this.addMouseListener(new MouseListener(){
+		imgLabel.addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent me) {
 				setCardSelected();
@@ -78,10 +84,8 @@ public class Card extends JPanel {
 			}
 		});
 		
-		// TODO: Add number to card label
-		// this.imgLabel.add(numLabel);
-		this.add(numLabel);
-		this.imgLabel.setIcon(new ImageIcon(this.cardImg));
+	    this.imgLabel.setIcon(new ImageIcon(this.cardImg));
+		imgLabel.add(numLabel);
 		this.add(imgLabel);
 	}
 

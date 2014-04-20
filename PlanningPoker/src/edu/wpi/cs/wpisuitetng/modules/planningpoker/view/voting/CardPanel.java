@@ -69,6 +69,7 @@ public class CardPanel extends JPanel {
 			Card newCard = new Card(viewDeck[i]);
 			hash.put(i, newCard);
 			cardsPanel.add(newCard);
+			// newCard.getA
 		}
 		
 		this.addMouseListener(new MouseListener(){
