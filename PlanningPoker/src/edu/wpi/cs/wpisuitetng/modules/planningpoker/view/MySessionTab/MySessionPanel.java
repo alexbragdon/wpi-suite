@@ -140,7 +140,8 @@ public class MySessionPanel extends JPanel {
                 if (row == -1) return -1;
                 return Integer.parseInt((String) closedPanel.getTable().getValueAt(row, 0));
             default:
-                throw new RuntimeException("Invalid panel index"); // $codepro.audit.disable thrownExceptions
+                // $codepro.audit.disable thrownExceptions
+                throw new RuntimeException("Invalid panel index"); 
         }
     }
     /**
@@ -170,7 +171,8 @@ public class MySessionPanel extends JPanel {
      * Method closeTimedOutSessions.
      * @param sessions PlanningPokerSession[]
      */
-    public void closeTimedOutSessions(PlanningPokerSession[] sessions) { // $codepro.audit.disable methodShouldBeStatic
+    // $codepro.audit.disable methodShouldBeStatic
+    public void closeTimedOutSessions(PlanningPokerSession[] sessions) { 
         //this method should not be static
         for (PlanningPokerSession s : sessions) {
             if (s.isDateInPast() && s.getType() == SessionType.DISTRIBUTED && (!(s.isComplete()))) {
@@ -182,7 +184,8 @@ public class MySessionPanel extends JPanel {
                                                 s.getRequirements(), s.getType(), false,
                                                 true, s.getModerator(), s.getDeck());
                 closedSession.setCompletionTime(new Date());
-                EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(closedSession);
+                EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(
+                                closedSession);
             }
         }
     }

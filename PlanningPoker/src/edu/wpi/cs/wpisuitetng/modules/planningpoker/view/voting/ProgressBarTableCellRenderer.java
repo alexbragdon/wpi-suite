@@ -24,7 +24,7 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 
     private static final int MAX = 1000;
     
-    private JProgressBar progressBar;
+    private final JProgressBar progressBar;
     
     public ProgressBarTableCellRenderer() {
         progressBar = new JProgressBar(0, MAX);
@@ -37,7 +37,7 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                     boolean hasFocus, int row, int column) {
-        Fraction fraction = (Fraction)value;
+        final Fraction fraction = (Fraction)value;
         progressBar.setValue((int)(fraction.getValue() * MAX));
         progressBar.setString(fraction.getNumerator() + "/" + fraction.getDenominator());
         return progressBar;

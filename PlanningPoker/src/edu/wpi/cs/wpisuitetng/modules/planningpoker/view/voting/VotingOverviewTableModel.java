@@ -23,18 +23,28 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 @SuppressWarnings("serial")
 public class VotingOverviewTableModel extends AbstractTableModel {
     
-    private static final String[] COLUMNS = { "Voted", "Name", "Type", "My Estimate", "Team Progress" };
+    private static final String[] COLUMNS = { 
+        "Voted", "Name", "Type", "My Estimate", "Team Progress" };
     private static final int VOTED_COLUMN = 0;
     private static final int NAME_COLUMN = 1;
     private static final int TYPE_COLUMN = 2;
     private static final int ESTIMATE_COLUMN = 3;
     private static final int PROGRESS_COLUMN = 4;
     
-    private List<RequirementEstimate> requirements;
-    private int teamCount;
-    private String user;
+    private final List<RequirementEstimate> requirements;
+    private final int teamCount;
+    private final String user;
     
-    public VotingOverviewTableModel(List<RequirementEstimate> requirements, int teamCount, String user) {
+    /**
+     * 
+     * Description
+     *
+     * @param requirements
+     * @param teamCount
+     * @param user
+     */
+    public VotingOverviewTableModel(List<RequirementEstimate> 
+            requirements, int teamCount, String user) {
         this.requirements = requirements;
         this.teamCount = teamCount;
         this.user = user;
@@ -68,6 +78,7 @@ public class VotingOverviewTableModel extends AbstractTableModel {
      * @see javax.swing.table.AbstractTableModel#getColumnClass(int)
      */
     @Override
+    // $codepro.audit.disable multipleReturns
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
             case VOTED_COLUMN: return String.class;
@@ -75,7 +86,9 @@ public class VotingOverviewTableModel extends AbstractTableModel {
             case TYPE_COLUMN: return String.class;
             case ESTIMATE_COLUMN: return Integer.class;
             case PROGRESS_COLUMN: return Fraction.class;
-            default: throw new RuntimeException("Invalid column index");
+            default: 
+                // $codepro.audit.disable thrownExceptions
+                throw new RuntimeException("Invalid column index");
         }
     }
     
@@ -83,13 +96,14 @@ public class VotingOverviewTableModel extends AbstractTableModel {
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     @Override
+    // $codepro.audit.disable multipleReturns
     public Object getValueAt(int row, int column) {
-        java.util.Random random = new java.util.Random();
-        String[] types = { "User Story", "Theme", "Epic" };
+        final java.util.Random random = new java.util.Random();
+        final String[] types = { "User Story", "Theme", "Epic" };
         
         
-        RequirementEstimate requirement = requirements.get(row);
-        boolean voted = requirement.getVotes().containsKey(user);
+        final RequirementEstimate requirement = requirements.get(row);
+        final boolean voted = requirement.getVotes().containsKey(user);
         
         switch (column) {
             case VOTED_COLUMN: return voted ? "\u2713" : "";
@@ -97,7 +111,9 @@ public class VotingOverviewTableModel extends AbstractTableModel {
             case TYPE_COLUMN: return types[random.nextInt(types.length)];
             case ESTIMATE_COLUMN: return voted ? requirement.getVotes().get(user) : "--";
             case PROGRESS_COLUMN: return new Fraction(requirement.getVotes().size(), teamCount);
-            default: throw new RuntimeException("Invalid column index");
+            default: 
+                // $codepro.audit.disable thrownExceptions
+                throw new RuntimeException("Invalid column index");
         }
     }
 }

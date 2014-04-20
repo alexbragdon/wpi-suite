@@ -22,6 +22,13 @@ import javax.swing.table.TableColumn;
  */
 @SuppressWarnings("serial")
 public class VotingOverviewTable extends JTable {
+    
+    /**
+     * 
+     * Description
+     *
+     * @param model
+     */
     public VotingOverviewTable(VotingOverviewTableModel model) {
         super(model);
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -31,7 +38,8 @@ public class VotingOverviewTable extends JTable {
             switch (i) {
                 case 0:
                     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-                    centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+                    // $codepro.audit.disable staticMemberAccess
+                    centerRenderer.setHorizontalAlignment(JLabel.CENTER); 
                     column.setCellRenderer(centerRenderer);
                     column.setMinWidth(50);
                     column.setMaxWidth(50);

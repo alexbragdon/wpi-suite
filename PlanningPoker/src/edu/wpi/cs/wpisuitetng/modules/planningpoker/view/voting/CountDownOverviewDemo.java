@@ -17,8 +17,6 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
@@ -53,17 +51,17 @@ public class CountDownOverviewDemo {
     	
     	Date endDate = new Date();
     	
-    	String string_date = "10-May-2014";
-    	SimpleDateFormat d = new SimpleDateFormat("dd-MMM-yyyy");
+    	final String string_date = "10-May-2014";
+    	final SimpleDateFormat d = new SimpleDateFormat("dd-MMM-yyyy");
     	try {
     		endDate = d.parse(string_date);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
     	
-    	List<RequirementEstimate> emptyList = new ArrayList<RequirementEstimate>();
+    	final List<RequirementEstimate> emptyList = new ArrayList<RequirementEstimate>();
     	
-    	PlanningPokerSession testSession = 
+    	final PlanningPokerSession testSession = 
                 new PlanningPokerSession(1, "CountDownTest",
                                 "Nothing", endDate,
                                 12,
@@ -72,7 +70,7 @@ public class CountDownOverviewDemo {
                                 true, null, null);
     	
     	
-        JFrame f = new JFrame("Count Down Demo");
+        final JFrame f = new JFrame("Count Down Demo");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(750, 100);
         f.getContentPane().add(new CountDownOverviewPanel(testSession), BorderLayout.CENTER);

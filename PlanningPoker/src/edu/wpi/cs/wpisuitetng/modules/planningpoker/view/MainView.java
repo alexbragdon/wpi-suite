@@ -21,14 +21,14 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.MySessionP
 
 /**
  * This is the main view of planning poker game. All tabs, buttons, GUI are created by this main view. 
- * @author Fangming Ning
- * @contributOr Team romulus
+ * @author Romulus
+ * @version 1
  */
 @SuppressWarnings("serial")
 public class MainView extends JTabbedPane {
-	private Component lastTab = null;
+	private final Component lastTab = null;
 	private ToolbarView toolbarView;
-	private MySessionPanel mySession = new MySessionPanel(this);
+	private final MySessionPanel mySession = new MySessionPanel(this);
 	
 
 	/**
@@ -46,12 +46,12 @@ public class MainView extends JTabbedPane {
 		this.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent arg0) {
-                JComponent selected = (JComponent) self.getSelectedComponent();
+                final JComponent selected = (JComponent) self.getSelectedComponent();
                 if (selected instanceof MySessionPanel) {
                     ((MySessionPanel)selected).refresh();
                 }
-                JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
-                int index = sourceTabbedPane.getSelectedIndex();
+                final JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+                final int index = sourceTabbedPane.getSelectedIndex();
                 if(index != 0){
                 	toolbarView.GetSuperButtonPanel().getSuperButton().setVisible(false);
                 }
@@ -98,7 +98,9 @@ public class MainView extends JTabbedPane {
 		try{
 			if (lastTab != null){
 				setSelectedComponent(lastTab);}
-		} catch (IllegalArgumentException e){}
+		} catch (IllegalArgumentException e) {
+		    e.printStackTrace();
+		}
 	}
 
 	/**

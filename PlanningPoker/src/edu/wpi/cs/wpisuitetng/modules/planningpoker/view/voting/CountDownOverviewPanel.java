@@ -9,25 +9,14 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
-import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.Timer;
-import javax.swing.table.TableModel;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
 /**
  * Displays a count down timer for a given session.
@@ -38,8 +27,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 @SuppressWarnings("serial")
 public class CountDownOverviewPanel extends JPanel {
     
-    private JLabel timingText;
-    public boolean over;
+    private final JLabel timingText;
+    boolean over;
     
     /**
      * Creates a overview panel for displaying a count down for a given planning poker session.
@@ -56,13 +45,14 @@ public class CountDownOverviewPanel extends JPanel {
         
         final Timer t = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	long time = getRemainingSessionTime(session);
+            	final long time = getRemainingSessionTime(session);
                 if (time >= 0) {
-                    long s = ((time / 1000) % 60);
-                    long m = (((time / 1000) / 60) % 60);
-                    long h = ((((time / 1000) / 60) / 60) % 60);
-                    long d = (((((time / 1000) / 60) / 60) / 24) % 24);
-                    timingText.setText("Time Remaining: " + d + " days " + h + " hours " + m + " minutes " + s + " seconds");
+                    final long s = ((time / 1000) % 60);
+                    final long m = (((time / 1000) / 60) % 60);
+                    final long h = ((((time / 1000) / 60) / 60) % 60);
+                    final long d = (((((time / 1000) / 60) / 60) / 24) % 24);
+                    timingText.setText("Time Remaining: " + d + " days " 
+                                    + h + " hours " + m + " minutes " + s + " seconds");
                     over = false;
                 } else {
                 	over = true;
@@ -80,10 +70,10 @@ public class CountDownOverviewPanel extends JPanel {
      */
     private long getRemainingSessionTime(PlanningPokerSession session) {
     	long time = session.getDate().getTime();
-    	time = time + (session.getHour() * 1000 * 60 * 60);
-    	time = time + (session.getMin() * 1000 * 60);
+    	time += (session.getHour() * 1000 * 60 * 60);
+    	time += (session.getMin() * 1000 * 60);
     	
-    	time = time - new Date().getTime();
+    	time -= new Date().getTime();
     	
     	return time;
     }

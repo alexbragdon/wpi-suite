@@ -78,7 +78,8 @@ public class ClosedSessionPanel extends JPanel {
             @Override
             public void valueChanged(ListSelectionEvent arg0) {
                 if(table.getSelectedRow() != -1){
-                    parentView.getToolbarView().GetSuperButtonPanel().getSuperButton().Update(2, false);
+                    parentView.getToolbarView().GetSuperButtonPanel().getSuperButton(
+                                    ).Update(2, false);
                     parentView.getMySession().getJoiningPanel().getTable().clearSelection();
                     parentView.getMySession().getModeratingPanel().getTable().clearSelection();
                 }

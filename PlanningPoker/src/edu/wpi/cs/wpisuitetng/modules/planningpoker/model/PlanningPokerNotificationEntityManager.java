@@ -121,7 +121,8 @@ EntityManager<PlanningPokerNotification> {
         }
         PlanningPokerNotification[] sessions = new PlanningPokerNotification[1];
         try {
-            sessions = db.retrieve(PlanningPokerNotification.class, "id", intId, s.getProject()).toArray(new PlanningPokerNotification[0]);
+            sessions = db.retrieve(PlanningPokerNotification.class, "id", intId, 
+                            s.getProject()).toArray(new PlanningPokerNotification[0]);
         } catch (WPISuiteException e) {
             e.printStackTrace();
         }

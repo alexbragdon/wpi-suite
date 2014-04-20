@@ -19,15 +19,16 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessi
 
 /**
  * The functionality of buttons and lists , etc goes here.
- * @author Fangming Ning
- * @contributOr Team Romulus
+ * @author Romulus
+ * @version 1
  */
 
 public class ViewEventController {
     private static ViewEventController instance = null;
     private MainView main = null;
     private ToolbarView toolbar = null;
-    private HashMap<PlanningPokerSession, Integer> listOfEditingSessions = new HashMap<PlanningPokerSession, Integer>();
+    private final HashMap<PlanningPokerSession, Integer> listOfEditingSessions = 
+                    new HashMap<PlanningPokerSession, Integer>();
 
     /**
      * Default constructor for ViewEventController.  Is protected to prevent instantiation.
@@ -72,17 +73,22 @@ public class ViewEventController {
      * Opens a new tab for the creation of a session.
      */
     public void createSession() {
-        SessionPanel newSession = new SessionPanel();
+        final SessionPanel newSession = new SessionPanel();
         main.addTab("New Session", null, newSession, "Create a new session");
         main.invalidate(); //force the tabbedpane to redraw.
         main.repaint();
         main.setSelectedComponent(newSession);
     }
     
+    /**
+     * 
+     * Description goes here.
+     *
+     */
     public void viewDeck() {
     	if (main.indexOfTab("Fibonacci Deck") == -1)
     	{
-    		ViewDeckPanel newDeck = ViewDeckPanel.getInstance(); 
+    		final ViewDeckPanel newDeck = ViewDeckPanel.getInstance(); 
     		main.addTab("Fibonacci Deck", null, newDeck, "View Chosen Deck");
     		main.invalidate();
     		main.repaint();
@@ -118,8 +124,8 @@ public class ViewEventController {
         }
 
         if (!(exists)) {
-            SessionPanel sessionEditor = new SessionPanel(session);
-            String tabName = "Edit " + session.getName();
+            final SessionPanel sessionEditor = new SessionPanel(session);
+            final String tabName = "Edit " + session.getName();
             main.addTab(tabName, null, sessionEditor, "Edit this session");
             main.invalidate();
             main.repaint();
@@ -147,8 +153,8 @@ public class ViewEventController {
         }
         
         if (!(exists)) {
-            CloseSessionPanel panel = new CloseSessionPanel(session, true);
-            String tabName = "Review " + session.getName();
+            final CloseSessionPanel panel = new CloseSessionPanel(session, true);
+            final String tabName = "Review " + session.getName();
             main.addTab(tabName, null, panel, "Close this session");
             main.invalidate();
             main.repaint();
@@ -175,8 +181,8 @@ public class ViewEventController {
         }
         
         if (!(exists)) {
-            CloseSessionPanel panel = new CloseSessionPanel(session, false);
-            String tabName = "View " + session.getName();
+            final CloseSessionPanel panel = new CloseSessionPanel(session, false);
+            final String tabName = "View " + session.getName();
             main.addTab(tabName, null, panel, "View this session");
             main.invalidate();
             main.repaint();

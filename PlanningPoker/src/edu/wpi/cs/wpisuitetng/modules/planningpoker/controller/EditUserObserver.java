@@ -17,20 +17,23 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
  * @author Team Romulus
- *
+ * @version 1
  */
 public class EditUserObserver implements RequestObserver {
     private final EditUserController controller;
 
     /**
-     * Makes the thing.
+     * Constructor for the EditUserObserver
+     * 
+     * @param editEmailController EditEmailController accociated with this observer
      */
     public EditUserObserver(EditUserController editEmailController) {
         controller = editEmailController;
     }
 
     /**
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver
+     * responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
     @Override
     public void responseSuccess(IRequest iReq) {
@@ -38,7 +41,8 @@ public class EditUserObserver implements RequestObserver {
     }
 
     /**
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver
+     * responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
      */
     @Override
     public void responseError(IRequest iReq) {
@@ -46,7 +50,8 @@ public class EditUserObserver implements RequestObserver {
     }
 
     /**
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
+     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver
+     * fail(edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
      */
     @Override
     public void fail(IRequest iReq, Exception exception) {

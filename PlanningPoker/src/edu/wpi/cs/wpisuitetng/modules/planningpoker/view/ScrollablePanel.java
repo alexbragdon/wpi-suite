@@ -58,7 +58,8 @@ public class ScrollablePanel extends JPanel implements Scrollable {
 	@Override
 	public int getScrollableBlockIncrement(Rectangle visibleRect,
 			int orientation, int direction) {
-        return ((orientation == SwingConstants.VERTICAL) ? visibleRect.height : visibleRect.width) - 10;
+        return ((orientation == SwingConstants.VERTICAL) ? visibleRect.height 
+                        : visibleRect.width) - 10;
 	}
 
 	/**
