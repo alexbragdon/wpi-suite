@@ -50,11 +50,11 @@ public class VotingOverviewDemo {
         RequirementEstimate req2 = new RequirementEstimate(1, "Code a GUI interface using Visual Basic to track an IP address", 0, false);
         RequirementEstimate req3 = new RequirementEstimate(2, "Allow two people to use the keyboard at once", 0, false);
         
-        req1.addVote("bob", 3);
-        req1.addVote("joe", 5);
-        req1.addVote("tom", 9);
-        req3.addVote("bob", 2);
-        req3.addVote("tom", 4);
+        req1.addVote("bob", null);
+        req1.addVote("joe", null);
+        req1.addVote("tom", null);
+        req3.addVote("bob", null);
+        req3.addVote("tom", null);
         
         List<RequirementEstimate> requirements = new ArrayList<RequirementEstimate>();
         requirements.add(req1);
