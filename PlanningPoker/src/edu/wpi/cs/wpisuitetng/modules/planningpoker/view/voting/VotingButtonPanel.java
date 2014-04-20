@@ -8,7 +8,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -22,7 +21,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.NumberFormatter;
 
 import net.miginfocom.swing.MigLayout;
@@ -37,10 +35,15 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
 
 public class VotingButtonPanel extends JPanel{
 	
+    /**
+     * 
+     * Description
+     *
+     * @param mode
+     */
 	public VotingButtonPanel(ViewMode mode){
 		
 		setLayout(new MigLayout());
-		//this.setSize(300, 200);
 		
 		if(mode.equals(ViewMode.WITHDECK)){
 			buildLayoutWithDeck();
@@ -51,22 +54,23 @@ public class VotingButtonPanel extends JPanel{
 
 	private void buildLayoutWithoutDeck() {
 		// TODO Auto-generated method stub
-		JLabel infoLabel = new JLabel("  Enter estimate  ");
-		JSpinner estimateSpin = new JSpinner(new SpinnerNumberModel(23, 0, 99, 1));
-		JButton voteButton = new JButton("Vote");
+		final JLabel infoLabel = new JLabel("  Enter estimate  ");
+		final JSpinner estimateSpin = new JSpinner(new SpinnerNumberModel(23, 0, 99, 1));
+		final JButton voteButton = new JButton("Vote");
 		
 		estimateSpin.setPreferredSize(new Dimension(100, 100));
-		estimateSpin.getComponent(0).setPreferredSize(new Dimension(75,75));
+		estimateSpin.getComponent(0).setPreferredSize(new Dimension(75, 75));
 		((JSpinner.NumberEditor) estimateSpin.getEditor()).getTextField().setFont(new Font("default", Font.BOLD, 72));
-		JFormattedTextField estimateNum = ((JSpinner.NumberEditor) estimateSpin.getEditor()).getTextField();
+		final JFormattedTextField estimateNum = ((JSpinner.NumberEditor) estimateSpin.getEditor()).getTextField();
         ((NumberFormatter) estimateNum.getFormatter()).setAllowsInvalid(false);
         estimateNum.setEditable(true);
 		voteButton.setPreferredSize(new Dimension(140, 180));
 		
 		try {
-            Image img = ImageIO.read(getClass().getResource("vote-button.png"));
+            final Image img = ImageIO.read(getClass().getResource("vote-button.png"));
             voteButton.setIcon(new ImageIcon(img));
         } catch (IOException ex) {
+            ex.printStackTrace();
         }
 		
 		add(infoLabel);
@@ -76,25 +80,26 @@ public class VotingButtonPanel extends JPanel{
 
 	private void buildLayoutWithDeck() {
 		// TODO Auto-generated method stub
-		JLabel infoLabel = new JLabel("  Total selected        ");
-		JLabel estimate = new JLabel("23");
-		JButton clearButton = new JButton("Clear Selection");
-		JButton voteButton = new JButton("Vote");
+		final JLabel infoLabel = new JLabel("  Total selected        ");
+		final JLabel estimate = new JLabel("23");
+		final JButton clearButton = new JButton("Clear Selection");
+		final JButton voteButton = new JButton("Vote");
 		
 		voteButton.setPreferredSize(new Dimension(140, 130));
 		clearButton.setPreferredSize(new Dimension(140, 40));
 		estimate.setFont(new Font("default", Font.BOLD, 72));
 		
 		try {
-            Image img1 = ImageIO.read(getClass().getResource("vote-button.png"));
+            final Image img1 = ImageIO.read(getClass().getResource("vote-button.png"));
             voteButton.setIcon(new ImageIcon(img1));
-            Image img2 = ImageIO.read(getClass().getResource("clear-button.png"));
+            final Image img2 = ImageIO.read(getClass().getResource("clear-button.png"));
             clearButton.setIcon(new ImageIcon(img2));
         } catch (IOException ex) {
+            ex.printStackTrace();
         }
 		
 		add(infoLabel);
-		add(clearButton,"wrap");
+		add(clearButton, "wrap");
 		add(estimate);
 		add(voteButton);
 	}

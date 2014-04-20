@@ -14,8 +14,6 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
@@ -46,9 +44,12 @@ public class VotingOverviewDemo {
      *
      */
     private static void createAndShowGUI() {
-        RequirementEstimate req1 = new RequirementEstimate(0, "Post to the server on page refresh", 0, false);
-        RequirementEstimate req2 = new RequirementEstimate(1, "Code a GUI interface using Visual Basic to track an IP address", 0, false);
-        RequirementEstimate req3 = new RequirementEstimate(2, "Allow two people to use the keyboard at once", 0, false);
+        final RequirementEstimate req1 = new RequirementEstimate(0, 
+                        "Post to the server on page refresh", 0, false);
+        final RequirementEstimate req2 = new RequirementEstimate(1, 
+                        "Code a GUI interface using Visual Basic to track an IP address", 0, false);
+        final RequirementEstimate req3 = new RequirementEstimate(2, 
+                        "Allow two people to use the keyboard at once", 0, false);
         
         req1.addVote("bob", 3);
         req1.addVote("joe", 5);
@@ -56,12 +57,12 @@ public class VotingOverviewDemo {
         req3.addVote("bob", 2);
         req3.addVote("tom", 4);
         
-        List<RequirementEstimate> requirements = new ArrayList<RequirementEstimate>();
+        final List<RequirementEstimate> requirements = new ArrayList<RequirementEstimate>();
         requirements.add(req1);
         requirements.add(req2);
         requirements.add(req3);
         
-        JFrame f = new JFrame("Demo");
+        final JFrame f = new JFrame("Demo");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(800, 600);
         f.getContentPane().add(new VotingOverviewPanel(requirements, 3, "bob"), BorderLayout.CENTER);

@@ -56,11 +56,14 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
                 clearButton = new JButton("Clear");
                 cancelButton = new JButton("Cancel");
                 openButton = new JButton("Create and Open");
-                openButton.setToolTipText("Create the planning poker session, add it to Sessions I'm Moderating in the sessions tab, and immediately make it active");
+                openButton.setToolTipText("Create the planning poker session, add it to " + 
+                                "Sessions I'm Moderating in the sessions tab, and " + 
+                                "immediately make it active");
                 openButton.setEnabled(false);
                 break;
             default:
-                throw new RuntimeException("Invalid ViewMode"); // $codepro.audit.disable thrownExceptions
+                // $codepro.audit.disable thrownExceptions
+                throw new RuntimeException("Invalid ViewMode"); 
         }
         
         final SpringLayout layout = new SpringLayout();
@@ -76,7 +79,9 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
             cancelButton.setIcon(new ImageIcon(img3));
             final Image img4 = ImageIO.read(getClass().getResource("openSession.png"));
             openButton.setIcon(new ImageIcon(img4));
-        }catch(IOException ex){}
+        } catch(IOException ex) {
+            ex.printStackTrace();
+        }
 
         this.add(saveButton);
         switch (viewMode) {

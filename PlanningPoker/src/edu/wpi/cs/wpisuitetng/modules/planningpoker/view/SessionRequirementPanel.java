@@ -34,7 +34,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * This is the panel on the open session table.
  * 
  * @author Team Romulus
- * @contributOr 
+ * @version 1
  */
 @SuppressWarnings("serial")
 public class SessionRequirementPanel extends JPanel {
@@ -58,14 +58,18 @@ public class SessionRequirementPanel extends JPanel {
 
     /**
      * Sets up directory table of requirements in system
+     * 
+     * @param parent
+     * @param viewMode
+     * @param displaySession
      */
     public SessionRequirementPanel(SessionPanel parent, ViewMode viewMode,
                     PlanningPokerSession displaySession) {
     	this.displaySession = displaySession;
-        Object[][] data = {};
-        String[] columns = { "ID", "NAME", "" };
+        final Object[][] data = {};
+        final String[] columns = { "ID", "NAME", "" };
 
-       new GetRequirementsController(this).retrieveRequirements();
+        new GetRequirementsController(this).retrieveRequirements();
 
         model = new DefaultTableModel(data, columns) {
         	@Override
@@ -76,7 +80,7 @@ public class SessionRequirementPanel extends JPanel {
 
         table = new JTable(model) {
             @Override
-            public Class<?> getColumnClass(int column) {
+            public Class<?> getColumnClass(int column) { // $codepro.audit.disable multipleReturns
                 switch (column) {
                     case 0:
                         return Integer.class;
@@ -88,7 +92,7 @@ public class SessionRequirementPanel extends JPanel {
             }
         };
 
-        JScrollPane tablePanel = new JScrollPane(table); 
+        final JScrollPane tablePanel = new JScrollPane(table); 
         tablePanel.setPreferredSize(new Dimension(1000, 800));
 
         table.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -103,11 +107,9 @@ public class SessionRequirementPanel extends JPanel {
         
         this.setLayout(new BorderLayout());
 
-        //JPanel refreshPanel = new JPanel();
         this.add(tablePanel, BorderLayout.CENTER);
-        //this.add(refreshPanel, BorderLayout.EAST);
         
-        TableColumn tc = table.getColumnModel().getColumn(2);
+        final TableColumn tc = table.getColumnModel().getColumn(2);
         tc.setCellEditor(table.getDefaultEditor(Boolean.class));  
         tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
         table.getTableHeader().setReorderingAllowed(false);
@@ -121,19 +123,35 @@ public class SessionRequirementPanel extends JPanel {
         tableUpdated();
     }
     
+    /**
+     * 
+     * This is the missing JavaDoc Comment
+     *
+     * @author Romulus
+     * @version Apr 20, 2014
+     */
     class MyItemListener implements ItemListener  
     {
+     // $codepro.audit.disable multipleReturns
       public void itemStateChanged(ItemEvent e) {  
-        Object source = e.getSource();  
-        if (!(source instanceof AbstractButton)) return;  
-        boolean checked = e.getStateChange() == ItemEvent.SELECTED;  
-        for(int x = 0, y = table.getRowCount(); x < y; x++)  
-        {  
+        final Object source = e.getSource();  
+        if (!(source instanceof AbstractButton)) {
+            return;  
+        }
+        final boolean checked = e.getStateChange() == ItemEvent.SELECTED;  
+        final int y = table.getRowCount();
+        for(int x = 0; x < y; x++)
+        {
           table.setValueAt(Boolean.valueOf(checked), x, 2);  
-        }  
+        }
       }   
     }
 
+    /**
+     * 
+     * Refreshes Requirements by adding new requirements when they get added
+     *
+     */
 	public void refreshRequirementSelection() {
 		for (int i = 0; i < requirements.size(); i++) {
 			model.setValueAt(false, i, 2);
@@ -142,7 +160,8 @@ public class SessionRequirementPanel extends JPanel {
 		for (RequirementEstimate displayRequirement : displaySession.getRequirements()) {
 		    boolean exists = false;
 		    for (int i = 0; i < requirements.size(); i++) {
-		        if (requirements.get(i).getId() == displayRequirement.getId() && requirements.get(i).getName().equals(displayRequirement.getName())) {
+		        if (requirements.get(i).getId() == displayRequirement.getId() 
+		                        && requirements.get(i).getName().equals(displayRequirement.getName())) {
 		            exists = true;
 		            model.setValueAt(true, i, 2);
 		        }
@@ -154,6 +173,12 @@ public class SessionRequirementPanel extends JPanel {
 		}
 	}
 
+	/**
+	 * 
+	 * Description goes here.
+	 *
+	 * @param l
+	 */
 	public void addListener(TableModelListener l) {
 		model.addTableModelListener(l);
 	}
@@ -163,8 +188,14 @@ public class SessionRequirementPanel extends JPanel {
      * @return A List containing the selected requirements
      */
 
+	/**
+	 * 
+	 * Description goes here.
+	 *
+	 * @return the list of Requirements checked off in the panel
+	 */
     public List<RequirementEstimate> getSelectedRequirements() {
-        List<RequirementEstimate> selected = new LinkedList<RequirementEstimate>();
+        final List<RequirementEstimate> selected = new LinkedList<RequirementEstimate>();
         for (int i = 0; i < requirements.size(); i++) {
             if ((Boolean) model.getValueAt(i, 2)) {
                 selected.add(requirements.get(i));
@@ -173,13 +204,18 @@ public class SessionRequirementPanel extends JPanel {
         return selected;
     }
     
+    /**
+     * 
+     * Description goes here.
+     *
+     * @param requirements
+     */
     public void addRequirements(Requirement[] requirements) {
     	for (Requirement r : requirements) {
     		importedRequirements.add(r);
 		}
     	for (int i = 0; i < importedRequirements.size(); i++) {
             Requirement req = importedRequirements.get(i);
-            //String currEst = String.valueOf(req.getEstimate());
             String iteration = req.getIteration().toString();
             
             boolean hasEqual = false;
@@ -202,15 +238,24 @@ public class SessionRequirementPanel extends JPanel {
     	tableUpdated();
     }
     
+    /**
+     * 
+     * Description goes here.
+     *
+     */
     public void tableUpdated() {
     	boolean allChecked = true;
        
     	if (model.getRowCount() != 0) {
     		for (int i = 0; i < model.getRowCount(); i++) {
     			if ((boolean)model.getValueAt(i, 2)){
-    			} else{allChecked = false;}
+    			} else {
+    			    allChecked = false;
+    			}
     		}   
-    	} else{allChecked = false;}
+    	} else {
+    	    allChecked = false;
+    	}
           
         checkBox.setCheck(allChecked, table.getTableHeader());
         

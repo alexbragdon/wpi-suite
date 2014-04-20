@@ -9,16 +9,11 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.TableModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
@@ -46,7 +41,7 @@ public class VotingOverviewPanel extends JPanel {
         
         setLayout(new BorderLayout());
         
-        JProgressBar overallProgress = new JProgressBar(0, 1000);
+        final JProgressBar overallProgress = new JProgressBar(0, 1000);
         int votes = 0;
         for (RequirementEstimate requirement : requirements) {
             if (requirement.getVotes().containsKey(user)) {

@@ -9,15 +9,10 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
 
 /**
@@ -47,7 +42,7 @@ public class VotingButtonDemo {
      *
      */
     private static void createAndShowGUI() {
-        JFrame f = new JFrame("Demo");
+        final JFrame f = new JFrame("Demo");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(300, 200);
         f.getContentPane().add(new VotingButtonPanel(ViewMode.WITHDECK), BorderLayout.CENTER);

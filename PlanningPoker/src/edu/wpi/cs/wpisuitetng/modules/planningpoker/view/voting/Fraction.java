@@ -18,19 +18,44 @@ public class Fraction {
     private final int numerator;
     private final int denominator;
     
+    /**
+     * 
+     * Description
+     *
+     * @param numerator
+     * @param denominator
+     */
     public Fraction(int numerator, int denominator) {
         this.numerator = numerator;
         this.denominator = denominator;
     }
     
+    /**
+     * 
+     * Description goes here.
+     *
+     * @return
+     */
     public int getNumerator() {
         return numerator;
     }
     
+    /**
+     * 
+     * Description goes here.
+     *
+     * @return
+     */
     public int getDenominator() {
         return denominator;
     }
     
+    /**
+     * 
+     * Description goes here.
+     *
+     * @return
+     */
     public double getValue() {
         return (double) numerator / denominator;
     }

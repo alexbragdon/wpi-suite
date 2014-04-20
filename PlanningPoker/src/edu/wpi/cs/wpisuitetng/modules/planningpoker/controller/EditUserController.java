@@ -19,11 +19,12 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * @author Team Romulus
+ * @version 1
  *
  */
 public class EditUserController {
-    private static EditUserController instance;
-    private EditUserObserver observer;
+    private static EditUserController instance = null;
+    private final EditUserObserver observer;
     
     /**
      * Construct a EditEmailsController
@@ -48,10 +49,13 @@ public class EditUserController {
 
     /**
      * Gets all requirements from the database
+     * @param u User to set the email of
      */
     public void setEmail(User u) 
     {
-        final Request request = Network.getInstance().makeRequest("core/user/" + u.getUsername(), HttpMethod.POST);
+        final Request request = 
+                        Network.getInstance().makeRequest("core/user/" + u.getUsername(), 
+                                        HttpMethod.POST);
         request.setBody(u.toJSON());
         request.addObserver(observer); // add an observer to process the response
         request.send();

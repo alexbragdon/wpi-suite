@@ -121,8 +121,8 @@ public class ClosedSessionTable extends JTable {
      */
     public void addSessions(PlanningPokerSession session) {
         if (session.getCompletionTime() != null) {
-            final String date =
-                            new SimpleDateFormat("MM/dd/yyyy HH:mm").format(session.getCompletionTime());
+            final String date = new SimpleDateFormat(
+                            "MM/dd/yyyy HH:mm").format(session.getCompletionTime());
             tableModel.insertRow(0, new String[] {
                             String.valueOf(session.getID()), session.getName(), date
             });

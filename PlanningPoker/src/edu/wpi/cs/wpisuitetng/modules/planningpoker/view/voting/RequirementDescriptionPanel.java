@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Team Romulus
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
@@ -11,6 +23,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
 /**
  * This class is a {@code JPanel} to contain the description of a {@code RequirmentEstimate}.
+ * @author Romulus
+ * @version 1
  */
 public final class RequirementDescriptionPanel extends JPanel {
 
@@ -38,16 +52,16 @@ public final class RequirementDescriptionPanel extends JPanel {
 		
 		descriptionArea.setText(this.req.getDescription());
 
-		JScrollPane scrollPanel = new JScrollPane(descriptionArea); //Put panel in a ScrollPane
+		final JScrollPane scrollPanel = new JScrollPane(descriptionArea); //Put panel in a ScrollPane
 		this.add(scrollPanel, BorderLayout.CENTER);
-	}	
+    }
 
 	/**
 	 * Update the panel's text of the requirement. Only 
 	 * needs to be used if Requirement description changes.
 	 */
 	public void updateDescription() {
-		descriptionArea.setText(this.req.getDescription());
+		descriptionArea.setText(req.getDescription());
 	}
 	
 	/**

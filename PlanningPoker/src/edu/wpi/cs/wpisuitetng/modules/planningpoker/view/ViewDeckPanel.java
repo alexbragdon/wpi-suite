@@ -23,6 +23,13 @@ import javax.swing.JScrollPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
 
+/**
+ * 
+ * Handles View of the Decks in the voting pannel
+ *
+ * @author Romulus
+ * @version Apr 20, 2014
+ */
 public class ViewDeckPanel extends JPanel {
 
 	private static final long serialVersionUID = 3047183291262652700L;
@@ -41,15 +48,16 @@ public class ViewDeckPanel extends JPanel {
 		
 		this.setLayout(new BorderLayout());
 		
-		//TODO: When more decks are added, make this more robust.
-		int[] cardValues = DeckSet.getInstance().getDeck("Default"); //Assume Fibonacci deck for now
+		// TODO: When more decks are added, make this more robust.
+		// Assume Fibonacci deck for now
+		final int[] cardValues = DeckSet.getInstance().getDeck("Default"); 
 		
 		//Load card images
 		initializeMap(cardValues);
 		
 		//set up panel and layout
-		JPanel cardsPanel = new JPanel();
-		JLabel[] cardLabels = getLabels(cardValues);
+		final JPanel cardsPanel = new JPanel();
+		final JLabel[] cardLabels = getLabels(cardValues);
 		cardsPanel.setLayout(new GridLayout(1, cardLabels.length));
 		int index = 0;
 		for (JLabel label : cardLabels) {
@@ -61,12 +69,12 @@ public class ViewDeckPanel extends JPanel {
 			cardsPanel.add(label);
 		}
 		
-		JScrollPane scrPanel = new JScrollPane(cardsPanel);
+		final JScrollPane scrPanel = new JScrollPane(cardsPanel);
 		this.add(scrPanel, BorderLayout.CENTER);
 	}
 	
 	private JLabel[] getLabels(int[] cardValues) {
-		JLabel[] labels = new JLabel[cardValues.length];
+		final JLabel[] labels = new JLabel[cardValues.length];
 		for (int i = 0; i < cardValues.length; i++) {
 			System.out.println("Getting: " + i + ", " + cardValues[i]);
 			labels[i] = new JLabel(new ImageIcon(cards.get(cardValues[i])));
@@ -112,6 +120,12 @@ public class ViewDeckPanel extends JPanel {
 		return INSTANCE;
 	}
 	
+	/**
+	 * 
+	 * Description goes here.
+	 *
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		ViewDeckPanel.getInstance();
 	}

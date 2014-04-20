@@ -135,8 +135,8 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
         }
         PlanningPokerSession[] sessions = new PlanningPokerSession[1];
         try {
-            sessions = 
-                            db.retrieve(PlanningPokerSession.class, "id", intId, s.getProject()).toArray(new PlanningPokerSession[0]);
+            sessions = db.retrieve(PlanningPokerSession.class, "id", intId, 
+                            s.getProject()).toArray(new PlanningPokerSession[0]);
         } catch (WPISuiteException e) {
             e.printStackTrace();
         }
@@ -205,8 +205,8 @@ public class PlanningPokerSessionEntityManager implements EntityManager<Planning
 
         // We have to get the original session from db4o, copy properties, then save.
 
-        final List<Model> oldSessions =
-                        db.retrieve(PlanningPokerSession.class, "ID", updatedSession.ID, s.getProject());
+        final List<Model> oldSessions = db.retrieve(PlanningPokerSession.class, "ID", 
+                        updatedSession.ID, s.getProject());
         if (oldSessions.size() < 1 || oldSessions.get(0) == null) {
             throw new BadRequestException("PlanningPokerSession with ID does not exist.");
         }
