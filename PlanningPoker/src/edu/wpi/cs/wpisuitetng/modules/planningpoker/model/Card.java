@@ -24,6 +24,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.CardPanel;
+
 /**
  * The class that contains information about a certain card
  * @author Team Romulus
@@ -52,37 +54,34 @@ public class Card extends JPanel {
 		this.addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent me) {
-				// TODO Auto-generated method stub
 				setCardSelected();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent me) {
 				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void mouseExited(MouseEvent me) {
 				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void mousePressed(MouseEvent me) {
 				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent me) {
 				// TODO Auto-generated method stub
-				
 			}
 		});
 		
-		this.imgLabel.setIcon(new ImageIcon(this.cardImg));
+		// TODO: Add number to card label
+		// this.imgLabel.add(numLabel);
 		this.add(numLabel);
+		this.imgLabel.setIcon(new ImageIcon(this.cardImg));
 		this.add(imgLabel);
 	}
 
@@ -94,25 +93,10 @@ public class Card extends JPanel {
 	}
 
 	/**
-	 * @param cardNum the cardNum to set
-	 */
-	public void setCardNum(int cardNum) {
-		this.cardNum = cardNum;
-		this.numLabel.setText(Integer.toString(cardNum));
-	}
-
-	/**
 	 * @return the cardImg
 	 */
 	public Image getCardImg() {
 		return cardImg;
-	}
-
-	/**
-	 * @param cardImg the cardImg to set
-	 */
-	public void setCardImg(Image cardImg) {
-		this.cardImg = cardImg;
 	}
 
 	/**
@@ -142,5 +126,12 @@ public class Card extends JPanel {
 			selected = false;
 			imgLabel.setBorder(null);
 		}
+	}
+	
+	/**
+	 * @return the selected
+	 */
+	public boolean isSelected() {
+		return selected;
 	}
 }
