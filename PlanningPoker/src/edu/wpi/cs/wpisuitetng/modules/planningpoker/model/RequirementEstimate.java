@@ -32,9 +32,14 @@ public class RequirementEstimate {
     private final String name;
     
     /**
+     * The description for the requirement
+     */
+    private String description;
+    
+    /**
      * A mapping of usernames to that users estimate.
      */
-    private final HashMap<String, Integer> votes;
+    private final HashMap<String, UserEstimate> votes;
 
     /**
      * The final requirement estimate, possibly overridden.
@@ -54,11 +59,19 @@ public class RequirementEstimate {
      * @param isExported boolean
      */
     public RequirementEstimate(int id, String name, int finalEstimate, boolean isExported) {
-        votes = new HashMap<String, Integer>();
+        votes = new HashMap<String, UserEstimate>();
         this.id = id;
         this.name = name;
         this.finalEstimate = finalEstimate;
         this.isExported = isExported;
+    }
+    
+    public void setDescription(String description) {
+    	this.description = description;
+    }
+    
+    public String getDescription() {
+    	return description;
     }
 
     public int getId() {
@@ -84,7 +97,7 @@ public class RequirementEstimate {
         this.isExported = isExported;
     }
 
-    public Map<String,Integer> getVotes() {
+    public Map<String,UserEstimate> getVotes() {
         return votes;
     }
 
@@ -94,7 +107,7 @@ public class RequirementEstimate {
      * @param username the username to set
      * @param estimate the user's estimate
      */
-    public void addVote(String username, int estimate) {
+    public void addVote(String username, UserEstimate estimate) {
         votes.put(username, estimate);
     }
 }
