@@ -126,7 +126,8 @@ public class Card extends JPanel {
 	 */
 	public void setCardSelected(){
 		if(parent.isZeroSelected() && cardNum != 0){
-			return;
+			parent.unselectZero();
+			parent.setZeroSelected(false);
 		}
 		
 		if(parent.isZeroSelected() && cardNum == 0){
@@ -139,7 +140,6 @@ public class Card extends JPanel {
 			
 			if(cardNum == 0){
 				parent.unknownSelected();
-				return;
 			}
 		}
 		
@@ -147,6 +147,8 @@ public class Card extends JPanel {
 			selected = false;
 			imgLabel.setBorder(null);
 		}
+		
+		System.out.println(parent.isZeroSelected());
 		
 		parent.updateSelectedIndices();
 	}

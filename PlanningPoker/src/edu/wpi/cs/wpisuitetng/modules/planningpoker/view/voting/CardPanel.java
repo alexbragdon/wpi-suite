@@ -192,4 +192,13 @@ public class CardPanel extends JPanel {
 	public void setZeroSelected(boolean zeroSelected) {
 		this.zeroSelected = zeroSelected;
 	}
+	
+	/**
+	 * Unselects the unknown card in the set
+	 */
+	public void unselectZero() {
+		Card unknown = hash.get(0);
+		unknown.getImgLabel().setBorder(null);
+		unknown.setSelected(false);
+	}
 }
