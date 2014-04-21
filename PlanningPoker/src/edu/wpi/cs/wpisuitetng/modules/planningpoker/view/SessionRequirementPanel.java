@@ -234,6 +234,7 @@ public class SessionRequirementPanel extends JPanel {
             
             	RequirementEstimate estimate = new RequirementEstimate(req.getId(), req.getName(), 0, false);
             	estimate.setDescription(req.getDescription());
+            	estimate.setType(req.getType());
             	this.requirements.add(estimate);
             }
         }

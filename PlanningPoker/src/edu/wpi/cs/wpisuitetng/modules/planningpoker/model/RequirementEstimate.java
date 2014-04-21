@@ -15,6 +15,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementType;
+
 /**
  * A RequirementEstimate represents the estimates associated with one requirement.
  * @author Team Romulus
@@ -50,6 +52,11 @@ public class RequirementEstimate {
      * True if this estimate has been exported to the requirements manager.
      */
     private boolean isExported;
+    
+    /**
+     * The type of the requirement.
+     */
+    private RequirementType type;
 
     /**
      * Constructor for RequirementEstimate.
@@ -101,6 +108,14 @@ public class RequirementEstimate {
         return votes;
     }
 
+    public RequirementType getType() {
+        return type;
+    }
+
+    public void setType(RequirementType type) {
+        this.type = type;
+    }
+    
     /**
      * Adds the given users vote to the vote collection.
      * 
