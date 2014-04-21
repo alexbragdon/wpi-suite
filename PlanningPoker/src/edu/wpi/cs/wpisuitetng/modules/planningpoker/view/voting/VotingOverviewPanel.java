@@ -14,6 +14,8 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
@@ -36,7 +38,7 @@ public class VotingOverviewPanel extends JPanel {
      * @param teamCount number of members on the team
      * @param user the currently logged in user
      */
-    public VotingOverviewPanel(List<RequirementEstimate> requirements, int teamCount, String user) {
+    public VotingOverviewPanel(List<RequirementEstimate> requirements, int teamCount, String user, final VotingPanel parent) {
         this.requirements = requirements;
         
         setLayout(new BorderLayout());
@@ -53,6 +55,13 @@ public class VotingOverviewPanel extends JPanel {
         table = new VotingOverviewTable(new VotingOverviewTableModel(requirements, teamCount, user));
         add(overallProgress, BorderLayout.NORTH);
         add(new JScrollPane(table), BorderLayout.CENTER);
+        
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                parent.updateSelectedRequirement(getSelectedRequirement());                
+            }
+        });
     }
     
     /**

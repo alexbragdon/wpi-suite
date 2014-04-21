@@ -34,7 +34,7 @@ public final class RequirementDescriptionPanel extends JPanel {
 	private final JLabel titleLabel = new JLabel("Requirement Description:");
 	private final JTextArea descriptionArea;
 
-	private final RequirementEstimate req;
+	private RequirementEstimate req;
 
 	/**
 	 * Create a RequirementDescriptionPanel from the specified requirement
@@ -64,7 +64,8 @@ public final class RequirementDescriptionPanel extends JPanel {
 	 * Update the panel's text of the requirement. Only 
 	 * needs to be used if Requirement description changes.
 	 */
-	public void updateDescription() {
+	public void updateDescription(RequirementEstimate req) {
+	    this.req = req;
 		descriptionArea.setText(req.getDescription());
 	}
 	

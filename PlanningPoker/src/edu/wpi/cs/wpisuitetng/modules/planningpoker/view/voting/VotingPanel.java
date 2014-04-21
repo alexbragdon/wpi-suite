@@ -15,6 +15,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
 
 /**
@@ -25,6 +26,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
  */
 @SuppressWarnings("serial")
 public class VotingPanel extends JPanel {
+    VotingOverviewPanel overview;
+    CardPanel cards;
+    RequirementDescriptionPanel description;
+    CountDownOverviewPanel countdown;
+    VotingButtonPanel buttons;
+    
     /**
      * Makes a VotingPanel
      * 
@@ -43,7 +50,7 @@ public class VotingPanel extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        VotingOverviewPanel overview = new VotingOverviewPanel(session.getRequirements(), 20, "bob");
+        overview = new VotingOverviewPanel(session.getRequirements(), 20, "bob", this);
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 2;
@@ -52,7 +59,7 @@ public class VotingPanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         add(overview, c);
 
-        CardPanel cards = new CardPanel("default", session.getRequirements().get(0));
+        cards = new CardPanel("default", session.getRequirements().get(0));
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 2;
@@ -61,7 +68,7 @@ public class VotingPanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         add(cards, c);
 
-        RequirementDescriptionPanel description = new RequirementDescriptionPanel(session
+        description = new RequirementDescriptionPanel(session
                         .getRequirements().get(0));
         c.gridx = 0;
         c.gridy = 2;
@@ -71,7 +78,7 @@ public class VotingPanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         add(description, c);
 
-        CountDownOverviewPanel countdown = new CountDownOverviewPanel(session);
+        countdown = new CountDownOverviewPanel(session);
         c.gridx = 0;
         c.gridy = 3;
         c.gridwidth = 1;
@@ -81,7 +88,7 @@ public class VotingPanel extends JPanel {
         c.anchor = GridBagConstraints.LAST_LINE_START;
         add(countdown, c);
 
-        VotingButtonPanel buttons = new VotingButtonPanel(ViewMode.WITHDECK);
+        buttons = new VotingButtonPanel(ViewMode.WITHDECK);
         c.gridx = 1;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -91,5 +98,14 @@ public class VotingPanel extends JPanel {
         c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.LINE_END;
         add(buttons, c);
+    }
+
+    /**
+     * Updates the selected requirement.
+     *
+     * @param selectedRequirement
+     */
+    public void updateSelectedRequirement(RequirementEstimate selectedRequirement) {
+        description.updateDescription(selectedRequirement);
     }
 }

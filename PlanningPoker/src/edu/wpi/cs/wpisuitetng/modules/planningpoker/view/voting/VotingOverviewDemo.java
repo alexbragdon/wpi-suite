@@ -49,11 +49,13 @@ public class VotingOverviewDemo {
     private static void createAndShowGUI() {
         final RequirementEstimate req1 = new RequirementEstimate(0, 
                         "Post to the server on page refresh", 0, false);
-        req1.setDescription("As a CSI investigator, I want to be able to track a killer's IP address using a GUI interface in Visual Basic so that I can find the killer and apprehend him.");
+        req1.setDescription("In 1976, industrial music found a name, when Throbbing Gristle formed Industrial Records (``Industrial Music for Industrial People'') along with such bands as Cabaret Voltaire and ClockDVA. These bands were heavily influenced by Burroughs' ideas, and cut-up theory made its way into their music, when the bands would make tape recordings of found sounds (machinery, short-wave radio, television newscasts, public conversations) and cut up, rearrange, and splice the tapes, turning it into music.");
         final RequirementEstimate req2 = new RequirementEstimate(1, 
                         "Code a GUI interface using Visual Basic to track an IP address", 0, false);
+        req2.setDescription("As a CSI investigator, I want to be able to track a killer's IP address using a GUI interface in Visual Basic so that I can find the killer and apprehend him.");
         final RequirementEstimate req3 = new RequirementEstimate(2, 
                         "Allow two people to use the keyboard at once", 0, false);
+        req3.setDescription("This is a short description.");
         
         req1.addVote("bob", null);
         req1.addVote("joe", null);
