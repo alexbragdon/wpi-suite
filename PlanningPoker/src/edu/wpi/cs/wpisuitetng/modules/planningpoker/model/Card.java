@@ -12,7 +12,10 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -23,6 +26,8 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.CardPanel;
 
 /**
  * The class that contains information about a certain card
@@ -36,11 +41,14 @@ public class Card extends JPanel {
 	private final JLabel numLabel;
 	private final JLabel imgLabel;
 	private boolean selected;
+	private CardPanel parent;
 
-	public Card(int cardNum){
+	public Card(int cardNum, CardPanel parent){
 		this.cardNum = cardNum;
+		this.parent = parent;
 		numLabel = new JLabel();
 		imgLabel = new JLabel();
+		imgLabel.setLayout(new BorderLayout());
 		selected = false;
 
 		try {
@@ -48,41 +56,38 @@ public class Card extends JPanel {
 		} catch (IOException ex) {}
 
 		numLabel.setText(Integer.toString(cardNum));
+		numLabel.setFont(numLabel.getFont().deriveFont(Font.BOLD, 64));
+		numLabel.setHorizontalAlignment(JLabel.CENTER);
 		
-		this.addMouseListener(new MouseListener(){
+		imgLabel.addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent me) {
-				// TODO Auto-generated method stub
 				setCardSelected();
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent me) {
 				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void mouseExited(MouseEvent me) {
 				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void mousePressed(MouseEvent me) {
 				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent me) {
 				// TODO Auto-generated method stub
-				
 			}
 		});
 		
-		this.imgLabel.setIcon(new ImageIcon(this.cardImg));
-		this.add(numLabel);
+	    this.imgLabel.setIcon(new ImageIcon(this.cardImg));
+		imgLabel.add(numLabel);
 		this.add(imgLabel);
 	}
 
@@ -94,25 +99,10 @@ public class Card extends JPanel {
 	}
 
 	/**
-	 * @param cardNum the cardNum to set
-	 */
-	public void setCardNum(int cardNum) {
-		this.cardNum = cardNum;
-		this.numLabel.setText(Integer.toString(cardNum));
-	}
-
-	/**
 	 * @return the cardImg
 	 */
 	public Image getCardImg() {
 		return cardImg;
-	}
-
-	/**
-	 * @param cardImg the cardImg to set
-	 */
-	public void setCardImg(Image cardImg) {
-		this.cardImg = cardImg;
 	}
 
 	/**
@@ -135,12 +125,21 @@ public class Card extends JPanel {
 	public void setCardSelected(){
 		if(!selected){
 			selected = true;
-			imgLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+			imgLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3, true));
+			parent.updateSelectedIndices();
 		}
 		
 		else{
 			selected = false;
 			imgLabel.setBorder(null);
+			parent.updateSelectedIndices();
 		}
+	}
+	
+	/**
+	 * @return the selected
+	 */
+	public boolean isSelected() {
+		return selected;
 	}
 }

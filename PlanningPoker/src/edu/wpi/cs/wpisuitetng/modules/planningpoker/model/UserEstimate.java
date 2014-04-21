@@ -12,6 +12,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A UserEstimate represents the estimates associated with one requirement
  * for one user
@@ -27,7 +30,7 @@ public class UserEstimate {
 	/**
      * The indices of selected cards for an estimate
      */
-	private int[] selectedCardIndices;
+	private List<Integer> selectedCardIndices = new ArrayList<Integer>();
 	
 	/**
      * The total estimate the user has specified
@@ -37,7 +40,7 @@ public class UserEstimate {
 	/**
      * Constructor
      */
-	public UserEstimate(String user, int[] selectedCardIndices, int totalEstimate){
+	public UserEstimate(String user, List<Integer> selectedCardIndices, int totalEstimate){
 		this.user = user;
 		this.selectedCardIndices = selectedCardIndices;
 		this.totalEstimate = totalEstimate;
@@ -60,14 +63,14 @@ public class UserEstimate {
 	/**
      * Returns a list of indices of selected cards
      */
-	public int[] getSelectedCardIndices() {
+	public List<Integer> getSelectedCardIndices() {
 		return selectedCardIndices;
 	}
 
 	/**
      * Sets the list
      */
-	public void setSelectedCardIndices(int[] selectedCardIndices) {
+	public void setSelectedCardIndices(List<Integer> selectedCardIndices) {
 		this.selectedCardIndices = selectedCardIndices;
 	}
 

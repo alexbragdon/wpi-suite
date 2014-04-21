@@ -40,7 +40,7 @@ public class CardPanelDemo {
 		JFrame f = new JFrame("Demo");
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setSize(300, 200);
-		f.getContentPane().add(new CardPanel("default", 0));
+		f.getContentPane().add(new CardPanel("default", null));
 		f.setVisible(true);
 	}
 }
