@@ -115,7 +115,9 @@ public class VotingPanel extends JPanel {
         c.anchor = GridBagConstraints.LINE_END;
         add(buttons, c);
         
-        cards.setButtonPanel(buttons);
+        if(hasDeck){
+        	cards.setButtonPanel(buttons);
+        }
     }
 
     /**
