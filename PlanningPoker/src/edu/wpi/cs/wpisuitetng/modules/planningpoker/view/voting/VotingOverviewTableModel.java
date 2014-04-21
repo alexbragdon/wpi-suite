@@ -98,17 +98,13 @@ public class VotingOverviewTableModel extends AbstractTableModel {
     @Override
     // $codepro.audit.disable multipleReturns
     public Object getValueAt(int row, int column) {
-        final java.util.Random random = new java.util.Random();
-        final String[] types = { "User Story", "Theme", "Epic" };
-        
-        
         final RequirementEstimate requirement = requirements.get(row);
         final boolean voted = requirement.getVotes().containsKey(user);
         
         switch (column) {
             case VOTED_COLUMN: return voted ? "\u2713" : "";
             case NAME_COLUMN: return requirement.getName();
-            case TYPE_COLUMN: return types[random.nextInt(types.length)];
+            case TYPE_COLUMN: return requirement.getType().toString();
             case ESTIMATE_COLUMN: return voted ? requirement.getVotes().get(user) : "--";
             case PROGRESS_COLUMN: return new Fraction(requirement.getVotes().size(), teamCount);
             default: 
