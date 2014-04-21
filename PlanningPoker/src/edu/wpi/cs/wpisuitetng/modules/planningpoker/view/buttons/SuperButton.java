@@ -101,7 +101,7 @@ public class SuperButton extends JButton {
             superButtonParent.setSelectedPanelIndex(1);
             this.setToolTipText("Vote in the selected session");
             // TODO: Make this button do something
-            this.setEnabled(false);
+            this.setEnabled(true);
         }
 
         // View session
@@ -133,8 +133,14 @@ public class SuperButton extends JButton {
      * Description goes here.
      *
      */
-    public void VoteSession(){
-
+    public void VoteSession(MainView parent){
+        final PlanningPokerSession session = getSelectedSession(parent, 1);
+        if (session == null) {
+            return;
+        }
+        ViewEventController.getInstance().voteOnSession(session);
+        setVisible(false);
+        superButtonParent.setVisible(false);
     }
 
     /**

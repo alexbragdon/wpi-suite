@@ -12,9 +12,12 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Component;
 import java.util.HashMap;
+
 import javax.swing.JComponent;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.VotingPanel;
 
 
 /**
@@ -209,5 +212,33 @@ public class ViewEventController {
      */
     public int getSize(){
     	return listOfEditingSessions.size();
+    }
+
+    /**
+     * Opens the voting panel for the session.
+     *
+     * @param session the session
+     */
+    public void voteOnSession(PlanningPokerSession session) {
+        boolean exists = false;
+        Component component = null;
+        
+        for (Component c : main.getComponents()) {
+            if (c instanceof VotingPanel && ((VotingPanel)c).getSession().equals(session)) {
+                exists = true;
+                component = c;
+            }
+        }
+        
+        if (!(exists)) {
+            final VotingPanel panel = new VotingPanel(session);
+            final String tabName = "Vote on " + session.getName();
+            main.addTab(tabName, null, panel, "Vote on this session");
+            main.invalidate();
+            main.repaint();
+            main.setSelectedComponent(panel);
+        } else {
+            main.setSelectedComponent(component);
+        }
     }
 }

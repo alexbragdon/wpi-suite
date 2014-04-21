@@ -31,6 +31,7 @@ public class VotingPanel extends JPanel {
     RequirementDescriptionPanel description;
     CountDownOverviewPanel countdown;
     VotingButtonPanel buttons;
+    PlanningPokerSession session;
     
     /**
      * Makes a VotingPanel
@@ -38,6 +39,7 @@ public class VotingPanel extends JPanel {
      * @param session the session
      */
     public VotingPanel(PlanningPokerSession session) {
+        this.session = session;
         buildLayout(session);
     }
 
@@ -107,5 +109,14 @@ public class VotingPanel extends JPanel {
      */
     public void updateSelectedRequirement(RequirementEstimate selectedRequirement) {
         description.updateDescription(selectedRequirement);
+    }
+
+    /**
+     * Returns the session used to create this panel.
+     *
+     * @return session
+     */
+    public PlanningPokerSession getSession() {
+        return session;
     }
 }

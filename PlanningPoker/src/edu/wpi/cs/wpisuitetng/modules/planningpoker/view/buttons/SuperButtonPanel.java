@@ -55,7 +55,7 @@ public class SuperButtonPanel extends ToolbarGroupView {
 
                 // Vote session
                 if(selectedPanelIndex == 1){
-                    superButton.VoteSession();
+                    superButton.VoteSession(parent);
                 }
 
                 // View session
