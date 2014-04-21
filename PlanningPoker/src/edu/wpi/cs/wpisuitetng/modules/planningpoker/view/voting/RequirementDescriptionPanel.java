@@ -13,14 +13,16 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
-//import java.awt.Color;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-//import javax.swing.UIManager;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
@@ -35,7 +37,7 @@ public final class RequirementDescriptionPanel extends JPanel {
 
 	private final JLabel titleLabel = new JLabel("Requirement Description:");
 	private final JTextArea descriptionArea;
-	//private Color color = UIManager.getColor ( "Panel.background" );
+	private Color color = UIManager.getColor ( "Panel.background" );
 
 	private RequirementEstimate req;
 
@@ -48,9 +50,12 @@ public final class RequirementDescriptionPanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		this.add(titleLabel, BorderLayout.NORTH);
 
+		Font font = titleLabel.getFont();
+		titleLabel.setFont(new Font(font.getFontName(), Font.BOLD, font.getSize()));
+		
 		//Initialize JTextArea and its properties
 		descriptionArea = new JTextArea();
-//		descriptionArea.setBackground(color) ;
+		descriptionArea.setBackground(color) ;
 		descriptionArea.setLineWrap(true); //Wrap the lines
 		descriptionArea.setWrapStyleWord(true); //Wrap text only at word boundaries
 		descriptionArea.setEditable(false);
@@ -58,6 +63,7 @@ public final class RequirementDescriptionPanel extends JPanel {
 		descriptionArea.setText(this.req.getDescription());
 
 		final JScrollPane scrollPanel = new JScrollPane(descriptionArea); //Put panel in a ScrollPane
+		scrollPanel.setBorder(new LineBorder(color));
 		this.add(scrollPanel, BorderLayout.CENTER);
 		
 		setMinimumSize(new Dimension(0, 120));
