@@ -21,32 +21,37 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 
 /**
  * @author Team Romulus
- *
+ * 
  * @version Iteration-3
  */
 public class SuperButtonPanel extends ToolbarGroupView {
     private final SuperButton superButton = new SuperButton(this);
+
     private final JPanel contentPanel = new JPanel();
+
     private final MainView parentView;
+
     private int selectedPanelIndex = -1;
+
     private boolean isSessionActive = false;
 
     /**
      * Constructor for SuperButtonPanel.
+     * 
      * @param parent MainView
      */
     public SuperButtonPanel(final MainView parent) {
         super("");
 
         this.parentView = parent;
-        
+
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
         //change this to 450 when we have three buttons
         this.setPreferredWidth(150);
-        
+
         superButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {            
+            public void actionPerformed(ActionEvent e) {
                 pressSuperButton();
             }
         });
@@ -56,27 +61,27 @@ public class SuperButtonPanel extends ToolbarGroupView {
         contentPanel.setOpaque(false);
         this.add(contentPanel);
     }
-    
-    public void pressSuperButton(){
-    	// Edit session
-        if(selectedPanelIndex == 0 && !isSessionActive){
+
+    public void pressSuperButton() {
+        // Edit session
+        if (selectedPanelIndex == 0 && !isSessionActive) {
             superButton.EditSession(parentView);
         }
-        
+
         if (selectedPanelIndex == 0 && isSessionActive) {
             superButton.CloseSession(parentView);
         }
 
         // Vote session
-        if(selectedPanelIndex == 1){
+        if (selectedPanelIndex == 1) {
             superButton.VoteSession(parentView);
         }
 
         // View session
-        if(selectedPanelIndex == 2){
+        if (selectedPanelIndex == 2) {
             superButton.ViewSession(parentView);
         }
-        
+
         parentView.getMySession().getModeratingPanel().getTable().clearSelection();
         parentView.getMySession().getJoiningPanel().getTable().clearSelection();
         parentView.getMySession().getClosedPanel().getTable().clearSelection();
@@ -105,7 +110,7 @@ public class SuperButtonPanel extends ToolbarGroupView {
      * 
      * @return void
      */
-    public void setSelectedPanelIndex(int newIndex){
+    public void setSelectedPanelIndex(int newIndex) {
         selectedPanelIndex = newIndex;
     }
 

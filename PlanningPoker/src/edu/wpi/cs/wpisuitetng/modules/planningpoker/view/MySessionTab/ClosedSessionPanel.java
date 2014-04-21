@@ -94,7 +94,7 @@ public class ClosedSessionPanel extends JPanel {
             }
         });
     	
-    	this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
+        this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
 
 	}
 

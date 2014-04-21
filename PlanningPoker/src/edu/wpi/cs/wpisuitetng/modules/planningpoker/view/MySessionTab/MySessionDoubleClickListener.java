@@ -6,6 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.event.MouseAdapter;
@@ -19,6 +20,7 @@ public class MySessionDoubleClickListener extends MouseAdapter {
 
     /**
      * Constructor for MySessionDoubleClickListener.
+     * 
      * @param parentView
      */
     public MySessionDoubleClickListener(MainView parentView) {
