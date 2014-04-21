@@ -64,7 +64,7 @@ public class Card extends JPanel {
 		imgLabel.addMouseListener(new MouseListener(){
 			@Override
 			public void mouseClicked(MouseEvent me) {
-				setCardSelected();
+				toggleCardSelection();
 			}
 
 			@Override
@@ -124,7 +124,7 @@ public class Card extends JPanel {
 	/**
 	 * @param Sets the card to selected and sets border
 	 */
-	public void setCardSelected(){
+	public void toggleCardSelection(){
 		if(parent.isZeroSelected() && cardNum != 0){
 			return;
 		}

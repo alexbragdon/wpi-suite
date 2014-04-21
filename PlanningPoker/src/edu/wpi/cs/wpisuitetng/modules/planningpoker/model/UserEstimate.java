@@ -41,7 +41,8 @@ public class UserEstimate {
      * Constructor
      */
 	public UserEstimate(String user, List<Integer> selectedCardIndices, int totalEstimate){
-		this.user = user;
+		this.selectedCardIndices = new ArrayList<Integer>();
+	    this.user = user;
 		this.selectedCardIndices = selectedCardIndices;
 		this.totalEstimate = totalEstimate;
 	}

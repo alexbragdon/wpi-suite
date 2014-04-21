@@ -36,7 +36,7 @@ public class CardPanel extends JPanel {
 	/**
 	 * Hashmap of indices to cards
 	 */
-	private HashMap<Integer, Card> hash;
+	private HashMap<Integer, Card> cardIndices;
 
 	/**
 	 * RequirementEstimate for the currently selected requirement
@@ -60,14 +60,14 @@ public class CardPanel extends JPanel {
 		// Set up panel and layout
 		JPanel cardsPanel = new JPanel();
 
-		hash = new HashMap<Integer, Card>();
+		cardIndices = new HashMap<Integer, Card>();
 		for(int i = 0; i < viewDeck.length; i++){
 			Card newCard = new Card(viewDeck[i], this);
-			hash.put(i, newCard);
+			cardIndices.put(i, newCard);
 			cardsPanel.add(newCard);
 		}
 
-		cardsPanel.setLayout(new GridLayout(1, hash.size()));
+		cardsPanel.setLayout(new GridLayout(1, cardIndices.size()));
 
 		JScrollPane scrollPanel = new JScrollPane(cardsPanel);
 		this.add(scrollPanel, BorderLayout.CENTER);
@@ -85,8 +85,8 @@ public class CardPanel extends JPanel {
 		zeroSelected = !zeroSelected;
 		selectedCardsIndices.clear();
 
-		for(int i = 1; i < hash.size(); i++){
-			Card newCard = hash.get(i);
+		for(int i = 1; i < cardIndices.size(); i++){
+			Card newCard = cardIndices.get(i);
 			newCard.setSelected(false);
 			newCard.getImgLabel().setBorder(null);
 		}
@@ -107,8 +107,8 @@ public class CardPanel extends JPanel {
 	public void updateSelectedIndices(){
 		selectedCardsIndices.clear();
 
-		for(int i = 0; i < hash.size(); i++){
-			Card newCard = hash.get(i);
+		for(int i = 0; i < cardIndices.size(); i++){
+			Card newCard = cardIndices.get(i);
 			if(newCard.isSelected()){
 				selectedCardsIndices.add(i);
 			}
@@ -129,13 +129,18 @@ public class CardPanel extends JPanel {
 	public void selectedRequirementChanged(RequirementEstimate r){
 		resetCards();
 		UserEstimate currentUserEst = r.getVotes().get(ConfigManager.getConfig().getUserName());
-		selectedCardsIndices = currentUserEst.getSelectedCardIndices();
-
-		for(int i = 0; i < selectedCardsIndices.size(); i++){
-			Card temp = hash.get(selectedCardsIndices.get(i));
-			temp.setCardSelected();
+		
+		if(currentUserEst != null){
+    		selectedCardsIndices = currentUserEst.getSelectedCardIndices();
+    		
+    		if(currentUserEst != null){
+        		for(int i = 0; i < selectedCardsIndices.size(); i++){
+        			Card temp = cardIndices.get(selectedCardsIndices.get(i));
+        			temp.toggleCardSelection();
+        		}
+    		}
 		}
-
+		
 		this.currentReq = r;
 	}
 
@@ -145,7 +150,7 @@ public class CardPanel extends JPanel {
 	public void calculateTotalEstimate(){
 		int totalEstimate = 0;
 		for(int i = 0; i < selectedCardsIndices.size(); i++){
-			Card temp = hash.get(selectedCardsIndices.get(i));
+			Card temp = cardIndices.get(selectedCardsIndices.get(i));
 			totalEstimate += temp.getCardNum();
 			System.out.println(totalEstimate);
 		}
@@ -167,8 +172,8 @@ public class CardPanel extends JPanel {
 	 */
 	public void resetCards(){
 		for(int i = 0; i < selectedCardsIndices.size(); i++){
-			Card temp = hash.get(selectedCardsIndices.get(i));
-			temp.setCardSelected();
+			Card temp = cardIndices.get(selectedCardsIndices.get(i));
+			temp.toggleCardSelection();
 		}
 
 		selectedCardsIndices.clear();
