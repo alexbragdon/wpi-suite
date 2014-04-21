@@ -14,6 +14,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
@@ -136,6 +137,10 @@ public class VotingPanel extends JPanel {
             cards.selectedRequirementChanged(selectedRequirement);
             cards.updateSelectedIndices();
         }
+        
+        boolean hasVoted = selectedRequirement.getVotes()
+                        .containsKey(ConfigManager.getConfig().getUserName());
+        buttons.setFieldsEnabled(!hasVoted);
     }
 
     /**

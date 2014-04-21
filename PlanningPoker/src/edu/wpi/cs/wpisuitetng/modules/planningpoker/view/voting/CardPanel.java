@@ -202,7 +202,7 @@ public class CardPanel extends JPanel {
 	 * Unselects the unknown card in the set
 	 */
 	public void unselectZero() {
-		Card unknown = hash.get(0);
+		Card unknown = cardIndices.get(0);
 		unknown.getImgLabel().setBorder(null);
 		unknown.setSelected(false);
 	}

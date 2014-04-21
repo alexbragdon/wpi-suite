@@ -38,6 +38,10 @@ public class VotingButtonPanel extends JPanel{
 	 * Label for the current estimate (with deck)
 	 */
 	private JLabel estimateLabel;
+	private JSpinner estimateSpin;
+	private JButton clearButton;
+	private JButton voteButton;
+	private final ViewMode mode;
 	
     /**
      * 
@@ -47,6 +51,8 @@ public class VotingButtonPanel extends JPanel{
      */
 	public VotingButtonPanel(ViewMode mode){
 		
+	    this.mode = mode;
+	    
 		setLayout(new MigLayout());
 		
 		if(mode.equals(ViewMode.WITHDECK)){
@@ -62,8 +68,8 @@ public class VotingButtonPanel extends JPanel{
 	private void buildLayoutWithoutDeck() {
 		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("  Enter estimate  ");
-		final JSpinner estimateSpin = new JSpinner(new SpinnerNumberModel(23, 0, 99, 1));
-		final JButton voteButton = new JButton("Vote");
+		estimateSpin = new JSpinner(new SpinnerNumberModel(23, 0, 99, 1));
+		voteButton = new JButton("Vote");
 		
 		estimateSpin.setPreferredSize(new Dimension(100, 100));
 		estimateSpin.getComponent(0).setPreferredSize(new Dimension(75, 75));
@@ -89,8 +95,8 @@ public class VotingButtonPanel extends JPanel{
 		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("  Total selected        ");
 		estimateLabel = new JLabel("0");
-		final JButton clearButton = new JButton("Clear Selection");
-		final JButton voteButton = new JButton("Vote");
+		clearButton = new JButton("Clear Selection");
+		voteButton = new JButton("Vote");
 		
 		voteButton.setPreferredSize(new Dimension(140, 130));
 		clearButton.setPreferredSize(new Dimension(140, 40));
@@ -116,5 +122,14 @@ public class VotingButtonPanel extends JPanel{
 	 */
 	public JLabel getEstimateLabel() {
 		return estimateLabel;
+	}
+	
+	public void setFieldsEnabled(boolean isEnabled) {
+	    voteButton.setEnabled(isEnabled);
+	    if (mode == ViewMode.WITHDECK) {
+	        clearButton.setEnabled(isEnabled);
+	    } else {
+	        estimateSpin.setEnabled(isEnabled);
+	    }
 	}
 }
