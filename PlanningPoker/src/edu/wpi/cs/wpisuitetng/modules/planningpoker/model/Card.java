@@ -53,7 +53,9 @@ public class Card extends JPanel {
 
 		try {
 			this.cardImg = ImageIO.read(getClass().getResource("blank.png"));
-		} catch (IOException ex) {}
+		} catch (IOException ex) {
+		    ex.printStackTrace();
+		}
 
 		numLabel.setText(Integer.toString(cardNum));
 		numLabel.setFont(numLabel.getFont().deriveFont(Font.BOLD, 64));
