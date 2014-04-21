@@ -34,6 +34,8 @@ public class VotingPanel extends JPanel {
     VotingButtonPanel buttons;
     PlanningPokerSession session;
     
+    private final boolean hasDeck; 
+    
     /**
      * Makes a VotingPanel
      * 
@@ -43,9 +45,11 @@ public class VotingPanel extends JPanel {
         this.session = session;
         
         if (session.getDeck().equals("-None-")) {
-            buildLayout(session, false);
+            this.hasDeck = false;
+            buildLayout(session);
         } else {
-            buildLayout(session, true);
+            this.hasDeck = true;
+            buildLayout(session);
         }
     }
 
@@ -54,7 +58,8 @@ public class VotingPanel extends JPanel {
      *
      * @param session the session
      */
-    private void buildLayout(PlanningPokerSession session, boolean hasDeck) {
+    private void buildLayout(PlanningPokerSession session) {
+        
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -127,7 +132,10 @@ public class VotingPanel extends JPanel {
      */
     public void updateSelectedRequirement(RequirementEstimate selectedRequirement) {
         description.updateDescription(selectedRequirement);
-        cards.updateSelectedIndices();
+        if(hasDeck){
+            cards.selectedRequirementChanged(selectedRequirement);
+            cards.updateSelectedIndices();
+        }
     }
 
     /**
