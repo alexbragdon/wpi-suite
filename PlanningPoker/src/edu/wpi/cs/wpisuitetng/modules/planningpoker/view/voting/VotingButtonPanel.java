@@ -38,6 +38,7 @@ public class VotingButtonPanel extends JPanel{
 	 * Label for the current estimate (with deck)
 	 */
 	private JLabel estimateLabel;
+	private JButton voteButton;
 	
     /**
      * 
@@ -63,7 +64,7 @@ public class VotingButtonPanel extends JPanel{
 		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("  Enter estimate  ");
 		final JSpinner estimateSpin = new JSpinner(new SpinnerNumberModel(23, 0, 99, 1));
-		final JButton voteButton = new JButton("Vote");
+		voteButton = new JButton("Vote");
 		
 		estimateSpin.setPreferredSize(new Dimension(100, 100));
 		estimateSpin.getComponent(0).setPreferredSize(new Dimension(75, 75));
@@ -90,8 +91,9 @@ public class VotingButtonPanel extends JPanel{
 		final JLabel infoLabel = new JLabel("  Total selected        ");
 		estimateLabel = new JLabel("0");
 		final JButton clearButton = new JButton("Clear Selection");
-		final JButton voteButton = new JButton("Vote");
+		voteButton = new JButton("Vote");
 		
+		voteButton.setEnabled(false);
 		voteButton.setPreferredSize(new Dimension(140, 130));
 		clearButton.setPreferredSize(new Dimension(140, 40));
 		estimateLabel.setFont(new Font("default", Font.BOLD, 72));
@@ -116,5 +118,13 @@ public class VotingButtonPanel extends JPanel{
 	 */
 	public JLabel getEstimateLabel() {
 		return estimateLabel;
+	}
+	
+	public void disableVoteButton() {
+		voteButton.setEnabled(false);
+	}
+	
+	public void enableVoteButton() {
+		voteButton.setEnabled(true);
 	}
 }
