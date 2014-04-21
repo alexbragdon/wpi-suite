@@ -54,6 +54,7 @@ public class GetPlanningPokerSessionController implements ActionListener {
             request.send(); // send the request
         } catch (RuntimeException ex) {
             // The network hasn't been configured yet, but that's not a problem
+            ex.printStackTrace();
         }
     }
 
