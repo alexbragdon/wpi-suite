@@ -93,23 +93,9 @@ public class ClosedSessionPanel extends JPanel {
                 }
             }
         });
-//    	mytable.addMouseListener(new MouseAdapter() {
-//    	    public void mousePressed(MouseEvent me) {
-//    	        JTable table =(JTable) me.getSource();
-//    	        Point p = me.getPoint();
-//    	        int row = table.rowAtPoint(p);
-//    	        if (me.getClickCount() == 2) {
-//    	            // your valueChanged overridden method 
-//    	        }
-//    	    }
-//    	});
-    	this.table.addMouseListener(new MouseAdapter() {
-    		public void mousePressed(MouseEvent me){
-    			if(me.getClickCount() == 2){
-    				parentView.getToolbarView().GetSuperButtonPanel().pressSuperButton();
-    			}
-    		}
-		});
+    	
+    	this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
+
 	}
 
 

@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -72,7 +73,12 @@ public class JoiningSessionPanel extends JPanel {
         panel.add(bottomPanel, BorderLayout.SOUTH);
 
         this.add(panel, BorderLayout.CENTER);
+        
+        this.setupListeners();
 
+    }
+    
+    private void setupListeners(){
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -83,7 +89,8 @@ public class JoiningSessionPanel extends JPanel {
                 }
             }
         });
-
+        
+        this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
     }
 
 
