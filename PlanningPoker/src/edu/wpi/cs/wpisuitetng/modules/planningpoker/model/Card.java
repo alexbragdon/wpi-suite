@@ -125,19 +125,39 @@ public class Card extends JPanel {
 	 * @param Sets the card to selected and sets border
 	 */
 	public void setCardSelected(){
+		if(parent.isZeroSelected() && cardNum != 0){
+			return;
+		}
+		
+		if(parent.isZeroSelected() && cardNum == 0){
+			parent.setZeroSelected(false);
+		}
+		
 		if(!selected){
 			selected = true;
 			imgLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3, true));
-			parent.updateSelectedIndices();
+			
+			if(cardNum == 0){
+				parent.unknownSelected();
+				return;
+			}
 		}
 		
 		else{
 			selected = false;
 			imgLabel.setBorder(null);
-			parent.updateSelectedIndices();
 		}
+		
+		parent.updateSelectedIndices();
 	}
 	
+	/**
+	 * @param selected the selected to set
+	 */
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
 	/**
 	 * @return the selected
 	 */

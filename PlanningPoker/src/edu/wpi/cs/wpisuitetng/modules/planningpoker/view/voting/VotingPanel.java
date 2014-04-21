@@ -100,6 +100,8 @@ public class VotingPanel extends JPanel {
         c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.LINE_END;
         add(buttons, c);
+        
+        cards.setButtonPanel(buttons);
     }
 
     /**
@@ -109,6 +111,7 @@ public class VotingPanel extends JPanel {
      */
     public void updateSelectedRequirement(RequirementEstimate selectedRequirement) {
         description.updateDescription(selectedRequirement);
+        cards.updateSelectedIndices();
     }
 
     /**

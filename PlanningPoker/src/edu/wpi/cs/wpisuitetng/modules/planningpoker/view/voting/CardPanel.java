@@ -36,13 +36,20 @@ public class CardPanel extends JPanel {
 	/**
 	 * Hashmap of indices to cards
 	 */
-	HashMap<Integer, Card> hash;
+	private HashMap<Integer, Card> hash;
 
 	/**
 	 * RequirementEstimate for the currently selected requirement
 	 */
-	RequirementEstimate currentReq;
-
+	private RequirementEstimate currentReq;
+	
+	/**
+	 * VotingButtonPanel
+	 */
+	private VotingButtonPanel buttons;
+	
+	private boolean zeroSelected = false;
+	
 	public CardPanel(String deckName, RequirementEstimate r){
 		this.selectedCardsIndices = new ArrayList<Integer>();
 		this.setLayout(new BorderLayout());
@@ -67,6 +74,29 @@ public class CardPanel extends JPanel {
 		
 		setMinimumSize(new Dimension(0, 190));
 		setPreferredSize(new Dimension(0, 190));
+	}
+	
+	/**
+	 * Occurs when the user selects "?" as an estimate
+	 * @param 
+	 * @return void
+	 */
+	public void unknownSelected(){
+		zeroSelected = !zeroSelected;
+		selectedCardsIndices.clear();
+
+		for(int i = 1; i < hash.size(); i++){
+			Card newCard = hash.get(i);
+			newCard.setSelected(false);
+			newCard.getImgLabel().setBorder(null);
+		}
+		
+		selectedCardsIndices.add(0);
+
+		// TODO: Have this communicating with the session
+		//UserEstimate currentUserEst = currentReq.getVotes().get(ConfigManager.getConfig().getUserName());
+		//currentUserEst.setSelectedCardIndices(selectedCardsIndices);
+		buttons.getEstimateLabel().setText("?");
 	}
 
 	/**
@@ -117,9 +147,12 @@ public class CardPanel extends JPanel {
 		for(int i = 0; i < selectedCardsIndices.size(); i++){
 			Card temp = hash.get(selectedCardsIndices.get(i));
 			totalEstimate += temp.getCardNum();
+			System.out.println(totalEstimate);
 		}
 
-		currentReq.getVotes().get(ConfigManager.getConfig().getUserName()).setTotalEstimate(totalEstimate);
+		// TODO: Have this pass in the list of selected indices to the requirement
+		// currentReq.getVotes().get(ConfigManager.getConfig().getUserName()).setTotalEstimate(totalEstimate);
+		buttons.getEstimateLabel().setText(Integer.toString(totalEstimate));
 	}
 
 	/**
@@ -139,5 +172,24 @@ public class CardPanel extends JPanel {
 		}
 
 		selectedCardsIndices.clear();
+	}
+
+	public void setButtonPanel(VotingButtonPanel buttons) {
+		// TODO Auto-generated method stub
+		this.buttons = buttons;
+	}
+	
+	/**
+	 * @return the zeroSelected
+	 */
+	public boolean isZeroSelected() {
+		return zeroSelected;
+	}
+
+	/**
+	 * @param zeroSelected the zeroSelected to set
+	 */
+	public void setZeroSelected(boolean zeroSelected) {
+		this.zeroSelected = zeroSelected;
 	}
 }

@@ -33,7 +33,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
  * @version Apr 19, 2014
  */
 
-public class VotingButtonPanel extends JPanel{
+public class VotingButtonPanel extends JPanel{	
+	/**
+	 * Label for the current estimate (with deck)
+	 */
+	private JLabel estimateLabel;
 	
     /**
      * 
@@ -84,13 +88,13 @@ public class VotingButtonPanel extends JPanel{
 	private void buildLayoutWithDeck() {
 		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("  Total selected        ");
-		final JLabel estimate = new JLabel("23");
+		estimateLabel = new JLabel("0");
 		final JButton clearButton = new JButton("Clear Selection");
 		final JButton voteButton = new JButton("Vote");
 		
 		voteButton.setPreferredSize(new Dimension(140, 130));
 		clearButton.setPreferredSize(new Dimension(140, 40));
-		estimate.setFont(new Font("default", Font.BOLD, 72));
+		estimateLabel.setFont(new Font("default", Font.BOLD, 72));
 		
 		try {
             final Image img1 = ImageIO.read(getClass().getResource("vote-button.png"));
@@ -103,9 +107,14 @@ public class VotingButtonPanel extends JPanel{
 		
 		add(infoLabel);
 		add(clearButton, "wrap");
-		add(estimate);
+		add(estimateLabel);
 		add(voteButton);
 	}
-	
-	
+
+	/**
+	 * @return the estimateLabel
+	 */
+	public JLabel getEstimateLabel() {
+		return estimateLabel;
+	}
 }
