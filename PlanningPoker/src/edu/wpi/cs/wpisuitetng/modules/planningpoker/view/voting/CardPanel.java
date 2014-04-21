@@ -158,6 +158,11 @@ public class CardPanel extends JPanel {
 		// TODO: Have this pass in the list of selected indices to the requirement
 		// currentReq.getVotes().get(ConfigManager.getConfig().getUserName()).setTotalEstimate(totalEstimate);
 		buttons.getEstimateLabel().setText(Integer.toString(totalEstimate));
+		if(Integer.toString(totalEstimate).equals("0")){
+			buttons.disableVoteButton();
+		}else{
+			buttons.enableVoteButton();
+		}
 	}
 
 	/**
@@ -188,6 +193,7 @@ public class CardPanel extends JPanel {
 	 * @return the zeroSelected
 	 */
 	public boolean isZeroSelected() {
+		buttons.enableVoteButton();
 		return zeroSelected;
 	}
 
