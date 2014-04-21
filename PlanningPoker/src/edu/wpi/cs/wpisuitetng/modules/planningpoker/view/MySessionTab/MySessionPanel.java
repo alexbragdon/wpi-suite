@@ -10,7 +10,9 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
 import java.util.Date;
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -72,13 +74,13 @@ public class MySessionPanel extends JPanel {
         this.add(moderatingPanel);
         this.add(joiningPanel);
         this.add(closedPanel);
-
+        
         timer = new Timer(1000, new GetPlanningPokerSessionController(this));
         timer.setInitialDelay(1000);
         timer.start();
     }
-
-    /**
+    
+	/**
      * Method populateTables.
      * @param newSessions PlanningPokerSession[]
      */
