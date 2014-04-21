@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -16,6 +17,7 @@ import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 
 /**
@@ -41,7 +43,9 @@ public class CountDownOverviewPanel extends JPanel {
         timingText = new JLabel("");
         timingText.setFont (timingText.getFont ().deriveFont (24.0f));
         
-        setLayout(new BorderLayout());
+        FlowLayout layout = new FlowLayout();
+        layout.setAlignOnBaseline(true);
+        setLayout(layout);
         
         final Timer t = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -49,19 +53,30 @@ public class CountDownOverviewPanel extends JPanel {
                 if (time >= 0) {
                     final long s = ((time / 1000) % 60);
                     final long m = (((time / 1000) / 60) % 60);
-                    final long h = ((((time / 1000) / 60) / 60) % 60);
-                    final long d = (((((time / 1000) / 60) / 60) / 24) % 24);
-                    timingText.setText("Time Remaining: " + d + " days " 
-                                    + h + " hours " + m + " minutes " + s + " seconds");
+                    final long h = ((((time / 1000) / 60) / 60) % 24);
+                    final long d = ((((time / 1000) / 60) / 60) / 24);
+                    
+                    String text;
+                    if (d > 0) {
+                        text = d + "d " + h + "h";
+                    } else if (h > 0) {
+                        text = h + "h " + m + "m";
+                    } else {
+                        text = m + "m " + s + "s";
+                    }
+                    
+                    timingText.setText(text);
                     over = false;
                 } else {
                 	over = true;
                 }
             }
         });
+        t.setInitialDelay(0);
         t.start();
         
-        add(timingText, BorderLayout.CENTER);
+        add(new JLabel("Time remaining: "));
+        add(timingText);
     }
     
     /**
