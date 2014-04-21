@@ -187,9 +187,10 @@ public class CardPanel extends JPanel {
 	public void clearCardSelection(){
 		for(int i = 0; i < selectedCardsIndices.size(); i++){
 			Card temp = cardIndices.get(selectedCardsIndices.get(i));
-			temp.toggleCardSelection();
+			temp.setSelected(false);
+			temp.getImgLabel().setBorder(null);
 		}
-
+		
         selectedCardsIndices.clear();
 
 		calculateTotalEstimate();
