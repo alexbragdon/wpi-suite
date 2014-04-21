@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
 
 /**
@@ -40,7 +41,12 @@ public class VotingPanel extends JPanel {
      */
     public VotingPanel(PlanningPokerSession session) {
         this.session = session;
-        buildLayout(session);
+        
+        if (session.getDeck().equals("-None-")) {
+            buildLayout(session, false);
+        } else {
+            buildLayout(session, true);
+        }
     }
 
     /**
@@ -48,7 +54,7 @@ public class VotingPanel extends JPanel {
      *
      * @param session the session
      */
-    private void buildLayout(PlanningPokerSession session) {
+    private void buildLayout(PlanningPokerSession session, boolean hasDeck) {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -56,41 +62,49 @@ public class VotingPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 2;
+        c.gridheight = hasDeck ? 1 : 2;
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.fill = GridBagConstraints.BOTH;
         add(overview, c);
 
-        cards = new CardPanel("default", session.getRequirements().get(0));
-        c.gridx = 0;
-        c.gridy = 1;
-        c.gridwidth = 2;
-        c.weightx = 0.0;
-        c.weighty = 0.0;
-        c.fill = GridBagConstraints.BOTH;
-        add(cards, c);
+        c.gridheight = 1;
+        if (hasDeck) {
+            cards = new CardPanel("default", session.getRequirements().get(0));
+            c.gridx = 0;
+            c.gridy = 1;
+            c.gridwidth = 2;
+            c.weightx = 0.0;
+            c.weighty = 0.0;
+            c.fill = GridBagConstraints.BOTH;
+            add(cards, c);
+        }
 
         description = new RequirementDescriptionPanel(session
                         .getRequirements().get(0));
         c.gridx = 0;
         c.gridy = 2;
         c.gridwidth = 1;
+        c.gridheight = session.getType() == SessionType.DISTRIBUTED ? 1 : 2;
         c.weightx = 0.6;
         c.weighty = 0.0;
         c.fill = GridBagConstraints.BOTH;
         add(description, c);
 
-        countdown = new CountDownOverviewPanel(session);
-        c.gridx = 0;
-        c.gridy = 3;
-        c.gridwidth = 1;
-        c.weightx = 0.6;
-        c.weighty = 0.0;
-        c.fill = GridBagConstraints.VERTICAL;
-        c.anchor = GridBagConstraints.LAST_LINE_START;
-        add(countdown, c);
+        c.gridheight = 1;
+        if (session.getType() == SessionType.DISTRIBUTED) {
+            countdown = new CountDownOverviewPanel(session);
+            c.gridx = 0;
+            c.gridy = 3;
+            c.gridwidth = 1;
+            c.weightx = 0.6;
+            c.weighty = 0.0;
+            c.fill = GridBagConstraints.VERTICAL;
+            c.anchor = GridBagConstraints.LAST_LINE_START;
+            add(countdown, c);
+        }
 
-        buttons = new VotingButtonPanel(ViewMode.WITHDECK);
+        buttons = new VotingButtonPanel(hasDeck ? ViewMode.WITHDECK : ViewMode.WITHOUTDECK);
         c.gridx = 1;
         c.gridy = 2;
         c.gridwidth = 1;
