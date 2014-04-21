@@ -57,7 +57,14 @@ public class Card extends JPanel {
 		    ex.printStackTrace();
 		}
 
-		numLabel.setText(Integer.toString(cardNum));
+		if(cardNum == 0){
+			numLabel.setText("?");
+		}
+		
+		else{
+			numLabel.setText(Integer.toString(cardNum));
+		}
+		
 		numLabel.setFont(numLabel.getFont().deriveFont(Font.BOLD, 64));
 		numLabel.setHorizontalAlignment(JLabel.CENTER);
 		

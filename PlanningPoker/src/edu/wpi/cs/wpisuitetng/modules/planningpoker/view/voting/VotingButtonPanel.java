@@ -11,6 +11,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -42,6 +46,11 @@ public class VotingButtonPanel extends JPanel{
 	private JButton clearButton;
 	private JButton voteButton;
 	private final ViewMode mode;
+	
+	/**
+	 * Card Panel
+	 */
+	private CardPanel cards;
 	
     /**
      * 
@@ -94,7 +103,7 @@ public class VotingButtonPanel extends JPanel{
 	private void buildLayoutWithDeck() {
 		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("  Total selected        ");
-		estimateLabel = new JLabel("0");
+		estimateLabel = new JLabel("--");
 		clearButton = new JButton("Clear Selection");
 		voteButton = new JButton("Vote");
 		
@@ -110,6 +119,28 @@ public class VotingButtonPanel extends JPanel{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+		
+		clearButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent m) {
+				cards.clearCardSelection();				
+			}
+		});
+		
+		PropertyChangeListener listener = new PropertyChangeListener(){
+			@Override
+			public void propertyChange(PropertyChangeEvent p) {
+				if(estimateLabel.getText().equals("--")){
+					voteButton.setEnabled(false);
+				}
+				
+				else{
+					voteButton.setEnabled(true);
+				}
+			}
+		};
+		
+		estimateLabel.addPropertyChangeListener(listener);
 		
 		add(infoLabel);
 		add(clearButton, "wrap");
@@ -131,5 +162,13 @@ public class VotingButtonPanel extends JPanel{
 	    } else {
 	        estimateSpin.setEnabled(isEnabled);
 	    }
+	}
+
+	/**
+	 * Sets a reference to the card panel
+	 * @param cards
+	 */
+	public void setCardPanel(CardPanel cards) {
+		this.cards = cards;
 	}
 }
