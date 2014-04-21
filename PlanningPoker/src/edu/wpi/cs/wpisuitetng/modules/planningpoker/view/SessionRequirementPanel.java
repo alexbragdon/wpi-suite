@@ -232,7 +232,9 @@ public class SessionRequirementPanel extends JPanel {
 
             	model.addRow(new Object[] { req.getId(), req.getName(), false });
             
-            	this.requirements.add(new RequirementEstimate(req.getId(), req.getName(), 0, false));
+            	RequirementEstimate estimate = new RequirementEstimate(req.getId(), req.getName(), 0, false);
+            	estimate.setDescription(req.getDescription());
+            	this.requirements.add(estimate);
             }
         }
     	tableUpdated();
