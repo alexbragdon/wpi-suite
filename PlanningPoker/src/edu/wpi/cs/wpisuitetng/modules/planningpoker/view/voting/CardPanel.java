@@ -42,14 +42,14 @@ public class CardPanel extends JPanel {
 	 * RequirementEstimate for the currently selected requirement
 	 */
 	private RequirementEstimate currentReq;
-	
+
 	/**
 	 * VotingButtonPanel
 	 */
 	private VotingButtonPanel buttons;
-	
+
 	private boolean zeroSelected = false;
-	
+
 	public CardPanel(String deckName, RequirementEstimate r){
 		this.selectedCardsIndices = new ArrayList<Integer>();
 		this.setLayout(new BorderLayout());
@@ -71,11 +71,11 @@ public class CardPanel extends JPanel {
 
 		JScrollPane scrollPanel = new JScrollPane(cardsPanel);
 		this.add(scrollPanel, BorderLayout.CENTER);
-		
+
 		setMinimumSize(new Dimension(0, 190));
 		setPreferredSize(new Dimension(0, 190));
 	}
-	
+
 	/**
 	 * Occurs when the user selects "?" as an estimate
 	 * @param 
@@ -90,7 +90,7 @@ public class CardPanel extends JPanel {
 			newCard.setSelected(false);
 			newCard.getImgLabel().setBorder(null);
 		}
-		
+
 		selectedCardsIndices.add(0);
 
 		// TODO: Have this communicating with the session
@@ -113,7 +113,7 @@ public class CardPanel extends JPanel {
 				selectedCardsIndices.add(i);
 			}
 		}
-		
+
 		// Selected indices changed, recalculate total estimate
 		calculateTotalEstimate();
 
@@ -127,7 +127,7 @@ public class CardPanel extends JPanel {
 	 * @return void
 	 */
 	public void selectedRequirementChanged(RequirementEstimate r){
-		resetCards();
+		clearCardSelection();
 		UserEstimate currentUserEst = r.getVotes().get(ConfigManager.getConfig().getUserName());
 		selectedCardsIndices = currentUserEst.getSelectedCardIndices();
 
@@ -152,7 +152,19 @@ public class CardPanel extends JPanel {
 
 		// TODO: Have this pass in the list of selected indices to the requirement
 		// currentReq.getVotes().get(ConfigManager.getConfig().getUserName()).setTotalEstimate(totalEstimate);
-		buttons.getEstimateLabel().setText(Integer.toString(totalEstimate));
+
+		// Nothing is selected
+		if(totalEstimate == 0 && selectedCardsIndices.size() == 0){
+			buttons.getEstimateLabel().setText("--");
+		}
+		
+		else if(totalEstimate == 0){
+			buttons.getEstimateLabel().setText("?");
+		}
+
+		else{
+			buttons.getEstimateLabel().setText(Integer.toString(totalEstimate));
+		}
 	}
 
 	/**
@@ -163,22 +175,25 @@ public class CardPanel extends JPanel {
 	}
 
 	/**
-	 * Resets the selected cards
+	 * Clears the selection on all cards
 	 */
-	public void resetCards(){
-		for(int i = 0; i < selectedCardsIndices.size(); i++){
-			Card temp = hash.get(selectedCardsIndices.get(i));
-			temp.setCardSelected();
+	public void clearCardSelection(){
+		selectedCardsIndices.clear();
+
+		for(int i = 0; i < hash.size(); i++){
+			Card temp = hash.get(i);
+			temp.setSelected(false);
+			temp.getImgLabel().setBorder(null);
 		}
 
-		selectedCardsIndices.clear();
+		calculateTotalEstimate();
 	}
 
 	public void setButtonPanel(VotingButtonPanel buttons) {
 		// TODO Auto-generated method stub
 		this.buttons = buttons;
 	}
-	
+
 	/**
 	 * @return the zeroSelected
 	 */
@@ -192,7 +207,7 @@ public class CardPanel extends JPanel {
 	public void setZeroSelected(boolean zeroSelected) {
 		this.zeroSelected = zeroSelected;
 	}
-	
+
 	/**
 	 * Unselects the unknown card in the set
 	 */

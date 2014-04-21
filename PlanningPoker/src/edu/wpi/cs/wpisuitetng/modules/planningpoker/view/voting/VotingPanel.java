@@ -117,6 +117,7 @@ public class VotingPanel extends JPanel {
         
         if(hasDeck){
         	cards.setButtonPanel(buttons);
+        	buttons.setCardPanel(cards);
         }
     }
 
