@@ -31,6 +31,7 @@ public class ModeratingSessionPanel extends JPanel {
 
     /**
      * Constructor for ModeratingSessionPanel.
+     * 
      * @param mainView MainView
      * @param mySessionPanel MySessionPanel
      */
