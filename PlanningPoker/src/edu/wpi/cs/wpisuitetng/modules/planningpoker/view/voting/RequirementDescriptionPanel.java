@@ -13,6 +13,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -54,6 +55,9 @@ public final class RequirementDescriptionPanel extends JPanel {
 
 		final JScrollPane scrollPanel = new JScrollPane(descriptionArea); //Put panel in a ScrollPane
 		this.add(scrollPanel, BorderLayout.CENTER);
+		
+		setMinimumSize(new Dimension(0, 120));
+		setPreferredSize(new Dimension(0, 120));
     }
 
 	/**

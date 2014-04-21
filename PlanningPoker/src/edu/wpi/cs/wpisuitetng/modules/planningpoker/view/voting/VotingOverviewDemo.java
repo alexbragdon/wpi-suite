@@ -10,12 +10,15 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 
 /**
  * Description
@@ -46,6 +49,7 @@ public class VotingOverviewDemo {
     private static void createAndShowGUI() {
         final RequirementEstimate req1 = new RequirementEstimate(0, 
                         "Post to the server on page refresh", 0, false);
+        req1.setDescription("As a CSI investigator, I want to be able to track a killer's IP address using a GUI interface in Visual Basic so that I can find the killer and apprehend him.");
         final RequirementEstimate req2 = new RequirementEstimate(1, 
                         "Code a GUI interface using Visual Basic to track an IP address", 0, false);
         final RequirementEstimate req3 = new RequirementEstimate(2, 
@@ -62,10 +66,12 @@ public class VotingOverviewDemo {
         requirements.add(req2);
         requirements.add(req3);
         
+        final PlanningPokerSession session = new PlanningPokerSession(2, "A test", "This is a test session", new Date(), 23, 59, requirements, SessionType.DISTRIBUTED, true, false, "bob", "-None");
+        
         final JFrame f = new JFrame("Demo");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(800, 600);
-        f.getContentPane().add(new VotingOverviewPanel(requirements, 3, "bob"), BorderLayout.CENTER);
+        f.getContentPane().add(new VotingPanel(session), BorderLayout.CENTER);
         f.setVisible(true);
         
     }

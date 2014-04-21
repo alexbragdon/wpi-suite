@@ -9,9 +9,11 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JLabel;
@@ -84,7 +86,14 @@ public class CountDownOverviewPanel extends JPanel {
      * @return the number of milliseconds until the session is over.
      */
     private long getRemainingSessionTime(PlanningPokerSession session) {
-    	long time = session.getDate().getTime();
+        Calendar calender = Calendar.getInstance();
+        calender.setTime(session.getDate());
+        calender.set(Calendar.HOUR_OF_DAY, 0);
+        calender.set(Calendar.MINUTE, 0);
+        calender.set(Calendar.SECOND, 0);
+        calender.set(Calendar.MILLISECOND, 0);
+        
+    	long time = calender.getTime().getTime();
     	time += (session.getHour() * 1000 * 60 * 60);
     	time += (session.getMin() * 1000 * 60);
     	

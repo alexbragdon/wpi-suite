@@ -50,6 +50,9 @@ public class VotingButtonPanel extends JPanel{
 		}else if (mode.equals(ViewMode.WITHOUTDECK)){
 			buildLayoutWithoutDeck();
 		}
+		
+		setMinimumSize(new Dimension(270, 150));
+		setPreferredSize(new Dimension(270, 150));
 	}
 
 	private void buildLayoutWithoutDeck() {

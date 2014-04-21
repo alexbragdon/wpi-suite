@@ -2,6 +2,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
@@ -13,6 +15,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -75,6 +78,9 @@ public class CardPanel extends JPanel {
 
 		JScrollPane scrollPanel = new JScrollPane(cardsPanel);
 		this.add(scrollPanel, BorderLayout.CENTER);
+		
+		setMinimumSize(new Dimension(0, 190));
+		setPreferredSize(new Dimension(0, 190));
 	}
 
 	/**
