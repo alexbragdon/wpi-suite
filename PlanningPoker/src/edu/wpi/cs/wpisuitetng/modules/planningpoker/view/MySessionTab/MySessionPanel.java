@@ -112,10 +112,13 @@ public class MySessionPanel extends JPanel {
             for (PlanningPokerSession session : newSessions) {
                 if (session.isComplete()) {
                     closedPanel.getTable().addSessions(session);
-                } else if (session.isActive() && !session.getModerator().equals(username)) {
-                    joiningPanel.getTable().addSessions(session);
-                } else if (session.getModerator().equals(username)) {
-                    moderatingPanel.getTable().addSessions(session);
+                } else{
+                    if (session.isActive() /*&& !session.getModerator().equals(username)*/) {
+                        joiningPanel.getTable().addSessions(session);
+                    }
+                    if (session.getModerator().equals(username)) {
+                        moderatingPanel.getTable().addSessions(session);
+                    }
                 }
             }
         }
