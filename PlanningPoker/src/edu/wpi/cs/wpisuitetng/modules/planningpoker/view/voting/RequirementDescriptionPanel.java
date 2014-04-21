@@ -13,12 +13,14 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
+//import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+//import javax.swing.UIManager;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
@@ -33,6 +35,7 @@ public final class RequirementDescriptionPanel extends JPanel {
 
 	private final JLabel titleLabel = new JLabel("Requirement Description:");
 	private final JTextArea descriptionArea;
+	//private Color color = UIManager.getColor ( "Panel.background" );
 
 	private RequirementEstimate req;
 
@@ -47,6 +50,7 @@ public final class RequirementDescriptionPanel extends JPanel {
 
 		//Initialize JTextArea and its properties
 		descriptionArea = new JTextArea();
+//		descriptionArea.setBackground(color) ;
 		descriptionArea.setLineWrap(true); //Wrap the lines
 		descriptionArea.setWrapStyleWord(true); //Wrap text only at word boundaries
 		descriptionArea.setEditable(false);
