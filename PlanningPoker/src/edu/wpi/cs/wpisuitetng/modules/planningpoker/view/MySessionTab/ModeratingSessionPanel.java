@@ -31,6 +31,7 @@ public class ModeratingSessionPanel extends JPanel {
 
     /**
      * Constructor for ModeratingSessionPanel.
+     * 
      * @param mainView MainView
      * @param mySessionPanel MySessionPanel
      */
@@ -71,7 +72,12 @@ public class ModeratingSessionPanel extends JPanel {
 
         this.add(panel, BorderLayout.CENTER);
 
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+        this.setupListeners();
+    }
+
+
+    private void setupListeners() {
+    	table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if(table.getSelectedRow() != -1){
@@ -84,10 +90,13 @@ public class ModeratingSessionPanel extends JPanel {
                 }
             }
         });
-    }
+        
+    	this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
+		
+	}
 
 
-    /**
+	/**
      * @return the table
      */
     public ModeratingSessionTable getTable() {

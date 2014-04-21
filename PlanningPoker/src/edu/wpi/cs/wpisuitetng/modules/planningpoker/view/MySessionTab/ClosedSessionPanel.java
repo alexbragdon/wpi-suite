@@ -9,6 +9,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -73,8 +75,14 @@ public class ClosedSessionPanel extends JPanel {
         panel.add(bottomPanel, BorderLayout.SOUTH);
 
         this.add(panel, BorderLayout.CENTER);
+        
+        this.setupListeners();
 
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+    }
+    
+    private void setupListeners() {
+    	
+    	table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent arg0) {
                 if(table.getSelectedRow() != -1){
@@ -85,8 +93,10 @@ public class ClosedSessionPanel extends JPanel {
                 }
             }
         });
+    	
+        this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
 
-    }
+	}
 
 
     /**
