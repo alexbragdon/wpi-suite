@@ -10,6 +10,11 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.GridLayout;
+
+import java.util.Date;
+
+import javax.swing.JComboBox;
+
 import java.awt.event.MouseAdapter;
 import java.util.Date;
 
@@ -22,6 +27,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerS
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.ClosedSessionPanel;
 
 /**
  * Description
@@ -29,14 +35,19 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
  * @author rafaelangelo
  * @version Apr 7, 2014
  */
+/**
+ * @author rafaelangelo
+ *
+ */
 public class MySessionPanel extends JPanel {
 
     private final ModeratingSessionPanel moderatingPanel;
     private final JoiningSessionPanel joiningPanel;
     private final ClosedSessionPanel closedPanel;
     private MainView parentView;
-    private PlanningPokerSession[] sessions = { };
+    public PlanningPokerSession[] sessions = { };
     private final Timer timer;
+    private JComboBox<String> filterMenu;
 
     /**
      * @return the moderatingPanel
@@ -78,9 +89,10 @@ public class MySessionPanel extends JPanel {
         timer = new Timer(1000, new GetPlanningPokerSessionController(this));
         timer.setInitialDelay(1000);
         timer.start();
+        
     }
     
-	/**
+    /**
      * Method populateTables.
      * @param newSessions PlanningPokerSession[]
      */
@@ -123,6 +135,46 @@ public class MySessionPanel extends JPanel {
             }
         }
     }
+    
+	/**
+	 * Forces a refresh regardless of changes.
+	 * @param newSessions new sessions
+	 */
+	private void forceRefresh(PlanningPokerSession[] newSessions) {
+		moderatingPanel.getTable().clear();
+		joiningPanel.getTable().clear();
+		closedPanel.getTable().clear();
+
+		final String username = ConfigManager.getConfig().getUserName();
+
+		for (PlanningPokerSession session : newSessions) {
+		    if (session.isComplete()) {
+		    	if (closedPanel.getFilterMenuSelected() == 0) {
+		    		closedPanel.getTable().addSessions(session);
+		    	}
+		    	else if (closedPanel.getFilterMenuSelected() == 1) {
+		        		if (lastTwoDays(session)) {
+		        			closedPanel.getTable().addSessions(session);	
+		        		}
+		        	}
+		    	else if (closedPanel.getFilterMenuSelected() == 2) {
+		    		if (lastWeek(session)) {
+		    			closedPanel.getTable().addSessions(session);
+		    		}
+		    	}
+		    	else if (closedPanel.getFilterMenuSelected() == 3) {
+		    		if (lastMonth(session)) {
+		    			closedPanel.getTable().addSessions(session);
+		    		}
+		    	}
+		        //closedPanel.getTable().addSessions(session);
+		    } else if (session.isActive() && !session.getModerator().equals(username)) {
+		        joiningPanel.getTable().addSessions(session);
+		    } else if (session.getModerator().equals(username)) {
+		        moderatingPanel.getTable().addSessions(session);
+		    }
+		}
+	}
 
     /**
      * Method getSelectedID.
@@ -194,4 +246,115 @@ public class MySessionPanel extends JPanel {
             }
         }
     }
+
+    
+	
+    
+    /**
+     * 
+     * Filters closed sessions to display only the sessions closed in the last two days
+     * @param session a session
+     * @return true if session closed in the last two days, false otherwise
+     */
+    @SuppressWarnings("deprecation")
+	public boolean lastTwoDays(PlanningPokerSession session) {
+		boolean status = false;
+			if (session.isComplete()) {
+				Date dt = new Date();
+				if (session.getDate().getYear() == dt.getYear()) {
+					if (session.getDate().getMonth() == dt.getMonth()) {
+						if (session.getDate().getDate() == 0) {
+							int previous = 30;
+							if (dt.getDate() == previous) {
+								status = true;
+							}
+						}
+						if (session.getDate().getDate() == dt.getDate() || 
+								session.getDate().getDate() == dt.getDate() - 1 || 
+								session.getDate().getDate() == dt.getDate() - 2) {
+							status = true;
+						}
+					}
+				
+			}
+			else {
+				status = false;
+			}
+		}
+		return status;	
+	}
+	
+    
+	/**
+	 * Filters closed sessions to display only the sessions closed in the last seven days
+	 * @param session a session
+	 * @return true if session closed in the last seven days, false otherwise
+	 */
+	@SuppressWarnings("deprecation")
+	public boolean lastWeek(PlanningPokerSession session) {
+		boolean status = false;
+			if (session.isComplete()) {
+				Date dt = new Date();
+				if (session.getDate().getYear() == dt.getYear()) {
+					if (session.getDate().getMonth() == dt.getMonth()) {
+						if (session.getDate().getDate() == dt.getDate() || 
+								session.getDate().getDate() == dt.getDate() - 1 || 
+								session.getDate().getDate() == dt.getDate() - 2 ||
+								session.getDate().getDate() == dt.getDate() - 3 ||
+								session.getDate().getDate() == dt.getDate() - 4 ||
+								session.getDate().getDate() == dt.getDate() - 5 ||
+								session.getDate().getDate() == dt.getDate() - 6 ||
+								session.getDate().getDate() == dt.getDate() - 7) {
+							status = true;
+						}
+					}
+				
+			}
+			else {
+				status = false;
+			}
+		}
+		return status;	 
+	}
+	
+	
+	/**
+	 * Filters closed sessions to display only the sessions closed in the last 30 days
+	 * @param session
+	 * @return true if session closed in the last 30 days, false otherwise
+	 */
+	@SuppressWarnings("deprecation")
+	public boolean lastMonth(PlanningPokerSession session) {
+		boolean status = false;
+		if (session.isComplete()) {
+			Date dt = new Date();
+			if (session.getDate().getYear() == dt.getYear()) {
+				if (session.getDate().getMonth() == dt.getMonth()) {
+					status = true;
+				}
+				if (session.getDate().getMonth() == dt.getMonth() - 1) {
+					if (session.getDate().getDate() >= dt.getDate()) {
+						status = true;
+					}
+				}
+				if (session.getDate().getMonth() == 0) {
+					int previous = 11;
+					if (dt.getMonth() == previous) {
+						if (session.getDate().getDate() >= dt.getDate()) {
+							status = true;
+						}
+					}
+				}
+			}
+			else {
+				status = false;
+			}
+		}
+		return status;
+	}
+	
+	public void redraw() {
+		forceRefresh(sessions);
+	}
+
 }

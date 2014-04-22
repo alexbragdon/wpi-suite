@@ -662,6 +662,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             ViewEventController.getInstance().removeTab(this);
         }
     }
+    
 
 
     /**
