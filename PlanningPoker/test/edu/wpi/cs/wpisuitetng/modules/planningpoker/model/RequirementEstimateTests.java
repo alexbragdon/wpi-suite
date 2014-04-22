@@ -10,29 +10,12 @@
 
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
-import java.util.HashMap;
-
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockRequest;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
 public class RequirementEstimateTests {
