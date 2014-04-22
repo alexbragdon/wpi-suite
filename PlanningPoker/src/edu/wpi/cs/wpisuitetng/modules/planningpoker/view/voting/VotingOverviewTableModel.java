@@ -105,7 +105,7 @@ public class VotingOverviewTableModel extends AbstractTableModel {
             case VOTED_COLUMN: return voted ? "\u2713" : "";
             case NAME_COLUMN: return requirement.getName();
             case TYPE_COLUMN: return requirement.getType().toString();
-            case ESTIMATE_COLUMN: return voted ? requirement.getVotes().get(user) : "--";
+            case ESTIMATE_COLUMN: return voted ? requirement.getVotes().get(user).getTotalEstimate() : "--";
             case PROGRESS_COLUMN: return new Fraction(requirement.getVotes().size(), teamCount);
             default: 
                 // $codepro.audit.disable thrownExceptions
