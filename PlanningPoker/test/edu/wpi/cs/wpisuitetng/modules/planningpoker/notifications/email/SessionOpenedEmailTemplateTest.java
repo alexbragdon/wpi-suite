@@ -10,8 +10,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,8 +53,8 @@ public class SessionOpenedEmailTemplateTest {
         assertEquals(subject, msg.getSubject());
         String body = "Hello Tester Test,\n\nadmin has begun planning poker session \"Test\".\n\n" +
                         "Description:\n\ttest\n\n" + "Requirements:\n\tTest1\n\n"+
-                        "Voting ends on Monday, April 21 at 0:0.\n\n"+
-                        "- The planning poker team";
+                        "Voting ends on "+new SimpleDateFormat("EEEE, MMMM d 'at' 0:0").format(new Date()) + 
+                        ".\n\n- The planning poker team";
         assertEquals(body, msg.getBody());
     }
 

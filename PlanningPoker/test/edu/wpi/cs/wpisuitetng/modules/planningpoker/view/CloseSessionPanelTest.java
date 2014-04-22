@@ -73,12 +73,12 @@ public class CloseSessionPanelTest {
 	@Test
 	public void testOtherFunctionalities(){
 		assertEquals(String.class, cstm.getColumnClass(0));
-		assertEquals(String.class, cstm.getColumnClass(1));
-		assertEquals(String.class, cstm.getColumnClass(2));
+		assertEquals(Double.class, cstm.getColumnClass(1));
+		assertEquals(Double.class, cstm.getColumnClass(2));
 		assertEquals(Integer.class, cstm.getColumnClass(3));
 		assertEquals("2", cstm.getValueAt(0, 0));
-		assertEquals("--", cstm.getValueAt(0, 1));
-		assertEquals("--", cstm.getValueAt(0, 2));
+		assertEquals(0.0, cstm.getValueAt(0, 1));
+		assertEquals(0.0, cstm.getValueAt(0, 2));
 		assertEquals(2, cstm.getValueAt(0, 3));
 		cstm.setValueAt(3, 0, 3);
 		assertEquals(3, cstm.getValueAt(0, 3));
