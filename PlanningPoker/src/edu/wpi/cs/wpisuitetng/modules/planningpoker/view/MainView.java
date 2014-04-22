@@ -48,7 +48,7 @@ public class MainView extends JTabbedPane {
             public void stateChanged(ChangeEvent arg0) {
                 final JComponent selected = (JComponent) self.getSelectedComponent();
                 if (selected instanceof MySessionPanel) {
-                    ((MySessionPanel)selected).refresh();
+                    ((MySessionPanel)selected).forceRefresh(((MySessionPanel)selected).sessions);
                 }
                 final JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
                 final int index = sourceTabbedPane.getSelectedIndex();

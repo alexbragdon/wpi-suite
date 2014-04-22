@@ -128,7 +128,7 @@ public class MySessionPanel extends JPanel {
      * 
      * @param newSessions new sessions
      */
-    private void forceRefresh(final PlanningPokerSession[] newSessions) {
+    public void forceRefresh(final PlanningPokerSession[] newSessions) {
         moderatingPanel.getTable().clear();
         joiningPanel.getTable().clear();
         closedPanel.getTable().clear();
