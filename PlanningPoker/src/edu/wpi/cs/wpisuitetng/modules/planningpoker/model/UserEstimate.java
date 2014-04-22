@@ -21,7 +21,7 @@ import java.util.List;
  * @author Team Romulus
  * @version Iteration-5
  */
-public class UserEstimate {
+public class UserEstimate implements Comparable<UserEstimate> {
 	/**
      * The user associated with the estimate
      */
@@ -88,4 +88,13 @@ public class UserEstimate {
 	public void setTotalEstimate(int totalEstimate) {
 		this.totalEstimate = totalEstimate;
 	}
+
+    /**
+     * 
+     */
+    @Override
+    public int compareTo(UserEstimate otherEstimate) {
+        // TODO Auto-generated method stub
+        return totalEstimate - otherEstimate.getTotalEstimate();
+    }
 }

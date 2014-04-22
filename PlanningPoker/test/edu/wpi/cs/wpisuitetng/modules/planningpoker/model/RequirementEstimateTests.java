@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -50,5 +51,50 @@ public class RequirementEstimateTests {
 		testReq.setExported(true);
 		assertEquals(true, testReq.isExported());
 	}
+	@Test
+	public void TestCalculateMean() {
+	    testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
+	    // Add a user which did not vote
+	    testReq.addVote("Bobby", null);
+	    // Add users who did vote
+	    testReq.addVote("Tommy", new UserEstimate("Tommy", new ArrayList<Integer>(), 7));
+	    testReq.addVote("Soggy", new UserEstimate("Soggy", new ArrayList<Integer>(), 5));
 
+	    assertEquals(6, testReq.calculateMean(), 0);
+
+	    // Add a duplicate value into the hash map
+        testReq.addVote("Ronny", new UserEstimate("Ronny", new ArrayList<Integer>(), 5));
+        testReq.addVote("Nonny", new UserEstimate("Nonny", new ArrayList<Integer>(), 3));
+        
+        assertEquals(5, testReq.calculateMean(), 0);
+        
+        // Add an unsure vote 
+        testReq.addVote("Dobby", new UserEstimate("Dobby", new ArrayList<Integer>(), 0));
+        
+        assertEquals(5, testReq.calculateMean(), 0);
+	}
+    @Test
+    public void TestCalculateMedian() {
+        testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
+        // Add a user which did not vote
+        testReq.addVote("Bobby", null);
+        // Add users who did vote
+        testReq.addVote("Tommy", new UserEstimate("Tommy", new ArrayList<Integer>(), 7));
+        testReq.addVote("Soggy", new UserEstimate("Soggy", new ArrayList<Integer>(), 5));
+        testReq.addVote("Molly", new UserEstimate("Molly", new ArrayList<Integer>(), 9));
+
+        assertEquals(7, testReq.calculateMedian(), 0);
+
+        // Add a duplicate value into the hash map
+        testReq.addVote("Ronny", new UserEstimate("Ronny", new ArrayList<Integer>(), 5));
+        testReq.addVote("Nonny", new UserEstimate("Nonny", new ArrayList<Integer>(), 3));
+
+        assertEquals(5, testReq.calculateMedian(), 0);
+
+        // Add an unsure vote and another vote (so the number of votes is even)
+        testReq.addVote("Dobby", new UserEstimate("Dobby", new ArrayList<Integer>(), 0));
+        testReq.addVote("Holly", new UserEstimate("Holly", new ArrayList<Integer>(), 100));
+
+        assertEquals(6, testReq.calculateMedian(), 0);
+    }
 }

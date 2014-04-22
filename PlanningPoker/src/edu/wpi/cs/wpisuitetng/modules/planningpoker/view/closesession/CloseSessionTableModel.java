@@ -67,8 +67,8 @@ public class CloseSessionTableModel extends AbstractTableModel {
         //multiple returns makes code much clean in this case
         switch (columnIndex) {
             case 0: return String.class;
-            case 1: return String.class;
-            case 2: return String.class;
+            case 1: return Double.class;
+            case 2: return Double.class;
             case 3: return Integer.class;
             default: 
                 // $codepro.audit.disable thrownExceptions
@@ -94,8 +94,9 @@ public class CloseSessionTableModel extends AbstractTableModel {
             case 0:
                 return session.getRequirements().get(row).getName();
             case 1:
+                return session.getRequirements().get(row).calculateMean();
             case 2:
-                return "--";
+                return session.getRequirements().get(row).calculateMedian();
             case 3:
                 return session.getRequirements().get(row).getFinalEstimate();
             default:

@@ -12,7 +12,11 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementType;
@@ -124,5 +128,68 @@ public class RequirementEstimate {
      */
     public void addVote(String username, UserEstimate estimate) {
         votes.put(username, estimate);
+    }
+    
+    /**
+     * 
+     * Calculates the mean of the acceptable votes. An acceptable
+     * vote is one which is not 0 or the final estimate.
+     *
+     * @return the mean of all the votes
+     */
+    public double calculateMean() {
+        int totalEstimate = 0;
+        int numberEstimates = 0;
+        for (UserEstimate userVote : votes.values()) {
+            if (userVote != null && userVote.getTotalEstimate() != 0) {
+                totalEstimate += userVote.getTotalEstimate();
+                numberEstimates++;
+            }
+        }
+        
+        double average = 0;
+        
+        if (numberEstimates != 0) {
+            average = totalEstimate / numberEstimates;
+        }
+        
+        return average;
+    }
+    
+    /**
+     * 
+     * Calcualtes the median of the acceptable votes. An acceptable
+     * vote is one which is not 0 or the final estimate
+     *
+     * @return the median of all the votes
+     */
+    public double calculateMedian() {
+        ArrayList<Integer> sortedVotes = new ArrayList<Integer>();
+        
+        for (UserEstimate userVote : votes.values()) {
+            if (userVote != null && userVote.getTotalEstimate() != 0) {
+                sortedVotes.add(userVote.getTotalEstimate());
+            }
+        }
+        
+        Collections.sort(sortedVotes);
+        
+        System.out.println(sortedVotes);
+        
+        int size = sortedVotes.size();
+        
+        if (size == 0) {
+            return 0;
+        }
+        
+        if (size % 2 == 1) {
+            // Size is odd: Return the thing's total at the floor of the thing divided by 2
+            return sortedVotes.get(size / 2);
+        } else {
+            // Size is even: Return the the average of the thing's total on 
+            // either size of the thing divided by 2
+            return (sortedVotes.get(size / 2) 
+                            + sortedVotes.get((size / 2) - 1)) / 2;
+        }
     }
 }
