@@ -21,6 +21,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetAllUsersController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
@@ -33,8 +34,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
  */
 @SuppressWarnings("serial")
 public class VotingOverviewPanel extends JPanel {
-    
-    private VotingOverviewTable table;
+	private VotingOverviewTable table;
     private List<RequirementEstimate> requirements;
     private final JProgressBar overallProgress;
     private final Timer timer;
@@ -84,6 +84,8 @@ public class VotingOverviewPanel extends JPanel {
         timer = new Timer(1000, new GetPlanningPokerSessionController(this));
         timer.setInitialDelay(1000);
         timer.start();
+        
+        new GetAllUsersController().requestAllUsers(this);
     }
     
     /**
@@ -128,5 +130,19 @@ public class VotingOverviewPanel extends JPanel {
 				table.repaint();
 			}
 		}
+	}
+	
+	/**
+	 * @return the table
+	 */
+	public VotingOverviewTable getTable() {
+		return table;
+	}
+
+	/**
+	 * @return the requirements
+	 */
+	public List<RequirementEstimate> getRequirements() {
+		return requirements;
 	}
 }

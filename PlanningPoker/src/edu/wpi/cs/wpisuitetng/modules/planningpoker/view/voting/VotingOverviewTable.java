@@ -22,8 +22,9 @@ import javax.swing.table.TableColumn;
  */
 @SuppressWarnings("serial")
 public class VotingOverviewTable extends JTable {
-    
-    /**
+	VotingOverviewTableModel votingOverviewTableModel;
+
+	/**
      * 
      * Description
      *
@@ -31,6 +32,7 @@ public class VotingOverviewTable extends JTable {
      */
     public VotingOverviewTable(VotingOverviewTableModel model) {
         super(model);
+        this.votingOverviewTableModel = model;
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         for (int i = 0; i < 5; i++) {
@@ -66,4 +68,11 @@ public class VotingOverviewTable extends JTable {
             }
         }
     }
+    
+    /**
+	 * @return the votingOverviewTableModel
+	 */
+	public VotingOverviewTableModel getVotingOverviewTableModel() {
+		return votingOverviewTableModel;
+	}
 }
