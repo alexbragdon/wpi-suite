@@ -178,6 +178,10 @@ public class RequirementEstimate {
         
         int size = sortedVotes.size();
         
+        if (size == 0) {
+            return 0;
+        }
+        
         if (size % 2 == 1) {
             // Size is odd: Return the thing's total at the floor of the thing divided by 2
             return sortedVotes.get(size / 2);
