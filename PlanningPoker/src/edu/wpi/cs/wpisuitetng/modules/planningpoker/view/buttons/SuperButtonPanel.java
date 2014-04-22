@@ -46,7 +46,6 @@ public class SuperButtonPanel extends ToolbarGroupView {
         this.parentView = parent;
 
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-        //change this to 450 when we have three buttons
         this.setPreferredWidth(150);
 
         superButton.addActionListener(new ActionListener() {
