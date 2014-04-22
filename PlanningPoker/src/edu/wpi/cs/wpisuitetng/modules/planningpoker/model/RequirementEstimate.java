@@ -134,7 +134,23 @@ public class RequirementEstimate {
      * @return the mean of all the votes
      */
     public double calculateMean() {
+        int totalEstimate = 0;
+        int numberEstimates = 0;
+        for (UserEstimate userVote : votes.values()) {
+            if (userVote.getTotalEstimate() != 0) {
+                totalEstimate += userVote.getTotalEstimate();
+                numberEstimates++;
+            }
+        }
         
+        double average = 0;
+        
+        if (numberEstimates != 0) {
+            average = totalEstimate / numberEstimates;
+        }
+        
+        // Make this method pass
+        return average;
     }
     
     /**
@@ -145,6 +161,7 @@ public class RequirementEstimate {
      * @return the median of all the votes
      */
     public int calculateMedian() {
-        
+        // Make this method pass
+        return -1;
     }
 }
