@@ -131,6 +131,10 @@ public class VotingButtonPanel extends JPanel{
 		return estimateLabel;
 	}
 	
+	public JSpinner getEstimateSpinner() {
+		return estimateSpin;
+	}
+	
 	public void setFieldsEnabled(boolean isEnabled) {
 	    voteButton.setEnabled(isEnabled);
 	    if (mode == ViewMode.WITHDECK) {

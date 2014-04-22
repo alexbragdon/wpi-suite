@@ -11,12 +11,16 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.UserEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
 
@@ -53,6 +57,8 @@ public class VotingPanel extends JPanel {
             this.hasDeck = true;
             buildLayout(session);
         }
+        
+        updateSelectedRequirement(session.getRequirements().get(0));
     }
 
     /**
@@ -65,7 +71,7 @@ public class VotingPanel extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        overview = new VotingOverviewPanel(session.getRequirements(), 20, "bob", this);
+        overview = new VotingOverviewPanel(session.getRequirements(), 20, ConfigManager.getConfig().getUserName(), this);
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 2;
@@ -156,15 +162,27 @@ public class VotingPanel extends JPanel {
     }
     
     public void votePressed() {
-    
-    	//RequirementEstimate allVotes = session.getRequirements().getVotest 
+    	int totalEstimate = 0;
+    	
+    	totalEstimate = (int) buttons.getEstimateSpinner().getValue();
+    	
+    	if (this.hasDeck) { 		
+    		currentRequirement.getVotes().put(ConfigManager.getConfig().getUserName(), 
+        			new UserEstimate(ConfigManager.getConfig().getUserName(), cards.getSelectedCardsIndices(), totalEstimate));
+    	} else {
+    		currentRequirement.getVotes().put(ConfigManager.getConfig().getUserName(), 
+        			new UserEstimate(ConfigManager.getConfig().getUserName(), totalEstimate));
+    	}
     	
     	PlanningPokerSession newSession = 
                 new PlanningPokerSession(session.getID(), session.getName(),
                                 session.getDescription(), session.getDate(),
                                 session.getHour(),
                                 session.getMin(),
-                                session.getRequirements(), session.getType(), false,
-                                true, session.getModerator(), session.getDeck());
+                                session.getRequirements(), session.getType(), session.isActive(),
+                                session.isComplete(), session.getModerator(), session.getDeck());
+    
+    	EditPlanningPokerSessionController.getInstance(
+                ).editPlanningPokerSession(newSession); 
     }
 }
