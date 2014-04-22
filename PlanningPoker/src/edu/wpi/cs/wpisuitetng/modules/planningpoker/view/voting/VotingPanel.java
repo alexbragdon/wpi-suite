@@ -147,6 +147,7 @@ public class VotingPanel extends JPanel {
         if(hasDeck){
             cards.selectedRequirementChanged(selectedRequirement);
             cards.updateSelectedIndices();
+            cards.calculateTotalEstimate();
         }
         
         boolean hasVoted = selectedRequirement.getVotes()
