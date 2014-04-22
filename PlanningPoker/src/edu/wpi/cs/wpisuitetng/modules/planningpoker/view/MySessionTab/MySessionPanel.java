@@ -115,24 +115,7 @@ public class MySessionPanel extends JPanel {
         sessions = newSessions;
 
         if (hasChanges) {
-            moderatingPanel.getTable().clear();
-            joiningPanel.getTable().clear();
-            closedPanel.getTable().clear();
-
-            final String username = ConfigManager.getConfig().getUserName();
-
-            for (PlanningPokerSession session : newSessions) {
-                if (session.isComplete()) {
-                    closedPanel.getTable().addSessions(session);
-                } else{
-                    if (session.isActive() /*&& !session.getModerator().equals(username)*/) {
-                        joiningPanel.getTable().addSessions(session);
-                    }
-                    if (session.getModerator().equals(username)) {
-                        moderatingPanel.getTable().addSessions(session);
-                    }
-                }
-            }
+            forceRefresh(newSessions);
         }
     }
     
