@@ -81,7 +81,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
         			return;
         		}
 	            final int dialogButton = JOptionPane.YES_NO_OPTION;
-	            final int dialogResult = JOptionPane.showConfirmDialog(null, 
+	            final int dialogResult = JOptionPane.showConfirmDialog(tabbedPane, 
 	            		"There are unsaved changes. Close anyway?", "Warning", dialogButton);
 	            if (dialogResult == JOptionPane.YES_OPTION)
 	            {

@@ -39,7 +39,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
  */
 @SuppressWarnings("serial")
 public class CloseButtonPanel extends ToolbarGroupView {
-    private final JButton closeButton = new JButton("<html>Close<br />Session</html>");
+    private final JButton closeButton = new JButton("<html>Close<br />Game</html>");
 
     private final JPanel contentPanel = new JPanel();
 
@@ -72,14 +72,14 @@ public class CloseButtonPanel extends ToolbarGroupView {
             }
         });
 
-        closeButton.setToolTipText("Close this planning poker session.");
+        closeButton.setToolTipText("Close this planning poker game.");
 
         closeButton.setVisible(false);
         contentPanel.add(closeButton);
         contentPanel.setOpaque(false);
         this.add(contentPanel);
         
-        closeButton.setToolTipText("Close selected Planning Poker session and end voting");
+        closeButton.setToolTipText("Close selected Planning Poker game and end voting");
     }
 
     public void pressCloseButton(MainView parent) {
