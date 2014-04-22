@@ -27,7 +27,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
- * This is the code for the three buttons on the tool bar. Currently has only one button on it.
+ * This is the code for the create session on the tool bar.
  * @author Team romulus
  * @version Iteration-1
  */

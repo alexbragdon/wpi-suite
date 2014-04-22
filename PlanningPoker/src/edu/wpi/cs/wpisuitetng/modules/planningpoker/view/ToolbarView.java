@@ -15,6 +15,7 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.ButtonsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.EmailButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SuperButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CloseButtonPanel;
 
 /**
  * The view of tool bars of planning poker game. It holds all the buttons in tool bar.
@@ -28,6 +29,7 @@ public class ToolbarView extends DefaultToolbarView {
     private final ButtonsPanel CreateButtonPanel;
     private final SuperButtonPanel SuperButtonPanel;
     private final EmailButtonPanel EmailButtonPanel;
+    private final CloseButtonPanel CloseButtonPanel;
 
     /**
      * Creates and positions option buttons in upper toolbar
@@ -40,6 +42,8 @@ public class ToolbarView extends DefaultToolbarView {
         this.addGroup(CreateButtonPanel);
         SuperButtonPanel = new SuperButtonPanel(mainView);
         this.addGroup(SuperButtonPanel);
+        CloseButtonPanel = new CloseButtonPanel(mainView);
+        this.addGroup(CloseButtonPanel);
         this.add(Box.createHorizontalGlue());
         EmailButtonPanel = new EmailButtonPanel(mainView);
         this.add(EmailButtonPanel);
@@ -56,4 +60,9 @@ public class ToolbarView extends DefaultToolbarView {
     public EmailButtonPanel GetEmailButtonPanel(){ // $codepro.audit.disable methodJavadoc
         return EmailButtonPanel;
     }
+    
+    public CloseButtonPanel GetCloseButtonPanel(){ // $codepro.audit.disable methodJavadoc
+        return CloseButtonPanel;
+    }
+    
 }
