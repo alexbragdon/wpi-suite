@@ -28,6 +28,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
 
 import net.miginfocom.swing.MigLayout;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
 
 /**
@@ -46,6 +47,7 @@ public class VotingButtonPanel extends JPanel{
 	private JButton clearButton;
 	private JButton voteButton;
 	private final ViewMode mode;
+	private final VotingPanel parentPanel;
 	
 	/**
 	 * Card Panel
@@ -58,7 +60,7 @@ public class VotingButtonPanel extends JPanel{
      *
      * @param mode
      */
-	public VotingButtonPanel(ViewMode mode){
+	public VotingButtonPanel(ViewMode mode, VotingPanel votingPanel){
 		
 	    this.mode = mode;
 	    
@@ -72,6 +74,9 @@ public class VotingButtonPanel extends JPanel{
 		
 		setMinimumSize(new Dimension(270, 150));
 		setPreferredSize(new Dimension(270, 150));
+		
+		parentPanel = votingPanel;
+		setupListeners();
 	}
 
 	private void buildLayoutWithoutDeck() {
@@ -155,6 +160,10 @@ public class VotingButtonPanel extends JPanel{
 		return estimateLabel;
 	}
 	
+	public JSpinner getEstimateSpinner() {
+		return estimateSpin;
+	}
+	
 	public void setFieldsEnabled(boolean isEnabled) {
 	    voteButton.setEnabled(isEnabled);
 	    if (mode == ViewMode.WITHDECK) {
@@ -171,4 +180,14 @@ public class VotingButtonPanel extends JPanel{
 	public void setCardPanel(CardPanel cards) {
 		this.cards = cards;
 	}
+	
+	
+	private void setupListeners(){        
+        voteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                parentPanel.votePressed();
+            }
+        });
+	}
+
 }

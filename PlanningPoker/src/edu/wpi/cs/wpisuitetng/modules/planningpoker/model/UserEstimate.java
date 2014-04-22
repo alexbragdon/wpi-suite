@@ -47,6 +47,12 @@ public class UserEstimate implements Comparable<UserEstimate> {
 		this.totalEstimate = totalEstimate;
 	}
 
+	public UserEstimate(String user, int totalEstimate){
+		this.selectedCardIndices = new ArrayList<Integer>();
+	    this.user = user;
+		this.totalEstimate = totalEstimate;
+	}
+	
 	/**
      * Returns the user associated with the estimate
      */
