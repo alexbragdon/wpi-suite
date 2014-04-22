@@ -47,6 +47,7 @@ public class CloseSessionPanelTest {
 		csp = new CloseSessionPanel(ses, true);
 		csbp = new CloseSessionButtonsPanel(csp, true);
 		cstm = new CloseSessionTableModel (ses, true);
+		ViewEventController.getInstance().setMainView(new MainView());
 	}
 	@Test
 	public void testClosePressed(){
