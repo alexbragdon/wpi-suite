@@ -42,9 +42,9 @@ public class CloseSessionPanel extends JPanel {
     }
 
     private void buildLayout() {
-        editPanel = new JScrollPane(new JTable(new CloseSessionTableModel(session, isEditable)));
         buttons = new CloseSessionButtonsPanel(this, isEditable);
-
+        editPanel = new JScrollPane(new JTable(new CloseSessionTableModel(session, isEditable, buttons)));
+        
         setLayout(new BorderLayout());
         add(editPanel, BorderLayout.CENTER);
         add(buttons, BorderLayout.SOUTH);

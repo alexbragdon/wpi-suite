@@ -77,6 +77,14 @@ public class CloseSessionButtonsPanel extends JPanel {
             }
         });
     }    
+    
+    public void disableCloseButton() {
+        closeButton.setEnabled(false);
+    }
+    
+    public void enableCloseButton() {
+        closeButton.setEnabled(true);
+    }
 
     public JButton getCloseButton() {
         return closeButton;

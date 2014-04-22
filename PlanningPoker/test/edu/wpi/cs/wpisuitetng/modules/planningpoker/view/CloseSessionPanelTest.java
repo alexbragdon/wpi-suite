@@ -46,7 +46,7 @@ public class CloseSessionPanelTest {
 				reqList, SessionType.REALTIME, false, false, "admin", "-None-");
 		csp = new CloseSessionPanel(ses, true);
 		csbp = new CloseSessionButtonsPanel(csp, true);
-		cstm = new CloseSessionTableModel (ses, true);
+		cstm = new CloseSessionTableModel (ses, true, null);
 		ViewEventController.getInstance().setMainView(new MainView());
 	}
 	@Test

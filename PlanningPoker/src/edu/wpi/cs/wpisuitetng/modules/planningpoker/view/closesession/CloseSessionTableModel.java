@@ -12,6 +12,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 import javax.swing.table.AbstractTableModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionButtonsPanel;
 
 /**
  * This models the table displayed in the close session tab.
@@ -20,6 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
  */
 @SuppressWarnings("serial")
 public class CloseSessionTableModel extends AbstractTableModel {
+    private final CloseSessionButtonsPanel buttons;
     private final PlanningPokerSession session;
     private final boolean isEditable;
     private final String[] columns = { "Requirement Name", "Mean", "Median", "Final Estimate" };
@@ -30,9 +32,10 @@ public class CloseSessionTableModel extends AbstractTableModel {
      * @param session the session to model
      * @param isEditable
      */
-    public CloseSessionTableModel(PlanningPokerSession session, boolean isEditable) {
+    public CloseSessionTableModel(PlanningPokerSession session, boolean isEditable, CloseSessionButtonsPanel buttons) {
         this.session = session;
         this.isEditable = isEditable;
+        this.buttons = buttons;
     }
 
     /*
@@ -111,14 +114,19 @@ public class CloseSessionTableModel extends AbstractTableModel {
     @Override
     // $codepro.audit.disable multipleReturns
     public void setValueAt(Object value, int row, int column) { 
+        buttons.enableCloseButton();
+        
         //multiple returns makes code much clean in this case
         if (column != 3) {
             // $codepro.audit.disable thrownExceptions
             throw new RuntimeException("Invalid column index"); 
         }
 
-        final int estimate = (Integer)value;
-        if (estimate < 0) return;
+        final int estimate = (Integer) value;
+        if (estimate < 0) {
+            buttons.disableCloseButton();
+            return;
+        }
         session.getRequirements().get(row).setFinalEstimate(estimate);
         fireTableCellUpdated(row, column);
     }
