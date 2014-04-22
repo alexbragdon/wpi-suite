@@ -89,6 +89,15 @@ public class ClosedSessionPanel extends JPanel {
         this.add(panel, BorderLayout.CENTER);
         
         this.setupListeners();
+        
+        filterMenu.addItemListener(new ItemListener() {
+        	@Override
+        	public void itemStateChanged(ItemEvent arg0) {
+        		if (arg0.getStateChange() == ItemEvent.SELECTED) {
+        			mySessionPanel.redraw();
+        		}
+        	}
+        });
 
     }
     
