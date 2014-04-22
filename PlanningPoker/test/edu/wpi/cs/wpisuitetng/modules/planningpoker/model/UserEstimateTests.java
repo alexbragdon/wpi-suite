@@ -45,4 +45,4 @@ public class UserEstimateTests {
 		testEstimate.setTotalEstimate(15);
 		assertEquals(15, testEstimate.getTotalEstimate());
 	}
-
+}

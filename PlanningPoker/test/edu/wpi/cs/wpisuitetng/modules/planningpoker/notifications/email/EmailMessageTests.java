@@ -1,7 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email;
 
 import static org.junit.Assert.*;
-s
 import org.junit.Before;
 import org.junit.Test;
 
