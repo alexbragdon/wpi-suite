@@ -125,4 +125,26 @@ public class RequirementEstimate {
     public void addVote(String username, UserEstimate estimate) {
         votes.put(username, estimate);
     }
+    
+    /**
+     * 
+     * Calculates the mean of the acceptable votes. An acceptable
+     * vote is one which is not 0 or the final estimate.
+     *
+     * @return the mean of all the votes
+     */
+    public double calculateMean() {
+        
+    }
+    
+    /**
+     * 
+     * Calcualtes the median of the acceptable votes. An acceptable
+     * vote is one which is not 0 or the final estimate
+     *
+     * @return the median of all the votes
+     */
+    public int calculateMedian() {
+        
+    }
 }
