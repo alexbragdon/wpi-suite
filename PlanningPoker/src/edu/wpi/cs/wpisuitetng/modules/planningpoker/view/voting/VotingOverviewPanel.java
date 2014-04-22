@@ -62,7 +62,7 @@ public class VotingOverviewPanel extends JPanel {
         overallProgress.setValue(votes * 1000 / requirements.size());
         
         table = new VotingOverviewTable(new VotingOverviewTableModel(requirements, teamCount, user));
-        
+        table.getSelectionModel().setSelectionInterval(0, 0);
         add(overallProgress, BorderLayout.NORTH);
         add(new JScrollPane(table), BorderLayout.CENTER);
         

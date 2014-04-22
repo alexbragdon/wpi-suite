@@ -69,7 +69,11 @@ public class SessionRequirementPanel extends JPanel {
         final Object[][] data = {};
         final String[] columns = { "ID", "NAME", "" };
 
-        new GetRequirementsController(this).retrieveRequirements();
+        try {
+            new GetRequirementsController(this).retrieveRequirements();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
 
         model = new DefaultTableModel(data, columns) {
         	@Override

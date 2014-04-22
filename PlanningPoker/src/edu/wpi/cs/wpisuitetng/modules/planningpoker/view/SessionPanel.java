@@ -662,6 +662,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             ViewEventController.getInstance().removeTab(this);
         }
     }
+    
 
 
     /**
@@ -675,15 +676,20 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             final PlanningPokerSession session = createSessionFromFields();
             displaySession = session;
             session.setDeck(selectedDeck);
-            switch (viewMode) {
-                case CREATE:
-                    AddPlanningPokerSessionController.getInstance(
-                                    ).addPlanningPokerSession(session);
-                    break;
-                case EDIT:
-                    EditPlanningPokerSessionController.getInstance(
-                                    ).editPlanningPokerSession(session);
-                    break;
+            
+            try {
+                switch (viewMode) {
+                    case CREATE:
+                        AddPlanningPokerSessionController.getInstance(
+                                        ).addPlanningPokerSession(session);
+                        break;
+                    case EDIT:
+                        EditPlanningPokerSessionController.getInstance(
+                                        ).editPlanningPokerSession(session);
+                        break;
+                }
+            } catch (RuntimeException e) {
+                e.printStackTrace();
             }
 
             sendEmail(session);
@@ -882,8 +888,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      * @param session
      */
     public void sendEmail(PlanningPokerSession session) {
-        final Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/open", HttpMethod.POST);
-        request.setBody(session.toJSON());
-        request.send();
+        try {
+            final Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/open", HttpMethod.POST);
+            request.setBody(session.toJSON());
+            request.send();
+        } catch (RuntimeException e) {
+            
+        }
     }
 }

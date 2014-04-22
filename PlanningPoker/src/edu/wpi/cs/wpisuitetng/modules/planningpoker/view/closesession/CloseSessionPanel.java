@@ -56,7 +56,11 @@ public class CloseSessionPanel extends JPanel {
     public void closePressed() {
         session.setComplete(true);
         session.setCompletionTime(new Date());
-        EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+        try {
+            EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
         remove();
     }
 
