@@ -89,8 +89,17 @@ public class JoiningSessionTable extends JTable {
             }
         }
         
+        String displayVotes;
+        
+        if (session.getRequirements().size() == votes) {
+            displayVotes = "Done!";
+        } else {
+            displayVotes = String.valueOf(votes) + "/" + 
+                            String.valueOf(session.getRequirements().size());
+        }
+        
         tableModel.addRow(new String[] { String.valueOf(session.getID()), 
-                        session.getName(), dateString, String.valueOf(votes)});
+                        session.getName(), dateString, displayVotes});
 
     }
     /**     *
