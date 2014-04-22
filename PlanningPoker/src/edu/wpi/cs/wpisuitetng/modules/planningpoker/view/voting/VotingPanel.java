@@ -110,7 +110,7 @@ public class VotingPanel extends JPanel {
             add(countdown, c);
         }
 
-        buttons = new VotingButtonPanel(hasDeck ? ViewMode.WITHDECK : ViewMode.WITHOUTDECK);
+        buttons = new VotingButtonPanel(hasDeck ? ViewMode.WITHDECK : ViewMode.WITHOUTDECK, this);
         c.gridx = 1;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -150,5 +150,9 @@ public class VotingPanel extends JPanel {
      */
     public PlanningPokerSession getSession() {
         return session;
+    }
+    
+    public void votePressed() {
+    	
     }
 }
