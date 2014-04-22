@@ -34,6 +34,7 @@ public class VotingPanel extends JPanel {
     CountDownOverviewPanel countdown;
     VotingButtonPanel buttons;
     PlanningPokerSession session;
+    RequirementEstimate currentRequirement;
     
     private final boolean hasDeck; 
     
@@ -141,6 +142,8 @@ public class VotingPanel extends JPanel {
         boolean hasVoted = selectedRequirement.getVotes()
                         .containsKey(ConfigManager.getConfig().getUserName());
         buttons.setFieldsEnabled(!hasVoted);
+        
+        currentRequirement = selectedRequirement;
     }
 
     /**
@@ -153,6 +156,15 @@ public class VotingPanel extends JPanel {
     }
     
     public void votePressed() {
+    
+    	//RequirementEstimate allVotes = session.getRequirements().getVotest 
     	
+    	PlanningPokerSession newSession = 
+                new PlanningPokerSession(session.getID(), session.getName(),
+                                session.getDescription(), session.getDate(),
+                                session.getHour(),
+                                session.getMin(),
+                                session.getRequirements(), session.getType(), false,
+                                true, session.getModerator(), session.getDeck());
     }
 }
