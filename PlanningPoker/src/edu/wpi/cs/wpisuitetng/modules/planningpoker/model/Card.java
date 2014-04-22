@@ -43,7 +43,7 @@ public class Card extends JPanel {
 	private boolean selected;
 	private CardPanel parent;
 
-	public Card(int cardNum, CardPanel parent){
+	public Card(int cardNum, CardPanel parent, boolean isEditable){
 		this.cardNum = cardNum;
 		this.parent = parent;
 		numLabel = new JLabel();
@@ -68,32 +68,34 @@ public class Card extends JPanel {
 		numLabel.setFont(numLabel.getFont().deriveFont(Font.BOLD, 64));
 		numLabel.setHorizontalAlignment(JLabel.CENTER);
 		
-		imgLabel.addMouseListener(new MouseListener(){
-			@Override
-			public void mouseClicked(MouseEvent me) {
-				toggleCardSelection();
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent me) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void mouseExited(MouseEvent me) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void mousePressed(MouseEvent me) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent me) {
-				// TODO Auto-generated method stub
-			}
-		});
+		if (isEditable) {
+			imgLabel.addMouseListener(new MouseListener(){
+				@Override
+				public void mouseClicked(MouseEvent me) {
+					toggleCardSelection();
+				}
+	
+				@Override
+				public void mouseEntered(MouseEvent me) {
+					// TODO Auto-generated method stub
+				}
+	
+				@Override
+				public void mouseExited(MouseEvent me) {
+					// TODO Auto-generated method stub
+				}
+	
+				@Override
+				public void mousePressed(MouseEvent me) {
+					// TODO Auto-generated method stub
+				}
+	
+				@Override
+				public void mouseReleased(MouseEvent me) {
+					// TODO Auto-generated method stub
+				}
+			});
+		}
 		
 	    this.imgLabel.setIcon(new ImageIcon(this.cardImg));
 		imgLabel.add(numLabel);
@@ -165,6 +167,11 @@ public class Card extends JPanel {
 	 */
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+		if (selected) {
+			imgLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3, true));
+		} else {
+			imgLabel.setBorder(null);
+		}
 	}
 
 	/**

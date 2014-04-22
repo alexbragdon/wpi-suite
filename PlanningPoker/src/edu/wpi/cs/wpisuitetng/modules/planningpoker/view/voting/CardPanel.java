@@ -3,6 +3,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,10 +48,12 @@ public class CardPanel extends JPanel {
 	 * VotingButtonPanel
 	 */
 	private VotingButtonPanel buttons;
+	
+	private List<Card> cards = new ArrayList<Card>();
 
 	private boolean zeroSelected = false;
 
-	public CardPanel(String deckName, RequirementEstimate r){
+	public CardPanel(String deckName, RequirementEstimate r, boolean isEditable){
 		this.selectedCardsIndices = new ArrayList<Integer>();
 		this.setLayout(new BorderLayout());
 
@@ -62,9 +65,10 @@ public class CardPanel extends JPanel {
 
 		cardIndices = new HashMap<Integer, Card>();
 		for(int i = 0; i < viewDeck.length; i++){
-			Card newCard = new Card(viewDeck[i], this);
+			Card newCard = new Card(viewDeck[i], this, isEditable);
 			cardIndices.put(i, newCard);
 			cardsPanel.add(newCard);
+			cards.add(newCard);
 		}
 
 		cardsPanel.setLayout(new GridLayout(1, cardIndices.size()));
@@ -129,6 +133,7 @@ public class CardPanel extends JPanel {
 	 * @return void
 	 */
 	public void selectedRequirementChanged(RequirementEstimate r){
+		this.currentReq = r;
 		clearCardSelection();
 		UserEstimate currentUserEst = r.getVotes().get(ConfigManager.getConfig().getUserName());
 		
@@ -138,12 +143,10 @@ public class CardPanel extends JPanel {
     		if(currentUserEst != null){
         		for(int i = 0; i < selectedCardsIndices.size(); i++){
         			Card temp = cardIndices.get(selectedCardsIndices.get(i));
-        			temp.toggleCardSelection();
+        			temp.setSelected(true);
         		}
     		}
 		}
-		
-		this.currentReq = r;
 	}
 
 	/**
@@ -222,5 +225,16 @@ public class CardPanel extends JPanel {
 		Card unknown = cardIndices.get(0);
 		unknown.getImgLabel().setBorder(null);
 		unknown.setSelected(false);
+	}
+	
+	/**
+	 * Disables editing.
+	 */
+	public void disableEditing() {
+		for (Card card : cards) {
+			for (MouseListener listener : card.getImgLabel().getMouseListeners()) {
+				card.getImgLabel().removeMouseListener(listener);
+			}
+		}
 	}
 }

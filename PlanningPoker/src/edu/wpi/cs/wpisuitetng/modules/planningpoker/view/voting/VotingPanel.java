@@ -83,7 +83,9 @@ public class VotingPanel extends JPanel {
 
         c.gridheight = 1;
         if (hasDeck) {
-            cards = new CardPanel("default", session.getRequirements().get(0));
+        	boolean isEditable = !session.getRequirements().get(0).getVotes()
+        			.containsKey(ConfigManager.getConfig().getUserName());
+            cards = new CardPanel("default", session.getRequirements().get(0), isEditable);
             c.gridx = 0;
             c.gridy = 1;
             c.gridwidth = 2;
@@ -165,12 +167,12 @@ public class VotingPanel extends JPanel {
     public void votePressed() {
     	int totalEstimate = 0;
     	
-    	totalEstimate = (int) buttons.getEstimateSpinner().getValue();
-    	
-    	if (this.hasDeck) { 		
+    	if (this.hasDeck) { 	
+    		totalEstimate = Integer.parseInt(buttons.getEstimateLabel().getText());
     		currentRequirement.getVotes().put(ConfigManager.getConfig().getUserName(), 
         			new UserEstimate(ConfigManager.getConfig().getUserName(), cards.getSelectedCardsIndices(), totalEstimate));
     	} else {
+    		totalEstimate = (int) buttons.getEstimateSpinner().getValue();
     		currentRequirement.getVotes().put(ConfigManager.getConfig().getUserName(), 
         			new UserEstimate(ConfigManager.getConfig().getUserName(), totalEstimate));
     	}
@@ -185,5 +187,8 @@ public class VotingPanel extends JPanel {
     
     	EditPlanningPokerSessionController.getInstance(
                 ).editPlanningPokerSession(newSession); 
+    	
+    	buttons.setFieldsEnabled(false);
+        cards.disableEditing();
     }
 }
