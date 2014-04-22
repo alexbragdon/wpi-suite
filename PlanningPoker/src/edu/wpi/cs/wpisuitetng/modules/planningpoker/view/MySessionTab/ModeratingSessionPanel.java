@@ -31,6 +31,7 @@ public class ModeratingSessionPanel extends JPanel {
 
     /**
      * Constructor for ModeratingSessionPanel.
+     * 
      * @param mainView MainView
      * @param mySessionPanel MySessionPanel
      */
@@ -71,21 +72,31 @@ public class ModeratingSessionPanel extends JPanel {
 
         this.add(panel, BorderLayout.CENTER);
 
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+        this.setupListeners();
+    }
+
+
+    private void setupListeners() {
+    	table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if(table.getSelectedRow() != -1){
                     parentView.getMySession().getJoiningPanel().getTable().clearSelection();
                     parentView.getMySession().getClosedPanel().getTable().clearSelection();
-                    final boolean isActive = ((String) getTable().getValueAt(getTable().getSelectedRow(), 3)).equals("Active");
-                    parentView.getToolbarView().GetSuperButtonPanel().getSuperButton().Update(0, isActive);
+                    final boolean isActive = ((String) getTable().getValueAt(getTable(
+                                    ).getSelectedRow(), 3)).equals("Active");
+                    parentView.getToolbarView().GetSuperButtonPanel().getSuperButton(
+                                    ).Update(0, isActive);
                 }
             }
         });
-    }
+        
+    	this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
+		
+	}
 
 
-    /**
+	/**
      * @return the table
      */
     public ModeratingSessionTable getTable() {

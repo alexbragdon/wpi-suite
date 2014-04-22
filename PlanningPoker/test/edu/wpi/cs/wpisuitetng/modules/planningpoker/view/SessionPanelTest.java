@@ -76,20 +76,20 @@ public class SessionPanelTest {
 	public void testTheValidateFieldsMethodWithoutCalendar() {
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
-		sesPan.setTimeDisabled();
-		assertTrue(sesPan.validateFields(true));
+		sesPan.makeTimeDisabled();
+		assertTrue(sesPan.canValidateFields(true));
 		sesPan.setNameField("");
-		assertFalse(sesPan.validateFields(true));
+		assertFalse(sesPan.canValidateFields(true));
 		assertEquals("*Please enter a name.",sesPan.getInfoLabel());
 		sesPan.setNameField("  Test Name");
-		assertFalse(sesPan.validateFields(true));
+		assertFalse(sesPan.canValidateFields(true));
 		assertEquals("*Name cannot start with a space.",sesPan.getInfoLabel());
 		sesPan.setNameField("Testing 123");
 		sesPan.setDesField("");
-		assertFalse(sesPan.validateFields(true));
+		assertFalse(sesPan.canValidateFields(true));
 		assertEquals("*Please enter a description.",sesPan.getInfoLabel());
 		sesPan.setDesField("  Sample Description");
-		assertFalse(sesPan.validateFields(true));
+		assertFalse(sesPan.canValidateFields(true));
 		assertEquals("*Description cannot start with a space.",sesPan.getInfoLabel());
 	}
 	
@@ -97,21 +97,21 @@ public class SessionPanelTest {
 	public void testTheValidateFieldsMethodWithCalendar() {
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
-		sesPan.setTimeEnabled();
-		assertTrue(sesPan.validateFields(true));
-		sesPan.setSpinTime();
-		assertFalse(sesPan.validateFields(true));
+		sesPan.makeTimeEmabled();
+		assertTrue(sesPan.canValidateFields(true));
+		sesPan.resetSpinTime();
+		assertFalse(sesPan.canValidateFields(true));
 		assertEquals("*Date is in the past",sesPan.getInfoLabel());
 	}
 	@Test
 	public void testTheValidateFieldsMethodWithoutRequirement() {
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
-		sesPan.setTimeDisabled();
+		sesPan.makeTimeDisabled();
 		ses = new PlanningPokerSession(21345, "Test Session", "Hello The World", new Date(), 23, 59,
 				new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "admin", null);
 		//sesPan = new SessionPanel(ses);
-		assertTrue(sesPan.validateFields(true));
+		assertTrue(sesPan.canValidateFields(true));
 		assertEquals("",sesPan.getInfoLabel());
 	}
 	@Test
@@ -119,23 +119,23 @@ public class SessionPanelTest {
 		sesPan = new SessionPanel();
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
-		sesPan.setTimeDisabled();
+		sesPan.makeTimeDisabled();
 		// Assert False because there is no way to let the new created session to choose a requirement.
 		//This test only test whether the constructor for creating session works, so no need to assertTrue. 
-		assertFalse(sesPan.validateFields(true));
+		assertFalse(sesPan.canValidateFields(true));
 	}
 	@Test
 	public void testClearFunctionality() {
 		sesPan = new SessionPanel();
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
-		sesPan.setTimeDisabled();
+		sesPan.makeTimeDisabled();
 		sesPan.clearPressed();
 		assertEquals("*Select at least one requirement",sesPan.getInfoLabel());
 	}
 	@Test
 	public void testChangedAndButtonPressed() {
-		assertTrue(sesPan.changed());
+		assertTrue(sesPan.isChanged());
 		sesPan.cancelPressed();
 		sesPan.textChanged();
 		Network.initNetwork(new MockNetwork());
@@ -147,16 +147,16 @@ public class SessionPanelTest {
 	public void testDisturbedSession() {
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
-		sesPan.setTimeDisabled();
+		sesPan.makeTimeDisabled();
 		sesPan = new SessionPanel(disturbedses);
-		assertTrue(sesPan.validateFields(true));
+		assertTrue(sesPan.canValidateFields(true));
 		sesPan.clearPressed();
 	}
 	@Test
 	public void testButtonPressedInOtherConditions() {
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
-		sesPan.setTimeEnabled();
+		sesPan.makeTimeEmabled();
 		sesPan.textChanged();
 		sesPan.setNameField("");
 		sesPan.setDesField("");
@@ -166,8 +166,8 @@ public class SessionPanelTest {
 	public void testIncreasmentOfOneHour(){
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
-		sesPan.setTimeDisabled();
-		assertTrue(sesPan.validateFields(true));
+		sesPan.makeTimeDisabled();
+		assertTrue(sesPan.canValidateFields(true));
 		sesPan.setDateTime(2012, 2, 29, 23, 30);
 		sesPan.buildLY();
 		sesPan.setDateTime(2012, 2, 22, 23, 30);
@@ -177,8 +177,8 @@ public class SessionPanelTest {
 	public void testIncreasmentOfOneHour2(){
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
-		sesPan.setTimeDisabled();
-		assertTrue(sesPan.validateFields(true));
+		sesPan.makeTimeDisabled();
+		assertTrue(sesPan.canValidateFields(true));
 		sesPan.setDateTime(2011, 2, 28, 23, 30);
 		sesPan.buildLY();
 		sesPan.setDateTime(2011, 1, 29, 23, 30);
@@ -191,8 +191,8 @@ public class SessionPanelTest {
 	public void testIncreasmentOfOneHour3(){
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
-		sesPan.setTimeDisabled();
-		assertTrue(sesPan.validateFields(true));
+		sesPan.makeTimeDisabled();
+		assertTrue(sesPan.canValidateFields(true));
 
 		sesPan.setDateTime(2015, 12, 30, 23, 30);
 		sesPan.buildLY();
@@ -203,16 +203,9 @@ public class SessionPanelTest {
 	public void testOpenPressed(){
 		sesPan.setNameField("Test Name");
 		sesPan.setDesField("Test Description");
-		sesPan.setTimeDisabled();
+		sesPan.makeTimeDisabled();
 		sesPan.openPressed();
 		assertEquals(0,vec.getSize());
 	}
-	@Test
-	public void testSendEmail(){
-		sesPan.sendEmail(null);
-		User SampleUsr = new User("name","usrname","psw",55);
-		SampleUsr.setEmail("sample@sample.com");
-		User[] usr = {SampleUsr};
-		sesPan.sendEmail(usr);
-	}
+	
 }

@@ -70,7 +70,9 @@ public class CloseSessionTableModel extends AbstractTableModel {
             case 1: return String.class;
             case 2: return String.class;
             case 3: return Integer.class;
-            default: throw new RuntimeException("Invalid column index"); // $codepro.audit.disable thrownExceptions
+            default: 
+                // $codepro.audit.disable thrownExceptions
+                throw new RuntimeException("Invalid column index"); 
         }
     }
 
@@ -97,7 +99,8 @@ public class CloseSessionTableModel extends AbstractTableModel {
             case 3:
                 return session.getRequirements().get(row).getFinalEstimate();
             default:
-                throw new RuntimeException("Invalid column"); // $codepro.audit.disable thrownExceptions
+                // $codepro.audit.disable thrownExceptions
+                throw new RuntimeException("Invalid column"); 
         }
     }
 
@@ -105,10 +108,12 @@ public class CloseSessionTableModel extends AbstractTableModel {
      * @see javax.swing.table.AbstractTableModel#setValueAt(java.lang.Object, int, int)
      */
     @Override
-    public void setValueAt(Object value, int row, int column) { // $codepro.audit.disable multipleReturns
+    // $codepro.audit.disable multipleReturns
+    public void setValueAt(Object value, int row, int column) { 
         //multiple returns makes code much clean in this case
         if (column != 3) {
-            throw new RuntimeException("Invalid column index"); // $codepro.audit.disable thrownExceptions
+            // $codepro.audit.disable thrownExceptions
+            throw new RuntimeException("Invalid column index"); 
         }
 
         final int estimate = (Integer)value;

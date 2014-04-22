@@ -66,6 +66,8 @@
             <zipfileset src="./lib/jfreechart-1.0.14.jar"/>
 			<zipfileset src="${core-lib}/gson-2.2.2.jar" />
 			<zipfileset src="${core-lib}/commons-codec-1.7.jar" />
+            <zipfileset src="./lib/mail.jar" />
+            <zipfileset src="./lib/jcalendar-1.4.jar" />
 		</jar>
 		<copy file="modules.conf" todir="${dist}/janeway/" overwrite="true" />
 	</target>

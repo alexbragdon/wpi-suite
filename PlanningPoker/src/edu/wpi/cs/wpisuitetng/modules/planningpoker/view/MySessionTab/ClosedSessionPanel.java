@@ -9,6 +9,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
@@ -86,33 +88,32 @@ public class ClosedSessionPanel extends JPanel {
 
         this.add(panel, BorderLayout.CENTER);
         
-        filterMenu.addItemListener(new ItemListener() {
-        	@Override
-        	public void itemStateChanged(ItemEvent arg0) {
-        		if (arg0.getStateChange() == ItemEvent.SELECTED) {
-        			mySessionPanel.redraw();
-        		}
-        	}
-        });
+        this.setupListeners();
 
-        
-        table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+    }
+    
+    private void setupListeners() {
+    	
+    	table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+
             @Override
             public void valueChanged(ListSelectionEvent arg0) {
                 if(table.getSelectedRow() != -1){
-                    parentView.getToolbarView().GetSuperButtonPanel().getSuperButton().Update(2, false);
+                    parentView.getToolbarView().GetSuperButtonPanel().getSuperButton(
+                                    ).Update(2, false);
                     parentView.getMySession().getJoiningPanel().getTable().clearSelection();
                     parentView.getMySession().getModeratingPanel().getTable().clearSelection();
                 }
             }
         });
+    	
+        this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
 
     }
     
     public int getFilterMenuSelected() {
     	return filterMenu.getSelectedIndex();
     }
-    
     
 
 

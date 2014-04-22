@@ -16,17 +16,15 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.EmailButtonPanel;
 
 /**
  * @author Team Romulus
- *
+ * @version 1
  */
 public class GetAllUsersController {
-    private static GetAllUsersController instance;
-    private GetAllUsersObserver observer;
-    private SessionPanel sp;
+    private static final GetAllUsersController instance = null;
+    private final GetAllUsersObserver observer;
     private EmailButtonPanel ebp;
 
     /**
@@ -37,32 +35,27 @@ public class GetAllUsersController {
     }
 
     /**
-     * Gets all requirements from the database
+     * Gets all users from the database
+     * 
+     * @param ebp EmailButtonPanel 
+     * @param username 
      */
-    public void getAllUsers(EmailButtonPanel ebp, String username) 
+    public void requestAllUsers(EmailButtonPanel ebp, String username) 
     {
         this.ebp = ebp;
-        final Request request = Network.getInstance().makeRequest("core/user/" + username, HttpMethod.GET);
+        final Request request = 
+                        Network.getInstance().makeRequest("core/user/" + username, HttpMethod.GET);
         request.addObserver(observer); // add an observer to process the response
         request.send();
     }
 
     /**
-     * Gets all requirements from the database
+     * 
+     * Sends the user to the Email Button Pannel
+     *
+     * @param users User to send to Pannel
      */
-    public void getAllUsers(SessionPanel sp) 
-    {
-        this.sp = sp;
-        final Request request = Network.getInstance().makeRequest("core/user", HttpMethod.GET);
-        request.addObserver(observer); // add an observer to process the response
-        request.send();
-    }
-
     public void sendToPanel(User[] users){
-        if(sp != null){
-            sp.sendEmail(users);
-        }
-
         if(ebp != null){
             ebp.setUser(users[0]);
         }

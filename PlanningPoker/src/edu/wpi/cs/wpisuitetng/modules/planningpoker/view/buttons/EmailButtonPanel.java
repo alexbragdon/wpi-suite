@@ -39,24 +39,29 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 
 /**
  * @author Team Romulus
- * 
+ * @version 1
  */
 @SuppressWarnings("serial")
 public class EmailButtonPanel extends ToolbarGroupView {
-    private JButton emailButton = new JButton(
+    private final JButton emailButton = new JButton(
                     "<html>Email<br />Settings</html>");
-    private final ScrollablePanel emailButtonPanel = new ScrollablePanel();
+    private final ScrollablePanel emailScrollPanel = new ScrollablePanel();
     private final ScrollablePanel emailPanel = new ScrollablePanel();
     private final JPanel buttonPanel = new JPanel();
-    private final ScrollablePanel topPanel = new ScrollablePanel();
-    private JTextField emailField;
-    private JButton submitButton;
-    private JButton cancelButton;
-    private JLabel infoLabel;
-    private JCheckBox checkBox;
+    private final JTextField emailField;
+    private final JButton submitButton;
+    private final JButton cancelButton;
+    private final JLabel infoLabel;
+    private final JCheckBox checkBox;
     private String displayString;
     private User displayUser;
 
+    /**
+     * 
+     * Constructor for EmailButtonPannel
+     *
+     * @param parent Where this pannel goes
+     */
     public EmailButtonPanel(final MainView parent) {
         super("");
         this.setPreferredWidth(350);
@@ -64,9 +69,10 @@ public class EmailButtonPanel extends ToolbarGroupView {
 
         // Email settings button
         try {
-            Image img = ImageIO.read(getClass().getResource("emailButton.png"));
+            final Image img = ImageIO.read(getClass().getResource("emailButton.png"));
             emailButton.setIcon(new ImageIcon(img));
         } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
         // Field for entering email
@@ -89,27 +95,24 @@ public class EmailButtonPanel extends ToolbarGroupView {
         buttonPanel.add(new JLabel("Email notification?"));
         buttonPanel.add(submitButton);
         buttonPanel.add(cancelButton);
-        topPanel.setLayout(new MigLayout("insets 0 10 0 10"));
-        topPanel.add(emailField, "width 100px, height 20px, wmin 10");
-        topPanel.add(infoLabel, "height 20px");
 
-		emailButtonPanel.setLayout(new MigLayout("insets 15 175 0 0"));
-		//emailButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		emailButtonPanel.add(emailButton);
+		emailScrollPanel.setLayout(new MigLayout("insets 15 175 0 0"));
+		emailScrollPanel.add(emailButton);
 
-		//emailPanel.setBorder(BorderFactory.createEmptyBorder());
 		emailPanel.setLayout(new MigLayout("insets 0 10 0 10"));
 		
-//		emailPanel.add(emailField,"width 200px, height 20px, wmin 10");
-//		emailPanel.add(infoLabel, "wrap, height 18px");
-		emailPanel.add(topPanel, "wrap");
+		
+		emailPanel.add(emailField, "width 300px, height 20px, wmin 10, wrap");
+		emailPanel.add(infoLabel, "height 20px,wrap");
 		emailPanel.add(buttonPanel, "height 18px");
 
         emailButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(displayUser == null){
-                    new GetAllUsersController().getAllUsers(EmailButtonPanel.this, ConfigManager.getConfig().getUserName()); // Send email to all users
+                    // Send email to all users
+                    new GetAllUsersController().requestAllUsers(EmailButtonPanel.this, 
+                                    ConfigManager.getConfig().getUserName()); 
                 }
 
                 else{
@@ -121,9 +124,9 @@ public class EmailButtonPanel extends ToolbarGroupView {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (validateEmail()) {
+                if (canValidateEmail()) {
                     setEmailAddress(displayUser);
-                    emailButtonPanel.setVisible(true);
+                    emailScrollPanel.setVisible(true);
                     emailPanel.setVisible(false);
                 } else {
                     infoLabel.setText("*Email format incorrect");
@@ -134,7 +137,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                emailButtonPanel.setVisible(true);
+                emailScrollPanel.setVisible(true);
                 emailPanel.setVisible(false);
                 infoLabel.setText(" ");
 
@@ -147,41 +150,52 @@ public class EmailButtonPanel extends ToolbarGroupView {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                submitButton.setEnabled(validateEmail());
+                submitButton.setEnabled(canValidateEmail());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                submitButton.setEnabled(validateEmail());
+                submitButton.setEnabled(canValidateEmail());
             }
         });
 
         checkBox.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent a) {
-                submitButton.setEnabled(validateEmail());
+                submitButton.setEnabled(canValidateEmail());
             }
         });
 
         emailPanel.setOpaque(false);
-        emailButtonPanel.setOpaque(false);
+        emailScrollPanel.setOpaque(false);
         buttonPanel.setOpaque(false);
         checkBox.setOpaque(false);
-        topPanel.setOpaque(false);
-        emailButtonPanel.setVisible(true);
+        emailScrollPanel.setVisible(true);
         emailPanel.setVisible(false);
 
         this.add(emailPanel);
-        this.add(emailButtonPanel);
+        this.add(emailScrollPanel);
     }
 
+    /**
+     * 
+     * Set Email Address for a given user
+     *
+     * @param u User to set email address for
+     */
     public void setEmailAddress(User u){
         u.setEmail(emailField.getText());
         u.setHasNotificationsEnabled(checkBox.isSelected());
         EditUserController.getInstance().setEmail(u);
     }
 
-    public boolean validateEmail() {
+    /**
+     * 
+     * Checks if email is valid
+     *
+     * @return True if email is valid
+     */
+    public boolean canValidateEmail() {
         boolean valid = false;
         boolean changes = false;
         
@@ -216,11 +230,16 @@ public class EmailButtonPanel extends ToolbarGroupView {
         switchToEdit();
     }
 
+    /**
+     * 
+     * Change Pannel mode to Edit
+     *
+     */
     public void switchToEdit(){
         emailField.setText(displayUser.getEmail());
-        emailButtonPanel.setVisible(false);
+        emailScrollPanel.setVisible(false);
         emailPanel.setVisible(true);
         checkBox.setSelected(displayUser.getHasNotificationsEnabled());
-        submitButton.setEnabled(validateEmail());
+        submitButton.setEnabled(canValidateEmail());
     }
 }

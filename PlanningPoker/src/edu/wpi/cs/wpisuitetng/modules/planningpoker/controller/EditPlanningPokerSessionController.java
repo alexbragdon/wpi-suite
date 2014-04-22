@@ -52,7 +52,8 @@ public class EditPlanningPokerSessionController {
     {
         // POST means update
         final Request request =
-                        Network.getInstance().makeRequest("planningpoker/planningpokersession/", HttpMethod.POST);
+                        Network.getInstance().makeRequest("planningpoker/planningpokersession/", 
+                                        HttpMethod.POST);
         request.setBody(newSession.toJSON()); // put the new requirement in the body of the request
         System.out.println("Edit JSON body: " + request.getBody());
         request.addObserver(observer); // add an observer to process the response

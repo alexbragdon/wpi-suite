@@ -14,6 +14,10 @@ import java.awt.GridLayout;
 import java.util.Date;
 
 import javax.swing.JComboBox;
+
+import java.awt.event.MouseAdapter;
+import java.util.Date;
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -81,7 +85,7 @@ public class MySessionPanel extends JPanel {
         this.add(moderatingPanel);
         this.add(joiningPanel);
         this.add(closedPanel);
-
+        
         timer = new Timer(1000, new GetPlanningPokerSessionController(this));
         timer.setInitialDelay(1000);
         timer.start();
@@ -111,7 +115,24 @@ public class MySessionPanel extends JPanel {
         sessions = newSessions;
 
         if (hasChanges) {
-            forceRefresh(newSessions);
+            moderatingPanel.getTable().clear();
+            joiningPanel.getTable().clear();
+            closedPanel.getTable().clear();
+
+            final String username = ConfigManager.getConfig().getUserName();
+
+            for (PlanningPokerSession session : newSessions) {
+                if (session.isComplete()) {
+                    closedPanel.getTable().addSessions(session);
+                } else{
+                    if (session.isActive() /*&& !session.getModerator().equals(username)*/) {
+                        joiningPanel.getTable().addSessions(session);
+                    }
+                    if (session.getModerator().equals(username)) {
+                        moderatingPanel.getTable().addSessions(session);
+                    }
+                }
+            }
         }
     }
     
@@ -176,7 +197,8 @@ public class MySessionPanel extends JPanel {
                 if (row == -1) return -1;
                 return Integer.parseInt((String) closedPanel.getTable().getValueAt(row, 0));
             default:
-                throw new RuntimeException("Invalid panel index"); // $codepro.audit.disable thrownExceptions
+                // $codepro.audit.disable thrownExceptions
+                throw new RuntimeException("Invalid panel index"); 
         }
     }
     /**
@@ -206,7 +228,8 @@ public class MySessionPanel extends JPanel {
      * Method closeTimedOutSessions.
      * @param sessions PlanningPokerSession[]
      */
-    public void closeTimedOutSessions(PlanningPokerSession[] sessions) { // $codepro.audit.disable methodShouldBeStatic
+    // $codepro.audit.disable methodShouldBeStatic
+    public void closeTimedOutSessions(PlanningPokerSession[] sessions) { 
         //this method should not be static
         for (PlanningPokerSession s : sessions) {
             if (s.isDateInPast() && s.getType() == SessionType.DISTRIBUTED && (!(s.isComplete()))) {
@@ -218,7 +241,8 @@ public class MySessionPanel extends JPanel {
                                                 s.getRequirements(), s.getType(), false,
                                                 true, s.getModerator(), s.getDeck());
                 closedSession.setCompletionTime(new Date());
-                EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(closedSession);
+                EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(
+                                closedSession);
             }
         }
     }

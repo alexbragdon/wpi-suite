@@ -18,42 +18,39 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
  * @author Team Romulus
- *
+ * @version 1
  */
 public class GetAllUsersObserver implements RequestObserver {
     private final GetAllUsersController controller;
 
     /**
      * Makes the thing.
+     * @param getAllUsersController Controller to be ascociated with this observer
      */
     public GetAllUsersObserver(GetAllUsersController getAllUsersController) {
         controller = getAllUsersController;
     }
 
     /**
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+     * 
      */
-    @Override
     public void responseSuccess(IRequest iReq) {
         System.out.println("Request succeeded: " + iReq.getResponse().getBody());
-        User[] users = User.fromJsonArray(iReq.getResponse().getBody());
+        final User[] users = User.fromJsonArray(iReq.getResponse().getBody());
         controller.sendToPanel(users);
     }
 
     /**
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+     * 
      */
-    @Override
     public void responseError(IRequest iReq) {
         System.out.println("Request error: " + iReq.getResponse().getBody());
     }
 
-    /* (non-Javadoc)
-     * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
+    /**
+     * 
      */
-    @Override
     public void fail(IRequest iReq, Exception exception) {
         System.out.println("Request fail: " + iReq.getResponse().getBody());
-        //controller.addMessageToModel(new PostBoardMessage("The request to add a message failed."));
     }
 }

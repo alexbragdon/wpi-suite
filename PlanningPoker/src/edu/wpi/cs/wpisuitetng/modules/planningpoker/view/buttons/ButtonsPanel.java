@@ -52,7 +52,9 @@ public class ButtonsPanel extends ToolbarGroupView {
         try {
             final Image img = ImageIO.read(getClass().getResource("createSession2.png"));
             createButton.setIcon(new ImageIcon(img));
-        } catch (IOException ex) {}
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
         createButton.addActionListener(new ActionListener() {
             @Override

@@ -26,7 +26,13 @@ class CheckBoxHeader implements TableCellRenderer {
 	  
     private final JCheckBox check = new JCheckBox();  
   
-    public CheckBoxHeader(JTableHeader header) {  
+    /**
+     * 
+     * Description
+     *
+     * @param header
+     */
+    CheckBoxHeader(JTableHeader header) {  
         check.setOpaque(false);  
         check.setFont(header.getFont());
         check.setSelected(false);
@@ -34,14 +40,14 @@ class CheckBoxHeader implements TableCellRenderer {
   
             @Override  
             public void mouseClicked(MouseEvent e) {  
-                JTable table = ((JTableHeader) e.getSource()).getTable();  
-                TableColumnModel columnModel = table.getColumnModel();  
-                int viewColumn = columnModel.getColumnIndexAtX(e.getX());  
-                int modelColumn = table.convertColumnIndexToModel(viewColumn);  
+                final JTable table = ((JTableHeader) e.getSource()).getTable();  
+                final TableColumnModel columnModel = table.getColumnModel();  
+                final int viewColumn = columnModel.getColumnIndexAtX(e.getX());  
+                final int modelColumn = table.convertColumnIndexToModel(viewColumn);  
                 if (viewColumn == modelColumn) {  
                     check.setSelected(!check.isSelected());  
-                    TableModel m = table.getModel();  
-                    Boolean f = check.isSelected();  
+                    final TableModel m = table.getModel();  
+                    final Boolean f = check.isSelected();  
                     for (int i = 0; i < m.getRowCount(); i++) {  
                         m.setValueAt(f, i, modelColumn);  
                     }  
@@ -54,24 +60,37 @@ class CheckBoxHeader implements TableCellRenderer {
     @Override  
     public Component getTableCellRendererComponent(  
             JTable tbl, Object val, boolean isS, boolean hasF, int row, int col) {  
-        TableCellRenderer r = tbl.getTableHeader().getDefaultRenderer();  
-        JLabel l = (JLabel) r.getTableCellRendererComponent(tbl, val, isS, hasF, row, col);  
+        final TableCellRenderer r = tbl.getTableHeader().getDefaultRenderer();  
+        final JLabel l = (JLabel) r.getTableCellRendererComponent(tbl, val, isS, hasF, row, col);  
         l.setIcon(new CheckBoxIcon(check));  
         l.setText("Check All");
         return l;  
     }  
     
+    /**
+     * 
+     * Description goes here.
+     *
+     * @param value
+     * @param tabelHeader
+     */
     public void setCheck(boolean value, JTableHeader tabelHeader){
     	check.setSelected(value);
     	check.repaint();
     	tabelHeader.repaint();
     }
   
+    /**
+     * 
+     * CheckBoxIcon draws the checkbox.
+     * @author Romulus
+     * @version Apr 20, 2014
+     */
     private static class CheckBoxIcon implements Icon {  
   
         private final JCheckBox check;  
   
-        public CheckBoxIcon(JCheckBox check) {  
+        private CheckBoxIcon(JCheckBox check) {  
             this.check = check;  
         }  
   

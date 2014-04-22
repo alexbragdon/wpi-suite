@@ -37,8 +37,8 @@ public class FindPlanningPokerSessionController {
      */
     public void findPlanningPokerSessionbyID(int ID) 
     {
-        final Request request = 
-                        Network.getInstance().makeRequest("planningpoker/planningpokersession/" + String.valueOf(ID), HttpMethod.GET);
+        final Request request =  Network.getInstance().makeRequest(
+                        "planningpoker/planningpokersession/" + String.valueOf(ID), HttpMethod.GET);
         request.addObserver(observer);
         request.send();
     }
@@ -49,7 +49,7 @@ public class FindPlanningPokerSessionController {
      * This method is called by the GetMessagesRequestObserver
      * @param session 
      */
-    public void receivedMessages(PlanningPokerSession session) { // $codepro.audit.disable methodShouldBeStatic
+    public void receivedMessages(PlanningPokerSession session) { 
 
     }
 }

@@ -53,6 +53,7 @@ public class CloseSessionButtonsPanel extends JPanel {
             cancelButton.setIcon(new ImageIcon(img2));
         } catch(IOException ex) {
             // Don't worry if the images didn't load
+            ex.printStackTrace();
         }
 
         if (isEditable) {

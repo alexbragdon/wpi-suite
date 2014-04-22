@@ -8,6 +8,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.icons;
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,4 +29,5 @@ public class PokerIconsTests {
 		assertEquals(5, testIcon.getIconHeight());
 		assertEquals(5, testIcon.getIconWidth());
 	}
+	
 }

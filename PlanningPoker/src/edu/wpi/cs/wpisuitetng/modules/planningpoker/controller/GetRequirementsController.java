@@ -26,9 +26,15 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class GetRequirementsController implements ActionListener {
  
-	private static GetRequirementsController instance;
+	private static GetRequirementsController instance = null;
 	private SessionRequirementPanel panel;
 	
+	/**
+	 * 
+	 * Sets the panel for the requirement controller
+	 *
+	 * @param panel
+	 */
 	public GetRequirementsController(SessionRequirementPanel panel) {
         this.panel = panel;
     }
@@ -63,8 +69,8 @@ public class GetRequirementsController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Send a request to the core to save this requirement
-		final Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.GET); // GET == read
-		GetRequirementsRequestObserver observer = new GetRequirementsRequestObserver(this);
+		final Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.GET); 
+		final GetRequirementsRequestObserver observer = new GetRequirementsRequestObserver(this);
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 	}
@@ -73,10 +79,12 @@ public class GetRequirementsController implements ActionListener {
 	 * Sends an HTTP request to retrieve all requirements
 	 */
 	public void retrieveRequirements() {
-		final Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.GET); // GET == read
-		GetRequirementsRequestObserver observer = new GetRequirementsRequestObserver(this);
-		request.addObserver(observer); // add an observer to process the response
-		request.send(); // send the request
+		final Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.GET); 
+		final GetRequirementsRequestObserver observer = new GetRequirementsRequestObserver(this);
+		// add an observer to process the response
+		request.addObserver(observer); 
+		// send the request
+		request.send(); 
 	}
 
 	/**
