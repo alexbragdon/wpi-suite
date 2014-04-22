@@ -25,13 +25,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 
 /**
  * Description
  *
- * @author rafaelangelo
+ * @author Romulus
  * @version Apr 7, 2014
  */
 public class JoiningSessionTable extends JTable {
@@ -79,8 +81,16 @@ public class JoiningSessionTable extends JTable {
             date = calendar.getTime();
             dateString = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(date);
         }
+        
+        int votes = 0;
+        for (RequirementEstimate requirement : session.getRequirements()) {
+            if (requirement.getVotes().containsKey(ConfigManager.getConfig().getUserName())) {
+                votes++;
+            }
+        }
+        
         tableModel.addRow(new String[] { String.valueOf(session.getID()), 
-                        session.getName(), dateString });
+                        session.getName(), dateString, String.valueOf(votes)});
 
     }
     /**     *

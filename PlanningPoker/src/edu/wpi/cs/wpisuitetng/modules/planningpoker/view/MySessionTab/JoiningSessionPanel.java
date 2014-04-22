@@ -39,7 +39,7 @@ public class JoiningSessionPanel extends JPanel {
      */
     public JoiningSessionPanel(MainView mainView, final MySessionPanel mySessionPanel) {
         parentView = mainView;
-        final String[] columnNames = { "ID", "Name", "End Time" };
+        final String[] columnNames = { "ID", "Name", "End Time", "My Progress" };
 
         final Object[][] data = {};
 
@@ -54,6 +54,8 @@ public class JoiningSessionPanel extends JPanel {
         table.getColumnModel().getColumn(1).setPreferredWidth(200);
 
         table.getColumnModel().getColumn(2).setMinWidth(70);
+        
+        table.getColumnModel().getColumn(3).setMinWidth(60);
         table.setRowSorter(null);
 
         this.setLayout(new BorderLayout());

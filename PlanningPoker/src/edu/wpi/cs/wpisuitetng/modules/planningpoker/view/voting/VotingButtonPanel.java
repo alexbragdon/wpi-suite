@@ -28,7 +28,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.text.NumberFormatter;
 
 import net.miginfocom.swing.MigLayout;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
 
 /**
