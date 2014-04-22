@@ -116,6 +116,8 @@ public class VotingOverviewPanel extends JPanel {
 				if(overallProgress.getValue() != (userVotes * 1000 / session.getRequirements().size())){
 					overallProgress.setValue(userVotes * 1000 / session.getRequirements().size());
 				}
+				
+				table.repaint();
 			}
 		}
 	}
