@@ -64,7 +64,7 @@ public class VotingPanel extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        overview = new VotingOverviewPanel(session.getRequirements(), 20, "bob", this);
+        overview = new VotingOverviewPanel(session.getRequirements(), 20, "bob", this, session);
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 2;

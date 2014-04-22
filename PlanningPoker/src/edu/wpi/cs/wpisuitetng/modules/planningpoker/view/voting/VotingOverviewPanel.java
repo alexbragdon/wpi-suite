@@ -14,10 +14,15 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * Displays all requirements associated with a given game, along with their progress.
@@ -28,8 +33,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 @SuppressWarnings("serial")
 public class VotingOverviewPanel extends JPanel {
     
-    VotingOverviewTable table;
-    List<RequirementEstimate> requirements;
+    private VotingOverviewTable table;
+    private List<RequirementEstimate> requirements;
+    private final JProgressBar overallProgress;
+    private final Timer timer;
+    private PlanningPokerSession session;
     
     /**
      * Creates a overview panel for voting with the given model.
@@ -38,12 +46,13 @@ public class VotingOverviewPanel extends JPanel {
      * @param teamCount number of members on the team
      * @param user the currently logged in user
      */
-    public VotingOverviewPanel(List<RequirementEstimate> requirements, int teamCount, String user, final VotingPanel parent) {
+    public VotingOverviewPanel(List<RequirementEstimate> requirements, int teamCount, String user, final VotingPanel parent, PlanningPokerSession session) {
         this.requirements = requirements;
+        this.session = session;
         
         setLayout(new BorderLayout());
         
-        final JProgressBar overallProgress = new JProgressBar(0, 1000);
+        overallProgress = new JProgressBar(0, 1000);
         int votes = 0;
         for (RequirementEstimate requirement : requirements) {
             if (requirement.getVotes().containsKey(user)) {
@@ -53,6 +62,7 @@ public class VotingOverviewPanel extends JPanel {
         overallProgress.setValue(votes * 1000 / requirements.size());
         
         table = new VotingOverviewTable(new VotingOverviewTableModel(requirements, teamCount, user));
+        
         add(overallProgress, BorderLayout.NORTH);
         add(new JScrollPane(table), BorderLayout.CENTER);
         
@@ -62,6 +72,10 @@ public class VotingOverviewPanel extends JPanel {
                 parent.updateSelectedRequirement(getSelectedRequirement());                
             }
         });
+        
+        timer = new Timer(1000, new GetPlanningPokerSessionController(this));
+        timer.setInitialDelay(1000);
+        timer.start();
     }
     
     /**
@@ -78,4 +92,31 @@ public class VotingOverviewPanel extends JPanel {
             return null;
         }
     }
+
+	/**
+	 * @param sessions
+	 */
+	public void checkProgress(PlanningPokerSession[] sessions) {
+		int userVotes = 0; // Number of requirements a user has voted on
+		
+		for(int i = 0; i < sessions.length; i++){
+			if(session.equals(sessions[i])){
+				session = sessions[i];
+				
+				// For each requirement, check if it is in the list and the user has voted on it
+				for(int j = 0; j < session.getRequirements().size(); j++){
+					RequirementEstimate r = session.getRequirements().get(j);
+					
+					if(r.getVotes().containsKey(ConfigManager.getConfig().getUserName())){
+						userVotes++;
+					}
+				}
+				
+				// Updates the progress bar if something has changed
+				if(overallProgress.getValue() != (userVotes * 1000 / session.getRequirements().size())){
+					overallProgress.setValue(userVotes * 1000 / session.getRequirements().size());
+				}
+			}
+		}
+	}
 }
