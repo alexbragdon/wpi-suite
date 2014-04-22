@@ -12,7 +12,11 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementType;
@@ -159,8 +163,29 @@ public class RequirementEstimate {
      *
      * @return the median of all the votes
      */
-    public int calculateMedian() {
-        // Make this method pass
-        return -1;
+    public double calculateMedian() {
+        ArrayList<Integer> sortedVotes = new ArrayList<Integer>();
+        
+        for (UserEstimate userVote : votes.values()) {
+            if (userVote != null && userVote.getTotalEstimate() != 0) {
+                sortedVotes.add(userVote.getTotalEstimate());
+            }
+        }
+        
+        Collections.sort(sortedVotes);
+        
+        System.out.println(sortedVotes);
+        
+        int size = sortedVotes.size();
+        
+        if (size % 2 == 1) {
+            // Size is odd: Return the thing's total at the floor of the thing divided by 2
+            return sortedVotes.get(size / 2);
+        } else {
+            // Size is even: Return the the average of the thing's total on 
+            // either size of the thing divided by 2
+            return (sortedVotes.get(size / 2) 
+                            + sortedVotes.get((size / 2) - 1)) / 2;
+        }
     }
 }
