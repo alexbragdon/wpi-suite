@@ -79,6 +79,8 @@ public class CloseButtonPanel extends ToolbarGroupView {
         contentPanel.add(closeButton);
         contentPanel.setOpaque(false);
         this.add(contentPanel);
+        
+        closeButton.setToolTipText("Close selected Planning Poker session and end voting");
     }
 
     public void pressCloseButton(MainView parent) {
@@ -94,6 +96,8 @@ public class CloseButtonPanel extends ToolbarGroupView {
         parentView.getMySession().getModeratingPanel().getTable().clearSelection();
         parentView.getMySession().getJoiningPanel().getTable().clearSelection();
         parentView.getMySession().getClosedPanel().getTable().clearSelection();
+        
+        
     }
 
     public void Update(int selectedIndex, boolean isActive) {
@@ -114,14 +118,14 @@ public class CloseButtonPanel extends ToolbarGroupView {
         // Vote session
         if (selectedIndex == 1) {
             selectedPanelIndex = 1;
-            closeButton.setToolTipText("Vote in the selected session");
+
             closeButton.setVisible(false);
         }
 
         // View session
         if (selectedIndex == 2) {
             closeButton.setVisible(false);
-            closeButton.setToolTipText("View Planning Poker results for selected session");
+
             selectedPanelIndex = 2;
         }
     }
