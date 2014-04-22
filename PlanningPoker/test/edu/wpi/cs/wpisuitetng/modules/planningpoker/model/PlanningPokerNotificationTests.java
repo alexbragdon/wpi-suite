@@ -12,10 +12,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class PlanningPokerNotificationTests {
+
+	String notification = "woohoo";
+	String username = "Kabang";
 	private PlanningPokerNotification testNote;
+	private PlanningPokerNotification testNoteClone;
+	private PlanningPokerNotification testNoteBlank;
 	@Before
 	public void setUp(){
-		testNote = new PlanningPokerNotification();
+		testNote = new PlanningPokerNotification(notification, username);
+		testNoteClone = new PlanningPokerNotification(testNote);
+		testNoteBlank = new PlanningPokerNotification();
 	}
 	@Test
 	public void testsGetAndSetForNotification(){
@@ -28,5 +35,14 @@ public class PlanningPokerNotificationTests {
 		assertEquals("KaBlammers", testNote.getUsername());
 		
 	}
-
+	@Test
+	public void testsTheCreationWithPreviousNotification(){
+		assertEquals(testNote.getNotificiation(), testNoteClone.getNotificiation());
+		assertEquals(testNote.getUsername(), testNoteClone.getUsername());
+	}
+	@Test
+	public void checksIfConstructorWorkedProperly(){
+		assertEquals("", testNoteBlank.getUsername());
+		assertEquals("This is a dummy Notification", testNoteBlank.getNotificiation());
+	}
 }
