@@ -137,7 +137,7 @@ public class RequirementEstimate {
         int totalEstimate = 0;
         int numberEstimates = 0;
         for (UserEstimate userVote : votes.values()) {
-            if (userVote.getTotalEstimate() != 0) {
+            if (userVote != null && userVote.getTotalEstimate() != 0) {
                 totalEstimate += userVote.getTotalEstimate();
                 numberEstimates++;
             }
@@ -149,7 +149,6 @@ public class RequirementEstimate {
             average = totalEstimate / numberEstimates;
         }
         
-        // Make this method pass
         return average;
     }
     
