@@ -12,6 +12,11 @@ import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import java.awt.Dimension;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,6 +36,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 public class ClosedSessionPanel extends JPanel {
     ClosedSessionTable table;
     private final MainView parentView;
+    String[] filters = { "Show All", "Last 2 Days", "Last 7 Days", "Last 30 Days"};
+    public final JComboBox<String> filterMenu = new JComboBox<String>(filters);
 
     /**
      * Constructor for ClosedSessionPanel.
@@ -59,20 +66,25 @@ public class ClosedSessionPanel extends JPanel {
 
 
         this.setLayout(new BorderLayout());
+        
+        filterMenu.setPreferredSize(new Dimension(350, 20));
 
         final JPanel panel = new JPanel();
         final JPanel blankPanel = new JPanel();
         final JPanel blankPanel2 = new JPanel();
         final JPanel topPanel = new JPanel();
         final JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BorderLayout());
         topPanel.setLayout(new BorderLayout());
         panel.setLayout(new BorderLayout());
+        bottomPanel.add(filterMenu, BorderLayout.WEST);
         topPanel.add(blankPanel2, BorderLayout.NORTH);
         topPanel.add(new JLabel("Closed Sessions"), BorderLayout.SOUTH);
         panel.add(tablePanel, BorderLayout.CENTER);
         panel.add(blankPanel, BorderLayout.EAST);
         panel.add(topPanel, BorderLayout.NORTH);
         panel.add(bottomPanel, BorderLayout.SOUTH);
+        
 
         this.add(panel, BorderLayout.CENTER);
         
@@ -83,6 +95,7 @@ public class ClosedSessionPanel extends JPanel {
     private void setupListeners() {
     	
     	table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+
             @Override
             public void valueChanged(ListSelectionEvent arg0) {
                 if(table.getSelectedRow() != -1){
@@ -96,7 +109,12 @@ public class ClosedSessionPanel extends JPanel {
     	
         this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
 
-	}
+    }
+    
+    public int getFilterMenuSelected() {
+    	return filterMenu.getSelectedIndex();
+    }
+    
 
 
     /**
