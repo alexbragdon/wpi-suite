@@ -69,32 +69,7 @@ public class Card extends JPanel {
 		numLabel.setHorizontalAlignment(JLabel.CENTER);
 		
 		if (isEditable) {
-			imgLabel.addMouseListener(new MouseListener(){
-				@Override
-				public void mouseClicked(MouseEvent me) {
-					toggleCardSelection();
-				}
-	
-				@Override
-				public void mouseEntered(MouseEvent me) {
-					// TODO Auto-generated method stub
-				}
-	
-				@Override
-				public void mouseExited(MouseEvent me) {
-					// TODO Auto-generated method stub
-				}
-	
-				@Override
-				public void mousePressed(MouseEvent me) {
-					// TODO Auto-generated method stub
-				}
-	
-				@Override
-				public void mouseReleased(MouseEvent me) {
-					// TODO Auto-generated method stub
-				}
-			});
+			addListeners();
 		}
 		
 	    this.imgLabel.setIcon(new ImageIcon(this.cardImg));
@@ -179,5 +154,42 @@ public class Card extends JPanel {
 	 */
 	public boolean isSelected() {
 		return selected;
+	}
+	
+	public void addListeners() {
+		imgLabel.addMouseListener(new MouseListener(){
+			@Override
+			public void mouseClicked(MouseEvent me) {
+				toggleCardSelection();
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent me) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void mouseExited(MouseEvent me) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void mousePressed(MouseEvent me) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent me) {
+				// TODO Auto-generated method stub
+			}
+		});
+		this.repaint();
+	}
+	
+	public void removeListeners(){
+		for (MouseListener listener : imgLabel.getMouseListeners()) {
+			imgLabel.removeMouseListener(listener);
+		}
+
 	}
 }

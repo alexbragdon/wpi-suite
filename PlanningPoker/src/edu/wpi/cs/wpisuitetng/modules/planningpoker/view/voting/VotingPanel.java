@@ -189,6 +189,11 @@ public class VotingPanel extends JPanel {
                 ).editPlanningPokerSession(newSession); 
     	
     	buttons.setFieldsEnabled(false);
-        cards.disableEditing();
+        cards.disableEditing(true);
     }
+  
+    public CardPanel getCards() {
+    	return cards;
+    }
+  
 }

@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 import java.awt.BorderLayout;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -46,7 +47,7 @@ public class VotingOverviewPanel extends JPanel {
      * @param teamCount number of members on the team
      * @param user the currently logged in user
      */
-    public VotingOverviewPanel(List<RequirementEstimate> requirements, int teamCount, String user, final VotingPanel parent, PlanningPokerSession session) {
+    public VotingOverviewPanel(List<RequirementEstimate> requirements, int teamCount, final String user, final VotingPanel parent, PlanningPokerSession session) {
         this.requirements = requirements;
         this.session = session;
         
@@ -69,7 +70,15 @@ public class VotingOverviewPanel extends JPanel {
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                parent.updateSelectedRequirement(getSelectedRequirement());                
+                parent.updateSelectedRequirement(getSelectedRequirement());
+                
+                if (getSelectedRequirement().getVotes().containsKey(user)) {
+                	parent.getCards().disableEditing(true);
+                	parent.getCards().repaint();
+                } else {
+                	parent.getCards().disableEditing(false); 
+                	parent.getCards().repaint();
+                }
             }
         });
         

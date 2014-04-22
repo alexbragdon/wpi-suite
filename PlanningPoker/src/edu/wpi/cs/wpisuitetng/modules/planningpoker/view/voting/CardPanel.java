@@ -212,7 +212,7 @@ public class CardPanel extends JPanel {
 	}
 
 	/**
-	 * @param zeroSelected the zeroSelected to set
+	 * @param zeroSelected the zeroSelebuildLayouted to set
 	 */
 	public void setZeroSelected(boolean zeroSelected) {
 		this.zeroSelected = zeroSelected;
@@ -228,13 +228,13 @@ public class CardPanel extends JPanel {
 	}
 	
 	/**
-	 * Disables editing.
+	 * Disables or enables editing.
 	 */
-	public void disableEditing() {
+	public void disableEditing(boolean b) {
 		for (Card card : cards) {
-			for (MouseListener listener : card.getImgLabel().getMouseListeners()) {
-				card.getImgLabel().removeMouseListener(listener);
-			}
+			if (b) {
+				card.removeListeners();
+			} else {card.addListeners();}
 		}
 	}
 }
