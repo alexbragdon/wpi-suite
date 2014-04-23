@@ -188,5 +188,9 @@ public class VotingButtonPanel extends JPanel{
             }
         });
 	}
+	
+	public JButton getVoteButton() {
+		return voteButton;
+	}
 
 }

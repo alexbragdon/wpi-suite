@@ -23,6 +23,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.UserEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.ButtonsPanel;
 
 /**
  * Displays a panel for voting on Planning Poker Sessions.
@@ -189,6 +190,15 @@ public class VotingPanel extends JPanel {
                 ).editPlanningPokerSession(newSession); 
     	
     	buttons.setFieldsEnabled(false);
-        cards.disableEditing();
+        cards.disableEditing(true);
     }
+  
+    public CardPanel getCards() {
+    	return cards;
+    }
+    
+    public VotingButtonPanel getButtonPanel() {
+    	return buttons;
+    }
+  
 }
