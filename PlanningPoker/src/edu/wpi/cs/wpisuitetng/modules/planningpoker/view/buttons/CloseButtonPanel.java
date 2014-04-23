@@ -39,7 +39,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
  */
 @SuppressWarnings("serial")
 public class CloseButtonPanel extends ToolbarGroupView {
-    private final JButton closeButton = new JButton("<html>Close<br />Session</html>");
+    private final CloseOpenButton closeButton = new CloseOpenButton();
 
     private final JPanel contentPanel = new JPanel();
 
