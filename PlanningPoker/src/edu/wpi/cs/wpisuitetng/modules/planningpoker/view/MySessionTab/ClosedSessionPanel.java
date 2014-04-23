@@ -76,7 +76,7 @@ public class ClosedSessionPanel extends JPanel {
         panel.setLayout(new BorderLayout());
         //bottomPanel.add(filterMenu, BorderLayout.WEST);
         topPanel.add(blankPanel2, BorderLayout.NORTH);
-        topPanel.add(new JLabel("Closed Sessions"), BorderLayout.SOUTH);
+        topPanel.add(new JLabel("Game History"), BorderLayout.SOUTH);
         panel.add(tablePanel, BorderLayout.CENTER);
         panel.add(blankPanel, BorderLayout.EAST);
         panel.add(topPanel, BorderLayout.NORTH);
