@@ -24,26 +24,22 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
  * @author Team Romulus
  * @version Apr 23, 2014
  */
-public class VotingPanelTest {
-    private VotingPanel vp;
-
+public class CountDownOverviewPanelTest {
+    private CountDownOverviewPanel cdop;
+    
     @Before
     public void setUp(){
-        RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 13, false);
+        RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
         ArrayList<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
         listEst.add(testReq);
-        PlanningPokerSession session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
-                        listEst, SessionType.DISTRIBUTED, false, false, "aGuy", "deck");    
-        vp = new VotingPanel(session1);
-    }
 
-    @Test
-    public void testGetters(){
-        vp.getSession();
-        vp.getCards();
-        vp.getButtonPanel();
+        PlanningPokerSession session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
+                        listEst, SessionType.REALTIME, false, false, "aGuy", "-None-"); 
+        cdop = new CountDownOverviewPanel(session1);
     }
     
-   
-    
+    @Test
+    public void testIsOver(){
+        cdop.isOver();
+    }
 }

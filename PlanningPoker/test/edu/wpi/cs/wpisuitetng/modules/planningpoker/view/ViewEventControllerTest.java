@@ -65,12 +65,7 @@ public class ViewEventControllerTest {
 		vec.getMainView().removeTabAt(prevTabCount);
 		assertEquals(prevTabCount, vec.getMainView().getTabCount());
 	}
-//	@Test
-//	public void testEditSession(){
-//		int prevHashSize = vec.getSize();
-//		vec.editSession(ses);
-//		assertEquals(prevHashSize + 1, vec.getSize());
-//	}
+
 	@Test
 	public void testViewClosedSession(){
 		int prevTabCount = mv.getTabCount();

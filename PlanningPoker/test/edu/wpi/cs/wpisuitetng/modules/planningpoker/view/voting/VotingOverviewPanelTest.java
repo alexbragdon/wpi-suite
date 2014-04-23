@@ -8,6 +8,8 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -26,20 +28,36 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
  */
 public class VotingOverviewPanelTest {
     private VotingOverviewPanel vop;
-    
+    private PlanningPokerSession session1;
     @Before
     public void setUp(){
         RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
         ArrayList<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
         listEst.add(testReq);
-        
-        PlanningPokerSession session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
+
+        session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
                         listEst, SessionType.REALTIME, false, false, "aGuy", "-None-");    
         vop = new VotingOverviewPanel(listEst, 1, "admin", new VotingPanel(session1),  session1);
     }
-    
+
     @Test
-    public void test(){
+    public void testGetSelectedRequirement(){
+        assertNotNull(vop.getSelectedRequirement());
+    }
+
+    @Test
+    public void testCheckProgress(){
+        PlanningPokerSession[] sessions = {
+                        session1
+        };
         
+        vop.checkProgress(sessions);
+    }
+    
+    @Test 
+    public void testGetters(){
+        vop.getTable();
+        vop.getRequirements();
+        vop.getSession();
     }
 }
