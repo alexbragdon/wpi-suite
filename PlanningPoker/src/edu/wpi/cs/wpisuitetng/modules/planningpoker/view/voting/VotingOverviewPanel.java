@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -58,7 +59,11 @@ public class VotingOverviewPanel extends JPanel {
                 votes++;
             }
         }
+        overallProgress.setPreferredSize(new Dimension(800,25));//make the bar higher
+        overallProgress.setStringPainted(true);
         overallProgress.setValue(votes * 1000 / requirements.size());
+        overallProgress.setString("Personal voting progress: "+ 
+                                 Double.toString(votes*100 / requirements.size()) + "%");
         
         table = new VotingOverviewTable(new VotingOverviewTableModel(requirements, teamCount, user));
         table.getSelectionModel().setSelectionInterval(0, 0);
@@ -114,6 +119,8 @@ public class VotingOverviewPanel extends JPanel {
 				// Updates the progress bar if something has changed
 				if(overallProgress.getValue() != (userVotes * 1000 / session.getRequirements().size())){
 					overallProgress.setValue(userVotes * 1000 / session.getRequirements().size());
+					overallProgress.setString("Personal voting progress: "+ 
+                            Double.toString(userVotes*100 / session.getRequirements().size()) + "%");
 				}
 				
 				table.repaint();
