@@ -55,6 +55,7 @@ public class SuperButtonPanel extends ToolbarGroupView {
             }
         });
 
+        setVisible(false);
         superButton.setVisible(false);
         contentPanel.add(superButton);
         contentPanel.setOpaque(false);

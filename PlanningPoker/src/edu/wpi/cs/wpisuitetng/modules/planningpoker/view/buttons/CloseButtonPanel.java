@@ -106,11 +106,13 @@ public class CloseButtonPanel extends ToolbarGroupView {
         // Edit session
         if (selectedIndex == 0 && !isActive) {
             closeButton.setVisible(false);
+            setVisible(false);
             selectedPanelIndex = 0;
         }
 
         if (selectedIndex == 0 && isActive) {
             closeButton.setVisible(true);
+            setVisible(true);
             selectedPanelIndex = 0;
         }
 
@@ -119,11 +121,13 @@ public class CloseButtonPanel extends ToolbarGroupView {
             selectedPanelIndex = 1;
 
             closeButton.setVisible(false);
+            setVisible(false);
         }
 
         // View session
         if (selectedIndex == 2) {
             closeButton.setVisible(false);
+            setVisible(false);
 
             selectedPanelIndex = 2;
         }
