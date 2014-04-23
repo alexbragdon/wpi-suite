@@ -22,7 +22,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 public class CloseSessionTableModel extends AbstractTableModel {
     private final PlanningPokerSession session;
     private final boolean isEditable;
-    private final String[] columns = { "Requirement Name", "Mean", "Median", "Final Estimate" };
+    private final String[] columns = { "Requirement Name", "Type", "Mean", "Median", "Final Estimate" };
 
     /**
      * Creates a new table model for the given session.
@@ -67,9 +67,10 @@ public class CloseSessionTableModel extends AbstractTableModel {
         //multiple returns makes code much clean in this case
         switch (columnIndex) {
             case 0: return String.class;
-            case 1: return Double.class;
+            case 1: return String.class;
             case 2: return Double.class;
-            case 3: return Integer.class;
+            case 3: return Double.class;
+            case 4: return Integer.class;
             default: 
                 // $codepro.audit.disable thrownExceptions
                 throw new RuntimeException("Invalid column index"); 
@@ -81,7 +82,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return isEditable && columnIndex == 3;
+        return isEditable && columnIndex == 4;
     }
 
     /*
@@ -94,10 +95,12 @@ public class CloseSessionTableModel extends AbstractTableModel {
             case 0:
                 return session.getRequirements().get(row).getName();
             case 1:
-                return session.getRequirements().get(row).calculateMean();
+            	return session.getRequirements().get(row).getType();
             case 2:
-                return session.getRequirements().get(row).calculateMedian();
+                return session.getRequirements().get(row).calculateMean();
             case 3:
+                return session.getRequirements().get(row).calculateMedian();
+            case 4:
                 return session.getRequirements().get(row).getFinalEstimate();
             default:
                 // $codepro.audit.disable thrownExceptions
@@ -112,7 +115,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
     // $codepro.audit.disable multipleReturns
     public void setValueAt(Object value, int row, int column) { 
         //multiple returns makes code much clean in this case
-        if (column != 3) {
+        if (column != 4) {
             // $codepro.audit.disable thrownExceptions
             throw new RuntimeException("Invalid column index"); 
         }
