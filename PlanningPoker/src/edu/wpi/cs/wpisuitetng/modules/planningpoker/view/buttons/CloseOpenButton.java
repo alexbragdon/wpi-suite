@@ -94,10 +94,12 @@ public class CloseOpenButton extends JButton {
     }
     
     public void OpenSession(MainView parent){
-    	final PlanningPokerSession session = getSelectedSession(parent, 0);
-        if (session == null) {
+    	final PlanningPokerSession session = new PlanningPokerSession();
+    	final PlanningPokerSession tableSession = getSelectedSession(parent, 0);
+        if (tableSession == null) {
             return;
         }
+        session.copyFrom(tableSession);
         session.setActive(true);
         EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
         
