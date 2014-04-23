@@ -92,7 +92,6 @@ public class CardPanel extends JPanel {
 		for(int i = 1; i < cardIndices.size(); i++){
 			Card newCard = cardIndices.get(i);
 			newCard.setSelected(false);
-			newCard.getImgLabel().setBorder(null);
 		}
 
 		selectedCardsIndices.add(0);
@@ -194,7 +193,6 @@ public class CardPanel extends JPanel {
 		for(int i = 0; i < selectedCardsIndices.size(); i++){
 			Card temp = cardIndices.get(selectedCardsIndices.get(i));
 			temp.setSelected(false);
-			temp.getImgLabel().setBorder(null);
 		}
 		
         selectedCardsIndices.clear();
@@ -226,7 +224,6 @@ public class CardPanel extends JPanel {
 	 */
 	public void unselectZero() {
 		Card unknown = cardIndices.get(0);
-		unknown.getImgLabel().setBorder(null);
 		unknown.setSelected(false);
 	}
 	
