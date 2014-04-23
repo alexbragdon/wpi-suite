@@ -189,6 +189,14 @@ public class VotingPanel extends JPanel {
 	public void votePressed() {
 		int totalEstimate = 0;
 
+		session = overview.getSession();
+		
+		for (RequirementEstimate req : session.getRequirements()) {
+		    if (currentRequirement.getName().equals(req.getName())) {
+		        currentRequirement = req;
+		    }
+		}
+		
 		if (this.hasDeck) { 	
 			totalEstimate = Integer.parseInt(buttons.getEstimateLabel().getText());
 			currentRequirement.getVotes().put(ConfigManager.getConfig().getUserName(), 
