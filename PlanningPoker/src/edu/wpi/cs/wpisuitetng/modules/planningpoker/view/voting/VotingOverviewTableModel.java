@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.util.List;
 
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
@@ -30,7 +31,7 @@ public class VotingOverviewTableModel extends AbstractTableModel {
     private static final int ESTIMATE_COLUMN = 3;
     private static final int PROGRESS_COLUMN = 4;
     
-    private final List<RequirementEstimate> requirements;
+    private List<RequirementEstimate> requirements;
     private int teamCount;
     private final String user;
     
@@ -125,5 +126,16 @@ public class VotingOverviewTableModel extends AbstractTableModel {
 	 */
 	public void setTeamCount(int teamCount) {
 		this.teamCount = teamCount;
+	}
+	
+	/**
+	 * Updates the internal model of this table.
+	 *
+	 * @param newModel the new model
+	 */
+	public void updateModel(List<RequirementEstimate> newModel) {
+	    requirements = newModel;
+	    fireTableChanged(new TableModelEvent(this, 0, getRowCount() - 1,
+	                    TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
 	}
 }

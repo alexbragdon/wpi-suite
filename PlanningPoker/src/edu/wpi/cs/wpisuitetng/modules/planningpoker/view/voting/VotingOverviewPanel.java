@@ -36,6 +36,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 @SuppressWarnings("serial")
 public class VotingOverviewPanel extends JPanel {
 	private VotingOverviewTable table;
+	private VotingOverviewTableModel model;
     private List<RequirementEstimate> requirements;
     private final JProgressBar overallProgress;
     private final Timer timer;
@@ -67,7 +68,8 @@ public class VotingOverviewPanel extends JPanel {
         overallProgress.setString("Personal voting progress: "+ 
                                  Double.toString(votes*100 / requirements.size()) + "%");
         
-        table = new VotingOverviewTable(new VotingOverviewTableModel(requirements, teamCount, user));
+        model = new VotingOverviewTableModel(requirements, teamCount, user);
+        table = new VotingOverviewTable(model);
         table.getSelectionModel().setSelectionInterval(0, 0);
         add(overallProgress, BorderLayout.NORTH);
         add(new JScrollPane(table), BorderLayout.CENTER);
@@ -112,29 +114,11 @@ public class VotingOverviewPanel extends JPanel {
 	 * @param sessions
 	 */
 	public void checkProgress(PlanningPokerSession[] sessions) {
-		int userVotes = 0; // Number of requirements a user has voted on
 		
 		for(int i = 0; i < sessions.length; i++){
-			if(session.equals(sessions[i])){
+			if(session.getID() == sessions[i].getID()) {
 				session = sessions[i];
-				
-				// For each requirement, check if it is in the list and the user has voted on it
-				for(int j = 0; j < session.getRequirements().size(); j++){
-					RequirementEstimate r = session.getRequirements().get(j);
-					
-					if(r.getVotes().containsKey(ConfigManager.getConfig().getUserName())){
-						userVotes++;
-					}
-				}
-				
-				// Updates the progress bar if something has changed
-				if(overallProgress.getValue() != (userVotes * 1000 / session.getRequirements().size())){
-					overallProgress.setValue(userVotes * 1000 / session.getRequirements().size());
-					overallProgress.setString("Personal voting progress: "+ 
-                            Double.toString(userVotes*100 / session.getRequirements().size()) + "%");
-				}
-				
-				table.repaint();
+				model.updateModel(session.getRequirements());
 			}
 		}
 	}
@@ -151,5 +135,9 @@ public class VotingOverviewPanel extends JPanel {
 	 */
 	public List<RequirementEstimate> getRequirements() {
 		return requirements;
+	}
+	
+	public PlanningPokerSession getSession() {
+	    return session;
 	}
 }
