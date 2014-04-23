@@ -174,7 +174,7 @@ public class VotingPanel extends JPanel {
     		currentRequirement.getVotes().put(ConfigManager.getConfig().getUserName(), 
         			new UserEstimate(ConfigManager.getConfig().getUserName(), cards.getSelectedCardsIndices(), totalEstimate));
     	} else {
-    		totalEstimate = (int) buttons.getEstimateSpinner().getValue();
+    		totalEstimate = Integer.parseInt(buttons.getEstimateSpinner().getText());
     		currentRequirement.getVotes().put(ConfigManager.getConfig().getUserName(), 
         			new UserEstimate(ConfigManager.getConfig().getUserName(), totalEstimate));
     	}

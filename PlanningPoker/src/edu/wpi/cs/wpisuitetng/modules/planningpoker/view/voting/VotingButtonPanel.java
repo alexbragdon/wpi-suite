@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.io.StringWriter;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -24,8 +25,12 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.text.NumberFormatter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
 
 import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
@@ -42,7 +47,7 @@ public class VotingButtonPanel extends JPanel{
 	 * Label for the current estimate (with deck)
 	 */
 	private JLabel estimateLabel;
-	private JSpinner estimateSpin;
+	private JTextField estimateField;
 	private JButton clearButton;
 	private JButton voteButton;
 	private final ViewMode mode;
@@ -81,15 +86,41 @@ public class VotingButtonPanel extends JPanel{
 	private void buildLayoutWithoutDeck() {
 		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("  Enter estimate  ");
-		estimateSpin = new JSpinner(new SpinnerNumberModel(23, 0, 99, 1));
+		estimateField = new JTextField("0");
 		voteButton = new JButton("Vote");
 		
-		estimateSpin.setPreferredSize(new Dimension(100, 100));
-		estimateSpin.getComponent(0).setPreferredSize(new Dimension(75, 75));
-		((JSpinner.NumberEditor) estimateSpin.getEditor()).getTextField().setFont(new Font("default", Font.BOLD, 72));
-		final JFormattedTextField estimateNum = ((JSpinner.NumberEditor) estimateSpin.getEditor()).getTextField();
-        ((NumberFormatter) estimateNum.getFormatter()).setAllowsInvalid(false);
-        estimateNum.setEditable(true);
+		estimateField.setPreferredSize(new Dimension(120, 100));
+		estimateField.setEditable(true);
+		estimateField.setFont(new Font("default", Font.BOLD, 72));
+		estimateField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            	if(!validateSpinner()){
+            		voteButton.setEnabled(false);
+            	}else{
+            		voteButton.setEnabled(true);
+            	}
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+            	if(!validateSpinner()){
+            		voteButton.setEnabled(false);
+            	}else{
+            		voteButton.setEnabled(true);
+            	}
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+            	if(!validateSpinner()){
+            		voteButton.setEnabled(false);
+            	}else{
+            		voteButton.setEnabled(true);
+            	}
+            }
+        });
+
 		voteButton.setPreferredSize(new Dimension(140, 180));
 		
 		try {
@@ -101,7 +132,7 @@ public class VotingButtonPanel extends JPanel{
 		
 		add(infoLabel);
 		add(voteButton, "span 1 2,wrap");
-		add(estimateSpin);
+		add(estimateField);
 	}
 
 	private void buildLayoutWithDeck() {
@@ -160,14 +191,16 @@ public class VotingButtonPanel extends JPanel{
 		return estimateLabel;
 	}
 	
-	public JSpinner getEstimateSpinner() {
-		return estimateSpin;
+	public JTextField getEstimateSpinner() {
+		return estimateField;
 	}
 	
 	public void setFieldsEnabled(boolean isEnabled) {
 	    voteButton.setEnabled(isEnabled);
-	    if (mode == ViewMode.WITHOUTDECK) {
-	        estimateSpin.setEnabled(isEnabled);
+	    if (mode == ViewMode.WITHDECK) {
+	        clearButton.setEnabled(isEnabled);
+	    } else {
+	        estimateField.setEnabled(isEnabled);
 	    }
 	}
 
@@ -188,6 +221,32 @@ public class VotingButtonPanel extends JPanel{
         });
 	}
 	
+	private boolean validateSpinner(){
+		boolean validate = true;
+		String vote = estimateField.getText();
+		if(vote.length() == 0 || vote.length() >=3){
+			validate = false;
+		}
+		if(!isInteger(vote)){
+			validate = false;
+		}else if(Integer.parseInt(vote) < 0){
+			validate = false;
+		}
+		
+		
+		return validate;
+	}
+	
+	public boolean isInteger(String s) {
+	    try { 
+	        Integer.parseInt(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    }
+	    // only got here if we didn't return false
+	    return true;
+	}
+
 	public JButton getVoteButton() {
 		return voteButton;
 	}
@@ -195,4 +254,5 @@ public class VotingButtonPanel extends JPanel{
 	public JButton getClearButton() {
 		return clearButton;
 	}
+
 }
