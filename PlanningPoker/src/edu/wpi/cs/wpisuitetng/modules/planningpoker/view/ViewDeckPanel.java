@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
 
 /**
  * 
- * Handles View of the Decks in the voting pannel
+ * Handles View of the Decks in the voting panel
  *
  * @author Romulus
  * @version Apr 20, 2014

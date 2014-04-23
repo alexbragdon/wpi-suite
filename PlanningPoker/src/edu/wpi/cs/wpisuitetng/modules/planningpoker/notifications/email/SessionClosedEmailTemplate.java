@@ -63,7 +63,7 @@ public class SessionClosedEmailTemplate implements INotificationTemplate<EmailMe
         body.append("Hello ");
         body.append(user.getName());
         body.append(",\n\n");
-        body.append("Planning poker session \"");
+        body.append("Planning poker game \"");
         body.append(session.getName());
         body.append("\", created by ");
         body.append(session.getModerator());
