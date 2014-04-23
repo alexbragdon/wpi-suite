@@ -12,6 +12,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 import javax.swing.table.AbstractTableModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.Fraction;
 
 /**
  * This models the table displayed in the close session tab.
@@ -22,7 +23,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 public class CloseSessionTableModel extends AbstractTableModel {
     private final PlanningPokerSession session;
     private final boolean isEditable;
-    private final String[] columns = { "Requirement Name", "Type", "Mean", "Median", "Final Estimate" };
+    private final String[] columns = { "Requirement Name", "Type", "Team Progress", "Mean", "Median", "Final Estimate" };
 
     /**
      * Creates a new table model for the given session.
@@ -68,9 +69,10 @@ public class CloseSessionTableModel extends AbstractTableModel {
         switch (columnIndex) {
             case 0: return String.class;
             case 1: return String.class;
-            case 2: return Double.class;
+            case 2: return Fraction.class;
             case 3: return Double.class;
-            case 4: return Integer.class;
+            case 4: return Double.class;
+            case 5: return Integer.class;
             default: 
                 // $codepro.audit.disable thrownExceptions
                 throw new RuntimeException("Invalid column index"); 
@@ -82,7 +84,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return isEditable && columnIndex == 4;
+        return isEditable && columnIndex == 5;
     }
 
     /*
@@ -97,10 +99,12 @@ public class CloseSessionTableModel extends AbstractTableModel {
             case 1:
             	return session.getRequirements().get(row).getType();
             case 2:
-                return session.getRequirements().get(row).calculateMean();
+                return session.getRequirements().get(row).getVotes().size();
             case 3:
-                return session.getRequirements().get(row).calculateMedian();
+                return session.getRequirements().get(row).calculateMean();
             case 4:
+                return session.getRequirements().get(row).calculateMedian();
+            case 5:
                 return session.getRequirements().get(row).getFinalEstimate();
             default:
                 // $codepro.audit.disable thrownExceptions
