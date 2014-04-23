@@ -8,7 +8,10 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,40 +23,41 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
  * Description
  *
  * @author Team Romulus
- * @version Apr 22, 2014
+ * @version Apr 23, 2014
  */
-public class JoiningSessionTableTest {
-    private JoiningSessionTable jst;
-    
-    @Before 
+public class ClosedSessionTableTest {
+    private ClosedSessionTable cst;
+
+    @Before
     public void setUp(){
         final Object[][] data = {};
         final String[] columnNames = { "ID", "Name", "End Time", "My Progress" };
-        jst = new JoiningSessionTable(data, columnNames);
-                        
+        cst = new ClosedSessionTable(data, columnNames);
+    }
+    
+    
+    @Test
+    public void testGetSelectedID(){
+        assertEquals(-1, cst.getSelectedID());
+    }
+    
+    @Test
+    public void testIsCellEditable(){
+        assertFalse(cst.isCellEditable(0, 0));   
     }
     
     @Test
     public void testClear(){
-        jst.clear();
+        cst.clear();
     }
     
     @Test
     public void testAddSessions(){
         PlanningPokerSession session = new PlanningPokerSession();
         session.setType(SessionType.DISTRIBUTED);
-        
-        jst.addSessions(session);
+        cst.addSessions(session);
+        session.setCompletionTime(new Date());
+        cst.addSessions(session);
     }
     
-    @Test
-    public void testGetSelectedID(){
-        assertEquals(-1, jst.getSelectedID());
-    }
-    
-    @Test
-    public void testIsCellEditable(){
-        assertFalse(jst.isCellEditable(0, 0));
-        
-    }
 }

@@ -8,7 +8,8 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,41 +20,42 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
 /**
  * Description
  *
- * @author Team Romulus
- * @version Apr 22, 2014
+ * @author Xiaosong
+ * @version Apr 23, 2014
  */
-public class JoiningSessionTableTest {
-    private JoiningSessionTable jst;
+public class ModeratingSessionTableTest {
+   private ModeratingSessionTable mst;
     
     @Before 
     public void setUp(){
         final Object[][] data = {};
         final String[] columnNames = { "ID", "Name", "End Time", "My Progress" };
-        jst = new JoiningSessionTable(data, columnNames);
+        mst = new ModeratingSessionTable(data, columnNames);
                         
     }
     
     @Test
     public void testClear(){
-        jst.clear();
+        mst.clear();
     }
     
     @Test
     public void testAddSessions(){
         PlanningPokerSession session = new PlanningPokerSession();
         session.setType(SessionType.DISTRIBUTED);
-        
-        jst.addSessions(session);
+        mst.addSessions(session);
+        session.setActive(true);
+        mst.addSessions(session);
     }
     
     @Test
     public void testGetSelectedID(){
-        assertEquals(-1, jst.getSelectedID());
+        assertEquals(-1, mst.getSelectedID());
     }
     
     @Test
     public void testIsCellEditable(){
-        assertFalse(jst.isCellEditable(0, 0));
+        assertFalse(mst.isCellEditable(0, 0));
         
     }
 }

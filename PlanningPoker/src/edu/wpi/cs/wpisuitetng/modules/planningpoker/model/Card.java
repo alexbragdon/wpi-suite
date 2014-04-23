@@ -39,6 +39,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.CardPanel;
 public class Card extends JPanel {
 	private int cardNum;
 	private Image cardImg;
+	private Image cardSelectedImg;
+	private Image cardDisabledImg;
+	private Image cardSelectedDisabledImg;
 	private final JLabel numLabel;
 	private final JLabel imgLabel;
 	private boolean selected;
@@ -56,6 +59,9 @@ public class Card extends JPanel {
 
 		try {
 			this.cardImg = ImageIO.read(getClass().getResource("blank.png"));
+			cardSelectedImg = ImageIO.read(getClass().getResource("blank-selected.png"));
+			cardDisabledImg = ImageIO.read(getClass().getResource("blank-disabled.png"));
+			cardSelectedDisabledImg = ImageIO.read(getClass().getResource("blank-selected-disabled.png"));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -77,6 +83,7 @@ public class Card extends JPanel {
 		this.imgLabel.setIcon(new ImageIcon(this.cardImg));
 		imgLabel.add(numLabel);
 		this.add(imgLabel);
+		refreshImage();
 	}
 
 	/**
@@ -123,9 +130,7 @@ public class Card extends JPanel {
 			}
 
 			if (!selected) {
-				selected = true;
-				imgLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE,
-						3, true));
+				setSelected(true);
 
 				if (cardNum == 0) {
 					parent.unknownSelected();
@@ -133,8 +138,7 @@ public class Card extends JPanel {
 			}
 
 			else {
-				selected = false;
-				imgLabel.setBorder(null);
+				setSelected(false);
 			}
 
 			System.out.println(parent.isZeroSelected());
@@ -149,13 +153,23 @@ public class Card extends JPanel {
 	 */
 	public void setSelected(boolean selected) {
 		this.selected = selected;
-		if (selected) {
-			imgLabel.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3,
-					true));
-		} else {
-			imgLabel.setBorder(null);
-		}
+		refreshImage();
 	}
+
+    /**
+     * Description goes here.
+     */
+    private void refreshImage() {
+        if (selected && isEditable) {
+			imgLabel.setIcon(new ImageIcon(cardSelectedImg));
+		} else if (!selected && isEditable) {
+			imgLabel.setIcon(new ImageIcon(cardImg));
+		} else if (selected && !isEditable) {
+		    imgLabel.setIcon(new ImageIcon(cardSelectedDisabledImg));
+		} else {
+		    imgLabel.setIcon(new ImageIcon(cardDisabledImg));
+		}
+    }
 
 	/**
 	 * @return the selected
@@ -195,9 +209,11 @@ public class Card extends JPanel {
 
 	public void disableSelection() {
 		isEditable = false;
+		refreshImage();
 	}
 	
 	public void enableSelection() {
 		isEditable = true;
+		refreshImage();
 	}
 }
