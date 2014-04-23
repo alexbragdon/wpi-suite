@@ -246,7 +246,7 @@ public class VotingButtonPanel extends JPanel{
 		}
 		if(!isInteger(vote)){
 			validate = false;
-		}else if(Integer.parseInt(vote) < 0){
+		}else if(Integer.parseInt(vote) < 1){
 			validate = false;
 		}
 
