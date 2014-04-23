@@ -92,7 +92,7 @@ public class JoiningSessionTable extends JTable {
         String displayVotes;
         
         if (session.getRequirements().size() == votes) {
-            displayVotes = "Done!";
+            displayVotes = "Complete!";
         } else {
             displayVotes = String.valueOf(votes) + "/" + 
                             String.valueOf(session.getRequirements().size());
