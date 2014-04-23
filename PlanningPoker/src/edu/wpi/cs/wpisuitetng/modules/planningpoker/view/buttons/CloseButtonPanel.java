@@ -39,7 +39,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
  */
 @SuppressWarnings("serial")
 public class CloseButtonPanel extends ToolbarGroupView {
-    private final CloseOpenButton closeButton = new CloseOpenButton();
+    private final CloseOpenButton closeButton = new CloseOpenButton(this);
+    
+    
 
     private final JPanel contentPanel = new JPanel();
 
@@ -57,18 +59,18 @@ public class CloseButtonPanel extends ToolbarGroupView {
         this.setPreferredWidth(150);
 
         closeButton.setHorizontalAlignment(SwingConstants.CENTER);
-        try {
-            final Image img = ImageIO.read(getClass().getResource("close-button.png"));
-            closeButton.setIcon(new ImageIcon(img));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+//        try {
+//            final Image img = ImageIO.read(getClass().getResource("close-button.png"));
+//            closeButton.setIcon(new ImageIcon(img));
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
 
         closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pressCloseButton(parentView);
-                closeButton.setVisible(false);
+                pressCloseButton();
+                //closeButton.setVisible(false);
             }
         });
 
@@ -82,15 +84,17 @@ public class CloseButtonPanel extends ToolbarGroupView {
         closeButton.setToolTipText("Close selected Planning Poker session and end voting");
     }
 
-    public void pressCloseButton(MainView parent) {
+    public void pressCloseButton() {
 
-        final PlanningPokerSession session = getSelectedSession(parent, 0);
-        if (session == null) {
-            return;
+    	// Edit session
+        if (selectedPanelIndex == 0 && !isSessionActive) {
+            closeButton.OpenSession(parentView);
         }
-        session.setComplete(true);
-        session.setCompletionTime(new Date());
-        EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+
+        if (selectedPanelIndex == 0 && isSessionActive) {
+            closeButton.CloseSession(parentView);
+        }
+
 
         parentView.getMySession().getModeratingPanel().getTable().clearSelection();
         parentView.getMySession().getJoiningPanel().getTable().clearSelection();
@@ -99,35 +103,6 @@ public class CloseButtonPanel extends ToolbarGroupView {
         
     }
 
-    public void Update(int selectedIndex, boolean isActive) {
-        //closeButton.setVisible(true);
-        isSessionActive = isActive;
-
-        // Edit session
-        if (selectedIndex == 0 && !isActive) {
-            closeButton.setVisible(false);
-            selectedPanelIndex = 0;
-        }
-
-        if (selectedIndex == 0 && isActive) {
-            closeButton.setVisible(true);
-            selectedPanelIndex = 0;
-        }
-
-        // Vote session
-        if (selectedIndex == 1) {
-            selectedPanelIndex = 1;
-
-            closeButton.setVisible(false);
-        }
-
-        // View session
-        if (selectedIndex == 2) {
-            closeButton.setVisible(false);
-
-            selectedPanelIndex = 2;
-        }
-    }
 
     private PlanningPokerSession getSelectedSession(MainView parent, int panel) {
         final int id = parent.getMySession().getSelectedID(panel);
@@ -139,8 +114,22 @@ public class CloseButtonPanel extends ToolbarGroupView {
         }
         return session;
     }
-
-    public JButton getCloseButton(){
+    
+    public CloseOpenButton getCloseButton() {
         return closeButton;
+    }
+    
+    public void setSelectedPanelIndex(int newIndex) {
+        selectedPanelIndex = newIndex;
+    }
+    
+    public boolean isSessionActive() {
+        return isSessionActive;
+    }
+
+  
+    
+    public void setSessionActive(boolean isSessionActive) {
+        this.isSessionActive = isSessionActive;
     }
 }
