@@ -23,6 +23,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerS
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * Description
@@ -236,6 +239,9 @@ public class MySessionPanel extends JPanel {
                 closedSession.setCompletionTime(new Date());
                 EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(
                                 closedSession);
+                Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
+                request.setBody(closedSession.toJSON());
+                request.send();
             }
         }
     }
