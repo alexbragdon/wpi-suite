@@ -102,7 +102,7 @@ public class VotingPanel extends JPanel {
         c.gridy = 2;
         c.gridwidth = 1;
         c.gridheight = session.getType() == SessionType.DISTRIBUTED ? 1 : 2;
-        c.weightx = 0.6;
+        c.weightx = 0.8;
         c.weighty = 0.0;
         c.fill = GridBagConstraints.BOTH;
         add(description, c);
@@ -125,7 +125,7 @@ public class VotingPanel extends JPanel {
         c.gridy = 2;
         c.gridwidth = 1;
         c.gridheight = 2;
-        c.weightx = 0.4;
+        c.weightx = 0.2;
         c.weighty = 0.0;
         c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.LINE_END;
