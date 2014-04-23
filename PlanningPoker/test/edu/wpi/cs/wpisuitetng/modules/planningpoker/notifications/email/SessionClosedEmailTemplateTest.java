@@ -52,7 +52,7 @@ public class SessionClosedEmailTemplateTest {
         String subject = "Planning poker session Test has closed";
         assertEquals(subject, msg.getSubject());
         String body = "Hello Tester Test,\n\n" +
-                        "Planning poker session \"Test\", created by admin, closed on "+
+                        "Planning poker game \"Test\", created by admin, closed on "+
                         new SimpleDateFormat("EEEE, MMMM d 'at' HH:mm").format(new Date()) + 
                         ".\n\n- The planning poker team";
         assertEquals(body, msg.getBody());

@@ -100,7 +100,6 @@ public class UserEstimate implements Comparable<UserEstimate> {
      */
     @Override
     public int compareTo(UserEstimate otherEstimate) {
-        // TODO Auto-generated method stub
         return totalEstimate - otherEstimate.getTotalEstimate();
     }
 }
