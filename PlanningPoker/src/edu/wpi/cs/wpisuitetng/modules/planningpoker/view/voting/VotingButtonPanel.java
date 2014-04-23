@@ -163,7 +163,6 @@ public class VotingButtonPanel extends JPanel{
 		votePanel.setLayout(new BorderLayout());
 		final JPanel cornerPanel = new JPanel();
 		cornerPanel.setLayout(new BorderLayout());
-
 		voteButton.setPreferredSize(new Dimension(140, 130));
 		clearButton.setPreferredSize(new Dimension(140, 40));
 		estimateLabel.setFont(new Font("default", Font.BOLD, 72));
@@ -236,6 +235,8 @@ public class VotingButtonPanel extends JPanel{
 		
 		else if (mode == ViewMode.WITHDECK){
 			cards.calculateTotalEstimate();
+			voteButton.setEnabled(isEnabled);
+			clearButton.setEnabled(isEnabled);
 		}
 	}
 	
