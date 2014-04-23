@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
 /**
  * Description
  *
- * @author rafaelangelo
+ * @author team3Romulus
  * @version Apr 7, 2014
  */
 public class ModeratingSessionTable extends JTable {

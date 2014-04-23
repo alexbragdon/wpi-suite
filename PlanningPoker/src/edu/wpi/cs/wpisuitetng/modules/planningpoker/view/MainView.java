@@ -52,14 +52,8 @@ public class MainView extends JTabbedPane {
                 }
                 final JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
                 final int index = sourceTabbedPane.getSelectedIndex();
-                if(index != 0){
-                	toolbarView.GetSuperButtonPanel().setVisible(false);
-                	toolbarView.GetCloseButtonPanel().setVisible(false);
-                }
-                else{
-                	toolbarView.GetSuperButtonPanel().setVisible(true);
-                	toolbarView.GetCloseButtonPanel().setVisible(true);
-                }
+            	toolbarView.GetSuperButtonPanel().setVisible(false);
+            	toolbarView.GetCloseButtonPanel().setVisible(false);
             }
 		});
 
