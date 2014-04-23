@@ -92,7 +92,6 @@ public class CardPanel extends JPanel {
 		for(int i = 1; i < cardIndices.size(); i++){
 			Card newCard = cardIndices.get(i);
 			newCard.setSelected(false);
-			newCard.getImgLabel().setBorder(null);
 		}
 
 		selectedCardsIndices.add(0);
@@ -166,14 +165,17 @@ public class CardPanel extends JPanel {
 		// Nothing is selected
 		if(totalEstimate == 0 && selectedCardsIndices.size() == 0){
 			buttons.getEstimateLabel().setText("--");
+			buttons.getClearButton().setEnabled(false);
 		}
 		
 		else if(totalEstimate == 0){
 			buttons.getEstimateLabel().setText("?");
+			buttons.getClearButton().setEnabled(true);
 		}
 
 		else{
 			buttons.getEstimateLabel().setText(Integer.toString(totalEstimate));
+			buttons.getClearButton().setEnabled(true);
 		}
 	}
 
@@ -191,7 +193,6 @@ public class CardPanel extends JPanel {
 		for(int i = 0; i < selectedCardsIndices.size(); i++){
 			Card temp = cardIndices.get(selectedCardsIndices.get(i));
 			temp.setSelected(false);
-			temp.getImgLabel().setBorder(null);
 		}
 		
         selectedCardsIndices.clear();
@@ -208,11 +209,12 @@ public class CardPanel extends JPanel {
 	 * @return the zeroSelected
 	 */
 	public boolean isZeroSelected() {
+		
 		return zeroSelected;
 	}
 
 	/**
-	 * @param zeroSelected the zeroSelected to set
+	 * @param zeroSelected the zeroSelebuildLayouted to set
 	 */
 	public void setZeroSelected(boolean zeroSelected) {
 		this.zeroSelected = zeroSelected;
@@ -223,18 +225,17 @@ public class CardPanel extends JPanel {
 	 */
 	public void unselectZero() {
 		Card unknown = cardIndices.get(0);
-		unknown.getImgLabel().setBorder(null);
 		unknown.setSelected(false);
 	}
 	
 	/**
-	 * Disables editing.
+	 * Disables or enables editing.
 	 */
-	public void disableEditing() {
+	public void disableEditing(boolean b) {
 		for (Card card : cards) {
-			for (MouseListener listener : card.getImgLabel().getMouseListeners()) {
-				card.getImgLabel().removeMouseListener(listener);
-			}
+			if (b) {
+				card.disableSelection();
+			} else {card.enableSelection();}
 		}
 	}
 }

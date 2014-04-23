@@ -41,6 +41,7 @@ public class ToolbarView extends DefaultToolbarView {
         CreateButtonPanel = new ButtonsPanel(mainView);
         this.addGroup(CreateButtonPanel);
         SuperButtonPanel = new SuperButtonPanel(mainView);
+        SuperButtonPanel.setVisible(false);
         this.addGroup(SuperButtonPanel);
         CloseButtonPanel = new CloseButtonPanel(mainView);
         this.addGroup(CloseButtonPanel);

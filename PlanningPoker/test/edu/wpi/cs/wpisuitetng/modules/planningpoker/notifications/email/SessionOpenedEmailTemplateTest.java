@@ -49,9 +49,9 @@ public class SessionOpenedEmailTemplateTest {
     @Test
     public void testGenerateMessage(){
         EmailMessage msg = template.generateMessage(user);
-        String subject = "New planning poker session Test";
+        String subject = "New planning poker game Test";
         assertEquals(subject, msg.getSubject());
-        String body = "Hello Tester Test,\n\nadmin has begun planning poker session \"Test\".\n\n" +
+        String body = "Hello Tester Test,\n\nadmin has begun planning poker game \"Test\".\n\n" +
                         "Description:\n\ttest\n\n" + "Requirements:\n\tTest1\n\n"+
                         "Voting ends on "+new SimpleDateFormat("EEEE, MMMM d 'at' 0:0").format(new Date()) + 
                         ".\n\n- The planning poker team";

@@ -69,7 +69,7 @@ public class JoiningSessionPanel extends JPanel {
         topPanel.setLayout(new BorderLayout());
         panel.setLayout(new BorderLayout());
         topPanel.add(blankPanel3, BorderLayout.NORTH);
-        topPanel.add(new JLabel("   Sessions I'm voting in"), BorderLayout.SOUTH);
+        topPanel.add(new JLabel("   Games I'm voting in"), BorderLayout.SOUTH);
         panel.add(topPanel, BorderLayout.NORTH);
         panel.add(tablePanel, BorderLayout.CENTER);
         panel.add(blankPanel, BorderLayout.WEST);

@@ -53,7 +53,7 @@ public class ButtonTest {
 	@Test
 	public void testUpdateWithIndex(){
 		sb.Update(1, false);
-		assertEquals("<html>Vote in<br />Session</html>", sb.getTextOnButton());
+		assertEquals("<html>Vote in<br />Game</html>", sb.getTextOnButton());
 		sb.Update(2, false);
 		assertEquals("<html>View<br />Results</html>", sb.getTextOnButton());
 	}
@@ -65,8 +65,8 @@ public class ButtonTest {
 	}
 	@Test
 	public void testButtonsPanel(){
-		assertEquals("<html>Create<br />Session</html>", bp.getCreateButton().getText());
-		assertEquals("<html>Create<br />Session</html>", bp.getCreateIterationButton().getText());
+		assertEquals("<html>Create<br />Game</html>", bp.getCreateButton().getText());
+		assertEquals("<html>Create<br />Game</html>", bp.getCreateIterationButton().getText());
 	}
 	@Test
 	public void testSuperButtonPanel(){

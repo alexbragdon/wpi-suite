@@ -11,6 +11,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -18,6 +19,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -91,10 +93,15 @@ public class EmailButtonPanel extends ToolbarGroupView {
         infoLabel.setForeground(Color.red);
         checkBox = new JCheckBox();
 
-        buttonPanel.add(checkBox);
-        buttonPanel.add(new JLabel("Email notification?"));
-        buttonPanel.add(submitButton);
-        buttonPanel.add(cancelButton);
+        buttonPanel.setLayout(new BorderLayout());
+        JPanel checkPanel = new JPanel();
+        checkPanel.setLayout(new BorderLayout());
+        checkPanel.add(checkBox, BorderLayout.WEST);
+        checkPanel.add(new JLabel("Email Notification?"), BorderLayout.CENTER);
+        buttonPanel.add(checkPanel, BorderLayout.WEST);
+        //buttonPanel.add(new JLabel("Email notification?"));
+        buttonPanel.add(submitButton, BorderLayout.CENTER);
+        buttonPanel.add(cancelButton, BorderLayout.EAST);
 
 		emailScrollPanel.setLayout(new MigLayout("insets 15 175 0 0"));
 		emailScrollPanel.add(emailButton);

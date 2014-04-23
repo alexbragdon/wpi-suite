@@ -79,27 +79,27 @@ public class SuperButton extends JButton {
             this.setEnabled(true);
             superButtonParent.setSelectedPanelIndex(0);
             
-            this.setText("<html>Edit<br />Session</html>");
+            this.setText("<html>Edit<br />Game</html>");
             this.setIcon(new ImageIcon(editImg));
-            this.setToolTipText("Edit the selected session");
+            this.setToolTipText("Edit the selected game");
         }
         
         if (selectedIndex == 0 && isActive) {
             this.setEnabled(true);
             superButtonParent.setSelectedPanelIndex(0);
             
-            this.setText("<html>Review<br />Session<br />Progress</html>");
+            this.setText("<html>Review<br />Game<br />Progress</html>");
             this.setIcon(new ImageIcon(closeImg));
-            this.setToolTipText("Review the results of voting so far, enter" + 
-                            "final estimates, and choose to close the session");
+            this.setToolTipText("Review the results of voting so far, enter " + 
+                            "final estimates, and choose to close the game");
         }
 
         // Vote session
         if(selectedIndex == 1){
-            this.setText("<html>Vote in<br />Session</html>");
+            this.setText("<html>Vote in<br />Game</html>");
             this.setIcon(new ImageIcon(voteImg));
             superButtonParent.setSelectedPanelIndex(1);
-            this.setToolTipText("Vote in the selected session");
+            this.setToolTipText("Vote in the selected game");
             // TODO: Make this button do something
             this.setEnabled(true);
         }
@@ -108,7 +108,7 @@ public class SuperButton extends JButton {
         if(selectedIndex == 2){
             this.setText("<html>View<br />Results</html>");
             this.setIcon(new ImageIcon(viewImg));
-            this.setToolTipText("View Planning Poker results for selected session");
+            this.setToolTipText("View Planning Poker results for selected game");
             superButtonParent.setSelectedPanelIndex(2);
         }
     }
