@@ -166,14 +166,17 @@ public class CardPanel extends JPanel {
 		// Nothing is selected
 		if(totalEstimate == 0 && selectedCardsIndices.size() == 0){
 			buttons.getEstimateLabel().setText("--");
+			buttons.getClearButton().setEnabled(false);
 		}
 		
 		else if(totalEstimate == 0){
 			buttons.getEstimateLabel().setText("?");
+			buttons.getClearButton().setEnabled(true);
 		}
 
 		else{
 			buttons.getEstimateLabel().setText(Integer.toString(totalEstimate));
+			buttons.getClearButton().setEnabled(true);
 		}
 	}
 
