@@ -121,7 +121,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
     // $codepro.audit.disable multipleReturns
     public void setValueAt(Object value, int row, int column) { 
         //multiple returns makes code much clean in this case
-        if (column != 4) {
+        if (column != 5) {
             // $codepro.audit.disable thrownExceptions
             throw new RuntimeException("Invalid column index"); 
         }
