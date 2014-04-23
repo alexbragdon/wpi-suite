@@ -87,7 +87,8 @@ public class ModeratingSessionPanel extends JPanel {
                                     ).getSelectedRow(), 3)).equals("Active");
                     parentView.getToolbarView().GetSuperButtonPanel().getSuperButton(
                                     ).Update(0, isActive);
-                    parentView.getToolbarView().GetCloseButtonPanel().Update(0, isActive);
+                    parentView.getToolbarView().GetCloseButtonPanel().getCloseButton(
+                            ).Update(0, isActive);
                 }
             }
         });
