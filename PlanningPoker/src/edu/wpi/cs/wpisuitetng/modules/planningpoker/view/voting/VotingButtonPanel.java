@@ -14,6 +14,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -93,6 +95,14 @@ public class VotingButtonPanel extends JPanel{
 		estimateField.setPreferredSize(new Dimension(120, 100));
 		estimateField.setEditable(true);
 		estimateField.setFont(new Font("default", Font.BOLD, 72));
+		estimateField.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+            	if (estimateField.getText().equals("--")) {
+					estimateField.setText("");
+				}
+            }
+        });
 		estimateField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void changedUpdate(DocumentEvent e) {
