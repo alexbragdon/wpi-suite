@@ -34,7 +34,7 @@ public class UserEstimateTests {
 	@Before
 	public void setUp(){
 		testEstimate = new UserEstimate(username, indecesList, estimate);
-		testEstimate2 = new UserEstimate(username, indecesList, estimate2);
+		testEstimate2 = new UserEstimate(username, estimate2);
 	}
 	@Test
 	public void testsGetAndSetUsernameFunctions(){
@@ -50,6 +50,11 @@ public class UserEstimateTests {
 	}
 	@Test
 	public void teststheComparisonFunction(){
-		assertEquals(5, testEstimate.compareTo(testEstimate2));
+		assertEquals(14, testEstimate.compareTo(testEstimate2));
+	}
+	@Test
+	public void testsTheIndecesFunctions(){
+		testEstimate.setSelectedCardIndices(new ArrayList<Integer>());
+		assertEquals(new ArrayList<Integer>(), testEstimate.getSelectedCardIndices());
 	}
 }
