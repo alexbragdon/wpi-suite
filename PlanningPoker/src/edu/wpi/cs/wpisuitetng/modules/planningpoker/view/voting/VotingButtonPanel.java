@@ -197,9 +197,7 @@ public class VotingButtonPanel extends JPanel{
 	
 	public void setFieldsEnabled(boolean isEnabled) {
 	    voteButton.setEnabled(isEnabled);
-	    if (mode == ViewMode.WITHDECK) {
-	        clearButton.setEnabled(isEnabled);
-	    } else {
+	    if (mode == ViewMode.WITHOUTDECK){
 	        estimateField.setEnabled(isEnabled);
 	    }
 	}
@@ -254,5 +252,11 @@ public class VotingButtonPanel extends JPanel{
 	public JButton getClearButton() {
 		return clearButton;
 	}
-
+	
+	/**
+	 * @return the estimateField
+	 */
+	public JTextField getEstimateField() {
+		return estimateField;
+	}
 }
