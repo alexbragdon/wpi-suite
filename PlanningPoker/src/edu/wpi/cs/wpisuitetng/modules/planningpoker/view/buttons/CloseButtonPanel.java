@@ -29,6 +29,9 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * This is the code for the close session button on the tool bar. This button will show up if
@@ -91,6 +94,9 @@ public class CloseButtonPanel extends ToolbarGroupView {
         session.setComplete(true);
         session.setCompletionTime(new Date());
         EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+        Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
+        request.setBody(session.toJSON());
+        request.send();
 
         parentView.getMySession().getModeratingPanel().getTable().clearSelection();
         parentView.getMySession().getJoiningPanel().getTable().clearSelection();

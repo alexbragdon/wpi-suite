@@ -10,12 +10,17 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
 import java.awt.BorderLayout;
 import java.util.Date;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * The panel that appears when a session is closed by the moderator.
@@ -58,6 +63,9 @@ public class CloseSessionPanel extends JPanel {
         session.setCompletionTime(new Date());
         try {
             EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+            Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
+            request.setBody(session.toJSON());
+            request.send();
         } catch (RuntimeException e) {
             e.printStackTrace();
         }

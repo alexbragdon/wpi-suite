@@ -119,6 +119,7 @@ public class PlanningPokerSession extends AbstractModel {
         calendar.set(Calendar.SECOND, 60);
         final Date now = calendar.getTime();
   
+        calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, Hour);
         calendar.set(Calendar.MINUTE, Min); 
         final Date setdate = calendar.getTime();
