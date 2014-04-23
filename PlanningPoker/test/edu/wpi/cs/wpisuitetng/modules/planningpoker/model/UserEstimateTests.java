@@ -28,10 +28,13 @@ public class UserEstimateTests {
 	String username = "Dummy user";
 	List<Integer> indecesList = new ArrayList<Integer>();
 	int estimate = 20;
+	int estimate2 = 6;
 	UserEstimate testEstimate;
+	UserEstimate testEstimate2;
 	@Before
 	public void setUp(){
 		testEstimate = new UserEstimate(username, indecesList, estimate);
+		testEstimate2 = new UserEstimate(username, indecesList, estimate2);
 	}
 	@Test
 	public void testsGetAndSetUsernameFunctions(){
@@ -44,5 +47,9 @@ public class UserEstimateTests {
 		assertEquals(20, testEstimate.getTotalEstimate());
 		testEstimate.setTotalEstimate(15);
 		assertEquals(15, testEstimate.getTotalEstimate());
+	}
+	@Test
+	public void teststheComparisonFunction(){
+		assertEquals(5, testEstimate.compareTo(testEstimate2));
 	}
 }
