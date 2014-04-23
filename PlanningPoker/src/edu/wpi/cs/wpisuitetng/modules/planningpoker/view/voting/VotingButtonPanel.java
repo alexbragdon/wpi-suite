@@ -217,6 +217,8 @@ public class VotingButtonPanel extends JPanel{
 		
 		else if (mode == ViewMode.WITHDECK){
 			cards.calculateTotalEstimate();
+			voteButton.setEnabled(isEnabled);
+			clearButton.setEnabled(isEnabled);
 		}
 	}
 
