@@ -7,9 +7,11 @@
  * 
  * Contributors: Team Romulus
  ******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,16 +19,10 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.ClosedSessionPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.JoiningSessionPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.ModeratingSessionPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.MySessionPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionButtonsPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionTableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 
 
 
@@ -39,24 +35,20 @@ public class MySessionPanelTest {
 	private MainView mv;
 	private MySessionPanel msp;
 	private ArrayList<RequirementEstimate> reqList;
-	private ModeratingSessionPanel moderatingPanel;
-    private JoiningSessionPanel joiningPanel;
-    private ClosedSessionPanel closedPanel;
-	
 	@Before
 	public void setUp() throws Exception {	
 		mv = new MainView();
 		msp = new MySessionPanel(mv);
-		moderatingPanel = new ModeratingSessionPanel(mv, msp);
-        joiningPanel = new JoiningSessionPanel(mv, msp);
-        closedPanel = new ClosedSessionPanel(mv, msp);
+		new ModeratingSessionPanel(mv, msp);
+        new JoiningSessionPanel(mv, msp);
+        new ClosedSessionPanel(mv, msp);
 	}
 	@Test
 	public void testGetSession(){
 		reqList = new ArrayList<RequirementEstimate>();
 		reqList.add(new RequirementEstimate(1,"2",2,true));
 		Date dt = new Date();
-		dt.setYear(2012);
+		
 		PlanningPokerSession[] sessions = {
 				new PlanningPokerSession(3123, "Test Session", "Hello The World", dt, 23, 59,
 						reqList, SessionType.DISTRIBUTED, false, false, "admin", "-None-")
