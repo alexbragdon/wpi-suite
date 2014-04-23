@@ -186,9 +186,16 @@ public class VotingPanel extends JPanel {
 		return session;
 	}
 
+	public void dontKnowPressed() {
+		vote(true);
+	}
+	
 	public void votePressed() {
-		int totalEstimate = 0;
+		vote(false);
+	}
 
+	private void vote(boolean dontKnow) {
+		int totalEstimate = 0;
 		session = overview.getSession();
 		
 		for (RequirementEstimate req : session.getRequirements()) {
@@ -197,7 +204,11 @@ public class VotingPanel extends JPanel {
 		    }
 		}
 		
-		if (this.hasDeck) { 	
+		if (dontKnow) {
+			currentRequirement.getVotes().put(ConfigManager.getConfig().getUserName(), 
+					new UserEstimate(ConfigManager.getConfig().getUserName(), totalEstimate));
+		}
+		else if (this.hasDeck) { 	
 			totalEstimate = Integer.parseInt(buttons.getEstimateLabel().getText());
 			currentRequirement.getVotes().put(ConfigManager.getConfig().getUserName(), 
 					new UserEstimate(ConfigManager.getConfig().getUserName(), cards.getSelectedCardsIndices(), totalEstimate));

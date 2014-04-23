@@ -53,6 +53,8 @@ public class VotingButtonPanel extends JPanel{
 	private JButton voteButton;
 	private final ViewMode mode;
 	private final VotingPanel parentPanel;
+	private JButton dontKnowButton;
+	private boolean zeroSelected = false;
 
 	/**
 	 * Card Panel
@@ -89,6 +91,7 @@ public class VotingButtonPanel extends JPanel{
 		final JLabel infoLabel = new JLabel("  Enter estimate  ");
 		estimateField = new JTextField("0");
 		voteButton = new JButton("Vote");
+		dontKnowButton = new JButton("I Don't Know");
 
 		estimateField.setPreferredSize(new Dimension(120, 100));
 		estimateField.setEditable(true);
@@ -122,7 +125,8 @@ public class VotingButtonPanel extends JPanel{
 			}
 		});
 
-		voteButton.setPreferredSize(new Dimension(140, 180));
+		voteButton.setPreferredSize(new Dimension(140, 60));
+		dontKnowButton.setPreferredSize(new Dimension(140, 30));
 
 		try {
 			final Image img = ImageIO.read(getClass().getResource("vote-button.png"));
@@ -130,10 +134,23 @@ public class VotingButtonPanel extends JPanel{
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+		
+		dontKnowButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				unknownSelected();
+				
+			}
+		});
 
-		add(infoLabel);
-		add(voteButton, "span 1 2,wrap");
+		
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new BorderLayout());
+		add(infoLabel, "wrap");
 		add(estimateField);
+		add(buttonsPanel, "span 1 2,wrap");
+		buttonsPanel.add(voteButton, BorderLayout.NORTH);
+		buttonsPanel.add(dontKnowButton, BorderLayout.SOUTH);
 	}
 
 	private void buildLayoutWithDeck() {
@@ -214,11 +231,24 @@ public class VotingButtonPanel extends JPanel{
 			else{
 				voteButton.setEnabled(false);
 			}
+			dontKnowButton.setEnabled(isEnabled);
 		}
 		
 		else if (mode == ViewMode.WITHDECK){
 			cards.calculateTotalEstimate();
 		}
+	}
+	
+	/**
+	 * Occurs when the user presses "I Don't Know"
+	 * @param 
+	 * @return void
+	 */
+	public void unknownSelected() {
+		zeroSelected = !zeroSelected;
+		voteButton.setEnabled(false);
+		estimateField.setEnabled(false);
+		parentPanel.dontKnowPressed();
 	}
 
 	/**
