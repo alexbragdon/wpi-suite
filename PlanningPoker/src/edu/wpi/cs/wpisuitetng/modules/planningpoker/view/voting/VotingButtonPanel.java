@@ -8,6 +8,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -139,8 +140,12 @@ public class VotingButtonPanel extends JPanel{
 		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("  Total selected        ");
 		estimateLabel = new JLabel("--");
-		clearButton = new JButton("Clear Selection");
+		clearButton = new JButton("<html>Clear<br />Selection</html>");
 		voteButton = new JButton("Vote");
+		final JPanel votePanel = new JPanel();
+		votePanel.setLayout(new BorderLayout());
+		final JPanel cornerPanel = new JPanel();
+		cornerPanel.setLayout(new BorderLayout());
 		
 		voteButton.setPreferredSize(new Dimension(140, 130));
 		clearButton.setPreferredSize(new Dimension(140, 40));
@@ -178,10 +183,13 @@ public class VotingButtonPanel extends JPanel{
 		
 		estimateLabel.addPropertyChangeListener(listener);
 		
-		add(infoLabel);
-		add(clearButton, "wrap");
+		add(infoLabel, "wrap");
 		add(estimateLabel);
-		add(voteButton);
+		//add(clearButton, "wrap");
+		cornerPanel.add(clearButton, BorderLayout.WEST);
+		votePanel.add(cornerPanel, BorderLayout.NORTH);
+		add(votePanel, "dock east");
+		votePanel.add(voteButton, BorderLayout.WEST);
 	}
 
 	/**
