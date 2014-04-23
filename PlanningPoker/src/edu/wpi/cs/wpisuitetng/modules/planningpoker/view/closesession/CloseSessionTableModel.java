@@ -99,6 +99,8 @@ public class CloseSessionTableModel extends AbstractTableModel {
             case 1:
             	return session.getRequirements().get(row).getType();
             case 2:
+                // TODO Change so it is out of the number of users in the DB. 
+                // See GetAllUsersController and GetAllUsersObserver
                 return session.getRequirements().get(row).getVotes().size();
             case 3:
                 return session.getRequirements().get(row).calculateMean();
