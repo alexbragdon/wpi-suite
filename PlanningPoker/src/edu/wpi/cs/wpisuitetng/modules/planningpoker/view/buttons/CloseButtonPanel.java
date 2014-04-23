@@ -44,132 +44,155 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 @SuppressWarnings("serial")
 public class CloseButtonPanel extends ToolbarGroupView {
-    private final JButton closeButton = new JButton("<html>Close<br />Game</html>");
+	private final CloseOpenButton closeButton = new CloseOpenButton(this);
 
-    private final JPanel contentPanel = new JPanel();
+	private final JPanel contentPanel = new JPanel();
 
-    private final MainView parentView;
+	private final MainView parentView;
 
-    private int selectedPanelIndex = -1;
+	private int selectedPanelIndex = -1;
 
-    private boolean isSessionActive = false;
+	private boolean isSessionActive = false;
 
-    public CloseButtonPanel(final MainView parent) {
-        super("");
+	public CloseButtonPanel(final MainView parent) {
+		super("");
 
-        this.parentView = parent;
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-        this.setPreferredWidth(150);
+		this.parentView = parent;
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		this.setPreferredWidth(150);
 
-        closeButton.setHorizontalAlignment(SwingConstants.CENTER);
-        try {
-            final Image img = ImageIO.read(getClass().getResource("close-button.png"));
-            closeButton.setIcon(new ImageIcon(img));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+		closeButton.setHorizontalAlignment(SwingConstants.CENTER);
+		//        try {
+		//            final Image img = ImageIO.read(getClass().getResource("close-button.png"));
+		//            closeButton.setIcon(new ImageIcon(img));
+		//        } catch (IOException ex) {
+		//            ex.printStackTrace();
+		//        }
 
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pressCloseButton(parentView);
-                closeButton.setVisible(false);
-            }
-        });
+		closeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pressCloseButton();
+				//closeButton.setVisible(false);
+			}
+		});
 
-        closeButton.setToolTipText("Close this planning poker game.");
+		closeButton.setToolTipText("Close this planning poker game.");
 
-        closeButton.setVisible(false);
-        contentPanel.add(closeButton);
-        contentPanel.setOpaque(false);
-        this.add(contentPanel);
-        
-        closeButton.setToolTipText("Close selected Planning Poker game and end voting");
-    }
+		closeButton.setVisible(false);
+		contentPanel.add(closeButton);
+		contentPanel.setOpaque(false);
+		this.add(contentPanel);
 
-    public void pressCloseButton(MainView parent) {
+		closeButton.setToolTipText("Close selected Planning Poker game and end voting");
+	}
 
-        final PlanningPokerSession session = getSelectedSession(parent, 0);
-        if (session == null) {
-            return;
-        }        
-        final int dialogButton = JOptionPane.YES_NO_OPTION;
-        final int dialogResult = JOptionPane.showConfirmDialog(parentView, "Are you sure "
-        		+ "you want to close this game?", "Warning", dialogButton);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-            
-            for (RequirementEstimate req : session.getRequirements()) {
-                req.setFinalEstimate((int)Math.round(req.calculateMean()));
-            }
-            
-            session.setComplete(true);
-            session.setCompletionTime(new Date());
-            EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
-            Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
-            request.setBody(session.toJSON());
-            request.send();
+	public void pressCloseButton() {
 
-            parentView.getMySession().getModeratingPanel().getTable().clearSelection();
-            parentView.getMySession().getJoiningPanel().getTable().clearSelection();
-            parentView.getMySession().getClosedPanel().getTable().clearSelection();
-        }
-        else
-        {
-            parentView.getMySession().getModeratingPanel().getTable().clearSelection();
-            parentView.getMySession().getJoiningPanel().getTable().clearSelection();
-            parentView.getMySession().getClosedPanel().getTable().clearSelection();
-        	return;
-        }
-        
-        
-    }
+		// Edit session
+		if (selectedPanelIndex == 0 && !isSessionActive) {
+			closeButton.OpenSession(parentView);
+			closeButton.setVisible(false);
+			parentView.getToolbarView().GetSuperButtonPanel().getSuperButton().setVisible(false);
+		}
 
-    public void Update(int selectedIndex, boolean isActive) {
-        //closeButton.setVisible(true);
-        isSessionActive = isActive;
+		final PlanningPokerSession session = getSelectedSession(parentView, 0);
+		if (session == null) {
+			return;
+		}
 
-        // Edit session
-        if (selectedIndex == 0 && !isActive) {
-            closeButton.setVisible(false);
-            setVisible(false);
-            selectedPanelIndex = 0;
-        }
+		if(session.isActive()){
+			final int dialogButton = JOptionPane.YES_NO_OPTION;
+			final int dialogResult = JOptionPane.showConfirmDialog(parentView, "Are you sure "
+					+ "you want to close this game?", "Warning", dialogButton);
+			if (dialogResult == JOptionPane.YES_OPTION) {
 
-        if (selectedIndex == 0 && isActive) {
-            closeButton.setVisible(true);
-            setVisible(true);
-            selectedPanelIndex = 0;
-        }
+				for (RequirementEstimate req : session.getRequirements()) {
+					req.setFinalEstimate((int)Math.round(req.calculateMean()));
+				}
 
-        // Vote session
-        if (selectedIndex == 1) {
-            selectedPanelIndex = 1;
+				session.setComplete(true);
+				session.setCompletionTime(new Date());
+				EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+				Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
+				request.setBody(session.toJSON());
+				request.send();
 
-            closeButton.setVisible(false);
-            setVisible(false);
-        }
+				parentView.getMySession().getModeratingPanel().getTable().clearSelection();
+				parentView.getMySession().getJoiningPanel().getTable().clearSelection();
+				parentView.getMySession().getClosedPanel().getTable().clearSelection();
+			}
+			else
+			{
+				parentView.getMySession().getModeratingPanel().getTable().clearSelection();
+				parentView.getMySession().getJoiningPanel().getTable().clearSelection();
+				parentView.getMySession().getClosedPanel().getTable().clearSelection();
+				return;
+			}
 
-        // View session
-        if (selectedIndex == 2) {
-            closeButton.setVisible(false);
-            setVisible(false);
+		}
+	}
 
-            selectedPanelIndex = 2;
-        }
-    }
+	public void Update(int selectedIndex, boolean isActive) {
+		//closeButton.setVisible(true);
+		isSessionActive = isActive;
 
-    private PlanningPokerSession getSelectedSession(MainView parent, int panel) {
-        final int id = parent.getMySession().getSelectedID(panel);
-        final PlanningPokerSession session;
-        if (id != -1) {
-            session = parent.getMySession().getSessionById(id);
-        } else {
-            session = null;
-        }
-        return session;
-    }
+		// Edit session
+		if (selectedIndex == 0 && !isActive) {
+			closeButton.setVisible(false);
+			setVisible(false);
+			selectedPanelIndex = 0;
+		}
 
-    public JButton getCloseButton(){
-        return closeButton;
-    }
+		if (selectedIndex == 0 && isActive) {
+			closeButton.setVisible(true);
+			setVisible(true);
+			selectedPanelIndex = 0;
+		}
+
+		// Vote session
+		if (selectedIndex == 1) {
+			selectedPanelIndex = 1;
+
+			closeButton.setVisible(false);
+			setVisible(false);
+		}
+
+		// View session
+		if (selectedIndex == 2) {
+			closeButton.setVisible(false);
+			setVisible(false);
+
+			selectedPanelIndex = 2;
+		}
+	}
+
+	private PlanningPokerSession getSelectedSession(MainView parent, int panel) {
+		final int id = parent.getMySession().getSelectedID(panel);
+		final PlanningPokerSession session;
+		if (id != -1) {
+			session = parent.getMySession().getSessionById(id);
+		} else {
+			session = null;
+		}
+		return session;
+	}
+
+	public CloseOpenButton getCloseButton() {
+		return closeButton;
+	}
+
+	public void setSelectedPanelIndex(int newIndex) {
+		selectedPanelIndex = newIndex;
+	}
+
+	public boolean isSessionActive() {
+		return isSessionActive;
+	}
+
+
+
+	public void setSessionActive(boolean isSessionActive) {
+		this.isSessionActive = isSessionActive;
+	}
 }

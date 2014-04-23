@@ -89,7 +89,8 @@ public class JoiningSessionPanel extends JPanel {
                 if (table.getSelectedRow() != -1) {
                     parentView.getToolbarView().GetSuperButtonPanel().getSuperButton()
                                     .Update(1, false);
-                    parentView.getToolbarView().GetCloseButtonPanel().Update(1, false);
+                    parentView.getToolbarView().GetCloseButtonPanel().getCloseButton(
+                            ).Update(1, false);
                     parentView.getMySession().getModeratingPanel().getTable().clearSelection();
                     parentView.getMySession().getClosedPanel().getTable().clearSelection();
                 }
