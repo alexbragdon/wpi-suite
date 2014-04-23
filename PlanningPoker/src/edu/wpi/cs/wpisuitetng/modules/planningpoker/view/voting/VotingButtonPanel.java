@@ -53,33 +53,33 @@ public class VotingButtonPanel extends JPanel{
 	private JButton voteButton;
 	private final ViewMode mode;
 	private final VotingPanel parentPanel;
-	
+
 	/**
 	 * Card Panel
 	 */
 	private CardPanel cards;
-	
-    /**
-     * 
-     * Description
-     *
-     * @param mode
-     */
+
+	/**
+	 * 
+	 * Description
+	 *
+	 * @param mode
+	 */
 	public VotingButtonPanel(ViewMode mode, VotingPanel votingPanel){
-		
-	    this.mode = mode;
-	    
+
+		this.mode = mode;
+
 		setLayout(new MigLayout());
-		
+
 		if(mode.equals(ViewMode.WITHDECK)){
 			buildLayoutWithDeck();
 		}else if (mode.equals(ViewMode.WITHOUTDECK)){
 			buildLayoutWithoutDeck();
 		}
-		
+
 		setMinimumSize(new Dimension(270, 150));
 		setPreferredSize(new Dimension(270, 150));
-		
+
 		parentPanel = votingPanel;
 		setupListeners();
 	}
@@ -89,48 +89,48 @@ public class VotingButtonPanel extends JPanel{
 		final JLabel infoLabel = new JLabel("  Enter estimate  ");
 		estimateField = new JTextField("0");
 		voteButton = new JButton("Vote");
-		
+
 		estimateField.setPreferredSize(new Dimension(120, 100));
 		estimateField.setEditable(true);
 		estimateField.setFont(new Font("default", Font.BOLD, 72));
 		estimateField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-            	if(!validateSpinner()){
-            		voteButton.setEnabled(false);
-            	}else{
-            		voteButton.setEnabled(true);
-            	}
-            }
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				if(!validateSpinner()){
+					voteButton.setEnabled(false);
+				}else{
+					voteButton.setEnabled(true);
+				}
+			}
 
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-            	if(!validateSpinner()){
-            		voteButton.setEnabled(false);
-            	}else{
-            		voteButton.setEnabled(true);
-            	}
-            }
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				if(!validateSpinner()){
+					voteButton.setEnabled(false);
+				}else{
+					voteButton.setEnabled(true);
+				}
+			}
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-            	if(!validateSpinner()){
-            		voteButton.setEnabled(false);
-            	}else{
-            		voteButton.setEnabled(true);
-            	}
-            }
-        });
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				if(!validateSpinner()){
+					voteButton.setEnabled(false);
+				}else{
+					voteButton.setEnabled(true);
+				}
+			}
+		});
 
 		voteButton.setPreferredSize(new Dimension(140, 180));
-		
+
 		try {
-            final Image img = ImageIO.read(getClass().getResource("vote-button.png"));
-            voteButton.setIcon(new ImageIcon(img));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-		
+			final Image img = ImageIO.read(getClass().getResource("vote-button.png"));
+			voteButton.setIcon(new ImageIcon(img));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
 		add(infoLabel);
 		add(voteButton, "span 1 2,wrap");
 		add(estimateField);
@@ -146,20 +146,20 @@ public class VotingButtonPanel extends JPanel{
 		votePanel.setLayout(new BorderLayout());
 		final JPanel cornerPanel = new JPanel();
 		cornerPanel.setLayout(new BorderLayout());
-		
+
 		voteButton.setPreferredSize(new Dimension(140, 130));
 		clearButton.setPreferredSize(new Dimension(140, 40));
 		estimateLabel.setFont(new Font("default", Font.BOLD, 72));
-		
+
 		try {
-            final Image img1 = ImageIO.read(getClass().getResource("vote-button.png"));
-            voteButton.setIcon(new ImageIcon(img1));
-            final Image img2 = ImageIO.read(getClass().getResource("clear-button.png"));
-            clearButton.setIcon(new ImageIcon(img2));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-		
+			final Image img1 = ImageIO.read(getClass().getResource("vote-button.png"));
+			voteButton.setIcon(new ImageIcon(img1));
+			final Image img2 = ImageIO.read(getClass().getResource("clear-button.png"));
+			clearButton.setIcon(new ImageIcon(img2));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+
 		clearButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent m) {
@@ -167,22 +167,22 @@ public class VotingButtonPanel extends JPanel{
 				clearButton.setEnabled(false);
 			}
 		});
-		
+
 		PropertyChangeListener listener = new PropertyChangeListener(){
 			@Override
 			public void propertyChange(PropertyChangeEvent p) {
 				if(estimateLabel.getText().equals("--")){
 					voteButton.setEnabled(false);
 				}
-				
+
 				else{
 					voteButton.setEnabled(true);
 				}
 			}
 		};
-		
+
 		estimateLabel.addPropertyChangeListener(listener);
-		
+
 		add(infoLabel, "wrap");
 		add(estimateLabel);
 		//add(clearButton, "wrap");
@@ -198,16 +198,27 @@ public class VotingButtonPanel extends JPanel{
 	public JLabel getEstimateLabel() {
 		return estimateLabel;
 	}
-	
+
 	public JTextField getEstimateSpinner() {
 		return estimateField;
 	}
-	
-	public void setFieldsEnabled(boolean isEnabled) {
-	    voteButton.setEnabled(isEnabled);
-	    if (mode == ViewMode.WITHOUTDECK){
-	        estimateField.setEnabled(isEnabled);
-	    }
+
+	public void setFieldsEnabled(boolean isEnabled) {	    
+		if (mode == ViewMode.WITHOUTDECK){
+			estimateField.setEnabled(isEnabled);
+
+			if(validateSpinner()){
+				voteButton.setEnabled(isEnabled);
+			}
+			
+			else{
+				voteButton.setEnabled(false);
+			}
+		}
+		
+		else if (mode == ViewMode.WITHDECK){
+			cards.calculateTotalEstimate();
+		}
 	}
 
 	/**
@@ -217,16 +228,16 @@ public class VotingButtonPanel extends JPanel{
 	public void setCardPanel(CardPanel cards) {
 		this.cards = cards;
 	}
-	
-	
+
+
 	private void setupListeners(){        
-        voteButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                parentPanel.votePressed();
-            }
-        });
+		voteButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parentPanel.votePressed();
+			}
+		});
 	}
-	
+
 	private boolean validateSpinner(){
 		boolean validate = true;
 		String vote = estimateField.getText();
@@ -238,29 +249,29 @@ public class VotingButtonPanel extends JPanel{
 		}else if(Integer.parseInt(vote) < 0){
 			validate = false;
 		}
-		
-		
+
+
 		return validate;
 	}
-	
+
 	public boolean isInteger(String s) {
-	    try { 
-	        Integer.parseInt(s); 
-	    } catch(NumberFormatException e) { 
-	        return false; 
-	    }
-	    // only got here if we didn't return false
-	    return true;
+		try { 
+			Integer.parseInt(s); 
+		} catch(NumberFormatException e) { 
+			return false; 
+		}
+		// only got here if we didn't return false
+				return true;
 	}
 
 	public JButton getVoteButton() {
 		return voteButton;
 	}
-	
+
 	public JButton getClearButton() {
 		return clearButton;
 	}
-	
+
 	/**
 	 * @return the estimateField
 	 */
