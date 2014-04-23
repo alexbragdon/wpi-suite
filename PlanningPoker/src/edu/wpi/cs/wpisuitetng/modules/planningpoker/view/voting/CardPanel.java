@@ -233,8 +233,8 @@ public class CardPanel extends JPanel {
 	public void disableEditing(boolean b) {
 		for (Card card : cards) {
 			if (b) {
-				card.removeListeners();
-			} else {card.addListeners();}
+				card.disableSelection();
+			} else {card.enableSelection();}
 		}
 	}
 }

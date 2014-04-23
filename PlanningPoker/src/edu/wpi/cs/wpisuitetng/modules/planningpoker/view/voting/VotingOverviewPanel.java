@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 import java.awt.BorderLayout;
 import java.util.List;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -74,10 +75,9 @@ public class VotingOverviewPanel extends JPanel {
                 
                 if (getSelectedRequirement().getVotes().containsKey(user)) {
                 	parent.getCards().disableEditing(true);
-                	parent.getCards().repaint();
                 } else {
-                	parent.getCards().disableEditing(false); 
-                	parent.getCards().repaint();
+                	parent.getCards().disableEditing(false);
+                	parent.getButtonPanel().getVoteButton().setEnabled(false);
                 }
             }
         });
