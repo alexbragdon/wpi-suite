@@ -22,6 +22,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -91,16 +92,28 @@ public class CloseButtonPanel extends ToolbarGroupView {
         if (session == null) {
             return;
         }
-        session.setComplete(true);
-        session.setCompletionTime(new Date());
-        EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
-        Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
-        request.setBody(session.toJSON());
-        request.send();
+        final int dialogButton = JOptionPane.YES_NO_OPTION;
+        final int dialogResult = JOptionPane.showConfirmDialog(parentView, "Are you sure "
+        		+ "you want to close this game?", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            session.setComplete(true);
+            session.setCompletionTime(new Date());
+            EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+            Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
+            request.setBody(session.toJSON());
+            request.send();
 
-        parentView.getMySession().getModeratingPanel().getTable().clearSelection();
-        parentView.getMySession().getJoiningPanel().getTable().clearSelection();
-        parentView.getMySession().getClosedPanel().getTable().clearSelection();
+            parentView.getMySession().getModeratingPanel().getTable().clearSelection();
+            parentView.getMySession().getJoiningPanel().getTable().clearSelection();
+            parentView.getMySession().getClosedPanel().getTable().clearSelection();
+        }
+        else
+        {
+            parentView.getMySession().getModeratingPanel().getTable().clearSelection();
+            parentView.getMySession().getJoiningPanel().getTable().clearSelection();
+            parentView.getMySession().getClosedPanel().getTable().clearSelection();
+        	return;
+        }
         
         
     }
