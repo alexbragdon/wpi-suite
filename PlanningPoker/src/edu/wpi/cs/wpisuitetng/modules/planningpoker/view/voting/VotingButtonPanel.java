@@ -127,7 +127,8 @@ public class VotingButtonPanel extends JPanel{
 		clearButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent m) {
-				cards.clearCardSelection();				
+				cards.clearCardSelection();
+				clearButton.setEnabled(false);
 			}
 		});
 		
@@ -165,9 +166,7 @@ public class VotingButtonPanel extends JPanel{
 	
 	public void setFieldsEnabled(boolean isEnabled) {
 	    voteButton.setEnabled(isEnabled);
-	    if (mode == ViewMode.WITHDECK) {
-	        clearButton.setEnabled(isEnabled);
-	    } else {
+	    if (mode == ViewMode.WITHOUTDECK) {
 	        estimateSpin.setEnabled(isEnabled);
 	    }
 	}
@@ -192,5 +191,8 @@ public class VotingButtonPanel extends JPanel{
 	public JButton getVoteButton() {
 		return voteButton;
 	}
-
+	
+	public JButton getClearButton() {
+		return clearButton;
+	}
 }

@@ -72,7 +72,7 @@ public class VotingPanel extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        overview = new VotingOverviewPanel(session.getRequirements(), 20, ConfigManager.getConfig().getUserName(), this, session);
+        overview = new VotingOverviewPanel(session.getRequirements(), 0, ConfigManager.getConfig().getUserName(), this, session);
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 2;
@@ -147,6 +147,7 @@ public class VotingPanel extends JPanel {
         if(hasDeck){
             cards.selectedRequirementChanged(selectedRequirement);
             cards.updateSelectedIndices();
+            cards.calculateTotalEstimate();
         }
         
         boolean hasVoted = selectedRequirement.getVotes()
