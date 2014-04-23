@@ -29,6 +29,7 @@ import javax.swing.SwingConstants;
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -91,11 +92,16 @@ public class CloseButtonPanel extends ToolbarGroupView {
         final PlanningPokerSession session = getSelectedSession(parent, 0);
         if (session == null) {
             return;
-        }
+        }        
         final int dialogButton = JOptionPane.YES_NO_OPTION;
         final int dialogResult = JOptionPane.showConfirmDialog(parentView, "Are you sure "
         		+ "you want to close this game?", "Warning", dialogButton);
         if (dialogResult == JOptionPane.YES_OPTION) {
+            
+            for (RequirementEstimate req : session.getRequirements()) {
+                req.setFinalEstimate((int)Math.round(req.calculateMean()));
+            }
+            
             session.setComplete(true);
             session.setCompletionTime(new Date());
             EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);

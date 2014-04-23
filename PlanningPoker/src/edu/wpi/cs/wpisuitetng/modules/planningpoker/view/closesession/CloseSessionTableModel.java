@@ -121,7 +121,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
         }
 
         final int estimate = (Integer)value;
-        if (estimate < 0) return;
+        if (estimate < 1) return;
         session.getRequirements().get(row).setFinalEstimate(estimate);
         fireTableCellUpdated(row, column);
     }

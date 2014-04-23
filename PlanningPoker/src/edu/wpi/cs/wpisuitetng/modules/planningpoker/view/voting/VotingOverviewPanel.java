@@ -41,6 +41,7 @@ public class VotingOverviewPanel extends JPanel {
     private final JProgressBar overallProgress;
     private final Timer timer;
     private PlanningPokerSession session;
+    private String user;
     
     /**
      * Creates a overview panel for voting with the given model.
@@ -52,21 +53,14 @@ public class VotingOverviewPanel extends JPanel {
     public VotingOverviewPanel(List<RequirementEstimate> requirements, int teamCount, final String user, final VotingPanel parent, PlanningPokerSession session) {
         this.requirements = requirements;
         this.session = session;
+        this.user = user;
         
         setLayout(new BorderLayout());
         
         overallProgress = new JProgressBar(0, 1000);
-        int votes = 0;
-        for (RequirementEstimate requirement : requirements) {
-            if (requirement.getVotes().containsKey(user)) {
-                votes++;
-            }
-        }
+        updateOverallProgress();
         overallProgress.setPreferredSize(new Dimension(800,25));//make the bar higher
         overallProgress.setStringPainted(true);
-        overallProgress.setValue(votes * 1000 / requirements.size());
-        overallProgress.setString("Personal voting progress: "+ 
-                                 Double.toString(votes*100 / requirements.size()) + "%");
         
         model = new VotingOverviewTableModel(requirements, teamCount, user);
         table = new VotingOverviewTable(model);
@@ -118,9 +112,27 @@ public class VotingOverviewPanel extends JPanel {
 		for(int i = 0; i < sessions.length; i++){
 			if(session.getID() == sessions[i].getID()) {
 				session = sessions[i];
+				requirements = session.getRequirements();
 				model.updateModel(session.getRequirements());
+				updateOverallProgress();
 			}
 		}
+	}
+	
+	/**
+	 * Updates the overall progress bar.
+	 *
+	 */
+	private void updateOverallProgress() {
+	    int votes = 0;
+        for (RequirementEstimate requirement : requirements) {
+            if (requirement.getVotes().containsKey(user)) {
+                votes++;
+            }
+        }
+        overallProgress.setValue(votes * 1000 / requirements.size());
+        overallProgress.setString("Personal voting progress: "+ 
+                                 Double.toString(votes*100 / requirements.size()) + "%");
 	}
 	
 	/**

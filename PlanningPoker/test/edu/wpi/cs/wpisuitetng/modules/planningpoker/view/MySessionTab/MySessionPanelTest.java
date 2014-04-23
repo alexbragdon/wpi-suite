@@ -87,7 +87,7 @@ public class MySessionPanelTest {
         msp.refresh();
     }
     
-    @Test//(expected=NullPointerException.class)
+    @Test
     public void testcCloseTimedOutSessions(){
         reqList = new ArrayList<RequirementEstimate>();
         reqList.add(new RequirementEstimate(1,"2",2,true));
