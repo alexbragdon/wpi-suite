@@ -150,7 +150,8 @@ public class RequirementEstimate {
         double average = 0;
         
         if (numberEstimates != 0) {
-            average = totalEstimate / numberEstimates;
+            average = totalEstimate / ((double) numberEstimates);
+            average = Math.round(average);
         }
         
         return average;
