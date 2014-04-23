@@ -23,6 +23,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.FindPlanningPoker
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * Description
@@ -91,6 +94,9 @@ public class CloseOpenButton extends JButton {
         session.setComplete(true);
         session.setCompletionTime(new Date());
         EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+        Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
+        request.setBody(session.toJSON());
+        request.send();
     }
     
     public void OpenSession(MainView parent){
@@ -102,7 +108,9 @@ public class CloseOpenButton extends JButton {
         session.copyFrom(tableSession);
         session.setActive(true);
         EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
-        
+        Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/open", HttpMethod.POST);
+        request.setBody(session.toJSON());
+        request.send();
     }
     
     private PlanningPokerSession getSelectedSession(MainView parent, int panel) {
