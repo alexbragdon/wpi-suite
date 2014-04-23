@@ -90,7 +90,7 @@ public class SuperButton extends JButton {
             
             this.setText("<html>Review<br />Session<br />Progress</html>");
             this.setIcon(new ImageIcon(closeImg));
-            this.setToolTipText("Review the results of voting so far, enter" + 
+            this.setToolTipText("Review the results of voting so far, enter " + 
                             "final estimates, and choose to close the session");
         }
 
