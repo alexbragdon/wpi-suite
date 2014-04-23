@@ -17,6 +17,7 @@ import javax.swing.JTable;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -42,6 +43,11 @@ public class CloseSessionPanel extends JPanel {
      */
     public CloseSessionPanel(PlanningPokerSession session, boolean isEditable) {
         this.session = session;
+        
+        for (RequirementEstimate req : session.getRequirements()) {
+            req.setFinalEstimate((int)Math.round(req.calculateMean()));
+        }
+        
         this.isEditable = isEditable;
         buildLayout();
     }
