@@ -48,16 +48,16 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
                 saveButton = new JButton("Update");
                 clearButton = new JButton("Undo changes");
                 cancelButton = new JButton("Cancel");
-                openButton = new JButton("Open Session");
-                openButton.setToolTipText("Open this session.");
+                openButton = new JButton("Open Game");
+                openButton.setToolTipText("Open this game.");
                 break;
             case CREATE:
                 saveButton = new JButton("Create");
                 clearButton = new JButton("Clear");
                 cancelButton = new JButton("Cancel");
                 openButton = new JButton("Create and Open");
-                openButton.setToolTipText("Create the planning poker session, add it to " + 
-                                "Sessions I'm Moderating in the sessions tab, and " + 
+                openButton.setToolTipText("Create the planning poker game, add it to " + 
+                                "Games I'm Moderating in the games tab, and " + 
                                 "immediately make it active");
                 openButton.setEnabled(false);
                 break;
@@ -97,9 +97,9 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
             break;
         }
         
-        saveButton.setToolTipText("Create the planning poker session and add it to Sessions I'm Moderating in the sessions tab");
-        clearButton.setToolTipText("Clear all the fields of this new session");
-        cancelButton.setToolTipText("Cancel creation of session and close tab");
+        saveButton.setToolTipText("Create the planning poker game and add it to Games I'm Moderating in the games tab");
+        clearButton.setToolTipText("Clear all the fields of this new game");
+        cancelButton.setToolTipText("Cancel creation of game and close tab");
 
         setupListeners();
     }

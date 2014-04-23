@@ -58,7 +58,7 @@ public class SessionOpenedEmailTemplate implements INotificationTemplate<EmailMe
     public EmailMessage generateMessage(User user) {
         final String from = "planningpokerwpi@gmail.com";
         final String to = user.getEmail();
-        final String subject = "New planning poker session " + session.getName();
+        final String subject = "New planning poker game " + session.getName();
         
         final StringBuilder body = new StringBuilder();
         
@@ -66,7 +66,7 @@ public class SessionOpenedEmailTemplate implements INotificationTemplate<EmailMe
         body.append(user.getName());
         body.append(",\n\n");
         body.append(session.getModerator());
-        body.append(" has begun planning poker session \"");
+        body.append(" has begun planning poker game \"");
         body.append(session.getName());
         body.append("\".\n\n");
         body.append("Description:\n\t");

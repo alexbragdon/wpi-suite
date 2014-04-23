@@ -77,7 +77,7 @@ public class ViewEventController {
      */
     public void createSession() {
         final SessionPanel newSession = new SessionPanel();
-        main.addTab("New Session", null, newSession, "Create a new session");
+        main.addTab("New Game", null, newSession, "Create a new game");
         main.invalidate(); //force the tabbedpane to redraw.
         main.repaint();
         main.setSelectedComponent(newSession);
@@ -129,7 +129,7 @@ public class ViewEventController {
         if (!(exists)) {
             final SessionPanel sessionEditor = new SessionPanel(session);
             final String tabName = "Edit " + session.getName();
-            main.addTab(tabName, null, sessionEditor, "Edit this session");
+            main.addTab(tabName, null, sessionEditor, "Edit this game");
             main.invalidate();
             main.repaint();
             main.setSelectedComponent(sessionEditor);
@@ -158,7 +158,7 @@ public class ViewEventController {
         if (!(exists)) {
             final CloseSessionPanel panel = new CloseSessionPanel(session, true);
             final String tabName = "Review " + session.getName();
-            main.addTab(tabName, null, panel, "Close this session");
+            main.addTab(tabName, null, panel, "Close this game");
             main.invalidate();
             main.repaint();
             main.setSelectedComponent(panel);
@@ -186,7 +186,7 @@ public class ViewEventController {
         if (!(exists)) {
             final CloseSessionPanel panel = new CloseSessionPanel(session, false);
             final String tabName = "View " + session.getName();
-            main.addTab(tabName, null, panel, "View this session");
+            main.addTab(tabName, null, panel, "View this game");
             main.invalidate();
             main.repaint();
             main.setSelectedComponent(panel);
@@ -233,7 +233,7 @@ public class ViewEventController {
         if (!(exists)) {
             final VotingPanel panel = new VotingPanel(session);
             final String tabName = "Vote on " + session.getName();
-            main.addTab(tabName, null, panel, "Vote on this session");
+            main.addTab(tabName, null, panel, "Vote on this game");
             main.invalidate();
             main.repaint();
             main.setSelectedComponent(panel);

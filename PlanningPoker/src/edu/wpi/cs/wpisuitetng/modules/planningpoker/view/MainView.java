@@ -37,7 +37,7 @@ public class MainView extends JTabbedPane {
 	public MainView() {
 	    
 	    this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		this.addTab("Sessions", mySession);
+		this.addTab("Games", mySession);
 		
 
 		// Listen for tab changes to invoke auto refresh

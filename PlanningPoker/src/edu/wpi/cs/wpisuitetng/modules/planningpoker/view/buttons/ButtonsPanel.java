@@ -33,7 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  */
 @SuppressWarnings("serial")
 public class ButtonsPanel extends ToolbarGroupView {
-    private final JButton createButton = new JButton("<html>Create<br />Session</html>");
+    private final JButton createButton = new JButton("<html>Create<br />Game</html>");
 
     private final JPanel contentPanel = new JPanel();
 
