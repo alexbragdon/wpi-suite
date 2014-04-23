@@ -48,8 +48,6 @@ public class MySessionPanel extends JPanel {
 
     private final Timer timer;
 
-    private JComboBox<String> filterMenu;
-
     /**
      * @return the moderatingPanel
      */
