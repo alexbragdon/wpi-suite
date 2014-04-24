@@ -83,11 +83,12 @@ public class CloseSessionPanelTest {
 		assertEquals(Integer.class, cstm.getColumnClass(5));
 		
 		assertEquals("2", cstm.getValueAt(0, 0));
-		//assertEquals(0.0, cstm.getValueAt(0, 1));
-		//assertEquals(0.0, cstm.getValueAt(0, 2));
-		//assertEquals(0, cstm.getValueAt(0, 3));
-		//cstm.setValueAt(3, 0, 3);
-		//assertEquals(3, cstm.getValueAt(0, 3));
+		
+		assertEquals(0, cstm.getValueAt(0, 2));
+		assertEquals(0.0, cstm.getValueAt(0, 3));
+		assertEquals(0.0, cstm.getValueAt(0, 4));
+		cstm.setValueAt(3, 0, 5);
+		assertEquals(3, cstm.getValueAt(0, 5));
 	}
 
 }
