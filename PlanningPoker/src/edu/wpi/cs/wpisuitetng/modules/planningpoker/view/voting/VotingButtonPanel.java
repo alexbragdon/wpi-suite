@@ -246,7 +246,15 @@ public class VotingButtonPanel extends JPanel{
 		else if (mode == ViewMode.WITHDECK){
 			cards.calculateTotalEstimate();
 			voteButton.setEnabled(isEnabled);
-			clearButton.setEnabled(isEnabled);
+			
+			// Will check also if the user has voted
+			if(cards.getSelectedCardsIndices().size() == 0 || !isEnabled){
+				clearButton.setEnabled(false);
+			}
+			
+			else{
+				clearButton.setEnabled(true);
+			}
 		}
 	}
 	
