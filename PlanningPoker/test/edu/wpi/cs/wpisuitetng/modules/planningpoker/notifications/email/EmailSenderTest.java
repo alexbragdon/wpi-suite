@@ -49,8 +49,8 @@ public class EmailSenderTest {
         
     }
     
-    @Test
-    public void testSend(){
-        emailSender.send(user);
-    }
+    //@Test
+    //public void testSend(){
+    //    emailSender.send(user);
+    //}
 }
