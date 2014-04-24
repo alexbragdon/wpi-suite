@@ -97,7 +97,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         JPanel checkPanel = new JPanel();
         checkPanel.setLayout(new BorderLayout());
         checkPanel.add(checkBox, BorderLayout.WEST);
-        checkPanel.add(new JLabel("Email Notification?"), BorderLayout.CENTER);
+        checkPanel.add(new JLabel("Email Notification?   "), BorderLayout.CENTER);
         buttonPanel.add(checkPanel, BorderLayout.WEST);
         //buttonPanel.add(new JLabel("Email notification?"));
         buttonPanel.add(submitButton, BorderLayout.CENTER);

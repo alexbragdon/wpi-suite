@@ -8,6 +8,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
+
 import java.awt.Component;
 
 import javax.swing.JProgressBar;
@@ -29,6 +30,7 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
     public ProgressBarTableCellRenderer() {
         progressBar = new JProgressBar(0, MAX);
         progressBar.setStringPainted(true);
+        
     }
     
     /*
