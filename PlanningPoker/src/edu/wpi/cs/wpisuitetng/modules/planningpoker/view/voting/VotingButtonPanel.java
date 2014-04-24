@@ -91,11 +91,12 @@ public class VotingButtonPanel extends JPanel{
 	private void buildLayoutWithoutDeck() {
 		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("  Enter estimate  ");
+		final JLabel blankLabel = new JLabel("            ");
 		estimateField = new JTextField("0");
 		voteButton = new JButton("Vote");
 		dontKnowButton = new JButton("I Don't Know");
 
-		estimateField.setPreferredSize(new Dimension(120, 100));
+		estimateField.setPreferredSize(new Dimension(120, 130));
 		estimateField.setEditable(true);
 		estimateField.setFont(new Font("default", Font.BOLD, 72));
 		estimateField.addMouseListener(new MouseAdapter(){
@@ -160,6 +161,7 @@ public class VotingButtonPanel extends JPanel{
 		add(estimateField);
 		add(buttonsPanel, "span 1 2,wrap");
 		buttonsPanel.add(voteButton, BorderLayout.NORTH);
+		buttonsPanel.add(blankLabel, BorderLayout.CENTER);
 		buttonsPanel.add(dontKnowButton, BorderLayout.SOUTH);
 	}
 
@@ -173,7 +175,7 @@ public class VotingButtonPanel extends JPanel{
 		votePanel.setLayout(new BorderLayout());
 		final JPanel cornerPanel = new JPanel();
 		cornerPanel.setLayout(new BorderLayout());
-		voteButton.setPreferredSize(new Dimension(140, 130));
+		voteButton.setPreferredSize(new Dimension(140, 100));
 		clearButton.setPreferredSize(new Dimension(140, 40));
 		estimateLabel.setFont(new Font("default", Font.BOLD, 72));
 
@@ -208,7 +210,8 @@ public class VotingButtonPanel extends JPanel{
 		};
 
 		estimateLabel.addPropertyChangeListener(listener);
-
+		
+		JLabel blankLabel = new JLabel("          ");
 		add(infoLabel, "wrap");
 		add(estimateLabel);
 		//add(clearButton, "wrap");
