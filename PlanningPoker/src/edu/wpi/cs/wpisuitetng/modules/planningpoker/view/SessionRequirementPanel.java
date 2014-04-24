@@ -11,9 +11,13 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
@@ -21,11 +25,13 @@ import java.util.TimerTask;
 import java.util.Timer;
 
 import javax.swing.AbstractButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
@@ -107,6 +113,14 @@ public class SessionRequirementPanel extends JPanel {
 					return String.class;
 				}
 			}
+
+			@Override
+			public String getToolTipText(MouseEvent event) {
+				Point p = event.getPoint();
+				int rowIndex = rowAtPoint(p);
+				int sessionID = (int) this.getValueAt(rowIndex, 0);
+				return getDescription(sessionID);
+			}
 		};
 
 		final JScrollPane tablePanel = new JScrollPane(table);
@@ -138,6 +152,27 @@ public class SessionRequirementPanel extends JPanel {
 		checkBox = new CheckBoxHeader(table.getTableHeader());
 		tc.setHeaderRenderer(checkBox);
 		tableUpdated();
+	}
+
+	protected String getDescription(int sessionID) {
+		boolean found = false;
+		String description = null;
+		for (RequirementEstimate requirment : requirements) {
+			if (requirment.getId() == sessionID) {
+				found = true;
+				description = requirment.getDescription();
+			} 
+		} 
+		
+		if (found && description.length() >= 77 ) {
+			BreakIterator bi = BreakIterator.getWordInstance();
+			bi.setText(description);
+			int first_after = bi.following(80);
+			 return description.substring(0, first_after) + "...";
+		}  else if (found) {
+			return description;
+		}else {return "Not Found";}
+		
 	}
 
 	/**
@@ -230,18 +265,21 @@ public class SessionRequirementPanel extends JPanel {
 	 * @param requirements
 	 */
 	public void addRequirements(Requirement[] requirements) {
-		
+
 		List<Requirement> importedRequirements = new ArrayList<Requirement>();
-		
+
 		for (Requirement r : requirements) {
 			boolean imported = false;
 			for (int i = 0; i < model.getRowCount(); i++) {
-				if ((int)model.getValueAt(i, 0) == r.getId() && model.getValueAt(i, 1).equals(r.getName())) {
+				if ((int) model.getValueAt(i, 0) == r.getId()
+						&& model.getValueAt(i, 1).equals(r.getName())) {
 					imported = true;
 				}
 			}
-			
-			if (!imported) {importedRequirements.add(r);}
+
+			if (!imported) {
+				importedRequirements.add(r);
+			}
 		}
 		for (int i = 0; i < importedRequirements.size(); i++) {
 			Requirement req = importedRequirements.get(i);
@@ -258,8 +296,10 @@ public class SessionRequirementPanel extends JPanel {
 				this.requirements.add(estimate);
 			}
 		}
-		
-		if (importedRequirements.size() != 0) {tableUpdated();}
+
+		if (importedRequirements.size() != 0) {
+			tableUpdated();
+		}
 	}
 
 	/**
