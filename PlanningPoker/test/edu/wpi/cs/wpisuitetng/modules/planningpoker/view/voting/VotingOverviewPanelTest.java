@@ -16,9 +16,12 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
  * Description
@@ -31,6 +34,9 @@ public class VotingOverviewPanelTest {
     private PlanningPokerSession session1;
     @Before
     public void setUp(){
+    	Network.initNetwork(new MockNetwork());
+		Network.getInstance().setDefaultNetworkConfiguration(
+				new NetworkConfiguration("http://wpisuitetng"));
         RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
         ArrayList<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
         listEst.add(testReq);
