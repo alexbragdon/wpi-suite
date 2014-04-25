@@ -2,7 +2,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 
