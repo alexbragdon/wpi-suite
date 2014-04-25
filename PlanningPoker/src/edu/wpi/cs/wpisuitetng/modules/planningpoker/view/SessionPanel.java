@@ -440,6 +440,17 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				if (timeEnable.isSelected()) {
 					timeEnable.setSelected(false);
 				} else {timeEnable.setSelected(true);}
+				
+				if (timeEnable.isSelected()) {
+                    dateChooser.setEnabled(true);
+                    hourSpin.setEnabled(true);
+                    minuteSpin.setEnabled(true);
+                } else {
+                    dateChooser.setEnabled(false);
+                    hourSpin.setEnabled(false);
+                    minuteSpin.setEnabled(false);
+                }
+                updateButtonPanel();
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
