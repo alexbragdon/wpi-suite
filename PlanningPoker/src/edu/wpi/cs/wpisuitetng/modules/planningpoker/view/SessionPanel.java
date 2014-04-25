@@ -131,6 +131,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     /**
      * Goes on right, allows user to select requirements.
      */
+    // TODO replace JPanel with something real
     private SessionRequirementPanel requirementsPanel;
 
     /**
@@ -141,6 +142,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     /**
      * Create, reset, cancel buttons at the bottom.
      */
+    // TODO replace JPanel with something real
     private SessionButtonPanel buttonPanel;
 
 
@@ -154,6 +156,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         viewMode = ViewMode.EDIT;
         dt = new Date();
         this.buildLayout();
+
     }
 
     /**
