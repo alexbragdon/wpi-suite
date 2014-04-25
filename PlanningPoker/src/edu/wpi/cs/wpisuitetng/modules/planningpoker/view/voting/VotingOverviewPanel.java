@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
 
@@ -146,6 +147,9 @@ public class VotingOverviewPanel extends JPanel {
         overallProgress.setValue(votes * 1000 / requirements.size());
         overallProgress.setString("Personal voting progress: "+ 
                         Double.toString(votes*100 / requirements.size()) + "%");
+        if ((double)votes / requirements.size() == 1.0) {
+            overallProgress.setForeground(new Color(102, 204, 102));
+        }
     }
 
     /**
