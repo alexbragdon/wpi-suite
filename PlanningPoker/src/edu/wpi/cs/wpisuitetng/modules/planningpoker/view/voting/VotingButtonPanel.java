@@ -117,7 +117,7 @@ public class VotingButtonPanel extends JPanel{
 					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
 						errorLabel.setText(" ");
 					}else{
-						errorLabel.setText("*Enter positive num");
+						errorLabel.setText("*Enter a positive integer from 1 to 99");
 					}
 				}else{
 					voteButton.setEnabled(true);
@@ -132,7 +132,7 @@ public class VotingButtonPanel extends JPanel{
 					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
 						errorLabel.setText(" ");
 					}else{
-						errorLabel.setText("*Enter positive num");
+						errorLabel.setText("*Enter a positive integer from 1 to 99");
 					}
 				}else{
 					voteButton.setEnabled(true);
@@ -147,7 +147,7 @@ public class VotingButtonPanel extends JPanel{
 					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
 						errorLabel.setText(" ");
 					}else{
-						errorLabel.setText("*Enter positive num");
+						errorLabel.setText("*Enter a positive integer from 1 to 99");
 					}
 				}else{
 					voteButton.setEnabled(true);
@@ -178,14 +178,15 @@ public class VotingButtonPanel extends JPanel{
 		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new BorderLayout());
-		add(infoLabel);
-		add(buttonsPanel, "span 1 3,wrap");
-		add(estimateField,"wrap");
-		add(errorLabel, " wrap");
-		
 		buttonsPanel.add(voteButton, BorderLayout.NORTH);
 		buttonsPanel.add(blankLabel, BorderLayout.CENTER);
 		buttonsPanel.add(dontKnowButton, BorderLayout.SOUTH);
+		add(infoLabel);
+		add(buttonsPanel, "span 1 2,wrap");
+		add(estimateField,"wrap");
+		add(errorLabel,"span");
+		
+		
 	}
 
 	private void buildLayoutWithDeck() {
