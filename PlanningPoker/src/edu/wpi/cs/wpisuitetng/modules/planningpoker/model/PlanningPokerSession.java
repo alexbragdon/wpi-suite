@@ -430,5 +430,15 @@ public class PlanningPokerSession extends AbstractModel {
     public void setDeck(String deck) {
         this.deck = deck;
     }
+    
+    public boolean hasEveryoneVoted(int menbers){
+    	boolean flag = true;
+    	for(RequirementEstimate r : RequirementEstimates){
+    		if(r.getVotes().size() != menbers){
+    			flag = false;
+    		}
+    	}
+    	return flag;
+    }
 
 }

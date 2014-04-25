@@ -11,9 +11,12 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
@@ -40,6 +43,7 @@ public class VotingPanel extends JPanel {
 	VotingButtonPanel buttons;
 	PlanningPokerSession session;
 	RequirementEstimate currentRequirement;
+	JLabel label;
 
 	private final boolean hasDeck; 
 
@@ -75,7 +79,7 @@ public class VotingPanel extends JPanel {
 		overview = new VotingOverviewPanel(session.getRequirements(), 0, ConfigManager.getConfig().getUserName(), this, session);
 		c.gridx = 0;
 		c.gridy = 0;
-		c.gridwidth = 2;
+		c.gridwidth = 3;
 		c.gridheight = hasDeck ? 1 : 2;
 		c.weightx = 1.0;
 		c.weighty = 1.0;
@@ -120,8 +124,23 @@ public class VotingPanel extends JPanel {
 			add(countdown, c);
 		}
 
+		URL url = getClass().getResource("complete.png");
+	    ImageIcon imageicon = new ImageIcon( url );
+	    label = new JLabel( imageicon );
+	    label.setVisible(false);
+	    c.gridx = 1;
+		c.gridy = 2;
+		c.gridwidth = 1;
+		c.gridheight = 2;
+		c.weightx = 0.2;
+		c.weighty = 0.0;
+		c.fill = GridBagConstraints.VERTICAL;
+		c.anchor = GridBagConstraints.LINE_END;
+		add(label, c);
+		
+		
 		buttons = new VotingButtonPanel(hasDeck ? ViewMode.WITHDECK : ViewMode.WITHOUTDECK, this);
-		c.gridx = 1;
+		c.gridx = 2;
 		c.gridy = 2;
 		c.gridwidth = 1;
 		c.gridheight = 2;
@@ -240,6 +259,10 @@ public class VotingPanel extends JPanel {
 
 	public VotingButtonPanel getButtonPanel() {
 		return buttons;
+	}
+	
+	public void showFinishIcon(){
+		label.setVisible(true);
 	}
 
 }

@@ -42,6 +42,7 @@ public class VotingOverviewPanel extends JPanel {
     private final Timer timer;
     private PlanningPokerSession session;
     private String user;
+    private VotingPanel parent;
     
     /**
      * Creates a overview panel for voting with the given model.
@@ -54,6 +55,7 @@ public class VotingOverviewPanel extends JPanel {
         this.requirements = requirements;
         this.session = session;
         this.user = user;
+        this.parent = parent;
         
         setLayout(new BorderLayout());
         
@@ -151,5 +153,9 @@ public class VotingOverviewPanel extends JPanel {
 	
 	public PlanningPokerSession getSession() {
 	    return session;
+	}
+	
+	public void notifyParent(){
+		parent.showFinishIcon();
 	}
 }
