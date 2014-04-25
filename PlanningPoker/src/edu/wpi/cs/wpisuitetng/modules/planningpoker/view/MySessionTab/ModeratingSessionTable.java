@@ -51,7 +51,7 @@ public class ModeratingSessionTable extends JTable {
         this.setDropMode(DropMode.ON);
         this.getTableHeader().setReorderingAllowed(false);
         this.setAutoCreateRowSorter(true);
-        this.setDragEnabled(true);
+        //this.setDragEnabled(true);
         setFillsViewportHeight(true);
 
     }
