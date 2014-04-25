@@ -31,6 +31,9 @@ public class User extends AbstractModel
 	private Role role;
 	private String email;
 	private boolean hasNotificationsEnabled;
+	private String phoneNumber;
+	private String carrier;
+	private boolean hasSmsEnabled;
 	
 	transient private String password; // excluded from serialization, still stored.
 	
@@ -49,6 +52,9 @@ public class User extends AbstractModel
 		this.role = Role.USER;
 		this.email = "";
 		this.hasNotificationsEnabled = true;
+		this.phoneNumber = "";
+		this.carrier = "";
+		this.hasSmsEnabled = true;
 	}
 	
 	@Override
@@ -88,6 +94,18 @@ public class User extends AbstractModel
                     return false;
                 }
 				
+				if(this.phoneNumber != null && !this.phoneNumber.equals(((User)other).phoneNumber)) {
+				    return false;
+				}
+				
+                if(this.carrier != null && !this.carrier.equals(((User)other).carrier)) {
+                    return false;
+                }
+				
+                if(hasSmsEnabled != ((User)other).hasSmsEnabled) {
+                    return false;
+                }
+                
 				return true;
 			}
 		}
@@ -163,7 +181,61 @@ public class User extends AbstractModel
         this.email = email;
     }
 	
-	/* database interaction */
+	/**
+	 * Returns the user's phone number.
+	 *
+	 * @return phone number
+	 */
+	public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * Sets the phone number to the given string.
+     *
+     * @param phoneNumber number to set
+     */
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    /**
+     * Returns the users cellular carrier.
+     *
+     * @return carrier
+     */
+    public String getCarrier() {
+        return carrier;
+    }
+
+    /**
+     * Sets the user's cellular carrier.
+     *
+     * @param carrier carrier
+     */
+    public void setCarrier(String carrier) {
+        this.carrier = carrier;
+    }
+
+    /**
+     * Returns true if SMS notifications are enabled.
+     *
+     * @return SMS notification setting
+     */
+    public boolean hasSmsEnabled() {
+        return hasSmsEnabled;
+    }
+
+    /**
+     * Sets SMS notification.
+     *
+     * @param hasSmsEnabled true if SMS is enabled
+     */
+    public void setSmsEnabled(boolean hasSmsEnabled) {
+        this.hasSmsEnabled = hasSmsEnabled;
+    }
+
+    /* database interaction */
 	public void save()
 	{
 		return;
