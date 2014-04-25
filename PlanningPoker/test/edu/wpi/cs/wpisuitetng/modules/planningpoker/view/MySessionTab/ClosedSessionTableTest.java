@@ -32,7 +32,7 @@ public class ClosedSessionTableTest {
     public void setUp(){
         final Object[][] data = {};
         final String[] columnNames = { "ID", "Name", "End Time", "My Progress" };
-        
+
         //TODO: Fix this test, null was added
         cst = new ClosedSessionTable(data, columnNames, null);
     }
