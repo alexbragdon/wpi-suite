@@ -40,6 +40,31 @@ public class Fraction {
         return numerator;
     }
     
+    @Override
+    public String toString() {
+    	return numerator + "/" + denominator;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+    	if (!(o instanceof Fraction)) {
+    		return false;
+    	}
+    	
+    	Fraction other = (Fraction) o;
+    	return (this.numerator == other.numerator) &&
+    			(this.denominator == other.denominator);
+    }
+    
+    @Override
+    public int hashCode() {
+    	int prime = 31;    	
+    	int result = prime;
+    	result = result * prime + numerator;
+    	result = result * prime + denominator;
+    	return result;
+    }
+    
     /**
      * 
      * Description goes here.
