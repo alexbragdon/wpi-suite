@@ -16,14 +16,14 @@ public class FractionTests {
 		
 		assertEquals(f1, f2);
 		assertEquals(f1, f1);
-		assertNotEquals(f1, f3);
-		assertNotEquals(f1, null);
-		assertNotEquals(f3, f4);
-		assertNotEquals(f3, new Object());
+		assertTrue(!f1.equals(f3));
+		assertTrue(!f1.equals(null));
+		assertTrue(!f3.equals(f4));
+		assertTrue(!f3.equals(new Object()));
 		assertEquals(f1.toString(), f2.toString());
 		assertEquals(f1.hashCode(), f2.hashCode());
-		assertNotEquals(f2.toString(), f4.toString());
-		assertNotEquals(f3.hashCode(), f4.hashCode());
+		assertTrue(!f2.toString().equals(f4.toString()));
+		assertTrue(f3.hashCode() != f4.hashCode());
 		
 		assertEquals(f1.toString(), "1/2");
 		assertTrue(f1.getValue() == 0.5);
