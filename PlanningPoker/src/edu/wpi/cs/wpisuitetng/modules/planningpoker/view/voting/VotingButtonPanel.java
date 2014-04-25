@@ -172,11 +172,11 @@ public class VotingButtonPanel extends JPanel{
 		clearButton = new JButton("<html>Clear<br />Selection</html>");
 		voteButton = new JButton("Vote");
 		final JPanel votePanel = new JPanel();
-		votePanel.setLayout(new BorderLayout());
+		votePanel.setLayout(new MigLayout());
 		final JPanel cornerPanel = new JPanel();
 		cornerPanel.setLayout(new BorderLayout());
-		voteButton.setPreferredSize(new Dimension(140, 100));
-		clearButton.setPreferredSize(new Dimension(140, 40));
+		voteButton.setPreferredSize(new Dimension(120, 80));
+		clearButton.setPreferredSize(new Dimension(120, 40));
 		estimateLabel.setFont(new Font("default", Font.BOLD, 72));
 
 		try {
@@ -210,15 +210,19 @@ public class VotingButtonPanel extends JPanel{
 		};
 
 		estimateLabel.addPropertyChangeListener(listener);
-		
-		JLabel blankLabel = new JLabel("          ");
+		JLabel blankLabel = new JLabel("");
+		JPanel blankPanel = new JPanel();
 		add(infoLabel, "wrap");
 		add(estimateLabel);
 		//add(clearButton, "wrap");
-		cornerPanel.add(clearButton, BorderLayout.WEST);
-		votePanel.add(cornerPanel, BorderLayout.NORTH);
+		cornerPanel.add(clearButton, BorderLayout.NORTH);
+		cornerPanel.add(blankPanel, BorderLayout.SOUTH);
+		//votePanel.add(blankPanel, BorderLayout.NORTH);
+		votePanel.add(blankLabel, "wrap");
+		votePanel.add(cornerPanel, "wrap");
+		votePanel.add(voteButton, "wrap");
 		add(votePanel, "dock east");
-		votePanel.add(voteButton, BorderLayout.WEST);
+		
 	}
 
 	/**
