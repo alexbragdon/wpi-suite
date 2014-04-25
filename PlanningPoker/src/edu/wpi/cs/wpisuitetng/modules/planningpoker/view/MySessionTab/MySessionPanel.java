@@ -350,5 +350,18 @@ public class MySessionPanel extends JPanel {
     public void redraw() {
         forceRefresh(sessions);
     }
+    
+    public void closeSession(int ID) {
+    	for (PlanningPokerSession session : sessions) {
+    		if (session.getID() == ID && session.isActive()) {
+    			session.setComplete(true);
+				session.setCompletionTime(new Date());
+				EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+				Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
+				request.setBody(session.toJSON());
+				request.send();
+    		}
+    	}
+    }
 
 }

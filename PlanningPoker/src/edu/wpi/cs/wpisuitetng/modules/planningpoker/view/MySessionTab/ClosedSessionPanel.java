@@ -49,7 +49,7 @@ public class ClosedSessionPanel extends JPanel {
 
         final Object[][] data = {};
 
-        table = new ClosedSessionTable(data, columnNames);
+        table = new ClosedSessionTable(data, columnNames, mySessionPanel);
 
         final JScrollPane tablePanel = new JScrollPane(table);
 
