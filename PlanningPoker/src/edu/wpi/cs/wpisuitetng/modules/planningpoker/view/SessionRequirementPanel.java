@@ -71,7 +71,7 @@ public class SessionRequirementPanel extends JPanel {
 		this.displaySession = displaySession;
 
 		final Object[][] data = {};
-		final String[] columns = { "ID", "NAME", "" };
+		final String[] columns = { "ID", "Requirments", "" };
 
 		TimerTask refreshRequirments = new TimerTask() {
 			public void run() {
@@ -147,6 +147,7 @@ public class SessionRequirementPanel extends JPanel {
 	 * @author Romulus
 	 * @version Apr 20, 2014
 	 */
+
 	class MyItemListener implements ItemListener {
 		// $codepro.audit.disable multipleReturns
 		public void itemStateChanged(ItemEvent e) {
@@ -197,6 +198,7 @@ public class SessionRequirementPanel extends JPanel {
 	 * 
 	 * @param l
 	 */
+
 	public void addListener(TableModelListener l) {
 		model.addTableModelListener(l);
 	}
