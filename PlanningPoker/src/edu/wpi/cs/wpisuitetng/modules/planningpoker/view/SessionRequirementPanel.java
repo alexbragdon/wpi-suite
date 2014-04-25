@@ -118,8 +118,8 @@ public class SessionRequirementPanel extends JPanel {
 			public String getToolTipText(MouseEvent event) {
 				Point p = event.getPoint();
 				int rowIndex = rowAtPoint(p);
-				int sessionID = (int) this.getValueAt(rowIndex, 0);
-				return getDescription(sessionID);
+				int requirementID = (int) this.getValueAt(rowIndex, 0);
+				return getDescription(requirementID);
 			}
 		};
 
