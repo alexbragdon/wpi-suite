@@ -43,8 +43,10 @@ class CheckBoxHeader implements TableCellRenderer {
                 final JTable table = ((JTableHeader) e.getSource()).getTable();  
                 final TableColumnModel columnModel = table.getColumnModel();  
                 final int viewColumn = columnModel.getColumnIndexAtX(e.getX());  
-                final int modelColumn = table.convertColumnIndexToModel(viewColumn);  
-                if (viewColumn == modelColumn) {  
+                final int modelColumn = table.convertColumnIndexToModel(viewColumn); 
+                Point p = e.getPoint();
+                int columnIndex = table.columnAtPoint(p);
+                if (viewColumn == modelColumn && columnIndex == 2) {  
                     check.setSelected(!check.isSelected());  
                     final TableModel m = table.getModel();  
                     final Boolean f = check.isSelected();  

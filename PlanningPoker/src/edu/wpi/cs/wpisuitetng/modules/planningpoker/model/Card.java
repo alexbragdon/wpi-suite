@@ -42,6 +42,7 @@ public class Card extends JPanel {
 	private Image cardSelectedImg;
 	private Image cardDisabledImg;
 	private Image cardSelectedDisabledImg;
+	private Image cardMouseOver;
 	private final JLabel numLabel;
 	private final JLabel imgLabel;
 	private boolean selected;
@@ -62,6 +63,7 @@ public class Card extends JPanel {
 			cardSelectedImg = ImageIO.read(getClass().getResource("blank-selected.png"));
 			cardDisabledImg = ImageIO.read(getClass().getResource("blank-disabled.png"));
 			cardSelectedDisabledImg = ImageIO.read(getClass().getResource("blank-selected-disabled.png"));
+			cardMouseOver = ImageIO.read(getClass().getResource("blank-mouse-over.png"));
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
@@ -77,7 +79,7 @@ public class Card extends JPanel {
 		numLabel.setFont(numLabel.getFont().deriveFont(Font.BOLD, 64));
 		numLabel.setHorizontalAlignment(JLabel.CENTER);
 
-	
+
 		addListeners();
 
 		this.imgLabel.setIcon(new ImageIcon(this.cardImg));
@@ -156,20 +158,20 @@ public class Card extends JPanel {
 		refreshImage();
 	}
 
-    /**
-     * Description goes here.
-     */
-    private void refreshImage() {
-        if (selected && isEditable) {
+	/**
+	 * Description goes here.
+	 */
+	private void refreshImage() {
+		if (selected && isEditable) {
 			imgLabel.setIcon(new ImageIcon(cardSelectedImg));
 		} else if (!selected && isEditable) {
 			imgLabel.setIcon(new ImageIcon(cardImg));
 		} else if (selected && !isEditable) {
-		    imgLabel.setIcon(new ImageIcon(cardSelectedDisabledImg));
+			imgLabel.setIcon(new ImageIcon(cardSelectedDisabledImg));
 		} else {
-		    imgLabel.setIcon(new ImageIcon(cardDisabledImg));
+			imgLabel.setIcon(new ImageIcon(cardDisabledImg));
 		}
-    }
+	}
 
 	/**
 	 * @return the selected
@@ -187,12 +189,16 @@ public class Card extends JPanel {
 
 			@Override
 			public void mouseEntered(MouseEvent me) {
-				// TODO Auto-generated method stub
+				if(isEditable && !selected){
+					imgLabel.setIcon(new ImageIcon(cardMouseOver));
+				}
 			}
 
 			@Override
 			public void mouseExited(MouseEvent me) {
-				// TODO Auto-generated method stub
+				if(isEditable && !selected){
+					imgLabel.setIcon(new ImageIcon(cardImg));
+				}
 			}
 
 			@Override
@@ -211,7 +217,7 @@ public class Card extends JPanel {
 		isEditable = false;
 		refreshImage();
 	}
-	
+
 	public void enableSelection() {
 		isEditable = true;
 		refreshImage();
