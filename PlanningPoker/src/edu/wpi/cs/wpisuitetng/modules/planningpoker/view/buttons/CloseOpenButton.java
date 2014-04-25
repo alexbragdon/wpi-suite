@@ -63,7 +63,7 @@ public class CloseOpenButton extends JButton {
         if (selectedIndex == 0 && !isActive) {
             closeButtonParent.setSelectedPanelIndex(0);
             
-            this.setText("<html>Open<br />Session</html>");
+            this.setText("<html>Open<br />Game</html>");
             this.setIcon(new ImageIcon(openIcon));
             this.setToolTipText("Open this session");
         }
@@ -71,7 +71,7 @@ public class CloseOpenButton extends JButton {
         if (selectedIndex == 0 && isActive) {
             closeButtonParent.setSelectedPanelIndex(0);
             
-            this.setText("<html>Close<br />Session</html>");
+            this.setText("<html>Close<br />Game</html>");
             this.setIcon(new ImageIcon(closeIcon));
         }
 

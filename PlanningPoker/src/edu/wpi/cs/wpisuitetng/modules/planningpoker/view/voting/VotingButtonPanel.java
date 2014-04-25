@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -57,6 +58,7 @@ public class VotingButtonPanel extends JPanel{
 	private final VotingPanel parentPanel;
 	private JButton dontKnowButton;
 	private boolean zeroSelected = false;
+	private JLabel errorLabel = new JLabel();
 
 	/**
 	 * Card Panel
@@ -81,8 +83,8 @@ public class VotingButtonPanel extends JPanel{
 			buildLayoutWithoutDeck();
 		}
 
-		setMinimumSize(new Dimension(270, 150));
-		setPreferredSize(new Dimension(270, 150));
+		setMinimumSize(new Dimension(290, 150));
+		setPreferredSize(new Dimension(290, 150));
 
 		parentPanel = votingPanel;
 		setupListeners();
@@ -90,13 +92,13 @@ public class VotingButtonPanel extends JPanel{
 
 	private void buildLayoutWithoutDeck() {
 		// TODO Auto-generated method stub
-		final JLabel infoLabel = new JLabel("  Enter estimate  ");
+		final JLabel infoLabel = new JLabel("Enter estimate  ");
 		final JLabel blankLabel = new JLabel("            ");
 		estimateField = new JTextField("0");
 		voteButton = new JButton("Vote");
 		dontKnowButton = new JButton("I Don't Know");
 
-		estimateField.setPreferredSize(new Dimension(120, 130));
+		estimateField.setPreferredSize(new Dimension(140, 125));
 		estimateField.setEditable(true);
 		estimateField.setFont(new Font("default", Font.BOLD, 72));
 		estimateField.addMouseListener(new MouseAdapter(){
@@ -112,8 +114,14 @@ public class VotingButtonPanel extends JPanel{
 			public void changedUpdate(DocumentEvent e) {
 				if(!validateSpinner()){
 					voteButton.setEnabled(false);
+					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
+						errorLabel.setText(" ");
+					}else{
+						errorLabel.setText("*Enter positive num");
+					}
 				}else{
 					voteButton.setEnabled(true);
+					errorLabel.setText(" ");
 				}
 			}
 
@@ -121,8 +129,14 @@ public class VotingButtonPanel extends JPanel{
 			public void insertUpdate(DocumentEvent e) {
 				if(!validateSpinner()){
 					voteButton.setEnabled(false);
+					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
+						errorLabel.setText(" ");
+					}else{
+						errorLabel.setText("*Enter positive num");
+					}
 				}else{
 					voteButton.setEnabled(true);
+					errorLabel.setText(" ");
 				}
 			}
 
@@ -130,8 +144,14 @@ public class VotingButtonPanel extends JPanel{
 			public void removeUpdate(DocumentEvent e) {
 				if(!validateSpinner()){
 					voteButton.setEnabled(false);
+					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
+						errorLabel.setText(" ");
+					}else{
+						errorLabel.setText("*Enter positive num");
+					}
 				}else{
 					voteButton.setEnabled(true);
+					errorLabel.setText(" ");
 				}
 			}
 		});
@@ -154,12 +174,15 @@ public class VotingButtonPanel extends JPanel{
 			}
 		});
 
+		errorLabel.setForeground(Color.red);
 		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new BorderLayout());
-		add(infoLabel, "wrap");
-		add(estimateField);
-		add(buttonsPanel, "span 1 2,wrap");
+		add(infoLabel);
+		add(buttonsPanel, "span 1 3,wrap");
+		add(estimateField,"wrap");
+		add(errorLabel, " wrap");
+		
 		buttonsPanel.add(voteButton, BorderLayout.NORTH);
 		buttonsPanel.add(blankLabel, BorderLayout.CENTER);
 		buttonsPanel.add(dontKnowButton, BorderLayout.SOUTH);
