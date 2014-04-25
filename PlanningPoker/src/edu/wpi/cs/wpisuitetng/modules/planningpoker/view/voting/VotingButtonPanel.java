@@ -117,7 +117,7 @@ public class VotingButtonPanel extends JPanel{
 					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
 						errorLabel.setText(" ");
 					}else{
-						errorLabel.setText("*Enter a positive integer from 1 to 99");
+						errorLabel.setText("*Please enter an integer from 1 to 99");
 					}
 				}else{
 					voteButton.setEnabled(true);
@@ -132,7 +132,7 @@ public class VotingButtonPanel extends JPanel{
 					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
 						errorLabel.setText(" ");
 					}else{
-						errorLabel.setText("*Enter a positive integer from 1 to 99");
+						errorLabel.setText("*Please enter an integer from 1 to 99");
 					}
 				}else{
 					voteButton.setEnabled(true);
@@ -147,7 +147,7 @@ public class VotingButtonPanel extends JPanel{
 					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
 						errorLabel.setText(" ");
 					}else{
-						errorLabel.setText("*Enter a positive integer from 1 to 99");
+						errorLabel.setText("*Please enter an integer from 1 to 99");
 					}
 				}else{
 					voteButton.setEnabled(true);
