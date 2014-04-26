@@ -82,9 +82,9 @@ public class GetAllUsersController {
         else if(votingOverviewPanel != null){
         	votingOverviewPanel.getTable().getVotingOverviewTableModel().setTeamCount(
         			users.length);
+        	votingOverviewPanel.passUserNum(users.length);
         	if(votingOverviewPanel.getSession().hasEveryoneVoted(users.length)){
         		votingOverviewPanel.notifyParent();
-        		System.out.println("-----------------------------------------------------");
         	}
         }
     }

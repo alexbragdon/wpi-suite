@@ -158,4 +158,8 @@ public class VotingOverviewPanel extends JPanel {
 	public void notifyParent(){
 		parent.showFinishIcon();
 	}
+	
+	public void passUserNum(int user){
+		parent.setUserNum(user);
+	}
 }

@@ -44,6 +44,7 @@ public class VotingPanel extends JPanel {
 	PlanningPokerSession session;
 	RequirementEstimate currentRequirement;
 	JLabel label;
+	int UserNum;
 
 	private final boolean hasDeck; 
 
@@ -245,7 +246,10 @@ public class VotingPanel extends JPanel {
 						session.getMin(),
 						session.getRequirements(), session.getType(), session.isActive(),
 						session.isComplete(), session.getModerator(), session.getDeck());
-
+		if(newSession.hasEveryoneVoted(UserNum)){
+			showFinishIcon();
+		}
+		
 		EditPlanningPokerSessionController.getInstance(
 				).editPlanningPokerSession(newSession); 
 
@@ -263,6 +267,10 @@ public class VotingPanel extends JPanel {
 	
 	public void showFinishIcon(){
 		label.setVisible(true);
+	}
+	
+	public void setUserNum(int users){
+		this.UserNum = users;
 	}
 
 }
