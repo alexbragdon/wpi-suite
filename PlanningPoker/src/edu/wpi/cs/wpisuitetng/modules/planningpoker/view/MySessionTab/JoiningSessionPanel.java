@@ -43,7 +43,7 @@ public class JoiningSessionPanel extends JPanel {
 
         final Object[][] data = {};
 
-        table = new JoiningSessionTable(data, columnNames);
+        table = new JoiningSessionTable(data, columnNames, mySessionPanel);
 
         final JScrollPane tablePanel = new JScrollPane(table);
 

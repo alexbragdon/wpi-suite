@@ -29,7 +29,7 @@ public class JoiningSessionTableTest {
     public void setUp(){
         final Object[][] data = {};
         final String[] columnNames = { "ID", "Name", "End Time", "My Progress" };
-        jst = new JoiningSessionTable(data, columnNames);
+        jst = new JoiningSessionTable(data, columnNames, null);
                         
     }
     
