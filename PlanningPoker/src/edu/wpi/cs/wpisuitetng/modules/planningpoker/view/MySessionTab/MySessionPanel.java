@@ -13,6 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 import java.awt.GridLayout;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -385,13 +386,13 @@ public class MySessionPanel extends JPanel {
 	public static void openSession(int ID) {
 		for (PlanningPokerSession session : sessions) {
 			if (session.getID() == ID && !session.isActive()) {
-				session.setActive(true);
-				EditPlanningPokerSessionController.getInstance()
-				.editPlanningPokerSession(session);
-				Request request = Network.getInstance().makeRequest(
-				"Advanced/planningpoker/notify/open", HttpMethod.POST);
-				request.setBody(session.toJSON());
-				request.send();
+				final PlanningPokerSession newSession = new PlanningPokerSession();
+		        newSession.copyFrom(session);
+		        newSession.setActive(true);
+		        EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
+		        Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/open", HttpMethod.POST);
+		        request.setBody(newSession.toJSON());
+		        request.send();
 			}
 		}
 	}
