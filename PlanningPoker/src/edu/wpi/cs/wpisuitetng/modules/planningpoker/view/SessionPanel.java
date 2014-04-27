@@ -417,7 +417,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         //Show contents of currently selected deck
         deckChooserPanel.add(chosenSequence, 
                         BorderLayout.EAST); 
-        infoPanel.add(deckChooserPanel);
+        infoPanel.add(deckChooserPanel,"wrap");
 
         final JPanel timeCheck = new JPanel();
         
@@ -460,18 +460,23 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				
 			}
         });
-        timeCheck.add(timeEnable);
-        timeCheck.add(new JLabel("Set an end time?"));
-        infoPanel.add(showDeck, "wrap");
+        timeCheck.setLayout(new BorderLayout());
+        timeCheck.setMinimumSize(new Dimension(360, 20));
+        timeCheck.setMaximumSize(new Dimension(1000,30));
+        timeCheck.add(timeEnable,BorderLayout.WEST);
+        timeCheck.add(new JLabel("Set an end time?"),BorderLayout.CENTER);
+        timeCheck.add(showDeck, BorderLayout.EAST);
+        
         if (!(selectedDeck.equals("-None-")))
         {
-            showDeck.setEnabled(true);
+            showDeck.setVisible(true);
         }
         else
         {
-            showDeck.setEnabled(false);
+            showDeck.setVisible(false);
         }
-        infoPanel.add(timeCheck, "wrap");
+        infoPanel.add(timeCheck,"wrap");
+        //infoPanel.add(showDeck, "wrap");
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         infoLabel.setText("");
         infoLabel.setForeground(Color.red);
@@ -551,11 +556,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                     selectedDeck = deckChooser.getSelectedItem().toString();
                     if (!(selectedDeck.equals("-None-")))
                     {
-                        showDeck.setEnabled(true);
+                        showDeck.setVisible(true);
                     }
                     else
                     {
-                        showDeck.setEnabled(false);
+                        showDeck.setVisible(false);
                     }
                     System.out.println("Item state changed to: " + selectedDeck);
                     // Add space for better display
