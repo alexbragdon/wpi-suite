@@ -26,6 +26,7 @@ import java.util.Timer;
 
 import javax.swing.AbstractButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -138,7 +139,7 @@ public class SessionRequirementPanel extends JPanel {
 
 		this.setLayout(new BorderLayout());
 
-		this.add(tablePanel, BorderLayout.CENTER);
+		
 
 		final TableColumn tc = table.getColumnModel().getColumn(2);
 		tc.setCellEditor(table.getDefaultEditor(Boolean.class));
@@ -152,6 +153,9 @@ public class SessionRequirementPanel extends JPanel {
 		checkBox = new CheckBoxHeader(table.getTableHeader());
 		tc.setHeaderRenderer(checkBox);
 		tableUpdated();
+		
+		this.add(tablePanel, BorderLayout.CENTER);
+		this.add(new JLabel("Select Requirements to Estimate"), BorderLayout.NORTH);
 	}
 
 	protected String getDescription(int sessionID) {
