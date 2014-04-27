@@ -12,6 +12,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.text.BreakIterator;
@@ -60,7 +61,11 @@ public class ModeratingSessionTable extends JTable {
         this.setDropMode(DropMode.ON);
         this.getTableHeader().setReorderingAllowed(false);
         this.setAutoCreateRowSorter(true);
-        //this.setDragEnabled(true);
+        try {
+            this.setDragEnabled(true);
+        } catch (HeadlessException e) {
+            e.printStackTrace();
+        }
         setFillsViewportHeight(true);
 
     }

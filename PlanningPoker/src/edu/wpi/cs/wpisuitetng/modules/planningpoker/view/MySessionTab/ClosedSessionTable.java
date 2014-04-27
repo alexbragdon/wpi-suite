@@ -20,6 +20,7 @@ import java.text.BreakIterator;
 import java.text.SimpleDateFormat;
 
 import javax.swing.BorderFactory;
+import javax.swing.DropMode;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -59,7 +60,7 @@ public class ClosedSessionTable extends JTable {
         tableModel = new DefaultTableModel(data, columnNames);
         this.setModel(tableModel);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //this.setDropMode(DropMode.ON);
+        this.setDropMode(DropMode.ON);
         this.getTableHeader().setReorderingAllowed(false);
         this.setAutoCreateRowSorter(true);
         setFillsViewportHeight(true);
