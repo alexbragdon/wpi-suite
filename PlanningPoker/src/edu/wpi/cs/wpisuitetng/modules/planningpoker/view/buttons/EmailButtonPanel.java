@@ -180,6 +180,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         emailScrollPanel.setOpaque(false);
         buttonPanel.setOpaque(false);
         checkBox.setOpaque(false);
+        checkPanel.setOpaque(false);
         emailScrollPanel.setVisible(true);
         emailPanel.setVisible(false);
 
