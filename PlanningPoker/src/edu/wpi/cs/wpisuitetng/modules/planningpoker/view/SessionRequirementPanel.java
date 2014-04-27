@@ -135,6 +135,7 @@ public class SessionRequirementPanel extends JPanel {
 			}
 		};
 
+		table.setRowSelectionAllowed(true);
 		final JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel.setPreferredSize(new Dimension(1000, 800));
 
