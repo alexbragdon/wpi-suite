@@ -241,7 +241,11 @@ public class VotingPanel extends JPanel {
                                             new UserEstimate(ConfigManager.getConfig()
                                                             .getUserName(), totalEstimate));
         } else if (this.hasDeck) {
-            totalEstimate = Integer.parseInt(buttons.getEstimateLabel().getText());
+            try {
+                totalEstimate = Integer.parseInt(buttons.getEstimateLabel().getText());
+            } catch (NumberFormatException e) {
+                totalEstimate = 0;
+            }
             currentRequirement.getVotes().put(
                             ConfigManager.getConfig().getUserName(),
                             new UserEstimate(ConfigManager.getConfig().getUserName(), cards
