@@ -19,10 +19,8 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.FindPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -63,16 +61,17 @@ public class CloseOpenButton extends JButton {
         if (selectedIndex == 0 && !isActive) {
             closeButtonParent.setSelectedPanelIndex(0);
             
-            this.setText("<html>Open<br />Session</html>");
+            this.setText("<html>Open<br />Game</html>");
             this.setIcon(new ImageIcon(openIcon));
-            this.setToolTipText("Open this session");
+            setToolTipText("Open Planning Poker game for voting");
         }
 
         if (selectedIndex == 0 && isActive) {
             closeButtonParent.setSelectedPanelIndex(0);
             
-            this.setText("<html>Close<br />Session</html>");
+            this.setText("<html>Close<br />Game</html>");
             this.setIcon(new ImageIcon(closeIcon));
+            setToolTipText("Close selected Planning Poker game and end voting on it");
         }
 
         // Vote session

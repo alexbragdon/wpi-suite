@@ -8,10 +8,13 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
+
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -29,6 +32,7 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
     public ProgressBarTableCellRenderer() {
         progressBar = new JProgressBar(0, MAX);
         progressBar.setStringPainted(true);
+        
     }
     
     /*
@@ -40,6 +44,13 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
         final Fraction fraction = (Fraction)value;
         progressBar.setValue((int)(fraction.getValue() * MAX));
         progressBar.setString(fraction.getNumerator() + "/" + fraction.getDenominator());
+
+        if (fraction.getValue() >= 0.99 && fraction.getValue() <= 1.01) {
+            progressBar.setForeground(new Color(102, 204, 102));
+        } else {
+            progressBar.setForeground(UIManager.getColor("ProgressBar.foreground"));
+        }
+        
         return progressBar;
     }
 }

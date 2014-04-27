@@ -11,8 +11,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -23,7 +21,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.UserEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.ButtonsPanel;
 
 /**
  * Displays a panel for voting on Planning Poker Sessions.
@@ -147,7 +144,6 @@ public class VotingPanel extends JPanel {
 		if(hasDeck){
 			cards.selectedRequirementChanged(selectedRequirement);
 			cards.updateSelectedIndices();
-			cards.calculateTotalEstimate();
 			
 			try{
 				buttons.getEstimateLabel().setText(
@@ -155,6 +151,7 @@ public class VotingPanel extends JPanel {
 								selectedRequirement.getVotes().get(
 										ConfigManager.getConfig().getUserName()).getTotalEstimate()));        	
 			} catch(NullPointerException n){
+			    n.printStackTrace();
 				buttons.getEstimateLabel().setText("--");
 			}
 		}
@@ -166,6 +163,7 @@ public class VotingPanel extends JPanel {
 								selectedRequirement.getVotes().get(
 										ConfigManager.getConfig().getUserName()).getTotalEstimate()));        	
 			} catch(NullPointerException n){
+			    n.printStackTrace();
 				buttons.getEstimateField().setText("--");
 			}			
 		}
@@ -231,7 +229,13 @@ public class VotingPanel extends JPanel {
 				).editPlanningPokerSession(newSession); 
 
 		buttons.setFieldsEnabled(false);
-		cards.disableEditing(true);
+		if(this.hasDeck){
+		    cards.disableEditing(true);
+		}
+		int row = overview.getTable().getSelectedRow();
+		if (row + 1 < session.getRequirements().size()) {
+		    overview.getTable().getSelectionModel().setSelectionInterval(row + 1, row + 1);
+		}
 	}
 
 	public CardPanel getCards() {

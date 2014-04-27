@@ -23,12 +23,15 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email.EmailSender;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email.SessionClosedEmailTemplate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email.SessionOpenedEmailTemplate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.sms.SessionClosedSmsTemplate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.sms.SessionOpenedSmsTemplate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.sms.SmsSender;
 
 // $codepro.audit.disable lineLength
 
 /**
  * This class provides a way for clients to notify other users of actions through an Network
- * request. It's currently hacked into an EntityManager because it seems like that's the only way to
+ * request. It's currently embedded in EntityManager because it seems like that's the only way to
  * run code on the server without changing the core significantly.
  * 
  * @author Team Romulus
@@ -75,9 +78,11 @@ public class NotificationEntityManager implements EntityManager<AbstractModel> {
         switch (type) {
             case "open":
                 senders.add(new EmailSender(new SessionOpenedEmailTemplate(session)));
+                senders.add(new SmsSender(new SessionOpenedSmsTemplate(session)));
                 break;
             case "close":
                 senders.add(new EmailSender(new SessionClosedEmailTemplate(session)));
+                senders.add(new SmsSender(new SessionClosedSmsTemplate(session)));
                 break;
             default:
                 throw new NotFoundException("There is no " + string + " notification.");

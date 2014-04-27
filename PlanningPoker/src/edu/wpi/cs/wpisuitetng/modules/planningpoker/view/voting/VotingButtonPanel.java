@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -19,21 +20,15 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.io.StringWriter;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 
 import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
@@ -57,6 +52,7 @@ public class VotingButtonPanel extends JPanel{
 	private final VotingPanel parentPanel;
 	private JButton dontKnowButton;
 	private boolean zeroSelected = false;
+	private JLabel errorLabel = new JLabel();
 
 	/**
 	 * Card Panel
@@ -81,8 +77,8 @@ public class VotingButtonPanel extends JPanel{
 			buildLayoutWithoutDeck();
 		}
 
-		setMinimumSize(new Dimension(270, 150));
-		setPreferredSize(new Dimension(270, 150));
+		setMinimumSize(new Dimension(290, 150));
+		setPreferredSize(new Dimension(290, 150));
 
 		parentPanel = votingPanel;
 		setupListeners();
@@ -90,12 +86,13 @@ public class VotingButtonPanel extends JPanel{
 
 	private void buildLayoutWithoutDeck() {
 		// TODO Auto-generated method stub
-		final JLabel infoLabel = new JLabel("  Enter estimate  ");
+		final JLabel infoLabel = new JLabel("Enter estimate  ");
+		final JLabel blankLabel = new JLabel("            ");
 		estimateField = new JTextField("0");
 		voteButton = new JButton("Vote");
 		dontKnowButton = new JButton("I Don't Know");
 
-		estimateField.setPreferredSize(new Dimension(120, 100));
+		estimateField.setPreferredSize(new Dimension(140, 125));
 		estimateField.setEditable(true);
 		estimateField.setFont(new Font("default", Font.BOLD, 72));
 		estimateField.addMouseListener(new MouseAdapter(){
@@ -111,8 +108,14 @@ public class VotingButtonPanel extends JPanel{
 			public void changedUpdate(DocumentEvent e) {
 				if(!validateSpinner()){
 					voteButton.setEnabled(false);
+					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
+						errorLabel.setText(" ");
+					}else{
+						errorLabel.setText("*Please enter an integer from 1 to 99");
+					}
 				}else{
 					voteButton.setEnabled(true);
+					errorLabel.setText(" ");
 				}
 			}
 
@@ -120,8 +123,14 @@ public class VotingButtonPanel extends JPanel{
 			public void insertUpdate(DocumentEvent e) {
 				if(!validateSpinner()){
 					voteButton.setEnabled(false);
+					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
+						errorLabel.setText(" ");
+					}else{
+						errorLabel.setText("*Please enter an integer from 1 to 99");
+					}
 				}else{
 					voteButton.setEnabled(true);
+					errorLabel.setText(" ");
 				}
 			}
 
@@ -129,8 +138,14 @@ public class VotingButtonPanel extends JPanel{
 			public void removeUpdate(DocumentEvent e) {
 				if(!validateSpinner()){
 					voteButton.setEnabled(false);
+					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
+						errorLabel.setText(" ");
+					}else{
+						errorLabel.setText("*Please enter an integer from 1 to 99");
+					}
 				}else{
 					voteButton.setEnabled(true);
+					errorLabel.setText(" ");
 				}
 			}
 		});
@@ -153,14 +168,19 @@ public class VotingButtonPanel extends JPanel{
 			}
 		});
 
+		errorLabel.setForeground(Color.red);
 		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new BorderLayout());
-		add(infoLabel, "wrap");
-		add(estimateField);
-		add(buttonsPanel, "span 1 2,wrap");
 		buttonsPanel.add(voteButton, BorderLayout.NORTH);
+		buttonsPanel.add(blankLabel, BorderLayout.CENTER);
 		buttonsPanel.add(dontKnowButton, BorderLayout.SOUTH);
+		add(infoLabel);
+		add(buttonsPanel, "span 1 2,wrap");
+		add(estimateField,"wrap");
+		add(errorLabel,"span");
+		
+		
 	}
 
 	private void buildLayoutWithDeck() {
@@ -170,11 +190,11 @@ public class VotingButtonPanel extends JPanel{
 		clearButton = new JButton("<html>Clear<br />Selection</html>");
 		voteButton = new JButton("Vote");
 		final JPanel votePanel = new JPanel();
-		votePanel.setLayout(new BorderLayout());
+		votePanel.setLayout(new MigLayout());
 		final JPanel cornerPanel = new JPanel();
 		cornerPanel.setLayout(new BorderLayout());
-		voteButton.setPreferredSize(new Dimension(140, 130));
-		clearButton.setPreferredSize(new Dimension(140, 40));
+		voteButton.setPreferredSize(new Dimension(120, 80));
+		clearButton.setPreferredSize(new Dimension(120, 40));
 		estimateLabel.setFont(new Font("default", Font.BOLD, 72));
 
 		try {
@@ -208,14 +228,19 @@ public class VotingButtonPanel extends JPanel{
 		};
 
 		estimateLabel.addPropertyChangeListener(listener);
-
+		JLabel blankLabel = new JLabel("");
+		JPanel blankPanel = new JPanel();
 		add(infoLabel, "wrap");
 		add(estimateLabel);
 		//add(clearButton, "wrap");
-		cornerPanel.add(clearButton, BorderLayout.WEST);
-		votePanel.add(cornerPanel, BorderLayout.NORTH);
+		cornerPanel.add(clearButton, BorderLayout.NORTH);
+		cornerPanel.add(blankPanel, BorderLayout.SOUTH);
+		//votePanel.add(blankPanel, BorderLayout.NORTH);
+		votePanel.add(blankLabel, "wrap");
+		votePanel.add(cornerPanel, "wrap");
+		votePanel.add(voteButton, "wrap");
 		add(votePanel, "dock east");
-		votePanel.add(voteButton, BorderLayout.WEST);
+		
 	}
 
 	/**
@@ -246,7 +271,15 @@ public class VotingButtonPanel extends JPanel{
 		else if (mode == ViewMode.WITHDECK){
 			cards.calculateTotalEstimate();
 			voteButton.setEnabled(isEnabled);
-			clearButton.setEnabled(isEnabled);
+			
+			// Will check also if the user has voted
+			if(cards.getSelectedCardsIndices().size() == 0 || !isEnabled){
+				clearButton.setEnabled(false);
+			}
+			
+			else{
+				clearButton.setEnabled(true);
+			}
 		}
 	}
 	
@@ -299,6 +332,7 @@ public class VotingButtonPanel extends JPanel{
 		try { 
 			Integer.parseInt(s); 
 		} catch(NumberFormatException e) { 
+		    e.printStackTrace();
 			return false; 
 		}
 		// only got here if we didn't return false

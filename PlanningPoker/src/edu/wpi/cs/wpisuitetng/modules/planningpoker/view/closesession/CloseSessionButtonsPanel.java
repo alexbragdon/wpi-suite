@@ -40,7 +40,7 @@ public class CloseSessionButtonsPanel extends JPanel {
      * @param isEditable
      */
     public CloseSessionButtonsPanel(CloseSessionPanel sessionPanel, boolean isEditable) {
-        closeButton = new JButton("Close Session");
+        closeButton = new JButton("Close Game");
         cancelButton = new JButton(isEditable ? "Cancel" : "OK");
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
