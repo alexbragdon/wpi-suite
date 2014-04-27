@@ -145,10 +145,10 @@ public class SessionRequirementPanel extends JPanel {
 		table.getColumnModel().getColumn(idColumn).setPreferredWidth(0);
 		table.getColumnModel().getColumn(idColumn).setResizable(false);
 		// Check Box Column
-		table.getColumnModel().getColumn(checkBoxColumn).setMinWidth(100);
+		table.getColumnModel().getColumn(checkBoxColumn).setMinWidth(75);
+		table.getColumnModel().getColumn(checkBoxColumn).setResizable(false);
 		// Name Column
-		table.getColumnModel().getColumn(nameColumn).setMinWidth(100);
-		table.getColumnModel().getColumn(nameColumn).setMaxWidth(100);
+		table.getColumnModel().getColumn(nameColumn).setMinWidth(200);
 		// Type Column
 		table.getColumnModel().getColumn(typeColumn).setMinWidth(50);
 		// Priority Column
@@ -207,6 +207,7 @@ public class SessionRequirementPanel extends JPanel {
 	 */
 	class MyItemListener implements ItemListener {
 		// $codepro.audit.disable multipleReturns
+	    // Multiple returns make code much neater
 		public void itemStateChanged(ItemEvent e) {
 			final Object source = e.getSource();
 			if (!(source instanceof AbstractButton)) {
@@ -243,8 +244,12 @@ public class SessionRequirementPanel extends JPanel {
 			}
 			if (!exists) {
 				requirements.add(displayRequirement);
+				// Edit this line if the columns change
 				model.addRow(new Object[] { displayRequirement.getId(),
-						displayRequirement.getName(), true });
+						true,
+						displayRequirement.getName(),
+						displayRequirement.getType(),
+						"" }); //TODO Change to actual priority of the thing
 			}
 		}
 	}
@@ -311,7 +316,9 @@ public class SessionRequirementPanel extends JPanel {
 
 			if (iteration.equals("Backlog")) {
 
-				model.addRow(new Object[] { req.getId(), req.getName(), false });
+			    // Update this if the columns change
+				model.addRow(new Object[] { req.getId(), false, req.getName(), 
+				                req.getType(), req.getPriority() });
 
 				RequirementEstimate estimate = new RequirementEstimate(
 						req.getId(), req.getName(), 0, false);
