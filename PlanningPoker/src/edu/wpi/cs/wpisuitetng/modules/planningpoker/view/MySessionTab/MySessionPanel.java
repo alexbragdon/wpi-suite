@@ -13,6 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 import java.awt.GridLayout;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -46,7 +47,7 @@ public class MySessionPanel extends JPanel {
 
     private MainView parentView;
 
-    public PlanningPokerSession[] sessions = {};
+    public static PlanningPokerSession[] sessions = {};
 
     private final Timer timer;
 
@@ -74,7 +75,8 @@ public class MySessionPanel extends JPanel {
     /**
      * Constructor for MySessionPanel.
      * 
-     * @param mainView MainView
+     * @param mainView
+     *            MainView
      */
     public MySessionPanel(final MainView mainView) {
         moderatingPanel = new ModeratingSessionPanel(mainView, this);
@@ -98,7 +100,8 @@ public class MySessionPanel extends JPanel {
     /**
      * Method populateTables.
      * 
-     * @param newSessions PlanningPokerSession[]
+     * @param newSessions
+     *            PlanningPokerSession[]
      */
     public void populateTables(final PlanningPokerSession[] newSessions) {
         boolean hasChanges = false;
@@ -126,7 +129,8 @@ public class MySessionPanel extends JPanel {
     /**
      * Forces a refresh regardless of changes.
      * 
-     * @param newSessions new sessions
+     * @param newSessions
+     *            new sessions
      */
     public void forceRefresh(final PlanningPokerSession[] newSessions) {
         moderatingPanel.getTable().clear();
@@ -152,8 +156,7 @@ public class MySessionPanel extends JPanel {
                         closedPanel.getTable().addSessions(session);
                     }
                 }
-            }
-            else { 
+            } else {
                 if (session.isActive()) {
                     joiningPanel.getTable().addSessions(session);
                 }
@@ -167,33 +170,38 @@ public class MySessionPanel extends JPanel {
     /**
      * Method getSelectedID.
      * 
-     * @param panel int
+     * @param panel
+     *            int
      * @return int
      */
-    public int getSelectedID(final int panel) { // $codepro.audit.disable multipleReturns 
-        //it is more cleaner to have multiple returns
+    public int getSelectedID(final int panel) { // $codepro.audit.disable
+                                                // multipleReturns
+        // it is more cleaner to have multiple returns
         switch (panel) {
-            case 0:
-                int row = moderatingPanel.getTable().getSelectedRow();
-                if (row == -1) {
-                    return -1;
-                }
-                return Integer.parseInt((String) moderatingPanel.getTable().getValueAt(row, 0));
-            case 1:
-                row = joiningPanel.getTable().getSelectedRow();
-                if (row == -1) {
-                    return -1;
-                }
-                return Integer.parseInt((String) joiningPanel.getTable().getValueAt(row, 0));
-            case 2:
-                row = closedPanel.getTable().getSelectedRow();
-                if (row == -1) {
-                    return -1;
-                }
-                return Integer.parseInt((String) closedPanel.getTable().getValueAt(row, 0));
-            default:
-                // $codepro.audit.disable thrownExceptions
-                throw new RuntimeException("Invalid panel index");
+        case 0:
+            int row = moderatingPanel.getTable().getSelectedRow();
+            if (row == -1) {
+                return -1;
+            }
+            return Integer.parseInt((String) moderatingPanel.getTable()
+                    .getValueAt(row, 0));
+        case 1:
+            row = joiningPanel.getTable().getSelectedRow();
+            if (row == -1) {
+                return -1;
+            }
+            return Integer.parseInt((String) joiningPanel.getTable()
+                    .getValueAt(row, 0));
+        case 2:
+            row = closedPanel.getTable().getSelectedRow();
+            if (row == -1) {
+                return -1;
+            }
+            return Integer.parseInt((String) closedPanel.getTable().getValueAt(
+                    row, 0));
+        default:
+            // $codepro.audit.disable thrownExceptions
+            throw new RuntimeException("Invalid panel index");
         }
     }
 
@@ -208,7 +216,8 @@ public class MySessionPanel extends JPanel {
     /**
      * Returns a session for the given ID, or null.
      * 
-     * @param id the id to search for
+     * @param id
+     *            the id to search for
      * 
      * @return the session
      */
@@ -224,21 +233,25 @@ public class MySessionPanel extends JPanel {
     /**
      * Method closeTimedOutSessions.
      * 
-     * @param sessions PlanningPokerSession[]
+     * @param sessions
+     *            PlanningPokerSession[]
      */
     // $codepro.audit.disable methodShouldBeStatic
     public void closeTimedOutSessions(final PlanningPokerSession[] sessions) {
-        //this method should not be static
+        // this method should not be static
         for (final PlanningPokerSession s : sessions) {
-            if (s.isDateInPast() && s.getType() == SessionType.DISTRIBUTED && (!(s.isComplete()))) {
-                final PlanningPokerSession closedSession = new PlanningPokerSession(s.getID(),
-                                s.getName(), s.getDescription(), s.getDate(), s.getHour(),
-                                s.getMin(), s.getRequirements(), s.getType(), false, true,
-                                s.getModerator(), s.getDeck());
+            if (s.isDateInPast() && s.getType() == SessionType.DISTRIBUTED
+                    && (!(s.isComplete()))) {
+                final PlanningPokerSession closedSession = new PlanningPokerSession(
+                        s.getID(), s.getName(), s.getDescription(),
+                        s.getDate(), s.getHour(), s.getMin(),
+                        s.getRequirements(), s.getType(), false, true,
+                        s.getModerator(), s.getDeck());
                 closedSession.setCompletionTime(new Date());
-                EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(
-                                closedSession);
-                Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
+                EditPlanningPokerSessionController.getInstance()
+                        .editPlanningPokerSession(closedSession);
+                Request request = Network.getInstance().makeRequest(
+                        "Advanced/planningpoker/notify/close", HttpMethod.POST);
                 request.setBody(closedSession.toJSON());
                 request.send();
             }
@@ -247,9 +260,11 @@ public class MySessionPanel extends JPanel {
 
     /**
      * 
-     * Filters closed sessions to display only the sessions closed in the last two days
+     * Filters closed sessions to display only the sessions closed in the last
+     * two days
      * 
-     * @param session a session
+     * @param session
+     *            a session
      * @return true if session closed in the last two days, false otherwise
      */
     @SuppressWarnings("deprecation")
@@ -266,8 +281,8 @@ public class MySessionPanel extends JPanel {
                         }
                     }
                     if (session.getDate().getDate() == dt.getDate()
-                                    || session.getDate().getDate() == dt.getDate() - 1
-                                    || session.getDate().getDate() == dt.getDate() - 2) {
+                            || session.getDate().getDate() == dt.getDate() - 1
+                            || session.getDate().getDate() == dt.getDate() - 2) {
                         status = true;
                     }
                 }
@@ -280,9 +295,11 @@ public class MySessionPanel extends JPanel {
     }
 
     /**
-     * Filters closed sessions to display only the sessions closed in the last seven days
+     * Filters closed sessions to display only the sessions closed in the last
+     * seven days
      * 
-     * @param session a session
+     * @param session
+     *            a session
      * @return true if session closed in the last seven days, false otherwise
      */
     @SuppressWarnings("deprecation")
@@ -293,13 +310,13 @@ public class MySessionPanel extends JPanel {
             if (session.getDate().getYear() == dt.getYear()) {
                 if (session.getDate().getMonth() == dt.getMonth()) {
                     if (session.getDate().getDate() == dt.getDate()
-                                    || session.getDate().getDate() == dt.getDate() - 1
-                                    || session.getDate().getDate() == dt.getDate() - 2
-                                    || session.getDate().getDate() == dt.getDate() - 3
-                                    || session.getDate().getDate() == dt.getDate() - 4
-                                    || session.getDate().getDate() == dt.getDate() - 5
-                                    || session.getDate().getDate() == dt.getDate() - 6
-                                    || session.getDate().getDate() == dt.getDate() - 7) {
+                            || session.getDate().getDate() == dt.getDate() - 1
+                            || session.getDate().getDate() == dt.getDate() - 2
+                            || session.getDate().getDate() == dt.getDate() - 3
+                            || session.getDate().getDate() == dt.getDate() - 4
+                            || session.getDate().getDate() == dt.getDate() - 5
+                            || session.getDate().getDate() == dt.getDate() - 6
+                            || session.getDate().getDate() == dt.getDate() - 7) {
                         status = true;
                     }
                 }
@@ -312,7 +329,8 @@ public class MySessionPanel extends JPanel {
     }
 
     /**
-     * Filters closed sessions to display only the sessions closed in the last 30 days
+     * Filters closed sessions to display only the sessions closed in the last
+     * 30 days
      * 
      * @param session
      * @return true if session closed in the last 30 days, false otherwise
@@ -349,18 +367,34 @@ public class MySessionPanel extends JPanel {
     public void redraw() {
         forceRefresh(sessions);
     }
-    
+
     public void closeSession(int ID) {
-    	for (PlanningPokerSession session : sessions) {
-    		if (session.getID() == ID && session.isActive()) {
-    			session.setComplete(true);
-				session.setCompletionTime(new Date());
-				EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
-				Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
-				request.setBody(session.toJSON());
-				request.send();
-    		}
-    	}
+        for (PlanningPokerSession session : sessions) {
+            if (session.getID() == ID && session.isActive()) {
+                session.setComplete(true);
+                session.setCompletionTime(new Date());
+                EditPlanningPokerSessionController.getInstance()
+                        .editPlanningPokerSession(session);
+                Request request = Network.getInstance().makeRequest(
+                        "Advanced/planningpoker/notify/close", HttpMethod.POST);
+                request.setBody(session.toJSON());
+                request.send();
+            }
+        }
+    }
+
+    public static void openSession(int ID) {
+        for (PlanningPokerSession session : sessions) {
+            if (session.getID() == ID && !session.isActive()) {
+                final PlanningPokerSession newSession = new PlanningPokerSession();
+                newSession.copyFrom(session);
+                newSession.setActive(true);
+                EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
+                Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/open", HttpMethod.POST);
+                request.setBody(newSession.toJSON());
+                request.send();
+            }
+        }
     }
 
 }

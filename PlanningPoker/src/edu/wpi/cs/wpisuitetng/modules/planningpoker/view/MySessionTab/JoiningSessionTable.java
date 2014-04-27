@@ -13,6 +13,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
@@ -20,10 +22,13 @@ import javax.swing.DropMode;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.TransferHandler;
+import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import java.io.IOException;
 import java.text.BreakIterator;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -63,6 +68,47 @@ public class JoiningSessionTable extends JTable {
         this.getTableHeader().setReorderingAllowed(false);
         this.setAutoCreateRowSorter(true);
         setFillsViewportHeight(true);
+        
+        @SuppressWarnings("serial")
+        TransferHandler dnd = new TransferHandler() {
+            public boolean canImport(TransferSupport support) {
+                if (!support.isDrop()) {
+                    return false;
+                }
+
+                if (!support.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public boolean importData(TransferSupport support) {
+                // if we can't handle the import, say so
+                if (!canImport(support)) {
+                    return false;
+                }
+
+                String data;
+                try {
+                    data = (String) support.getTransferable().getTransferData(
+                                    DataFlavor.stringFlavor);
+                } catch (UnsupportedFlavorException e) {
+                    return false;
+                } catch (IOException e) {
+                    return false;
+                }
+                ;
+
+                String[] parts = data.split("\\t");
+                int sessionID = Integer.parseInt(parts[0]);
+
+                MySessionPanel.openSession(sessionID);
+
+                return true;
+            }
+        };
+        this.setTransferHandler(dnd);
     }
 
     /**
