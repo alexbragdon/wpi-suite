@@ -9,6 +9,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.net.URL;
@@ -48,6 +49,8 @@ public class VotingPanel extends JPanel {
     RequirementEstimate currentRequirement;
 
     JLabel label;
+    
+    JPanel panel = new JPanel();
 
     int UserNum;
 
@@ -100,7 +103,7 @@ public class VotingPanel extends JPanel {
             cards = new CardPanel("default", session.getRequirements().get(0), isEditable);
             c.gridx = 0;
             c.gridy = 1;
-            c.gridwidth = 2;
+            c.gridwidth = 3;
             c.weightx = 0.0;
             c.weighty = 0.0;
             c.fill = GridBagConstraints.BOTH;
@@ -133,16 +136,19 @@ public class VotingPanel extends JPanel {
         final URL url = getClass().getResource("complete.png");
         final ImageIcon imageicon = new ImageIcon(url);
         label = new JLabel(imageicon);
+        panel.setPreferredSize(new Dimension(270, 200));
+        panel.setMinimumSize(new Dimension(180, 200));
+        panel.add(label);
         label.setVisible(false);
         c.gridx = 1;
         c.gridy = 2;
         c.gridwidth = 1;
         c.gridheight = 2;
-        c.weightx = 0.2;
+        c.weightx = 0.0;
         c.weighty = 0.0;
         c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.LINE_END;
-        add(label, c);
+        add(panel, c);
 
         buttons = new VotingButtonPanel(hasDeck ? ViewMode.WITHDECK : ViewMode.WITHOUTDECK, this);
         c.gridx = 2;
