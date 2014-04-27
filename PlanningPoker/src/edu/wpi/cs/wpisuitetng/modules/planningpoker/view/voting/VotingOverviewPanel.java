@@ -13,8 +13,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
 
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -22,7 +20,6 @@ import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetAllUsersController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
@@ -147,7 +144,8 @@ public class VotingOverviewPanel extends JPanel {
         overallProgress.setValue(votes * 1000 / requirements.size());
         overallProgress.setString("Personal voting progress: "+ 
                         Double.toString(votes*100 / requirements.size()) + "%");
-        if ((double)votes / requirements.size() == 1.0) {
+        if (((double)votes / requirements.size()) <= 1.01 
+                        && ((double)votes / requirements.size()) >= 0.99) {
             overallProgress.setForeground(new Color(102, 204, 102));
         }
     }

@@ -24,7 +24,6 @@ import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -51,25 +50,14 @@ import com.toedter.calendar.JCalendar;
 
 import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetAllUsersController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 /**
  * This is session panel for the sessions of planning poker game.
@@ -158,7 +146,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         viewMode = ViewMode.EDIT;
         dt = new Date();
         this.buildLayout();
-
     }
 
     /**
@@ -935,7 +922,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             request.setBody(session.toJSON());
             request.send();
         } catch (RuntimeException e) {
-            
+            e.printStackTrace();
         }
     }
 }

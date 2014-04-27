@@ -16,9 +16,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.BorderFactory;
-import javax.swing.DropMode;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.TransferHandler;
@@ -82,10 +80,12 @@ public class ClosedSessionTable extends JTable {
         	          data = (String) support.getTransferable().getTransferData(
         	              DataFlavor.stringFlavor);
         	        } catch (UnsupportedFlavorException e) {
-        	          return false;
+        	            e.printStackTrace();
+        	            return false;
         	        } catch (IOException e) {
-        	          return false;
-        	        };
+        	            e.printStackTrace();
+        	            return false;
+        	        }
         	        
         	        String[] parts = data.split("\\t");
         	        int sessionID = Integer.parseInt(parts[0]);

@@ -20,21 +20,15 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.io.StringWriter;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 
 import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
@@ -338,6 +332,7 @@ public class VotingButtonPanel extends JPanel{
 		try { 
 			Integer.parseInt(s); 
 		} catch(NumberFormatException e) { 
+		    e.printStackTrace();
 			return false; 
 		}
 		// only got here if we didn't return false

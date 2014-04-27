@@ -11,8 +11,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -23,7 +21,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.UserEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.ButtonsPanel;
 
 /**
  * Displays a panel for voting on Planning Poker Sessions.
@@ -154,6 +151,7 @@ public class VotingPanel extends JPanel {
 								selectedRequirement.getVotes().get(
 										ConfigManager.getConfig().getUserName()).getTotalEstimate()));        	
 			} catch(NullPointerException n){
+			    n.printStackTrace();
 				buttons.getEstimateLabel().setText("--");
 			}
 		}
@@ -165,6 +163,7 @@ public class VotingPanel extends JPanel {
 								selectedRequirement.getVotes().get(
 										ConfigManager.getConfig().getUserName()).getTotalEstimate()));        	
 			} catch(NullPointerException n){
+			    n.printStackTrace();
 				buttons.getEstimateField().setText("--");
 			}			
 		}
