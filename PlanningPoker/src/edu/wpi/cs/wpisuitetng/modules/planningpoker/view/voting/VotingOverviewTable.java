@@ -87,7 +87,7 @@ public class VotingOverviewTable extends JTable {
             rowIndex = convertRowIndexToModel(rowIndex);
             requirement = parent.getRequirements().get(rowIndex);
         } else {
-            return "";
+            return null;
         }
         
         String description = requirement.getDescription();

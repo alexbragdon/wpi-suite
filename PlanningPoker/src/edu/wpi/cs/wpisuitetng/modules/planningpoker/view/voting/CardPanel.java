@@ -3,7 +3,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

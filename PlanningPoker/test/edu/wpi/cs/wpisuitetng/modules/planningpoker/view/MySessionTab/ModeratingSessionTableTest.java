@@ -30,7 +30,7 @@ public class ModeratingSessionTableTest {
     public void setUp(){
         final Object[][] data = {};
         final String[] columnNames = { "ID", "Name", "End Time", "My Progress" };
-        mst = new ModeratingSessionTable(data, columnNames);
+        mst = new ModeratingSessionTable(data, columnNames, null);
                         
     }
     

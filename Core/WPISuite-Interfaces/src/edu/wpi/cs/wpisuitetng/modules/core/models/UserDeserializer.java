@@ -86,6 +86,18 @@ public class UserDeserializer implements JsonDeserializer<User> {
          else {
              inflated.setEmail("");
          }
+         
+         if (deflated.has("phoneNumber")) {
+             inflated.setPhoneNumber(deflated.get("phoneNumber").getAsString());
+         }
+         
+         if (deflated.has("carrier")) {
+             inflated.setCarrier(deflated.get("carrier").getAsString());
+         }
+         
+         if (deflated.has("hasSmsEnabled")) {
+             inflated.setSmsEnabled(deflated.get("hasSmsEnabled").getAsBoolean());
+         }
 		 
 		 if(deflated.has("role")  && !deflated.get("role").getAsString().equals(""))
 		 {

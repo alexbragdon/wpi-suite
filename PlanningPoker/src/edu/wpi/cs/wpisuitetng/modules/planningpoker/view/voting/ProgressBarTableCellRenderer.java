@@ -45,8 +45,10 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
         progressBar.setValue((int)(fraction.getValue() * MAX));
         progressBar.setString(fraction.getNumerator() + "/" + fraction.getDenominator());
 
-        if (fraction.getValue() == 1.0) {
+        if (fraction.getValue() >= 0.99 && fraction.getValue() <= 1.01) {
             progressBar.setForeground(new Color(102, 204, 102));
+        } else {
+            progressBar.setForeground(UIManager.getColor("ProgressBar.foreground"));
         }
         
         return progressBar;

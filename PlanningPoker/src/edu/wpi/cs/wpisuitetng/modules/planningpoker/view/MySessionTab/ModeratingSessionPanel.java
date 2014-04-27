@@ -6,6 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.BorderLayout;
@@ -20,13 +21,14 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 
 /**
  * Description
- *
+ * 
  * @author rafaelangelo
  * @version Apr 7, 2014
  */
 @SuppressWarnings("serial")
 public class ModeratingSessionPanel extends JPanel {
     private final ModeratingSessionTable table;
+
     private final MainView parentView;
 
     /**
@@ -35,14 +37,13 @@ public class ModeratingSessionPanel extends JPanel {
      * @param mainView MainView
      * @param mySessionPanel MySessionPanel
      */
-    public ModeratingSessionPanel(MainView mainView, final MySessionPanel mySessionPanel)
-    {
+    public ModeratingSessionPanel(MainView mainView, final MySessionPanel mySessionPanel) {
         parentView = mainView;
-        final String[] columnNames = {"ID", "Name", "End Time", "Status"};
+        final String[] columnNames = { "ID", "Name", "End Time", "Status" };
 
         final Object[][] data = {};
 
-        table = new ModeratingSessionTable(data, columnNames);
+        table = new ModeratingSessionTable(data, columnNames, mySessionPanel);
 
         final JScrollPane tablePanel = new JScrollPane(table);
 
@@ -75,33 +76,32 @@ public class ModeratingSessionPanel extends JPanel {
         this.setupListeners();
     }
 
-
     private void setupListeners() {
-    	table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                if(table.getSelectedRow() != -1){
+                if (table.getSelectedRow() != -1) {
                     parentView.getMySession().getJoiningPanel().getTable().clearSelection();
                     parentView.getMySession().getClosedPanel().getTable().clearSelection();
-                    final boolean isActive = ((String) getTable().getValueAt(getTable(
-                                    ).getSelectedRow(), 3)).equals("Active");
-                    parentView.getToolbarView().GetSuperButtonPanel().getSuperButton(
-                                    ).Update(0, isActive);
-                    parentView.getToolbarView().GetCloseButtonPanel().getCloseButton(
-                            ).Update(0, isActive);
+                    final boolean isActive = ((String) getTable().getValueAt(
+                                    getTable().getSelectedRow(), 3)).equals("Active");
+                    parentView.getToolbarView().GetSuperButtonPanel().getSuperButton()
+                                    .Update(0, isActive);
+                    parentView.getToolbarView().GetCloseButtonPanel().getCloseButton()
+                                    .Update(0, isActive);
                 }
             }
         });
-        
-    	this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
-		
-	}
 
+        this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
 
-	/**
+    }
+
+    /**
      * @return the table
      */
     public ModeratingSessionTable getTable() {
         return table;
     }
+
 }

@@ -6,12 +6,13 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors: Team Romulus
+ * 
+ * Changing the Columns? CTL+F for "Column Change: "
  ******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ItemEvent;
@@ -25,13 +26,12 @@ import java.util.TimerTask;
 import java.util.Timer;
 
 import javax.swing.AbstractButton;
-import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
@@ -47,7 +47,13 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  */
 @SuppressWarnings("serial")
 public class SessionRequirementPanel extends JPanel {
-
+    // Column Change: If the columns change, update these constants
+    final int idColumn = 0;
+    final int checkBoxColumn = 1;
+    final int nameColumn = 2;
+    final int typeColumn = 3;
+    final int priorityColumn = 4;
+    
 	private Timer timer;
 
 	PlanningPokerSession displaySession;
@@ -77,7 +83,8 @@ public class SessionRequirementPanel extends JPanel {
 		this.displaySession = displaySession;
 
 		final Object[][] data = {};
-		final String[] columns = { "ID", "Requirments", "" };
+		// Column Change: Also update this array
+		final String[] columns = { "ID", "", "Name", "Type", "Priority" };
 
 		TimerTask refreshRequirments = new TimerTask() {
 			public void run() {
@@ -96,7 +103,7 @@ public class SessionRequirementPanel extends JPanel {
 		model = new DefaultTableModel(data, columns) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				return column == 2;
+				return column == checkBoxColumn;
 			}
 		};
 
@@ -105,12 +112,17 @@ public class SessionRequirementPanel extends JPanel {
 			public Class<?> getColumnClass(int column) { // $codepro.audit.disable
 															// multipleReturns
 				switch (column) {
-				case 0:
+				case idColumn:
 					return Integer.class;
-				case 2:
+				case checkBoxColumn:
 					return Boolean.class;
+				case nameColumn: // Fallthrough intended
+				case typeColumn:
+				case priorityColumn: 
+				    return String.class;
+				// Column Change: Append a case for the new column, if one is added
 				default:
-					return String.class;
+				    return String.class;
 				}
 			}
 
@@ -118,7 +130,7 @@ public class SessionRequirementPanel extends JPanel {
 			public String getToolTipText(MouseEvent event) {
 				Point p = event.getPoint();
 				int rowIndex = rowAtPoint(p);
-				int requirementID = (int) this.getValueAt(rowIndex, 0);
+				int requirementID = (int) this.getValueAt(rowIndex, idColumn);
 				return getDescription(requirementID);
 			}
 		};
@@ -126,21 +138,28 @@ public class SessionRequirementPanel extends JPanel {
 		final JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel.setPreferredSize(new Dimension(1000, 800));
 
-		table.getColumnModel().getColumn(0).setMaxWidth(0);
-		table.getColumnModel().getColumn(0).setMinWidth(0);
-		table.getColumnModel().getColumn(0).setPreferredWidth(0);
-		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(1).setMinWidth(100);
-		table.getColumnModel().getColumn(2).setMinWidth(100);
-		table.getColumnModel().getColumn(2).setMaxWidth(100);
+		// ID Column
+		table.getColumnModel().getColumn(idColumn).setMaxWidth(0);
+		table.getColumnModel().getColumn(idColumn).setMinWidth(0);
+		table.getColumnModel().getColumn(idColumn).setPreferredWidth(0);
+		table.getColumnModel().getColumn(idColumn).setResizable(false);
+		// Check Box Column
+		table.getColumnModel().getColumn(checkBoxColumn).setMinWidth(75);
+		table.getColumnModel().getColumn(checkBoxColumn).setResizable(false);
+		// Name Column
+		table.getColumnModel().getColumn(nameColumn).setMinWidth(200);
+		// Type Column
+		table.getColumnModel().getColumn(typeColumn).setMinWidth(50);
+		// Priority Column
+		table.getColumnModel().getColumn(priorityColumn).setMinWidth(50);
+		// Column Change: Add column widths here
 
 		table.getTableHeader().setReorderingAllowed(false);
 
 		this.setLayout(new BorderLayout());
-
-		this.add(tablePanel, BorderLayout.CENTER);
-
-		final TableColumn tc = table.getColumnModel().getColumn(2);
+		
+		// Set up Checkbox Column
+		final TableColumn tc = table.getColumnModel().getColumn(checkBoxColumn);
 		tc.setCellEditor(table.getDefaultEditor(Boolean.class));
 		tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
 		table.getTableHeader().setReorderingAllowed(false);
@@ -152,6 +171,9 @@ public class SessionRequirementPanel extends JPanel {
 		checkBox = new CheckBoxHeader(table.getTableHeader());
 		tc.setHeaderRenderer(checkBox);
 		tableUpdated();
+		
+		this.add(tablePanel, BorderLayout.CENTER);
+		this.add(new JLabel("Select Requirements to Estimate"), BorderLayout.NORTH);
 	}
 
 	protected String getDescription(int sessionID) {
@@ -182,9 +204,9 @@ public class SessionRequirementPanel extends JPanel {
 	 * @author Romulus
 	 * @version Apr 20, 2014
 	 */
-
 	class MyItemListener implements ItemListener {
 		// $codepro.audit.disable multipleReturns
+	    // Multiple returns make code much neater
 		public void itemStateChanged(ItemEvent e) {
 			final Object source = e.getSource();
 			if (!(source instanceof AbstractButton)) {
@@ -193,7 +215,7 @@ public class SessionRequirementPanel extends JPanel {
 			final boolean checked = e.getStateChange() == ItemEvent.SELECTED;
 			final int y = table.getRowCount();
 			for (int x = 0; x < y; x++) {
-				table.setValueAt(Boolean.valueOf(checked), x, 2);
+				table.setValueAt(Boolean.valueOf(checked), x, checkBoxColumn);
 			}
 		}
 	}
@@ -205,7 +227,7 @@ public class SessionRequirementPanel extends JPanel {
 	 */
 	public void refreshRequirementSelection() {
 		for (int i = 0; i < requirements.size(); i++) {
-			model.setValueAt(false, i, 2);
+			model.setValueAt(false, i, checkBoxColumn);
 		}
 
 		for (RequirementEstimate displayRequirement : displaySession
@@ -216,13 +238,17 @@ public class SessionRequirementPanel extends JPanel {
 						&& requirements.get(i).getName()
 								.equals(displayRequirement.getName())) {
 					exists = true;
-					model.setValueAt(true, i, 2);
+					model.setValueAt(true, i, checkBoxColumn);
 				}
 			}
 			if (!exists) {
 				requirements.add(displayRequirement);
+				// Column Change: Add the new column, in order
 				model.addRow(new Object[] { displayRequirement.getId(),
-						displayRequirement.getName(), true });
+						true,
+						displayRequirement.getName(),
+						displayRequirement.getType(),
+						"" }); //TODO Add a feild to RequirementEstimate for Priority
 			}
 		}
 	}
@@ -253,7 +279,7 @@ public class SessionRequirementPanel extends JPanel {
 	public List<RequirementEstimate> getSelectedRequirements() {
 		final List<RequirementEstimate> selected = new LinkedList<RequirementEstimate>();
 		for (int i = 0; i < requirements.size(); i++) {
-			if ((Boolean) model.getValueAt(i, 2)) {
+			if ((Boolean) model.getValueAt(i, checkBoxColumn)) {
 				selected.add(requirements.get(i));
 			}
 		}
@@ -273,8 +299,8 @@ public class SessionRequirementPanel extends JPanel {
 		for (Requirement r : requirements) {
 			boolean imported = false;
 			for (int i = 0; i < model.getRowCount(); i++) {
-				if ((int) model.getValueAt(i, 0) == r.getId()
-						&& model.getValueAt(i, 1).equals(r.getName())) {
+				if ((int) model.getValueAt(i, idColumn) == r.getId()
+						&& model.getValueAt(i, nameColumn).equals(r.getName())) {
 					imported = true;
 				}
 			}
@@ -289,7 +315,9 @@ public class SessionRequirementPanel extends JPanel {
 
 			if (iteration.equals("Backlog")) {
 
-				model.addRow(new Object[] { req.getId(), req.getName(), false });
+			    // Column Change: Add the new column
+				model.addRow(new Object[] { req.getId(), false, req.getName(), 
+				                req.getType(), req.getPriority() });
 
 				RequirementEstimate estimate = new RequirementEstimate(
 						req.getId(), req.getName(), 0, false);
@@ -314,7 +342,7 @@ public class SessionRequirementPanel extends JPanel {
 
 		if (model.getRowCount() != 0) {
 			for (int i = 0; i < model.getRowCount(); i++) {
-				if ((boolean) model.getValueAt(i, 2)) {
+				if ((boolean) model.getValueAt(i, checkBoxColumn)) {
 				} else {
 					allChecked = false;
 				}
