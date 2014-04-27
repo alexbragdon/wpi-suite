@@ -6,12 +6,13 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors: Team Romulus
+ * 
+ * Changing the Columns? CTL+F for "Column Change: "
  ******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ItemEvent;
@@ -25,14 +26,12 @@ import java.util.TimerTask;
 import java.util.Timer;
 
 import javax.swing.AbstractButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsController;
@@ -48,7 +47,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  */
 @SuppressWarnings("serial")
 public class SessionRequirementPanel extends JPanel {
-    // If the columns change, update these constants
+    // Column Change: If the columns change, update these constants
     final int idColumn = 0;
     final int checkBoxColumn = 1;
     final int nameColumn = 2;
@@ -84,7 +83,7 @@ public class SessionRequirementPanel extends JPanel {
 		this.displaySession = displaySession;
 
 		final Object[][] data = {};
-		// Also update this array
+		// Column Change: Also update this array
 		final String[] columns = { "ID", "", "Name", "Type", "Priority" };
 
 		TimerTask refreshRequirments = new TimerTask() {
@@ -121,7 +120,7 @@ public class SessionRequirementPanel extends JPanel {
 				case typeColumn:
 				case priorityColumn: 
 				    return String.class;
-				// Append a case for the new column, if one is added
+				// Column Change: Append a case for the new column, if one is added
 				default:
 				    return String.class;
 				}
@@ -153,7 +152,7 @@ public class SessionRequirementPanel extends JPanel {
 		table.getColumnModel().getColumn(typeColumn).setMinWidth(50);
 		// Priority Column
 		table.getColumnModel().getColumn(priorityColumn).setMinWidth(50);
-		// If you add a coulmn, add it here
+		// Column Change: Add column widths here
 
 		table.getTableHeader().setReorderingAllowed(false);
 
@@ -244,12 +243,12 @@ public class SessionRequirementPanel extends JPanel {
 			}
 			if (!exists) {
 				requirements.add(displayRequirement);
-				// Edit this line if the columns change
+				// Column Change: Add the new column, in order
 				model.addRow(new Object[] { displayRequirement.getId(),
 						true,
 						displayRequirement.getName(),
 						displayRequirement.getType(),
-						"" }); //TODO Change to actual priority of the thing
+						"" }); //TODO Add a feild to RequirementEstimate for Priority
 			}
 		}
 	}
@@ -316,7 +315,7 @@ public class SessionRequirementPanel extends JPanel {
 
 			if (iteration.equals("Backlog")) {
 
-			    // Update this if the columns change
+			    // Column Change: Add the new column
 				model.addRow(new Object[] { req.getId(), false, req.getName(), 
 				                req.getType(), req.getPriority() });
 
