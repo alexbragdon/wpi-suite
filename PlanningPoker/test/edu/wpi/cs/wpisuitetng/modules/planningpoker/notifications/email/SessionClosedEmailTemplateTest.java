@@ -49,7 +49,7 @@ public class SessionClosedEmailTemplateTest {
     @Test
     public void testGenerateMessage(){
         EmailMessage msg = template.generateMessage(user);
-        String subject = "Planning poker session Test has closed";
+        String subject = "Planning poker game Test has closed";
         assertEquals(subject, msg.getSubject());
         String body = "Hello Tester Test,\n\n" +
                         "Planning poker game \"Test\", created by admin, closed on "+
