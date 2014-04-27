@@ -33,14 +33,15 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class CloseOpenButton extends JButton {
     private final CloseButtonPanel closeButtonParent;
+
     private Image closeIcon;
+
     private Image openIcon;
-    
+
     public CloseOpenButton(CloseButtonPanel parent) {
-    	closeButtonParent = parent;
+        closeButtonParent = parent;
         this.setHorizontalAlignment(SwingConstants.CENTER);
 
-        
         try {
             closeIcon = ImageIO.read(getClass().getResource("close-button.png"));
             openIcon = ImageIO.read(getClass().getResource("arrow-right.png"));
@@ -48,19 +49,20 @@ public class CloseOpenButton extends JButton {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
+
         this.setVisible(false);
         parent.setVisible(false);
     }
+
     public void Update(int selectedIndex, boolean isActive) {
-    	this.setVisible(true);
-    	closeButtonParent.setVisible(true);
-    	closeButtonParent.setSessionActive(isActive);
+        this.setVisible(true);
+        closeButtonParent.setVisible(true);
+        closeButtonParent.setSessionActive(isActive);
 
         // Edit session
         if (selectedIndex == 0 && !isActive) {
             closeButtonParent.setSelectedPanelIndex(0);
-            
+
             this.setText("<html>Open<br />Game</html>");
             this.setIcon(new ImageIcon(openIcon));
             setToolTipText("Open Planning Poker game for voting");
@@ -68,7 +70,7 @@ public class CloseOpenButton extends JButton {
 
         if (selectedIndex == 0 && isActive) {
             closeButtonParent.setSelectedPanelIndex(0);
-            
+
             this.setText("<html>Close<br />Game</html>");
             this.setIcon(new ImageIcon(closeIcon));
             setToolTipText("Close selected Planning Poker game and end voting on it");
@@ -76,42 +78,44 @@ public class CloseOpenButton extends JButton {
 
         // Vote session
         if (selectedIndex == 1) {
-        	closeButtonParent.setVisible(false);
+            closeButtonParent.setVisible(false);
         }
 
         // View session
         if (selectedIndex == 2) {
-        	closeButtonParent.setVisible(false);
+            closeButtonParent.setVisible(false);
         }
     }
-    
-    public void CloseSession(MainView parent){
-    	final PlanningPokerSession session = getSelectedSession(parent, 0);
+
+    public void CloseSession(MainView parent) {
+        final PlanningPokerSession session = getSelectedSession(parent, 0);
         if (session == null) {
             return;
         }
         session.setComplete(true);
         session.setCompletionTime(new Date());
         EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
-        Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
+        Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close",
+                        HttpMethod.POST);
         request.setBody(session.toJSON());
         request.send();
     }
-    
-    public void OpenSession(MainView parent){
-    	final PlanningPokerSession session = new PlanningPokerSession();
-    	final PlanningPokerSession tableSession = getSelectedSession(parent, 0);
+
+    public void OpenSession(MainView parent) {
+        final PlanningPokerSession session = new PlanningPokerSession();
+        final PlanningPokerSession tableSession = getSelectedSession(parent, 0);
         if (tableSession == null) {
             return;
         }
         session.copyFrom(tableSession);
         session.setActive(true);
         EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
-        Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/open", HttpMethod.POST);
+        Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/open",
+                        HttpMethod.POST);
         request.setBody(session.toJSON());
         request.send();
     }
-    
+
     private PlanningPokerSession getSelectedSession(MainView parent, int panel) {
         final int id = parent.getMySession().getSelectedID(panel);
         final PlanningPokerSession session;

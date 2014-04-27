@@ -108,7 +108,8 @@ public class ClosedSessionPanel extends JPanel {
                     parentView.getToolbarView().GetSuperButtonPanel().getSuperButton(
                                     ).Update(2, false);
                     parentView.getToolbarView().GetCloseButtonPanel().getCloseButton(
-                            ).Update(2, false);
+)
+                                    .Update(2, false);
                     parentView.getMySession().getJoiningPanel().getTable().clearSelection();
                     parentView.getMySession().getModeratingPanel().getTable().clearSelection();
                 }
