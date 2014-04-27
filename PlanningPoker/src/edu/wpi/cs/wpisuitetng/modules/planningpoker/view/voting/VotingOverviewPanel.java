@@ -43,6 +43,7 @@ public class VotingOverviewPanel extends JPanel {
     private PlanningPokerSession session;
     private String user;
     private VotingPanel parent;
+    private int UserNum;
     
     /**
      * Creates a overview panel for voting with the given model.
@@ -117,6 +118,9 @@ public class VotingOverviewPanel extends JPanel {
 				requirements = session.getRequirements();
 				model.updateModel(session.getRequirements());
 				updateOverallProgress();
+				if(session.hasEveryoneVoted(UserNum)){
+					notifyParent();
+				}
 			}
 		}
 	}
@@ -161,5 +165,6 @@ public class VotingOverviewPanel extends JPanel {
 	
 	public void passUserNum(int user){
 		parent.setUserNum(user);
+		this.UserNum = user;
 	}
 }
