@@ -98,9 +98,7 @@ public class ToolbarGroupView extends JPanel implements Hoverable {
 	 */
 	@Override
 	public void mouseEntered() {
-		this.setOpaque(true);
-		this.setBorder(BorderFactory.createMatteBorder(0, 1, 0, 1, Color.gray));
-		this.repaint();
+		// We hate the default mouse over behavior
 	}
 
 	/**
@@ -108,9 +106,7 @@ public class ToolbarGroupView extends JPanel implements Hoverable {
 	 */
 	@Override
 	public void mouseExited() {
-		this.setOpaque(false);
-		this.setBorder(BorderFactory.createEmptyBorder(0, 1, 0, 1));
-		this.repaint();
+		// We hate the default mouse over behavior
 	}
 	
 }
