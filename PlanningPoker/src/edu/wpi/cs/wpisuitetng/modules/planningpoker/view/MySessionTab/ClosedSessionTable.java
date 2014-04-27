@@ -59,7 +59,7 @@ public class ClosedSessionTable extends JTable {
         tableModel = new DefaultTableModel(data, columnNames);
         this.setModel(tableModel);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //this.setDropMode(DropMode.ON);
+        this.setDropMode(DropMode.ON);
         this.getTableHeader().setReorderingAllowed(false);
         this.setAutoCreateRowSorter(true);
         setFillsViewportHeight(true);
