@@ -62,7 +62,7 @@ public class CloseSessionPanelTest {
 	}
 	@Test
 	public void testBuildButtons(){
-		assertEquals("Close Session", csbp.getCloseButton().getText());
+		assertEquals("Close Game", csbp.getCloseButton().getText());
 		assertEquals("Cancel", csbp.getCancelButton().getText());
 	}
 	@Test

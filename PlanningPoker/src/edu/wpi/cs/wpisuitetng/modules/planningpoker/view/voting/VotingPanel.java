@@ -167,7 +167,6 @@ public class VotingPanel extends JPanel {
 		if(hasDeck){
 			cards.selectedRequirementChanged(selectedRequirement);
 			cards.updateSelectedIndices();
-			cards.calculateTotalEstimate();
 			
 			try{
 				buttons.getEstimateLabel().setText(
@@ -254,7 +253,13 @@ public class VotingPanel extends JPanel {
 				).editPlanningPokerSession(newSession); 
 
 		buttons.setFieldsEnabled(false);
-		cards.disableEditing(true);
+		if(this.hasDeck){
+		    cards.disableEditing(true);
+		}
+		int row = overview.getTable().getSelectedRow();
+		if (row + 1 < session.getRequirements().size()) {
+		    overview.getTable().getSelectionModel().setSelectionInterval(row + 1, row + 1);
+		}
 	}
 
 	public CardPanel getCards() {

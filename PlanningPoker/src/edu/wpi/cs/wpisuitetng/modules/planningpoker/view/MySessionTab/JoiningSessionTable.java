@@ -123,19 +123,6 @@ public class JoiningSessionTable extends JTable {
     }
 
     /**
-     * Overrides the paintComponent method to retrieve the requirements on the first painting.
-     * 
-     * @param g	The component object to paint
-     */
-    @Override
-    public void paintComponent(Graphics g)
-    {
-
-
-        super.paintComponent(g);
-    }
-
-    /**
      * Method prepareRenderer.
      * @param renderer TableCellRenderer
      * @param row int

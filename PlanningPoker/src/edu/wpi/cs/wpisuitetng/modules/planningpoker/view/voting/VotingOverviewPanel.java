@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
 
@@ -35,8 +36,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
  */
 @SuppressWarnings("serial")
 public class VotingOverviewPanel extends JPanel {
-	private VotingOverviewTable table;
-	private VotingOverviewTableModel model;
+    private VotingOverviewTable table;
+    private VotingOverviewTableModel model;
     private List<RequirementEstimate> requirements;
     private final JProgressBar overallProgress;
     private final Timer timer;
@@ -44,7 +45,7 @@ public class VotingOverviewPanel extends JPanel {
     private String user;
     private VotingPanel parent;
     private int UserNum;
-    
+
     /**
      * Creates a overview panel for voting with the given model.
      *
@@ -57,41 +58,41 @@ public class VotingOverviewPanel extends JPanel {
         this.session = session;
         this.user = user;
         this.parent = parent;
-        
+
         setLayout(new BorderLayout());
-        
+
         overallProgress = new JProgressBar(0, 1000);
         updateOverallProgress();
         overallProgress.setPreferredSize(new Dimension(800,25));//make the bar higher
         overallProgress.setStringPainted(true);
-        
+
         model = new VotingOverviewTableModel(requirements, teamCount, user);
-        table = new VotingOverviewTable(model);
+        table = new VotingOverviewTable(model, this);
         table.getSelectionModel().setSelectionInterval(0, 0);
         add(overallProgress, BorderLayout.NORTH);
         add(new JScrollPane(table), BorderLayout.CENTER);
-        
+
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 parent.updateSelectedRequirement(getSelectedRequirement());
-                
+
                 if (getSelectedRequirement().getVotes().containsKey(user)) {
-                	parent.getCards().disableEditing(true);
+                    parent.getCards().disableEditing(true);
                 } else {
-                	parent.getCards().disableEditing(false);
-                	parent.getButtonPanel().getVoteButton().setEnabled(false);
+                    parent.getCards().disableEditing(false);
+                    parent.getButtonPanel().getVoteButton().setEnabled(false);
                 }
             }
         });
-        
+
         timer = new Timer(1000, new GetPlanningPokerSessionController(this));
         timer.setInitialDelay(1000);
         timer.start();
-        
+
         new GetAllUsersController().requestAllUsers(this);
     }
-    
+
     /**
      * Gets the selected requirement.
      *
@@ -124,13 +125,27 @@ public class VotingOverviewPanel extends JPanel {
 			}
 		}
 	}
-	
-	/**
-	 * Updates the overall progress bar.
-	 *
-	 */
-	private void updateOverallProgress() {
-	    int votes = 0;
+
+    /**
+     * Gets the next requirement after voting a requirement.
+     *
+     */
+    public void getNextSelectedRequirement(final VotingPanel parent) {
+        int row = table.getSelectedRow();
+        if (row != -1) {
+            row = table.convertRowIndexToModel(row) + 1;
+            if(row < requirements.size()){
+                parent.updateSelectedRequirement(requirements.get(row));
+            }
+        }
+    } 
+
+    /**
+     * Updates the overall progress bar.
+     *
+     */
+    private void updateOverallProgress() {
+        int votes = 0;
         for (RequirementEstimate requirement : requirements) {
             if (requirement.getVotes().containsKey(user)) {
                 votes++;
@@ -138,22 +153,12 @@ public class VotingOverviewPanel extends JPanel {
         }
         overallProgress.setValue(votes * 1000 / requirements.size());
         overallProgress.setString("Personal voting progress: "+ 
-                                 Double.toString(votes*100 / requirements.size()) + "%");
-	}
-	
-	/**
-	 * @return the table
-	 */
-	public VotingOverviewTable getTable() {
-		return table;
-	}
+                        Double.toString(votes*100 / requirements.size()) + "%");
+             if ((double)votes / requirements.size() == 1.0) {
+                 overallProgress.setForeground(new Color(102, 204, 102));
+             }
+         }
 
-	/**
-	 * @return the requirements
-	 */
-	public List<RequirementEstimate> getRequirements() {
-		return requirements;
-	}
 	
 	public PlanningPokerSession getSession() {
 	    return session;
@@ -167,4 +172,21 @@ public class VotingOverviewPanel extends JPanel {
 		parent.setUserNum(user);
 		this.UserNum = user;
 	}
+
+     
+
+    /**
+     * @return the table
+     */
+    public VotingOverviewTable getTable() {
+        return table;
+    }
+
+    /**
+     * @return the requirements
+     */
+    public List<RequirementEstimate> getRequirements() {
+        return requirements;
+    }
+
 }

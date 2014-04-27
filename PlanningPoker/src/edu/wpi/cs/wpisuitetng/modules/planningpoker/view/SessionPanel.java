@@ -17,6 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
@@ -431,6 +433,46 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         infoPanel.add(deckChooserPanel);
 
         final JPanel timeCheck = new JPanel();
+        
+        timeCheck.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (timeEnable.isSelected()) {
+					timeEnable.setSelected(false);
+				} else {timeEnable.setSelected(true);}
+				
+				if (timeEnable.isSelected()) {
+                    dateChooser.setEnabled(true);
+                    hourSpin.setEnabled(true);
+                    minuteSpin.setEnabled(true);
+                } else {
+                    dateChooser.setEnabled(false);
+                    hourSpin.setEnabled(false);
+                    minuteSpin.setEnabled(false);
+                }
+                updateButtonPanel();
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+        });
         timeCheck.add(timeEnable);
         timeCheck.add(new JLabel("Set an end time?"));
         infoPanel.add(showDeck, "wrap");

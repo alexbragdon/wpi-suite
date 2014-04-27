@@ -10,13 +10,18 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.TransferHandler;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -39,16 +44,58 @@ public class ClosedSessionTable extends JTable {
      * Constructor for ClosedSessionTable.
      * @param data Object[][]
      * @param columnNames String[]
+     * @param mySessionPanel 
      */
-    public ClosedSessionTable(Object[][] data, String[] columnNames)
+    public ClosedSessionTable(Object[][] data, String[] columnNames, final MySessionPanel mySessionPanel)
     {
         tableModel = new DefaultTableModel(data, columnNames);
         this.setModel(tableModel);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.setDropMode(DropMode.ON);
+        //this.setDropMode(DropMode.ON);
         this.getTableHeader().setReorderingAllowed(false);
         this.setAutoCreateRowSorter(true);
         setFillsViewportHeight(true);
+        
+        @SuppressWarnings("serial")
+		TransferHandler dnd = new TransferHandler() {
+        	public boolean canImport(TransferSupport support) {
+                if (!support.isDrop()) {
+                  return false;
+                }
+                
+                if (!support.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                    return false;
+                  }
+
+                
+                return true;
+              }
+        	
+        	 public boolean importData(TransferSupport support) {
+        	        // if we can't handle the import, say so
+        	        if (!canImport(support)) {
+        	          return false;
+        	        }
+        	        
+        	        String data;
+        	        try {
+        	          data = (String) support.getTransferable().getTransferData(
+        	              DataFlavor.stringFlavor);
+        	        } catch (UnsupportedFlavorException e) {
+        	          return false;
+        	        } catch (IOException e) {
+        	          return false;
+        	        };
+        	        
+        	        String[] parts = data.split("\\t");
+        	        int sessionID = Integer.parseInt(parts[0]);
+        	        
+        	        mySessionPanel.closeSession(sessionID);
+        	        
+					return true;
+        	 }
+    	};
+    	this.setTransferHandler(dnd);
 
     }
     /**
