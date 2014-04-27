@@ -76,6 +76,8 @@ public class EmailButtonPanel extends ToolbarGroupView {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        
+        emailButton.setToolTipText("Edit email for notifications");
 
         // Field for entering email
         emailField = new JTextField();
@@ -92,6 +94,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         infoLabel = new JLabel(" ");
         infoLabel.setForeground(Color.red);
         checkBox = new JCheckBox();
+        checkBox.setToolTipText("Check to receive emails about game status");
 
         buttonPanel.setLayout(new BorderLayout());
         JPanel checkPanel = new JPanel();

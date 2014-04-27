@@ -63,7 +63,7 @@ public class CloseOpenButton extends JButton {
             
             this.setText("<html>Open<br />Game</html>");
             this.setIcon(new ImageIcon(openIcon));
-            this.setToolTipText("Open this session");
+            setToolTipText("Open Planning Poker game for voting");
         }
 
         if (selectedIndex == 0 && isActive) {
@@ -71,6 +71,7 @@ public class CloseOpenButton extends JButton {
             
             this.setText("<html>Close<br />Game</html>");
             this.setIcon(new ImageIcon(closeIcon));
+            setToolTipText("Close selected Planning Poker game and end voting on it");
         }
 
         // Vote session

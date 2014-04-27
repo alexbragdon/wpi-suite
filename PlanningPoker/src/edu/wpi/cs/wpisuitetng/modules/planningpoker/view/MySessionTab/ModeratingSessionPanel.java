@@ -42,7 +42,7 @@ public class ModeratingSessionPanel extends JPanel {
 
         final Object[][] data = {};
 
-        table = new ModeratingSessionTable(data, columnNames);
+        table = new ModeratingSessionTable(data, columnNames, mySessionPanel);
 
         final JScrollPane tablePanel = new JScrollPane(table);
 
@@ -104,4 +104,6 @@ public class ModeratingSessionPanel extends JPanel {
     public ModeratingSessionTable getTable() {
         return table;
     }
+    
+    
 }
