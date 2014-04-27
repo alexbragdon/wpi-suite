@@ -274,9 +274,32 @@ public class VotingPanel extends JPanel {
         if (this.hasDeck) {
             cards.disableEditing(true);
         }
+        
+        // Find the next row to select
         final int row = overview.getTable().getSelectedRow();
-        if (row + 1 < session.getRequirements().size()) {
-            overview.getTable().getSelectionModel().setSelectionInterval(row + 1, row + 1);
+        boolean foundRow = false;
+        
+        int nextRow;
+        for (nextRow = row + 1; nextRow < session.getRequirements().size(); nextRow++) {
+            if (!session.getRequirements().get(nextRow).getVotes().containsKey(
+                            ConfigManager.getConfig().getUserName())) {
+                foundRow = true;
+                break;
+            }
+        }
+        
+        if (!foundRow) {
+            for (nextRow = 0; nextRow < session.getRequirements().size(); nextRow++) {
+                if (!session.getRequirements().get(nextRow).getVotes().containsKey(
+                                ConfigManager.getConfig().getUserName())) {
+                    foundRow = true;
+                    break;
+                }
+            }
+        }
+        
+        if (foundRow) {
+            overview.getTable().getSelectionModel().setSelectionInterval(nextRow, nextRow);
         }
     }
 
