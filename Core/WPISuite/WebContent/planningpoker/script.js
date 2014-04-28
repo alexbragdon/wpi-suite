@@ -17,12 +17,15 @@ function run() {
 		switchProject(configuration.project, function(response) {
 			getPlanningPokerSession(configuration.session, function(response) {
 				var session = JSON.parse(response)[0];
-				var output = "<dl>";
-				session.RequirementEstimates.forEach(function(value) {
-					output += "<dt>" + value.name + "</dt>";
-					output += "<dd>" + value.description + "</dd>";
+				var output = "";
+				session.RequirementEstimates.forEach(function(value, index) {
+					output += '<div class="requirement">';
+					output += "<h2>" + value.name + "</h2>";
+					output += "<p>" + value.description + "</p>";
+					output += '<input type="number" id="vote-' + index + '" />';
+					output += '<input type="button" value="Vote" onclick="vote(' + index + ');" />';
+					output += '</div>';
 				});
-				output += "</dl>";
 				document.getElementById("output").innerHTML = output;
 			});
 		});
