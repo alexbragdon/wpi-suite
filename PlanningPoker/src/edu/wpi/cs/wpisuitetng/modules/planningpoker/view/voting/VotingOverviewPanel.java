@@ -12,8 +12,11 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -119,13 +122,15 @@ public class VotingOverviewPanel extends JPanel {
      * @param sessions
      */
     public void checkProgress(PlanningPokerSession[] sessions) {
-
         for (int i = 0; i < sessions.length; i++) {
             if (session.getID() == sessions[i].getID()) {
                 session = sessions[i];
                 requirements = session.getRequirements();
                 model.updateModel(session.getRequirements());
                 updateOverallProgress();
+                if (session.isComplete()) {
+                	disableAndDisplayVotingEnded();
+                }
                 if (session.hasEveryoneVoted(UserNum)) {
                     notifyParent();
                 }
@@ -193,5 +198,17 @@ public class VotingOverviewPanel extends JPanel {
     public List<RequirementEstimate> getRequirements() {
         return requirements;
     }
-
+    
+    public void disableAndDisplayVotingEnded() {
+    	if (!session.getDeck().equals("-None-")) {
+    		parent.getCards().disableEditing(true);
+    		parent.getButtonPanel().getClearButton().setEnabled(false);
+    		parent.getButtonPanel().getVoteButton().setEnabled(false);
+    	} else {
+    	parent.getButtonPanel().getVoteButton().setEnabled(false);
+    	parent.getButtonPanel().getDontKnowButton().setEnabled(false);
+    	parent.getButtonPanel().getEstimateField().setEnabled(false);
+    	}
+    	parent.showFinishIcon();
+    }
 }

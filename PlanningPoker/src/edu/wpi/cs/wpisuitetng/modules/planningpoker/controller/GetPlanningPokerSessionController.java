@@ -81,7 +81,7 @@ public class GetPlanningPokerSessionController implements ActionListener {
 			panel.populateTables(sessions);
 		}
 		
-		else if(votingPanel != null){
+		if(votingPanel != null){
 			votingPanel.checkProgress(sessions);
 		}
 	}
