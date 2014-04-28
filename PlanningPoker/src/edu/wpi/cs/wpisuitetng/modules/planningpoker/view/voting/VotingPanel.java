@@ -140,8 +140,8 @@ public class VotingPanel extends JPanel {
         final URL url = getClass().getResource("complete.png");
         final ImageIcon imageicon = new ImageIcon(url);
         label = new JLabel(imageicon);
-        panel.setPreferredSize(new Dimension(270, 200));
-        panel.setMinimumSize(new Dimension(180, 200));
+        panel.setPreferredSize(new Dimension(180, 180));
+        panel.setMinimumSize(new Dimension(180, 180));
         panel.add(label);
         label.setVisible(false);
         c.gridx = 1;
