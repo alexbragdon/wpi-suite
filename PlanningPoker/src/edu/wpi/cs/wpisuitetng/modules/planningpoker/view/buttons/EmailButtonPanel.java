@@ -213,7 +213,17 @@ public class EmailButtonPanel extends ToolbarGroupView {
             }
         });
         
-        
+        SMSSubmitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (canValidateSMS()) {
+                    emailScrollPanel.setVisible(true);
+                    SMSPanel.setVisible(false);
+                } else {
+                    SMSInfoLabel.setText("*SMS format incorrect");
+                }
+            }
+        });
 
         emailSubmitButton.addActionListener(new ActionListener() {
             @Override
