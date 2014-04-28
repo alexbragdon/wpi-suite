@@ -353,4 +353,8 @@ public class VotingButtonPanel extends JPanel{
 	public JTextField getEstimateField() {
 		return estimateField;
 	}
+	
+	public JButton getDontKnowButton() {
+		return dontKnowButton;
+	}
 }
