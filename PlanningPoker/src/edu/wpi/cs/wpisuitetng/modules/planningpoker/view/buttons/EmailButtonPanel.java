@@ -71,7 +71,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
     private final JButton SMSTestButton;
     private final JLabel SMSInfoLabel;
     private final JCheckBox SMSCheckBox;
-    private String[] carriers = { "AT&T", "T-Mobile", "Verizon","sprint"};
+    private String[] carriers = { "AT&T", "T-Mobile", "Verizon","Sprint"};
     private final JComboBox<String> CarrierChooser = new JComboBox<String>(carriers);
     /**
      * 
@@ -116,7 +116,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         // Validation label
         emailInfoLabel = new JLabel(" ");
         emailInfoLabel.setForeground(Color.red);
-        SMSInfoLabel = new JLabel("Sample hard-coded error msg");
+        SMSInfoLabel = new JLabel(" ");
         SMSInfoLabel.setForeground(Color.red);
         emailCheckBox = new JCheckBox();
         emailCheckBox.setToolTipText("Check to receive emails about game status");
@@ -231,6 +231,24 @@ public class EmailButtonPanel extends ToolbarGroupView {
             }
         });
 
+        
+        SMSField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {}
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SMSSubmitButton.setEnabled(canValidateSMS());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                SMSSubmitButton.setEnabled(canValidateSMS());
+            }
+        });
+
+        
+        
         emailField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent e) {}
@@ -315,6 +333,48 @@ public class EmailButtonPanel extends ToolbarGroupView {
 
         return valid && changes;
     }
+    
+    
+    public boolean canValidateSMS() {
+        boolean valid = false;
+        
+        if (SMSField.getText().length() == 0) {
+            SMSInfoLabel.setText("*Please enter your phone number");
+            valid = false;
+        } else if (SMSField.getText().length() > 0 && SMSField.getText().charAt(0) == ' ') {
+            SMSInfoLabel.setText("*Phone number cannot start with space");
+            valid = false;
+        } else if (!containTenDigit(SMSField.getText())) {
+            SMSInfoLabel.setText("*Invalid phone number length");
+            valid = false;
+        } else {
+            SMSInfoLabel.setText("");
+            valid = true;
+        }
+        return valid;
+    }
+    
+    public boolean containTenDigit(String string){
+    	int count = 0;
+    	for(int i = 0; i < string.length(); i ++){
+    		if(isInteger(string.charAt(i))){
+    			count ++;
+    		}
+    	}
+    	
+    	return count == 10;
+    }
+    
+    public boolean isInteger(char s) {
+        String numbers = "0123456789";
+        for (int i = 0; i < numbers.length(); i++) {
+        	if (numbers.charAt(i) == s) {
+        		return true;
+        	}
+        }
+        return false;
+    }
+    
 
     /**
      * @param user
