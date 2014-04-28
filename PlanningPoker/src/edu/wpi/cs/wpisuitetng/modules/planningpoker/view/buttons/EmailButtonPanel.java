@@ -24,6 +24,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -49,15 +50,29 @@ public class EmailButtonPanel extends ToolbarGroupView {
                     "<html>Email<br />Settings</html>");
     private final ScrollablePanel emailScrollPanel = new ScrollablePanel();
     private final ScrollablePanel emailPanel = new ScrollablePanel();
-    private final JPanel buttonPanel = new JPanel();
+    private final JPanel emailButtonPanel = new JPanel();
+    private final JPanel emailTopPanel = new JPanel();
     private final JTextField emailField;
-    private final JButton submitButton;
-    private final JButton cancelButton;
-    private final JLabel infoLabel;
-    private final JCheckBox checkBox;
-    private String displayString;
+    private final JButton emailSubmitButton;
+    private final JButton emailCancelButton;
+    private final JButton emailTestButton;
+    private final JLabel emailInfoLabel;
+    private final JCheckBox emailCheckBox;
     private User displayUser;
-
+    
+    private final JButton SMSButton = new JButton(
+            "<html>SMS<br />Settings</html>");
+    private final ScrollablePanel SMSPanel = new ScrollablePanel();
+    private final JPanel SMSButtonPanel = new JPanel();
+    private final JPanel SMSTopPanel = new JPanel();
+    private final JTextField SMSField;
+    private final JButton SMSSubmitButton;
+    private final JButton SMSCancelButton;
+    private final JButton SMSTestButton;
+    private final JLabel SMSInfoLabel;
+    private final JCheckBox SMSCheckBox;
+    private String[] carriers = { "AT&T", "T-Mobile", "Verizon","sprint"};
+    private final JComboBox<String> CarrierChooser = new JComboBox<String>(carriers);
     /**
      * 
      * Constructor for EmailButtonPannel
@@ -66,13 +81,14 @@ public class EmailButtonPanel extends ToolbarGroupView {
      */
     public EmailButtonPanel(final MainView parent) {
         super("");
-        this.setPreferredWidth(350);
+        this.setPreferredWidth(420);
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
         // Email settings button
         try {
             final Image img = ImageIO.read(getClass().getResource("emailButton.png"));
             emailButton.setIcon(new ImageIcon(img));
+            SMSButton.setIcon(new ImageIcon(img));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -81,40 +97,90 @@ public class EmailButtonPanel extends ToolbarGroupView {
 
         // Field for entering email
         emailField = new JTextField();
-        emailField.setSize(new Dimension(200, 25));
+        emailField.setPreferredSize(new Dimension(325, 20));
+        SMSField = new JTextField();
+        SMSField.setPreferredSize(new Dimension(230, 20));
 
         // Button for submitting new email
-        submitButton = new JButton("Submit");
-        submitButton.setEnabled(false);
+        emailSubmitButton = new JButton("Submit");
+        emailSubmitButton.setEnabled(false);
+        emailTestButton = new JButton("Test");
+        
+        SMSSubmitButton = new JButton("Submit");
+        SMSSubmitButton.setEnabled(false);
+        SMSTestButton = new JButton("Test");
 
         // Button for cancelling an email address
-        cancelButton = new JButton("Cancel");
-
+        emailCancelButton = new JButton("Cancel");
+        SMSCancelButton = new JButton("Cancel");
         // Validation label
-        infoLabel = new JLabel(" ");
-        infoLabel.setForeground(Color.red);
-        checkBox = new JCheckBox();
-        checkBox.setToolTipText("Check to receive emails about game status");
+        emailInfoLabel = new JLabel(" ");
+        emailInfoLabel.setForeground(Color.red);
+        SMSInfoLabel = new JLabel("Sample hard-coded error msg");
+        SMSInfoLabel.setForeground(Color.red);
+        emailCheckBox = new JCheckBox();
+        emailCheckBox.setToolTipText("Check to receive emails about game status");
+        SMSCheckBox = new JCheckBox();
+        SMSCheckBox.setToolTipText("Check to receive SMS about game status");
 
-        buttonPanel.setLayout(new BorderLayout());
+        emailButtonPanel.setLayout(new MigLayout("insets 0 0 0 0"));
         JPanel checkPanel = new JPanel();
         checkPanel.setLayout(new BorderLayout());
-        checkPanel.add(checkBox, BorderLayout.WEST);
-        checkPanel.add(new JLabel("Email Notification?   "), BorderLayout.CENTER);
-        buttonPanel.add(checkPanel, BorderLayout.WEST);
-        //buttonPanel.add(new JLabel("Email notification?"));
-        buttonPanel.add(submitButton, BorderLayout.CENTER);
-        buttonPanel.add(cancelButton, BorderLayout.EAST);
+        checkPanel.add(emailCheckBox, BorderLayout.WEST);
+        checkPanel.add(new JLabel("Email Notification?   "));
+        emailButtonPanel.add(checkPanel);
+        emailButtonPanel.add(emailSubmitButton);
+        emailButtonPanel.add(emailCancelButton);
+        emailButtonPanel.add(emailTestButton);
+        
+        SMSButtonPanel.setLayout(new MigLayout("insets 0 0 0 0"));
+        JPanel SMScheckPanel = new JPanel();
+        SMScheckPanel.setLayout(new BorderLayout());
+        SMScheckPanel.add(SMSCheckBox, BorderLayout.WEST);
+        SMScheckPanel.add(new JLabel("SMS Notification?   "));
+        SMSButtonPanel.add(SMScheckPanel);
+        SMSButtonPanel.add(SMSSubmitButton);
+        SMSButtonPanel.add(SMSCancelButton);
+        SMSButtonPanel.add(SMSTestButton);
 
-		emailScrollPanel.setLayout(new MigLayout("insets 15 175 0 0"));
+        
+		emailScrollPanel.setLayout(new MigLayout("insets 15 45 0 0"));
+		emailScrollPanel.add(SMSButton);
 		emailScrollPanel.add(emailButton);
 
 		emailPanel.setLayout(new MigLayout("insets 0 10 0 10"));
+		SMSPanel.setLayout(new MigLayout("insets 0 10 0 10"));
 		
 		
-		emailPanel.add(emailField, "width 300px, height 20px, wmin 10, wrap");
-		emailPanel.add(infoLabel, "height 20px,wrap");
-		emailPanel.add(buttonPanel, "height 18px");
+		emailTopPanel.add(new JLabel("Email:  "));
+		emailTopPanel.add(emailField,"wrap");
+		emailTopPanel.setLayout(new MigLayout("insets 0 5 0 0"));
+		emailTopPanel.setOpaque(false);
+		emailPanel.add(emailTopPanel, "wrap");
+		emailPanel.add(emailInfoLabel, "height 20px,wrap");
+		emailPanel.add(emailButtonPanel, "height 18px");
+		
+		CarrierChooser.setSelectedIndex(3);
+		//petList.addActionListener(this);
+		SMSTopPanel.add(new JLabel("SMS:  "));
+		SMSTopPanel.add(SMSField);
+		SMSTopPanel.add(CarrierChooser);
+		SMSTopPanel.setLayout(new MigLayout("insets 10 0 0 0"));
+		SMSTopPanel.setOpaque(false);
+		SMSPanel.add(SMSTopPanel, "wrap");
+		SMSPanel.add(SMSInfoLabel, "height 20px,wrap");
+		SMSPanel.add(SMSButtonPanel, "height 18px");
+		
+		
+		
+		SMSButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                emailScrollPanel.setVisible(false);
+                SMSPanel.setVisible(true);
+            }
+        });
+		
 
         emailButton.addActionListener(new ActionListener() {
             @Override
@@ -131,7 +197,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
             }
         });
 
-        submitButton.addActionListener(new ActionListener() {
+        emailSubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (canValidateEmail()) {
@@ -139,17 +205,28 @@ public class EmailButtonPanel extends ToolbarGroupView {
                     emailScrollPanel.setVisible(true);
                     emailPanel.setVisible(false);
                 } else {
-                    infoLabel.setText("*Email format incorrect");
+                    emailInfoLabel.setText("*Email format incorrect");
                 }
             }
         });
 
-        cancelButton.addActionListener(new ActionListener() {
+        SMSCancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                emailScrollPanel.setVisible(true);
+                SMSPanel.setVisible(false);
+                SMSInfoLabel.setText(" ");
+
+            }
+        });
+        
+        
+        emailCancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 emailScrollPanel.setVisible(true);
                 emailPanel.setVisible(false);
-                infoLabel.setText(" ");
+                emailInfoLabel.setText(" ");
 
             }
         });
@@ -160,31 +237,37 @@ public class EmailButtonPanel extends ToolbarGroupView {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                submitButton.setEnabled(canValidateEmail());
+                emailSubmitButton.setEnabled(canValidateEmail());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                submitButton.setEnabled(canValidateEmail());
+                emailSubmitButton.setEnabled(canValidateEmail());
             }
         });
 
-        checkBox.addActionListener(new ActionListener(){
+        emailCheckBox.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent a) {
-                submitButton.setEnabled(canValidateEmail());
+                emailSubmitButton.setEnabled(canValidateEmail());
             }
         });
 
         emailPanel.setOpaque(false);
+        SMSPanel.setOpaque(false);
         emailScrollPanel.setOpaque(false);
-        buttonPanel.setOpaque(false);
-        checkBox.setOpaque(false);
+        emailButtonPanel.setOpaque(false);
+        SMSButtonPanel.setOpaque(false);
+        emailCheckBox.setOpaque(false);
         checkPanel.setOpaque(false);
+        SMSCheckBox.setOpaque(false);
+        SMScheckPanel.setOpaque(false);
         emailScrollPanel.setVisible(true);
         emailPanel.setVisible(false);
+        SMSPanel.setVisible(false);
 
         this.add(emailPanel);
+        this.add(SMSPanel);
         this.add(emailScrollPanel);
     }
 
@@ -196,7 +279,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
      */
     public void setEmailAddress(User u){
         u.setEmail(emailField.getText());
-        u.setHasNotificationsEnabled(checkBox.isSelected());
+        u.setHasNotificationsEnabled(emailCheckBox.isSelected());
         EditUserController.getInstance().setEmail(u);
     }
 
@@ -211,22 +294,22 @@ public class EmailButtonPanel extends ToolbarGroupView {
         boolean changes = false;
         
         if (emailField.getText().length() == 0) {
-            infoLabel.setText("*Please enter your email");
+            emailInfoLabel.setText("*Please enter your email");
             valid = false;
         } else if (emailField.getText().length() > 0 && emailField.getText().charAt(0) == ' ') {
-            infoLabel.setText("*Email cannot start with space");
+            emailInfoLabel.setText("*Email cannot start with space");
             valid = false;
         } else if (!emailField.getText().matches(".+@.+\\.[a-z]+")) {
-            infoLabel.setText("*Invalid email format");
+            emailInfoLabel.setText("*Invalid email format");
             valid = false;
         } else {
-            infoLabel.setText("");
+            emailInfoLabel.setText("");
             valid = true;
         }
         
         if (!emailField.getText().equals(displayUser.getEmail())){
             changes = true;
-        } else if (checkBox.isSelected() != displayUser.getHasNotificationsEnabled()){
+        } else if (emailCheckBox.isSelected() != displayUser.getHasNotificationsEnabled()){
             changes = true;
         }
 
@@ -250,7 +333,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         emailField.setText(displayUser.getEmail());
         emailScrollPanel.setVisible(false);
         emailPanel.setVisible(true);
-        checkBox.setSelected(displayUser.getHasNotificationsEnabled());
-        submitButton.setEnabled(canValidateEmail());
+        emailCheckBox.setSelected(displayUser.getHasNotificationsEnabled());
+        emailSubmitButton.setEnabled(canValidateEmail());
     }
 }
