@@ -17,10 +17,10 @@ function run() {
 		switchProject(configuration.project, function(response) {
 			getPlanningPokerSession(configuration.session, function(response) {
 				var session = JSON.parse(response)[0];
-				var output = "";
+				var output = "<h2>" + session.Name + "</h2>";
 				session.RequirementEstimates.forEach(function(value, index) {
 					output += '<div class="requirement">';
-					output += "<h2>" + value.name + "</h2>";
+					output += "<h3>" + value.name + "</h3>";
 					output += "<p>" + value.description + "</p>";
 					output += '<input type="number" id="vote-' + index + '" />';
 					output += '<input type="button" value="Vote" onclick="vote(' + index + ');" />';
@@ -30,6 +30,11 @@ function run() {
 			});
 		});
 	});
+}
+
+function vote(index) {
+	var value = parseInt(document.getElementById("vote-" + index).value);
+	postVote(index, value);
 }
 
 /* CONFIG FUNCTIONS */
@@ -97,7 +102,22 @@ function getPlanningPokerSession(sessionIndex, callback) {
 	console.log("Getting planning poker sessions");
 	var xhr = createXHR(callback);
 	xhr.open("GET", "/WPISuite/API/planningpoker/planningpokersession/" + sessionIndex);
-	xhr.send(project);
+	xhr.send();
+}
+
+function postVote(index, value, callback) {
+	getPlanningPokerSession(configuration.session, function(response) {
+		var session = JSON.parse(response)[0];
+		var userVote = {
+			"user": configuration.username,
+			"selectedCardIndices": [],
+			"totalEstimate": value
+		};
+		session.RequirementEstimates[index].votes[configuration.username] = userVote;
+		var xhr = createXHR(callback);
+		xhr.open("POST", "/WPISuite/API/planningpoker/planningpokersession/" + index);
+		xhr.send(JSON.stringify(session));
+	});
 }
 
 function createXHR(callback) {
