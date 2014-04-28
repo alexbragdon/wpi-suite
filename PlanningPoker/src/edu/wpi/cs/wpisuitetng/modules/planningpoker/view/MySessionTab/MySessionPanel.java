@@ -397,4 +397,13 @@ public class MySessionPanel extends JPanel {
         }
     }
 
+    /**
+     * Returns the current sessions.
+     *
+     * @return sessions
+     */
+    public PlanningPokerSession[] getSessions() {
+        return sessions;
+    }
+
 }
