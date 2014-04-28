@@ -18,14 +18,20 @@ function run() {
 			getPlanningPokerSession(configuration.session, function(response) {
 				var session = JSON.parse(response)[0];
 				var output = "<h2>" + session.Name + "</h2>";
-				session.RequirementEstimates.forEach(function(value, index) {
-					output += '<div class="requirement">';
-					output += "<h3>" + value.name + "</h3>";
-					output += "<p>" + value.description + "</p>";
-					output += '<input type="number" id="vote-' + index + '" />';
-					output += '<input type="button" value="Vote" onclick="vote(' + index + ');" />';
-					output += '</div>';
-				});
+				if (session.isComplete) {
+					output += "<p>Session is closed</p>";
+				} else if (session.isActive) {
+					session.RequirementEstimates.forEach(function(value, index) {
+						output += '<div class="requirement">';
+						output += "<h3>" + value.name + "</h3>";
+						output += "<p>" + value.description + "</p>";
+						output += '<input type="number" id="vote-' + index + '" />';
+						output += '<input type="button" value="Vote" onclick="vote(' + index + ');" />';
+						output += '</div>';
+					});
+				} else {
+					output += "<p>Session is new</p>";
+				}
 				document.getElementById("output").innerHTML = output;
 			});
 		});
