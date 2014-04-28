@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Planning Poker Web App</title>
+    <script src="script.js"></script>
+    <!--<link rel="stylesheet" href="css/style.css">-->
+</head>
+<body onload="handleLoad();">
+    <h1>Planning Poker Web App</h1>
+    <fieldset>
+    	<legend>Login</legend>
+    	<label for="username">Username:</label>
+    	<input id="username" type="text" />
+    	<label for="password">Password:</label>
+    	<input id="password" type="password" />
+    	<label for="project">Project:</label>
+    	<input id="project" type="text" />
+    	<input type="button" value="Log in" onclick="run();" />
+    </fieldset>
+    <div id="output">
+    </div>
+</body>
+</html>
