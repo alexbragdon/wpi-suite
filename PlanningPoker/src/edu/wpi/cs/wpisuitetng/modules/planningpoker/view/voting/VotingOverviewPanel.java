@@ -201,6 +201,7 @@ public class VotingOverviewPanel extends JPanel {
     
     public void disableAndDisplayVotingEnded() {
     	if (!session.getDeck().equals("-None-")) {
+    		parent.getCards().clearCardSelection();
     		parent.getCards().disableEditing(true);
     		parent.getButtonPanel().getClearButton().setEnabled(false);
     		parent.getButtonPanel().getVoteButton().setEnabled(false);
