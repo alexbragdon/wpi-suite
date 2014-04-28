@@ -76,6 +76,7 @@ public class RequirementEstimate {
      * @param finalEstimate int
      * @param isExported boolean
      */
+    @Deprecated
     public RequirementEstimate(int id, String name, int finalEstimate, boolean isExported) {
         votes = new HashMap<String, UserEstimate>();
         this.id = id;
@@ -229,18 +230,21 @@ public class RequirementEstimate {
     }
     
     public boolean isEqual(Requirement r) {
+        /*
         if (this.id != r.getId()) {
             return false;
         }
-        if (this.name != r.getName()) {
+        */
+        if (!this.name.equals(r.getName())) {
             return false;
         }
+        /*
         if (this.type != r.getType()) {
             return false;
         }
         if (this.priority != r.getPriority()) {
             return false;
-        }
+        }*/
         return true;
     }
 }

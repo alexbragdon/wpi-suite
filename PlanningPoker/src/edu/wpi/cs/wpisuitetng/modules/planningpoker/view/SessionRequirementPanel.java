@@ -39,6 +39,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsCo
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementStatus;
 
 /**
  * This is the panel on the open session table.
@@ -66,9 +67,9 @@ public class SessionRequirementPanel extends JPanel {
 	 */
 	DefaultTableModel model = null;
 
-	List<RequirementEstimate> requirements = new ArrayList<RequirementEstimate>();
+	private List<RequirementEstimate> requirements = new ArrayList<RequirementEstimate>();
 
-	JTable table;
+	private JTable table;
 
 	CheckBoxHeader checkBox;
 
@@ -286,24 +287,22 @@ public class SessionRequirementPanel extends JPanel {
 		}
 		return selected;
 	}
-
-	private RequirementEstimate getRequirementIn(Requirement r) {
-        for (RequirementEstimate re : this.requirements) {
-            if (re.isEqual(r)) {
-                return re;
-            }
-        }
-        
-        return null;
-	}
 	
-	private int getRowFromRequirementEstimate(RequirementEstimate re) {
-	    for (int i = 0; i < model.getRowCount(); i++) {
-	        if ((int)model.getValueAt(i, idColumn) == re.getId()) {
-	            return i;
+	private Requirement findRequirementFromID(int id, ArrayList<Requirement> reqs) {
+	    for (Requirement r : reqs) {
+	        if (r.getId() == id) {
+	            return r;
 	        }
 	    }
-	    return -1;
+	    
+	    return null;
+	}
+	
+	private void updateTableRow(Requirement r, int row) {
+	    model.setValueAt(r.getName(), row, nameColumn);
+	    model.setValueAt(r.getType(), row, typeColumn);
+	    model.setValueAt(r.getPriority(), row, priorityColumn);
+	    this.repaint();
 	}
 	
 	/**
@@ -312,43 +311,33 @@ public class SessionRequirementPanel extends JPanel {
 	 * 
 	 * @param requirements from the Requirement Manager
 	 */
-	public void addRequirements(Requirement[] requirements) {
-
-	    // tableRequirements holds all the things in the table
-		List<RequirementEstimate> tableRequirements = this.requirements;
-		
-		// Iterate through the requirements from the Requirement Manager
-		for (Requirement r : requirements) {
-		    // Find the requiremnt estimate associated with the requirement
-		    RequirementEstimate re = getRequirementIn(r);
-		    // If it exists,
-		    if (re != null) {
-		        // Remove it from the list of things to remove
-		        tableRequirements.remove(re);
-		    } else {
-		        // If it didn't exist, add it 
-	            String iteration = r.getIteration().toString();
-	            if (iteration.equals("Backlog")) {
-	                // Column Change: Add the new column
-	                model.addRow(new Object[] { r.getId(), false, r.getName(), 
-	                                r.getType(), r.getPriority() });
-
-	                RequirementEstimate estimate = new RequirementEstimate(r);
-	                estimate.setDescription(r.getDescription());
-	                estimate.setType(r.getType());
-	                this.requirements.add(estimate);
+	public void addRequirements(ArrayList<Requirement> importedRequirements) {
+	    for (int i = 0; i < model.getRowCount(); i++) {
+	        Requirement r = findRequirementFromID((int) model.getValueAt(i, idColumn), importedRequirements);
+	        if (r == null) {
+	            model.removeRow(i);
+	            requirements.remove(i);
+	            this.repaint();
+	        } else {
+	            importedRequirements.remove(r);
+	            if (r.getStatus().equals(RequirementStatus.DELETED) || !r.getIteration().equals("Backlog")) {
+	                model.removeRow(i);
+	                requirements.remove(i);
+	                this.repaint();
+	            } else {
+	                updateTableRow(r, i);
 	            }
-		    }
-		}
-		
-		// Go through the list of requirement Estimates it didn't find and remove them
-		for (RequirementEstimate re : tableRequirements) {
-		    this.requirements.remove(re);
-		    int row = getRowFromRequirementEstimate(re);
-		    if (row != -1) {
-		        model.removeRow(row);
-		    }
-		}
+	        }
+	    }
+	    
+	    for (Requirement r : importedRequirements) {
+	        if (r.getStatus().equals(RequirementStatus.DELETED) || !r.getIteration().equals("Backlog")) {
+	        } else {
+	            requirements.add(new RequirementEstimate(r));
+	            model.addRow(new Object[] { r.getId(), true, r.getName(), r.getType(), r.getPriority() });
+	            this.repaint();
+	        }
+	    }
 	}
 
 	/**

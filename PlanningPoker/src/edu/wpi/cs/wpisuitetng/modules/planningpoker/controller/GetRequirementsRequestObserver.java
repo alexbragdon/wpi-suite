@@ -9,6 +9,8 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.util.ArrayList;
+
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
@@ -40,8 +42,14 @@ public class GetRequirementsRequestObserver implements RequestObserver {
 		// Convert the JSON array of requirements to a Requirement object array
 		final Requirement[] requirements = Requirement.fromJsonArray(iReq.getResponse().getBody());
 		
+		ArrayList<Requirement> arrayReqs = new ArrayList<Requirement>();
+		
+		for (Requirement r : requirements) {
+		    arrayReqs.add(r);
+		}
+		
 		// Pass these Requirements to the controller
-		controller.receivedRequirements(requirements);
+		controller.receivedRequirements(arrayReqs);
 	}
 
 	/**
@@ -58,8 +66,9 @@ public class GetRequirementsRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		final Requirement[] errorRequirement = { new Requirement(6, "Error", "error desc") };
-		controller.receivedRequirements(errorRequirement);
+		final ArrayList<Requirement> arrayReqs = new ArrayList<Requirement>();
+		arrayReqs.add(new Requirement(6, "Error", "error desc"));
+		controller.receivedRequirements(arrayReqs);
 	}
 
 }
