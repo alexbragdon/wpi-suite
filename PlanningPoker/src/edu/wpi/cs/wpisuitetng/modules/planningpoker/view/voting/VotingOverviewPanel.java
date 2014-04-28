@@ -127,10 +127,12 @@ public class VotingOverviewPanel extends JPanel {
                 model.updateModel(session.getRequirements());
                 updateOverallProgress();
                 if (session.hasEveryoneVoted(UserNum)) {
+                    parent.closeSession();
                     notifyParent();
                 }
             }
         }
+        
     }
 
     /**
