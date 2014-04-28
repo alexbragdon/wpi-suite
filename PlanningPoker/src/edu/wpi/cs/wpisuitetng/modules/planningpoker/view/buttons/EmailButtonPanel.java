@@ -39,6 +39,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditUserControlle
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetAllUsersController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
  * @author Team Romulus
@@ -73,6 +74,9 @@ public class EmailButtonPanel extends ToolbarGroupView {
     private final JCheckBox SMSCheckBox;
     private String[] carriers = { "AT&T", "T-Mobile", "Verizon","Sprint"};
     private final JComboBox<String> CarrierChooser = new JComboBox<String>(carriers);
+    
+    private final JButton helpButton = new JButton(
+            "<html>Help</html>");
     /**
      * 
      * Constructor for EmailButtonPannel
@@ -82,6 +86,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
     public EmailButtonPanel(final MainView parent) {
         super("");
         this.setPreferredWidth(420);
+        this.setMinimumSize(new Dimension(420, 200));
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
         // Email settings button
@@ -89,11 +94,14 @@ public class EmailButtonPanel extends ToolbarGroupView {
             final Image img = ImageIO.read(getClass().getResource("emailButton.png"));
             emailButton.setIcon(new ImageIcon(img));
             SMSButton.setIcon(new ImageIcon(img));
+            helpButton.setIcon(new ImageIcon(img));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         
         emailButton.setToolTipText("Edit email for notifications");
+        SMSButton.setToolTipText("Edit phone number for notifications");
+        helpButton.setToolTipText("Show help page for Planning Poker Game");
 
         // Field for entering email
         emailField = new JTextField();
@@ -144,9 +152,10 @@ public class EmailButtonPanel extends ToolbarGroupView {
         SMSButtonPanel.add(SMSTestButton);
 
         
-		emailScrollPanel.setLayout(new MigLayout("insets 15 45 0 0"));
+		emailScrollPanel.setLayout(new MigLayout("insets 0 13 0 0"));
 		emailScrollPanel.add(SMSButton);
 		emailScrollPanel.add(emailButton);
+		emailScrollPanel.add(helpButton);
 
 		emailPanel.setLayout(new MigLayout("insets 0 10 0 10"));
 		SMSPanel.setLayout(new MigLayout("insets 0 10 0 10"));
@@ -176,12 +185,19 @@ public class EmailButtonPanel extends ToolbarGroupView {
 		SMSButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	canValidateSMS();
                 emailScrollPanel.setVisible(false);
                 SMSPanel.setVisible(true);
             }
         });
 		
-
+		helpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ViewEventController.getInstance().helpSession();
+            }
+        });
+		
         emailButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -196,6 +212,8 @@ public class EmailButtonPanel extends ToolbarGroupView {
                 }
             }
         });
+        
+        
 
         emailSubmitButton.addActionListener(new ActionListener() {
             @Override
