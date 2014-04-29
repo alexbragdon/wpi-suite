@@ -9,6 +9,9 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.util.Date;
 
 import javax.swing.JPanel;
@@ -18,7 +21,9 @@ import javax.swing.JTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.RequirementDescriptionPanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -34,6 +39,7 @@ public class CloseSessionPanel extends JPanel {
     private final boolean isEditable;
     private JScrollPane editPanel;
     private CloseSessionButtonsPanel buttons;
+    RequirementDescriptionPanel description;
 
     /**
      * Creates a new panel to enter estimates while closing the given session.
@@ -53,12 +59,42 @@ public class CloseSessionPanel extends JPanel {
     }
 
     private void buildLayout() {
+        setLayout(new GridBagLayout());
+        final GridBagConstraints c = new GridBagConstraints();
+        
         editPanel = new JScrollPane(new JTable(new CloseSessionTableModel(session, isEditable)));
         buttons = new CloseSessionButtonsPanel(this, isEditable);
-
-        setLayout(new BorderLayout());
-        add(editPanel, BorderLayout.CENTER);
-        add(buttons, BorderLayout.SOUTH);
+        
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 3;
+        c.gridheight = 2;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        c.fill = GridBagConstraints.BOTH;
+        add(editPanel, c);
+        
+        description = new RequirementDescriptionPanel(session.getRequirements().get(0));
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.weightx = 0.8;
+        c.weighty = 0.0;
+        c.fill = GridBagConstraints.BOTH;
+        add(description, c);
+        //add(editPanel, BorderLayout.CENTER);
+        //add(buttons, BorderLayout.SOUTH);
+        
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.gridheight = 2;
+        c.weightx = 0.2;
+        c.weighty = 0.0;
+        c.fill = GridBagConstraints.VERTICAL;
+        c.anchor = GridBagConstraints.LINE_END;
+        add(buttons, c);
     }
 
     /**
@@ -77,7 +113,8 @@ public class CloseSessionPanel extends JPanel {
         }
         remove();
     }
-
+    
+    
     /**
      * Called by the buttons panel when cancel is pressed. Removes the tab.
      */
