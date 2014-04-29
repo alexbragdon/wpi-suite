@@ -33,30 +33,47 @@ public class HelpPanel extends JPanel{
 	
 	public HelpPanel(){
 		
-		this.setLayout(new BorderLayout());
-		JLabel title = new JLabel("Help");
-		title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 20));
-		
+		this.setLayout(new MigLayout());
+		JLabel title = new JLabel("Planning Poker Help");
+		title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 28));
+		JLabel title2 = new JLabel("Getting Started");
+		title2.setFont(new Font(title.getFont().getName(), Font.PLAIN, 28));
 		
 		JTextArea description = new JTextArea();
-		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 16));
+		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 18));
+		description.setPreferredSize(new Dimension(1000, 100));
 		description.setBackground(color) ;
 		description.setLineWrap(true);
 		description.setWrapStyleWord(true);
 		description.setEditable(false);
-		description.setText("A Hello world program is a computer program that outputs Hello, world on a display device. "
-				+ "Because it is typically one of the simplest programs possible in most programming languages, it is by tradition "
-				+ "often used to illustrate to beginners the most basic syntax of a programming language. It is also used to verify "
-				+ "that a language or system is operating correctly.In a device that does not display text, a simple program to "
-				+ "produce a signal, such as turning on an LED, is often substituted for Hello world as the introductory program.");
+		description.setText("Welcome to Planning Poker, a game that can help you with organizing requirements!"
+				+ " Using Planning Poker, you can create games for your group to vote on, as well as play games that other members of your group have made."
+				+ " Hopefully, this guide will present you with all the information you need to begin creating and playing Planning Poker Games.");
 		final JScrollPane scrollPanel = new JScrollPane(description);
 		scrollPanel.setBorder(new LineBorder(color));
 		
-		this.add(title,BorderLayout.NORTH);
-		this.add(scrollPanel, BorderLayout.CENTER);
+		JTextArea description2 = new JTextArea();
+		description2.setFont(new Font(description2.getFont().getName(), Font.PLAIN, 16));
+		description2.setPreferredSize(new Dimension(1000, 100));
+		description2.setBackground(color) ;
+		description2.setLineWrap(true);
+		description2.setWrapStyleWord(true);
+		description2.setEditable(false);
+		description2.setText("Lets get started! The First thing you should have seen upon opening Planing Poker is the 'Games' tab. This will be the tab you will see more than any other."
+				+ " It will organize and display any and all games that you are going to be involved with!"
+				+ " You may have noticed the three tables that are in the center of the window. These tables are used to organize all of the games that you are involved with!"
+				+ " The first of the three tables is the 'Games I'm Moderating' table. This table will list and display all of the games that you will create, or have already created."
+				+ " As you create games, it will automatically add them to the list!");
+		final JScrollPane scrollPanel2 = new JScrollPane(description2);
+		scrollPanel2.setBorder(new LineBorder(color));
 		
-		setMinimumSize(new Dimension(1000, 800));
-		setPreferredSize(new Dimension(1000, 800));
+		this.add(title, "wrap");
+		this.add(scrollPanel, "wrap");
+		this.add(title2, "wrap");
+		this.add(scrollPanel2,"wrap");
+		
+		this.setMinimumSize(new Dimension(1000, 800));
+		this.setPreferredSize(new Dimension(1000, 800));
 		
 	}
 
