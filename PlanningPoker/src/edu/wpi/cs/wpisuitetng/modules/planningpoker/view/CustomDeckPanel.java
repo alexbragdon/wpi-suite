@@ -84,7 +84,7 @@ public class CustomDeckPanel extends JPanel {
 		createDeck.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				// TODO Auto-generated method stub
+				// TODO: Save deck to database and allow user to select it
 				parent.getContentPanel().setRightComponent(parent.getRequirementsPanel());
 				parent.getShowDeck().setEnabled(true);
 			}
@@ -93,7 +93,6 @@ public class CustomDeckPanel extends JPanel {
 		cancelDeck.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				parent.getContentPanel().setRightComponent(parent.getRequirementsPanel());
 				parent.getShowDeck().setEnabled(true);
 			}

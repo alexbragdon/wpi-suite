@@ -20,10 +20,10 @@ import java.util.List;
  */
 public class Deck {
 	private String name;
-	private List<Integer> cards;
+	private int[] cards;
 	private DeckSelectionType type;
 	
-	public Deck(String name, List<Integer> cards, DeckSelectionType type){
+	public Deck(String name, int[] cards, DeckSelectionType type){
 		this.name = name;
 		this.cards = cards;
 		this.type = type;
@@ -32,7 +32,7 @@ public class Deck {
 	/**
 	 * @return the cards
 	 */
-	public List<Integer> getCards() {
+	public int[] getCards() {
 		return cards;
 	}
 
@@ -40,7 +40,7 @@ public class Deck {
 	/**
 	 * @param cards the cards to set
 	 */
-	public void setCards(List<Integer> cards) {
+	public void setCards(int[] cards) {
 		this.cards = cards;
 	}
 
