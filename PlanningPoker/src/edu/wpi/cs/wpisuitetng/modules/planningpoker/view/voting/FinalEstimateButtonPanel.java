@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -21,6 +23,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -57,7 +61,7 @@ public class FinalEstimateButtonPanel extends JPanel {
 		errorLabel.setForeground(Color.RED);
 		submitButton =new JButton("Submit");
 		submitButton.setPreferredSize(new Dimension(120, 100));
-		estimateField = new JTextField("0");
+		estimateField = new JTextField("--");
 		estimateField.setPreferredSize(new Dimension(120, 100));
 		estimateField.setEditable(true);
 		estimateField.setFont(new Font("default", Font.BOLD, 72));
@@ -74,6 +78,61 @@ public class FinalEstimateButtonPanel extends JPanel {
 			ex.printStackTrace();
 		}
 		
+		estimateField.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+            	if (estimateField.getText().equals("--")) {
+					estimateField.setText("");
+				}
+            }
+        });
+		
+		estimateField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				if(!validateSpinner()){
+					submitButton.setEnabled(false);
+					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
+						errorLabel.setText(" ");
+					}else{
+						errorLabel.setText("*Please enter an integer from 1 to 99");
+					}
+				}else{
+					submitButton.setEnabled(true);
+					errorLabel.setText(" ");
+				}
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				if(!validateSpinner()){
+					submitButton.setEnabled(false);
+					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
+						errorLabel.setText(" ");
+					}else{
+						errorLabel.setText("*Please enter an integer from 1 to 99");
+					}
+				}else{
+					submitButton.setEnabled(true);
+					errorLabel.setText(" ");
+				}
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				if(!validateSpinner()){
+					submitButton.setEnabled(false);
+					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
+						errorLabel.setText(" ");
+					}else{
+						errorLabel.setText("*Please enter an integer from 1 to 99");
+					}
+				}else{
+					submitButton.setEnabled(true);
+					errorLabel.setText(" ");
+				}
+			}
+		});
 		
 		add(infoLabel, "wrap");
 		add(midPanel, "wrap");
@@ -81,4 +140,33 @@ public class FinalEstimateButtonPanel extends JPanel {
 
 	}
 
+	private boolean validateSpinner(){
+		boolean validate = true;
+		String vote = estimateField.getText();
+		if(vote.length() == 0 || vote.length() >=3){
+			validate = false;
+		}
+		if(!isInteger(vote)){
+			validate = false;
+		}else if(Integer.parseInt(vote) < 1){
+			validate = false;
+		}
+		return validate;
+	}
+	
+	/**
+	 * Test whether the input String is a number.
+	 * @param s the input String
+	 * @return true if the String is a number, false otherwise
+	 */
+	public boolean isInteger(String s) {
+		try { 
+			Integer.parseInt(s); 
+		} catch(NumberFormatException e) { 
+		    e.printStackTrace();
+			return false; 
+		}
+		return true;
+	}
+	
 }
