@@ -14,6 +14,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -135,10 +136,17 @@ public class SessionRequirementPanel extends JPanel {
 				int requirementID = (int) this.getValueAt(rowIndex, idColumn);
 				return getDescription(requirementID);
 			}
+			
+			@Override
+		    public void paintComponent(Graphics g) {
+
+		        super.paintComponent(g);
+		    }
 		};
 
 		final JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel.setPreferredSize(new Dimension(1000, 800));
+		table.setFillsViewportHeight(true);
 
 		// ID Column
 		table.getColumnModel().getColumn(idColumn).setMaxWidth(0);
@@ -302,7 +310,7 @@ public class SessionRequirementPanel extends JPanel {
 	    model.setValueAt(r.getName(), row, nameColumn);
 	    model.setValueAt(r.getType(), row, typeColumn);
 	    model.setValueAt(r.getPriority(), row, priorityColumn);
-	    this.repaint();
+	    table.repaint();
 	}
 	
 	/**
@@ -317,13 +325,15 @@ public class SessionRequirementPanel extends JPanel {
 	        if (r == null) {
 	            model.removeRow(i);
 	            requirements.remove(i);
-	            this.repaint();
+	            table.repaint();
+	            model.fireTableDataChanged();
 	        } else {
 	            importedRequirements.remove(r);
 	            if (r.getStatus().equals(RequirementStatus.DELETED) || !r.getIteration().equals("Backlog")) {
 	                model.removeRow(i);
 	                requirements.remove(i);
-	                this.repaint();
+	                model.fireTableDataChanged();
+	                table.repaint();
 	            } else {
 	                updateTableRow(r, i);
 	            }
@@ -335,7 +345,8 @@ public class SessionRequirementPanel extends JPanel {
 	        } else {
 	            requirements.add(new RequirementEstimate(r));
 	            model.addRow(new Object[] { r.getId(), true, r.getName(), r.getType(), r.getPriority() });
-	            this.repaint();
+	            table.repaint();
+	            model.fireTableDataChanged();
 	        }
 	    }
 	}
