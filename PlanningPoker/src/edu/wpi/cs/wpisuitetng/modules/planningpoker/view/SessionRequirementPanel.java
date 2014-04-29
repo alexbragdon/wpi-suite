@@ -289,7 +289,7 @@ public class SessionRequirementPanel extends JPanel {
 	public List<RequirementEstimate> getSelectedRequirements() {
 		final List<RequirementEstimate> selected = new LinkedList<RequirementEstimate>();
 		for (int i = 0; i < requirements.size(); i++) {
-			if ((Boolean) model.getValueAt(i, checkBoxColumn)) {
+			if ((Boolean) table.getValueAt(i, checkBoxColumn)) {
 				selected.add(requirements.get(i));
 			}
 		}
@@ -323,15 +323,15 @@ public class SessionRequirementPanel extends JPanel {
 	    for (int i = 0; i < model.getRowCount(); i++) {
 	        Requirement r = findRequirementFromID((int) model.getValueAt(i, idColumn), importedRequirements);
 	        if (r == null) {
-	            model.removeRow(i);
-	            requirements.remove(i);
+	        	requirements.remove(i);
+	        	model.removeRow(i);
 	            table.repaint();
 	            model.fireTableDataChanged();
 	        } else {
 	            importedRequirements.remove(r);
 	            if (r.getStatus().equals(RequirementStatus.DELETED) || !r.getIteration().equals("Backlog")) {
-	                model.removeRow(i);
-	                requirements.remove(i);
+	            	requirements.remove(i);
+	            	model.removeRow(i);
 	                model.fireTableDataChanged();
 	                table.repaint();
 	            } else {
