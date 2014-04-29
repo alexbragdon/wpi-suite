@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
 public class SmsEmailTemplateTest {
     private SmsEmailTemplate SET;
     private User user;
-    
+
     @Before
     public void setUp(){
         SessionClosedSmsTemplate SCST;
@@ -45,17 +45,17 @@ public class SmsEmailTemplateTest {
         user = new User("Tester Test", "test", "test", 123);
         SET = new SmsEmailTemplate(SCST);
     }
-    
+
     @Test
     public void TestShouldReceiveNotifications(){
         assertFalse(SET.shouldReceiveNotifications(user));
     }
-    
+
     @Test(expected=RuntimeException.class)
     public void TestGenerateMessageException(){
         SET.generateMessage(user);
     }
-    
+
     @Test
     public void TestGenerateMessage(){
         user.setCarrier("AT&T");

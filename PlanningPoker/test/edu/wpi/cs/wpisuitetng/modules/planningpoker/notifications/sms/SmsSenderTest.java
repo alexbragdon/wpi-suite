@@ -8,9 +8,16 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.sms;
 
-import org.junit.Before;
+import java.util.ArrayList;
+import java.util.Date;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.INotificationTemplate;
+import org.junit.Before;
+import org.junit.Test;
+
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 
 /**
  * Description
@@ -20,9 +27,23 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.INotificationT
  */
 public class SmsSenderTest {
     private SmsSender SS;
-    
+    private User user;
     @Before
     public void setUp(){
-      
+        ArrayList<RequirementEstimate> requirement = new ArrayList<RequirementEstimate>();
+        requirement.add(new RequirementEstimate(0, "Test1", 0, true));
+        PlanningPokerSession session = new PlanningPokerSession(
+                        1,  "Test", "test", new Date(), 0,  0,
+                        requirement, SessionType.DISTRIBUTED, true, 
+                        true, "admin", "-None-");
+        session.setCompletionTime(new Date());
+        SessionClosedSmsTemplate SCST = new SessionClosedSmsTemplate(session);
+        SS = new SmsSender(SCST);
+        user = new User("Tester Test", "test", "test", 123);
+    }
+
+    @Test
+    public void TestSend(){
+        SS.send(user);
     }
 }
