@@ -10,12 +10,12 @@ public class DEMOOOOOOOOOOOOOOOOOO {
         JFrame frame = new JFrame("demo");
         
         
-        FinalEstimateButtonPanel panel = new FinalEstimateButtonPanel();
+        VoteStatisticPanel panel = new VoteStatisticPanel();
         
         
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(290,220));
+        frame.setPreferredSize(new Dimension(220,320));
         frame.setLayout(new FlowLayout(FlowLayout.LEFT));
         frame.add(panel);
         frame.pack();
