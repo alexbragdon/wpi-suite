@@ -248,6 +248,7 @@ public class VotingPanel extends JPanel {
             try {
                 totalEstimate = Integer.parseInt(buttons.getEstimateLabel().getText());
             } catch (NumberFormatException e) {
+                e.printStackTrace();
                 totalEstimate = 0;
             }
             currentRequirement.getVotes().put(
