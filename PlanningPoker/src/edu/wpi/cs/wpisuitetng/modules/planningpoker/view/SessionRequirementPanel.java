@@ -14,6 +14,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -27,6 +28,7 @@ import java.util.Timer;
 
 import javax.swing.AbstractButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -38,6 +40,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetRequirementsCo
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementStatus;
 
 /**
  * This is the panel on the open session table.
@@ -65,9 +68,9 @@ public class SessionRequirementPanel extends JPanel {
 	 */
 	DefaultTableModel model = null;
 
-	List<RequirementEstimate> requirements = new ArrayList<RequirementEstimate>();
+	private List<RequirementEstimate> requirements = new ArrayList<RequirementEstimate>();
 
-	JTable table;
+	private JTable table;
 
 	CheckBoxHeader checkBox;
 
@@ -133,11 +136,18 @@ public class SessionRequirementPanel extends JPanel {
 				int requirementID = (int) this.getValueAt(rowIndex, idColumn);
 				return getDescription(requirementID);
 			}
+			
+			@Override
+		    public void paintComponent(Graphics g) {
+
+		        super.paintComponent(g);
+		    }
 		};
 
 		table.setRowSelectionAllowed(true);
 		final JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel.setPreferredSize(new Dimension(1000, 800));
+		table.setFillsViewportHeight(true);
 
 		// ID Column
 		table.getColumnModel().getColumn(idColumn).setMaxWidth(0);
@@ -249,7 +259,7 @@ public class SessionRequirementPanel extends JPanel {
 						true,
 						displayRequirement.getName(),
 						displayRequirement.getType(),
-						"" }); //TODO Add a feild to RequirementEstimate for Priority
+						displayRequirement.getPriority() }); 
 			}
 		}
 	}
@@ -280,57 +290,66 @@ public class SessionRequirementPanel extends JPanel {
 	public List<RequirementEstimate> getSelectedRequirements() {
 		final List<RequirementEstimate> selected = new LinkedList<RequirementEstimate>();
 		for (int i = 0; i < requirements.size(); i++) {
-			if ((Boolean) model.getValueAt(i, checkBoxColumn)) {
+			if ((Boolean) table.getValueAt(i, checkBoxColumn)) {
 				selected.add(requirements.get(i));
 			}
 		}
 		return selected;
 	}
-
+	
+	private Requirement findRequirementFromID(int id, ArrayList<Requirement> reqs) {
+	    for (Requirement r : reqs) {
+	        if (r.getId() == id) {
+	            return r;
+	        }
+	    }
+	    
+	    return null;
+	}
+	
+	private void updateTableRow(Requirement r, int row) {
+	    model.setValueAt(r.getName(), row, nameColumn);
+	    model.setValueAt(r.getType(), row, typeColumn);
+	    model.setValueAt(r.getPriority(), row, priorityColumn);
+	    table.repaint();
+	}
+	
 	/**
 	 * 
 	 * Description goes here.
 	 * 
-	 * @param requirements
+	 * @param requirements from the Requirement Manager
 	 */
-	public void addRequirements(Requirement[] requirements) {
-
-		List<Requirement> importedRequirements = new ArrayList<Requirement>();
-
-		for (Requirement r : requirements) {
-			boolean imported = false;
-			for (int i = 0; i < model.getRowCount(); i++) {
-				if ((int) model.getValueAt(i, idColumn) == r.getId()
-						&& model.getValueAt(i, nameColumn).equals(r.getName())) {
-					imported = true;
-				}
-			}
-
-			if (!imported) {
-				importedRequirements.add(r);
-			}
-		}
-		for (int i = 0; i < importedRequirements.size(); i++) {
-			Requirement req = importedRequirements.get(i);
-			String iteration = req.getIteration().toString();
-
-			if (iteration.equals("Backlog")) {
-
-			    // Column Change: Add the new column
-				model.addRow(new Object[] { req.getId(), false, req.getName(), 
-				                req.getType(), req.getPriority() });
-
-				RequirementEstimate estimate = new RequirementEstimate(
-						req.getId(), req.getName(), 0, false);
-				estimate.setDescription(req.getDescription());
-				estimate.setType(req.getType());
-				this.requirements.add(estimate);
-			}
-		}
-
-		if (importedRequirements.size() != 0) {
-			tableUpdated();
-		}
+	public void addRequirements(ArrayList<Requirement> importedRequirements) {
+	    for (int i = 0; i < model.getRowCount(); i++) {
+	        Requirement r = findRequirementFromID((int) model.getValueAt(i, idColumn), importedRequirements);
+	        if (r == null) {
+	        	requirements.remove(i);
+	        	model.removeRow(i);
+	            table.repaint();
+	            model.fireTableDataChanged();
+	        } else {
+	            importedRequirements.remove(r);
+	            if (r.getStatus().equals(RequirementStatus.DELETED) || !r.getIteration().equals("Backlog")) {
+	            	requirements.remove(i);
+	            	model.removeRow(i);
+	                model.fireTableDataChanged();
+	                table.repaint();
+	            } else {
+	                updateTableRow(r, i);
+	            }
+	        }
+	    }
+	    
+	    for (Requirement r : importedRequirements) {
+	        if (r.getStatus().equals(RequirementStatus.DELETED) || !r.getIteration().equals("Backlog")) {
+	        } else {
+	            requirements.add(new RequirementEstimate(r));
+	            model.addRow(new Object[] { r.getId(), true, r.getName(), r.getType(), r.getPriority() });
+	            table.repaint();
+	            model.fireTableDataChanged();
+	        }
+	    }
 	}
 
 	/**

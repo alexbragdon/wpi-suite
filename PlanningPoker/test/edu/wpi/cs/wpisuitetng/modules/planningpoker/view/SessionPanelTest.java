@@ -185,7 +185,7 @@ public class SessionPanelTest {
 		sesPan.buildLY();
 		sesPan.setDateTime(2011, 1, 22, 23, 30);
 		sesPan.buildLY();
-		sesReqPan.addRequirements(reqs);
+		sesReqPan.addRequirements(new ArrayList<Requirement>());
 	}
 	@Test
 	public void testIncreasmentOfOneHour3(){
