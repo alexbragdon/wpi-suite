@@ -136,4 +136,12 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 				TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
 	}
 
+	/**
+	 * Remove the Session given by its row from the table
+	 * @param row The index of the session to remove
+	 */
+	public void removeRow(int row) {
+		sessions.remove(row);
+		fireTableChangedAll();
+	}
 }
