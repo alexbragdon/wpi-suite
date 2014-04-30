@@ -18,6 +18,7 @@ import java.util.Date;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -62,6 +63,7 @@ public class CloseSessionPanel extends JPanel {
         
         this.isEditable = isEditable;
         table = new JTable(new CloseSessionTableModel(session, isEditable));
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         buildLayout();
     }
 
@@ -73,6 +75,7 @@ public class CloseSessionPanel extends JPanel {
         panel.setLayout(new GridBagLayout());
         final GridBagConstraints c2 = new GridBagConstraints();
         table.changeSelection(0, 0, false, false);
+        //table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override

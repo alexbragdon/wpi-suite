@@ -60,6 +60,7 @@ public class FinalEstimateButtonPanel extends JPanel {
 		errorLabel = new JLabel(" ");
 		errorLabel.setForeground(Color.RED);
 		submitButton = new JButton("Submit");
+		submitButton.setEnabled(false);
 		submitButton.setPreferredSize(new Dimension(120, 100));
 		estimateField = new JTextField("--");
 		estimateField.setPreferredSize(new Dimension(120, 100));
