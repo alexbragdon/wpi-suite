@@ -54,7 +54,7 @@ public class HelpPanel extends JPanel{
 		
 		JTextArea description2 = new JTextArea();
 		description2.setFont(new Font(description2.getFont().getName(), Font.PLAIN, 16));
-		description2.setPreferredSize(new Dimension(1000, 100));
+		description2.setPreferredSize(new Dimension(1000, 300));
 		description2.setBackground(color) ;
 		description2.setLineWrap(true);
 		description2.setWrapStyleWord(true);
@@ -63,7 +63,9 @@ public class HelpPanel extends JPanel{
 				+ " It will organize and display any and all games that you are going to be involved with!"
 				+ " You may have noticed the three tables that are in the center of the window. These tables are used to organize all of the games that you are involved with!"
 				+ " The first of the three tables is the 'Games I'm Moderating' table. This table will list and display all of the games that you will create, or have already created."
-				+ " As you create games, it will automatically add them to the list!");
+				+ " As you create games, it will automatically add them to the list!"
+				+ " The Second table is the 'Games I am voting in' table. This table will list and display any games that you are allowed to vote in and haven't already."
+				+ " The Third table is the 'Game History' table. This table lists and displays any completed games that you have voted in, as well as any completed games you have moderated.");
 		final JScrollPane scrollPanel2 = new JScrollPane(description2);
 		scrollPanel2.setBorder(new LineBorder(color));
 		
