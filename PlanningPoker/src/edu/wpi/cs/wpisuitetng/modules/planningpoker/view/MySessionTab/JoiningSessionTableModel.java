@@ -52,12 +52,6 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 
 	@Override
 	public String getColumnName(int columnIndex) {
-		if ((columnIndex < 0) || (columnIndex >= COLUMNS.length)) {
-			throw new IllegalArgumentException(columnIndex + 
-					" not between: 0 and " + COLUMNS.length);
-		}
-
-		//Now we can assume the index is valid
 		return COLUMNS[columnIndex];
 	}
 
