@@ -33,7 +33,8 @@ public class WPIPlanningPokerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
                     IOException {
-        String filename = "planningpoker" + File.separator + "index.html";
+        String[] parts = req.getRequestURI().split("/");
+        String filename = "planningpoker" + File.separator + parts[parts.length - 1];
         String contextPath = getServletContext().getRealPath(File.separator);
         File file = new File(contextPath + filename);
         
