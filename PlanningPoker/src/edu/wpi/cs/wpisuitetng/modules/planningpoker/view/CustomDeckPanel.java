@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -58,8 +59,8 @@ public class CustomDeckPanel extends JPanel {
 	private Image cardImg;
 	private JPanel deckNamePanel;
 	private JScrollPane newCardScroll;
-	
-	private int index;
+	private JPanel scrollPanel;
+
 	
 	// TODO: Need some sort of data structure to hold textboxes and card values
 	
@@ -68,8 +69,6 @@ public class CustomDeckPanel extends JPanel {
 		
 		this.setLayout(new MigLayout());
 		// TODO: Create a decent layout for this panel
-		
-		index = 0;
 		
 		imgLabel = new JLabel();
 		imgLabel.setLayout(new BorderLayout());
@@ -84,7 +83,10 @@ public class CustomDeckPanel extends JPanel {
 		imgLabel.setIcon(new ImageIcon(this.cardImg));
 		imgLabel.add(numLabel);
 		
-		newCardScroll = new JScrollPane();
+		scrollPanel = new JPanel();
+		scrollPanel.setLayout(new MigLayout());
+		scrollPanel.setPreferredSize(new Dimension(260,310));
+		newCardScroll = new JScrollPane(scrollPanel);
 		newCardScroll.setPreferredSize(new Dimension(280, 320));
 		
 		this.deckName = new JLabel("Deck name    ");
@@ -126,10 +128,12 @@ public class CustomDeckPanel extends JPanel {
 	public void setupListeners(){
 		createDeck.addActionListener(new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent ae) {
+			public void actionPerformed(ActionEvent e) {
 				// TODO: Save deck to database and allow user to select it
-				parent.getContentPanel().setRightComponent(parent.getRequirementsPanel());
-				parent.getShowDeck().setEnabled(true);
+//				parent.getContentPanel().setRightComponent(parent.getRequirementsPanel());
+//				parent.getShowDeck().setEnabled(true);
+				createCard();
+				
 			}
 		});
 		
@@ -157,7 +161,8 @@ public class CustomDeckPanel extends JPanel {
 	}
 	
 	public void createCard(){
-	//	private JPanel 
+		scrollPanel.add(new CustomCardPanel(this), "wrap");
+		scrollPanel.repaint();
 	}
 	
 	public void remove(){
