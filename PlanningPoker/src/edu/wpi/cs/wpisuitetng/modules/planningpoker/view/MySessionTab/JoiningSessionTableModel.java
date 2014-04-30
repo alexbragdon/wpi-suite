@@ -23,6 +23,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.Fraction;
 
 public class JoiningSessionTableModel extends AbstractTableModel {
 
+	/**
+	 * The serialVersionUID of this class
+	 */
+	private static final long serialVersionUID = 7127623899608560261L;
+	
 	List<PlanningPokerSession> sessions;
 	final String[] COLUMNS = { "ID", "Name", "End Time", "My Progress" };
 	private final int ID_COLUMN = 0;
