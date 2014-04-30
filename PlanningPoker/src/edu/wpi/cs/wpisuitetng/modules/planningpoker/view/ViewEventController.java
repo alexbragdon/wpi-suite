@@ -240,4 +240,19 @@ public class ViewEventController {
             main.setSelectedComponent(component);
         }
     }
+    
+    /**
+     * Openthe help tab for the Planning Poker Game.
+     */
+	public void helpSession() {
+		if (main.indexOfTab("Help Page") == -1) {
+			final HelpPanel helpPage = new HelpPanel();
+			main.addTab("Help Page", null, helpPage, "Open the help page");
+			main.invalidate();
+			main.repaint();
+			main.setSelectedComponent(helpPage);
+		}else{
+			main.setSelectedIndex(main.indexOfTab("Help Page"));
+		}
+	}
 }
