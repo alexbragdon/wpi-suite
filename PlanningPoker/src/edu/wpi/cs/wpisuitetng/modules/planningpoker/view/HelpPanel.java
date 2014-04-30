@@ -53,8 +53,8 @@ public class HelpPanel extends JPanel{
 		scrollPanel.setBorder(new LineBorder(color));
 		
 		JTextArea description2 = new JTextArea();
-		description2.setFont(new Font(description2.getFont().getName(), Font.PLAIN, 16));
-		description2.setPreferredSize(new Dimension(1000, 300));
+		description2.setFont(new Font(description2.getFont().getName(), Font.PLAIN, 14));
+		description2.setPreferredSize(new Dimension(1500, 300));
 		description2.setBackground(color) ;
 		description2.setLineWrap(true);
 		description2.setWrapStyleWord(true);
@@ -65,7 +65,15 @@ public class HelpPanel extends JPanel{
 				+ " The first of the three tables is the 'Games I'm Moderating' table. This table will list and display all of the games that you will create, or have already created."
 				+ " As you create games, it will automatically add them to the list!"
 				+ " The Second table is the 'Games I am voting in' table. This table will list and display any games that you are allowed to vote in and haven't already."
-				+ " The Third table is the 'Game History' table. This table lists and displays any completed games that you have voted in, as well as any completed games you have moderated.");
+				+ " The Third table is the 'Game History' table. This table lists and displays any completed games that you have voted in, as well as any completed games you have moderated."
+				+ " Above the three panels, you will notice 4 buttons. One of these is the help button, which brings up this tab when clicked."
+				+ " The next two buttons are 'Email Settings' and 'SMS Settings'. Both of these buttons serve similar purposes, in that they both can control if you get notified when something happens to a game you are involved with."
+				+ " Upon clicking the 'Email Settings' button, the area near the button will change, and prompt you to enter an email address. Underneath the box in which you can"
+				+ " type in your email, there are three buttons. Submit, cancel, and test. The Submit button will remain unselectable until you type in a valid email address."
+				+ " The test button will send an email to the email that is currently in the type box, so you can check if it works before submitting it!"
+				+ " The cancel button will set the upper panel back into the 3-button standard form, and will ignore anything you typed in without submitting."
+				+ " Upon clicking the 'SMS Settings' button, the area around the button will once again change. This time, however, you will be prompted to enter a"
+				+ " Phone number, as well as a carrier. The 'Submit', 'Cancel' and 'Test' buttons all work the same way for SMS as they do for Email.");
 		final JScrollPane scrollPanel2 = new JScrollPane(description2);
 		scrollPanel2.setBorder(new LineBorder(color));
 		
