@@ -72,7 +72,7 @@ public class CloseSessionPanel extends JPanel {
         c2.gridx = 0;
         c2.gridy = 0;
         c2.gridwidth = 4;
-        c2.gridheight = 1;
+        c2.gridheight = 2;
         c2.weightx = 1.0;
         c2.weighty = 1.0;
         c2.fill = GridBagConstraints.BOTH;
@@ -80,9 +80,9 @@ public class CloseSessionPanel extends JPanel {
         c2.gridx = 4;
         c2.gridy = 0;
         c2.gridwidth = 1;
-        c2.gridheight = 1;
+        c2.gridheight = 2;
         c2.weightx = 0.0;
-        c2.weighty = 1.0;
+        c2.weighty = 2.0;
         panel.add(voteTable, c2);
         
         
@@ -97,7 +97,7 @@ public class CloseSessionPanel extends JPanel {
         
         description = new RequirementDescriptionPanel(session.getRequirements().get(0));
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 2;
         c.gridwidth = 1;
         c.gridheight = 1;
         c.weightx = 0.7;
@@ -108,13 +108,13 @@ public class CloseSessionPanel extends JPanel {
         
         submitButtons = new FinalEstimateButtonPanel();
         c.gridx = 1;
-        c.gridy = 1;
+        c.gridy = 2;
         c.gridwidth = 1;
         c.gridheight = 1;
         c.weightx = 0.3;
         c.weighty = 0.0;
         c.fill = GridBagConstraints.VERTICAL;
-        c.anchor = GridBagConstraints.LINE_END;
+        c.anchor = GridBagConstraints.LAST_LINE_END;
         add(submitButtons, c);
         
     }
