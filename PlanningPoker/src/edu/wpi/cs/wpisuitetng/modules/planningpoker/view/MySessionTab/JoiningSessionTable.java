@@ -27,6 +27,7 @@ import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import java.io.IOException;
 import java.text.BreakIterator;
@@ -38,6 +39,8 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.Fraction;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.ProgressBarTableCellRenderer;
 
 /**
  * Description
@@ -68,6 +71,8 @@ public class JoiningSessionTable extends JTable {
         this.getTableHeader().setReorderingAllowed(false);
         this.setAutoCreateRowSorter(true);
         setFillsViewportHeight(true);
+        
+        setupTable();
         
         @SuppressWarnings("serial")
         TransferHandler dnd = new TransferHandler() {
@@ -112,6 +117,20 @@ public class JoiningSessionTable extends JTable {
     }
 
     /**
+     * Set up the table including adding the correct rendering
+     */
+    private void setupTable() {
+    	
+        TableColumn ID_COLUMN = getColumnModel().getColumn(0);
+        ID_COLUMN.setPreferredWidth(0);
+        ID_COLUMN.setMaxWidth(0);
+        ID_COLUMN.setPreferredWidth(0);
+		
+    	//Render Fractions as a progress bar
+    	this.setDefaultRenderer(Fraction.class, new ProgressBarTableCellRenderer());
+	}
+
+	/**
      * Method clear.
      */
     public void clear() {
