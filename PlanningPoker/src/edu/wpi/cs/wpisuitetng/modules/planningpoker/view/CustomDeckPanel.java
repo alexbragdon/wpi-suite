@@ -11,7 +11,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -29,20 +28,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Card;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSelectionType;
 
 /**
  * @author Team Romulus
  * @version Iteration-6
  */
+@SuppressWarnings("serial")
 public class CustomDeckPanel extends JPanel {
-	private Deck viewDeck;
-	
 	private JLabel deckName;
 	private JTextField deckNameTxt;
-	
-	private Card currentCard;
 	
 	private JLabel selectionMode;
 	private JRadioButton singleSelect;
@@ -60,15 +57,11 @@ public class CustomDeckPanel extends JPanel {
 	private JPanel deckNamePanel;
 	private JScrollPane newCardScroll;
 	private JPanel scrollPanel;
-
-	
-	// TODO: Need some sort of data structure to hold textboxes and card values
 	
 	public CustomDeckPanel(SessionPanel parent){
 		this.parent = parent;
 		
 		this.setLayout(new MigLayout());
-		// TODO: Create a decent layout for this panel
 		
 		imgLabel = new JLabel();
 		imgLabel.setLayout(new BorderLayout());
@@ -121,19 +114,14 @@ public class CustomDeckPanel extends JPanel {
 		add(this.cancelDeck);
 	}
 	
-	public void createDeck(){
-		// TODO: Send custom deck to the database and auto add to session
-	}
-	
 	public void setupListeners(){
 		createDeck.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO: Save deck to database and allow user to select it
-//				parent.getContentPanel().setRightComponent(parent.getRequirementsPanel());
-//				parent.getShowDeck().setEnabled(true);
-				createCard();
-				
+				Deck newDeck = createDeckFromFields();
+				AddDeckController.getInstance().addDeck(newDeck);
+				parent.getContentPanel().setRightComponent(parent.getRequirementsPanel());
+				parent.getShowDeck().setEnabled(true);
 			}
 		});
 		
@@ -160,12 +148,26 @@ public class CustomDeckPanel extends JPanel {
 		});
 	}
 	
+	protected Deck createDeckFromFields() {
+		// Temp session
+		Deck newDeck = new Deck("Empty", null, DeckSelectionType.SINGLE);
+		newDeck.setName(deckNameTxt.getText());
+		
+		if(singleSelect.isSelected()){
+			newDeck.setType(DeckSelectionType.SINGLE);
+		} else {
+			newDeck.setType(DeckSelectionType.MULTI);
+		}
+
+		
+		
+		return newDeck;
+	}
+
 	public void createCard(){
-		scrollPanel.add(new CustomCardPanel(this), "wrap");
-		scrollPanel.repaint();
+		//scrollPanel.add(new CustomCardPanel(this), "wrap");
+		//scrollPanel.repaint();
 	}
 	
-	public void remove(){
-		
-	}
+	public void remove(){}
 }
