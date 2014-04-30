@@ -29,11 +29,11 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 7127623899608560261L;
 	
 	List<PlanningPokerSession> sessions;
-	final String[] COLUMNS = { "ID", "Name", "End Time", "My Progress" };
-	private final int ID_COLUMN = 0;
-	private final int NAME_COLUMN = 1;
-	private final int END_TIME_COLUMN = 2;
-	private final int MY_PROGRESS_COLUMN = 3;
+	private static final String[] COLUMNS = { "ID", "Name", "End Time", "My Progress" };
+	private static final int ID_COLUMN = 0;
+	private static final int NAME_COLUMN = 1;
+	private static final int END_TIME_COLUMN = 2;
+	private static final int MY_PROGRESS_COLUMN = 3;
 
 	/**
 	 * Create a table model
