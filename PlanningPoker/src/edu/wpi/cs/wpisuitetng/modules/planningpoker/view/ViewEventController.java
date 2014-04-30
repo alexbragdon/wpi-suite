@@ -204,7 +204,6 @@ public class ViewEventController {
         if (comp instanceof SessionPanel) {
             listOfEditingSessions.remove(((SessionPanel) comp).getSession());
         }
-        main.setSelectedIndex(0);
         main.remove(comp);
     }
     /**

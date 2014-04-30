@@ -17,6 +17,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementPriority;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementType;
 
 /**
@@ -61,18 +65,37 @@ public class RequirementEstimate {
     private RequirementType type;
 
     /**
+     * The priority of the requirement
+     */
+    private RequirementPriority priority;
+    
+    /**
      * Constructor for RequirementEstimate.
      * @param id int
      * @param name String
      * @param finalEstimate int
      * @param isExported boolean
      */
+    @Deprecated
     public RequirementEstimate(int id, String name, int finalEstimate, boolean isExported) {
         votes = new HashMap<String, UserEstimate>();
         this.id = id;
         this.name = name;
         this.finalEstimate = finalEstimate;
         this.isExported = isExported;
+        // Set these to something
+        this.type = null;
+        this.priority = null;
+    }
+    
+    public RequirementEstimate(Requirement r) {
+        votes = new HashMap<String, UserEstimate>();
+        this.id = r.getId();
+        this.name = r.getName();
+        this.finalEstimate = 0;
+        this.isExported = false;
+        this.type = r.getType();
+        this.priority = r.getPriority();
     }
     
     public void setDescription(String description) {
@@ -112,6 +135,20 @@ public class RequirementEstimate {
 
     public RequirementType getType() {
         return type;
+    }
+
+    /**
+     * @return the priority
+     */
+    public RequirementPriority getPriority() {
+        return priority;
+    }
+
+    /**
+     * @param priority the priority to set
+     */
+    public void setPriority(RequirementPriority priority) {
+        this.priority = priority;
     }
 
     public void setType(RequirementType type) {
@@ -190,5 +227,24 @@ public class RequirementEstimate {
             return (sortedVotes.get(size / 2) 
                             + sortedVotes.get((size / 2) - 1)) / 2;
         }
+    }
+    
+    public boolean isEqual(Requirement r) {
+        /*
+        if (this.id != r.getId()) {
+            return false;
+        }
+        */
+        if (!this.name.equals(r.getName())) {
+            return false;
+        }
+        /*
+        if (this.type != r.getType()) {
+            return false;
+        }
+        if (this.priority != r.getPriority()) {
+            return false;
+        }*/
+        return true;
     }
 }

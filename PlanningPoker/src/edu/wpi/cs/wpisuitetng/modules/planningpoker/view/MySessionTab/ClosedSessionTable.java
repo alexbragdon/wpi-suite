@@ -90,11 +90,12 @@ public class ClosedSessionTable extends JTable {
                     data = (String) support.getTransferable().getTransferData(
                                     DataFlavor.stringFlavor);
                 } catch (UnsupportedFlavorException e) {
+                    e.printStackTrace();
                     return false;
                 } catch (IOException e) {
+                    e.printStackTrace();
                     return false;
                 }
-                ;
 
                 String[] parts = data.split("\\t");
                 int sessionID = Integer.parseInt(parts[0]);

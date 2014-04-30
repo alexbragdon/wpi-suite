@@ -58,6 +58,7 @@ public class DataStore implements Data {
 			// accessLocalServer
 			// Please see Wiki for more information on the ServerConfiguration.
 			ServerConfiguration config = Db4oClientServer.newServerConfiguration();
+			config.common().activationDepth(10);
 			config.common().reflectWith(new JdkReflector(Thread.currentThread().getContextClassLoader()));
 			config.common().objectClass(User.class).storeTransientFields(true); // Enables data persistence for passwords
 
