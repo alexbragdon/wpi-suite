@@ -1,5 +1,6 @@
 $(function() {
 	$('#loginButton').click(login);
+	$('#voteButton').click(vote);
 	
 	window.configuration = {};
 	var matches = document.URL.match(/planningpoker\/([^\/]+)\/([\d]+)\//);
@@ -11,7 +12,6 @@ $(function() {
 		configuration.project = '';
 		configuration.sessionIndex = 1;
 	}
-	//$('#voteButton').click(vote);
 });
 
 $(document).on('click', 'a', function(event) {
@@ -36,13 +36,42 @@ function login() {
 	networkLogin(username, password, function() {
 		networkProject(configuration.project, function() {
 			networkGetSession(configuration.sessionIndex, function() {
-				$('#sessionName').text(configuration.session.Name);
-				$('#sessionDescription').text(configuration.session.Description);
-				updateRequirementLists();
-				location.hash = 'overviewPage';
+				if (configuration.session.isActive && !configuration.session.isComplete) {
+					$('#sessionName').text(configuration.session.Name);
+					$('#sessionDescription').text(configuration.session.Description);
+					updateRequirementLists();
+					location.hash = 'overviewPage';
+				} else {
+					location.hash = 'closedPage';
+				}
 			});
 		});
 	});
+}
+
+function vote() {
+	var estimate = parseInt($('#vote').val());
+	if (isNaN(estimate) || estimate < 0 || estimate > 100) {
+		alert('Please enter an estimate between 0 and 100.');
+	} else {
+		networkGetSession(configuration.sessionIndex, function() {
+			if (configuration.session.isActive && !configuration.session.isComplete) {
+				configuration.session
+					.RequirementEstimates[configuration.requirementIndex]
+					.votes[configuration.username] = {
+						'user': configuration.username,
+						'selectedCardIndices': [],
+						'totalEstimate': estimate
+				};
+				networkUpdateSession(configuration.session, function() {
+					updateRequirementLists();
+					location.hash = 'overviewPage';
+				});
+			} else {
+				location.hash = 'closedPage';
+			}
+		});
+	}
 }
 
 function networkLogin(username, password, callback) {
@@ -79,18 +108,36 @@ function networkGetSession(index, callback) {
 	});
 }
 
-function updateRequirementLists() {
-	$('#pendingList').empty();
-	$('#votedList').empty();
+function networkUpdateSession(session, callback) {
+	$.ajax({
+		url: '/WPISuite/API/planningpoker/planningpokersession/' + session.ID,
+		type: 'POST',
+		datatype: 'json',
+		data: JSON.stringify(session),
+		success: callback,
+		error: function() { alert('There was a problem saving your vote.'); }
+	});
+}
+
+function updateRequirementLists() {	
+	var pendingOutput = '';
+	var votedOutput = '';
 	
 	configuration.session.RequirementEstimates.forEach(function(value, index) {
 		var output = '<li><a href="#votePage" data-requirement-index="' + index + '">'
 						+ value.name + '</a></li>';
 		if (configuration.username in value.votes) {
-			$('#votedList').append(output);
+			votedOutput += output;
 		} else {
-			$('#pendingList').append(output);
+			pendingOutput += output;
 		}
+	});
+	
+	$('#pendingList').html(pendingOutput).promise().done(function() {
+		$(this).listview().listview('refresh');
+	});
+	$('#votedList').html(votedOutput).promise().done(function() {
+		$(this).listview().listview('refresh');
 	});
 }
 
