@@ -35,8 +35,6 @@ import net.miginfocom.swing.MigLayout;
  */
 
 public class VoteStatisticPanel extends JPanel{
-	private int user;
-
 	private DefaultListModel listData= new DefaultListModel();
 	
 
@@ -89,11 +87,7 @@ public class VoteStatisticPanel extends JPanel{
 	 */
 	public String generateSpace(String head, String tail){
 		int limit;
-		if(user > 16){
-			limit = 22;
-		}else{
-			limit = 26;
-		}
+		limit = 24;
 		int length = limit - head.length() - tail.length();
 		StringBuffer outputBuffer = new StringBuffer(length);
 		for (int i = 0; i < length; i++){
@@ -110,7 +104,7 @@ public class VoteStatisticPanel extends JPanel{
 			String estimate = Integer.toString(votes.getTotalEstimate());
 			listData.addElement(user + generateSpace(user, estimate) + estimate );
 		}
-		System.out.println("=========================");
+		
 		
 	}
 
