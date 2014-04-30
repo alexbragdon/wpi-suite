@@ -8,11 +8,8 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
-<<<<<<< HEAD
-=======
+
 import java.awt.BorderLayout;
-import java.awt.Canvas;
->>>>>>> FETCH_HEAD
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
