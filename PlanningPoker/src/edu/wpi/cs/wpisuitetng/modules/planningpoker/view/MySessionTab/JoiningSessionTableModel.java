@@ -9,8 +9,10 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 
-import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.event.TableModelEvent;
@@ -19,6 +21,7 @@ import javax.swing.table.AbstractTableModel;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.Fraction;
 
 public class JoiningSessionTableModel extends AbstractTableModel {
@@ -27,7 +30,7 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 	 * The serialVersionUID of this class
 	 */
 	private static final long serialVersionUID = 7127623899608560261L;
-	
+
 	List<PlanningPokerSession> sessions;
 	private static final String[] COLUMNS = { "ID", "Name", "End Time", "My Progress" };
 	private static final int ID_COLUMN = 0;
@@ -76,7 +79,9 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 		switch (columnIndex) {
 		case ID_COLUMN : return String.class;
 		case NAME_COLUMN : return String.class;
-		case END_TIME_COLUMN : return Date.class;
+
+		//Display as string so the "--" can be properly rendered
+		case END_TIME_COLUMN : return String.class; 
 		case MY_PROGRESS_COLUMN : return Fraction.class;
 		default: throw new RuntimeException(columnIndex + " is invalid");
 		}
@@ -95,7 +100,20 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 
+		//The desired session
 		PlanningPokerSession session = sessions.get(row);
+
+		Date date = new Date(session.getDate().getTime());		
+
+		String dateString = "--";
+		if (session.getType() == SessionType.DISTRIBUTED) {
+			final Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.set(Calendar.HOUR_OF_DAY, session.getHour());
+			calendar.set(Calendar.MINUTE, session.getMin());
+			date = calendar.getTime();
+			dateString = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(date);
+		}
 
 		//Calculate how many of these requirements the current user has voted on
 		int myVotes = 0;
@@ -111,7 +129,7 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 		switch (col) {
 		case ID_COLUMN : return session.getID();
 		case NAME_COLUMN : return session.getName();
-		case END_TIME_COLUMN : return session.getCompletionTime();
+		case END_TIME_COLUMN : return dateString;
 		case MY_PROGRESS_COLUMN : return new Fraction(myVotes, totalVotes);
 		default: throw new RuntimeException(col + " is invalid");
 		}
