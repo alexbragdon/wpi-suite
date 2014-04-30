@@ -10,7 +10,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
-import java.util.List;
+import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 
@@ -38,14 +38,12 @@ public class Deck extends AbstractModel {
 		return cards;
 	}
 
-
 	/**
 	 * @param cards the cards to set
 	 */
 	public void setCards(int[] cards) {
 		this.cards = cards;
 	}
-
 
 	/**
 	 * @return the type
@@ -54,7 +52,6 @@ public class Deck extends AbstractModel {
 		return type;
 	}
 
-
 	/**
 	 * @param type the type to set
 	 */
@@ -62,14 +59,12 @@ public class Deck extends AbstractModel {
 		this.type = type;
 	}
 
-
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
-
 
 	/**
 	 * @param name the name to set
@@ -93,12 +88,76 @@ public class Deck extends AbstractModel {
 	@Override
 	public void save() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
+	/**
+	 * Converts the instance of this object to JSON
+	 */
 	public String toJSON() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Gson().toJson(this, Deck.class);
 	}
+	
+	/**
+     * Method fromJson.
+     * @param json String
+     * @return Deck
+     */
+    public static Deck fromJson(String json) {
+        final Gson parser = new Gson();
+        return parser.fromJson(json, Deck.class);
+    }
+
+    /**
+     * Method fromJsonArray.
+     * @param json String
+     * @return Deck[]
+     */
+    public static Deck[] fromJsonArray(String json) {
+        final Gson parser = new Gson();
+        return parser.fromJson(json, Deck[].class);
+    }
+    
+    /**
+     * obj The object to compare against
+     */
+    public boolean equals(Object obj){
+    	if (this == obj) {
+            return true;
+        }
+    	
+        if (obj == null) {
+            return false;
+        }
+        
+        if (!(obj instanceof Deck)) {
+            return false;
+        }
+        
+        final Deck other = (Deck)obj;
+        
+        if (!name.equals(other.getName())) {
+            return false;
+        }
+        
+        if (!cards.equals(other.getCards())) {
+            return false;
+        }
+        
+        if(!type.equals(other.type)){
+        	return false;
+        }
+    	
+    	return true;
+    }
+    
+    /**
+     * Method copyFrom
+     * @param updatedDeck Deck
+     */
+    public void copyFrom(Deck updatedDeck) {
+        name = updatedDeck.getName();
+        cards = updatedDeck.getCards();
+        type = updatedDeck.getType();
+    }
 }
