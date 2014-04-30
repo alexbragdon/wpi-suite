@@ -39,7 +39,6 @@ public class JoiningSessionPanel extends JPanel {
      */
     public JoiningSessionPanel(MainView mainView, final MySessionPanel mySessionPanel) {
         parentView = mainView;
-        final String[] columnNames = { "ID", "Name", "End Time", "My Progress" };
 
         final Object[][] data = {};
 
