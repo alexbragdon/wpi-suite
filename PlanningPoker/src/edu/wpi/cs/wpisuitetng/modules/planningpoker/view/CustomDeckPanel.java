@@ -16,6 +16,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -56,7 +58,7 @@ public class CustomDeckPanel extends JPanel {
 	private Image cardImg;
 	private JPanel deckNamePanel;
 	private JScrollPane newCardScroll;
-	private JPanel scrollPanel;
+	private CustomCardPanel scrollPanel;
 	
 	public CustomDeckPanel(SessionPanel parent){
 		this.parent = parent;
@@ -76,7 +78,7 @@ public class CustomDeckPanel extends JPanel {
 		imgLabel.setIcon(new ImageIcon(this.cardImg));
 		imgLabel.add(numLabel);
 		
-		scrollPanel = new JPanel();
+		scrollPanel = new CustomCardPanel();
 		scrollPanel.setLayout(new MigLayout());
 		scrollPanel.setPreferredSize(new Dimension(260,310));
 		newCardScroll = new JScrollPane(scrollPanel);
@@ -149,7 +151,6 @@ public class CustomDeckPanel extends JPanel {
 	}
 	
 	protected Deck createDeckFromFields() {
-		// Temp session
 		Deck newDeck = new Deck("Empty", null, DeckSelectionType.SINGLE);
 		newDeck.setName(deckNameTxt.getText());
 		
@@ -158,16 +159,13 @@ public class CustomDeckPanel extends JPanel {
 		} else {
 			newDeck.setType(DeckSelectionType.MULTI);
 		}
-
 		
+		int[] cardInts = new int[scrollPanel.getCards().size()];		
+		for(int i = 0; i < scrollPanel.getCards().size(); i++){
+			cardInts[i] = Integer.parseInt(scrollPanel.getCards().get(i).getTextField().getText());
+		}
 		
+		newDeck.setCards(cardInts);
 		return newDeck;
 	}
-
-	public void createCard(){
-		//scrollPanel.add(new CustomCardPanel(this), "wrap");
-		//scrollPanel.repaint();
-	}
-	
-	public void remove(){}
 }
