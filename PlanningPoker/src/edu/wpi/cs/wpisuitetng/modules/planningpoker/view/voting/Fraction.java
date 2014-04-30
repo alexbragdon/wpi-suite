@@ -42,6 +42,10 @@ public class Fraction {
     
     @Override
     public String toString() {
+    	if (numerator == denominator) {
+    		return "Complete!";
+    	}
+    	
     	return numerator + "/" + denominator;
     }
     
