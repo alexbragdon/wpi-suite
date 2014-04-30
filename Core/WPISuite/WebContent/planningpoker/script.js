@@ -1,137 +1,104 @@
-var configuration = {
-	username: "",
-	project: "",
-	session: 0
-};
+$(function() {
+	$('#loginButton').click(login);
+	//$('#voteButton').click(vote);
+});
 
-function handleLoad() {
-	configureFromFragment();
-	fillFromConfiguration();
-}
+$(document).on('click', 'a', function(event) {
+	event.preventDefault();
+	if ($(this).attr('href') === '#votePage') {
+		configuration.requirementIndex = parseInt($(this).attr('data-requirement-index'));
+		updateVotePage();
+	}
+	$.mobile.navigate($(this).attr('href'));
+});
 
-function run() {
-	configureFromFragment();
-	configureFromFields();
-	var password = document.getElementById("password").value;
-	login(configuration.username, password, function(response) {
-		switchProject(configuration.project, function(response) {
-			getPlanningPokerSession(configuration.session, function(response) {
-				var session = JSON.parse(response)[0];
-				var output = "<h2>" + session.Name + "</h2>";
-				if (session.isComplete) {
-					output += "<p>Session is closed</p>";
-				} else if (session.isActive) {
-					session.RequirementEstimates.forEach(function(value, index) {
-						output += '<div class="requirement">';
-						output += "<h3>" + value.name + "</h3>";
-						output += "<p>" + value.description + "</p>";
-						output += '<input type="number" id="vote-' + index + '" />';
-						output += '<input type="button" value="Vote" onclick="vote(' + index + ');" />';
-						output += '</div>';
-					});
-				} else {
-					output += "<p>Session is new</p>";
-				}
-				document.getElementById("output").innerHTML = output;
+function login() {
+	var project = 'default';
+	var index = 1;
+	var username = $('#username').val();
+	window.configuration = {};
+	window.configuration.username = username;
+	var password = $('#password').val();
+	
+	if (username == '' || password == '') {
+		alert('Please enter your username and password.');
+		return;
+	}
+	
+	networkLogin(username, password, function() {
+		networkProject(project, function() {
+			networkGetSession(index, function() {
+				$('#sessionName').text(configuration.session.Name);
+				$('#sessionDescription').text(configuration.session.Description);
+				updateRequirementLists();
+				location.hash = 'overviewPage';
 			});
 		});
 	});
 }
 
-function vote(index) {
-	var value = parseInt(document.getElementById("vote-" + index).value);
-	postVote(index, value);
-}
-
-/* CONFIG FUNCTIONS */
-
-function getFromFragment(key) {
-	if (window.location.hash) {
-		var matches = window.location.hash.match(new RegExp(key + "=([^&]+)"));
-		if (matches !== null) {
-			return matches[1];
-		} else {
-			return null;
-		}
-	}
-}
-
-function configureFromFragment() {
-	var username = getFromFragment("username");
-	var project = getFromFragment("project");
-	var session = getFromFragment("session");
-	if (username !== null) {
-		configuration.username = username;
-	}
-	if (project !== null) {
-		configuration.project = project;
-	}
-	if (session !== null) {
-		var sessionNum = parseInt(session, 10);
-		if (sessionNum !== NaN) {
-			configuration.session = sessionNum;
-		}
-	}
-}
-
-function configureFromFields() {
-	var username = document.getElementById("username").value;
-	var project = document.getElementById("project").value;
-	configuration.username = username;
-	configuration.project = project;
-}
-
-function fillFromConfiguration() {
-	document.getElementById("username").value = configuration.username;
-	document.getElementById("project").value = configuration.project;
-}
-
-/* NETWORK FUNCTIONS */
-
-function login(username, password, callback) {
-	console.log("Logging in as " + username);
-	var auth = "Basic " + window.btoa(username + ":" + password);
-	var xhr = createXHR(callback);
-	xhr.open("POST", "/WPISuite/API/login");
-	xhr.setRequestHeader("Authorization", auth);
-	xhr.send();
-}
-
-function switchProject(project, callback) {
-	console.log("Switching to project " + project);
-	var xhr = createXHR(callback);
-	xhr.open("PUT", "/WPISuite/API/login");
-	xhr.send(project);
-}
-
-function getPlanningPokerSession(sessionIndex, callback) {
-	console.log("Getting planning poker sessions");
-	var xhr = createXHR(callback);
-	xhr.open("GET", "/WPISuite/API/planningpoker/planningpokersession/" + sessionIndex);
-	xhr.send();
-}
-
-function postVote(index, value, callback) {
-	getPlanningPokerSession(configuration.session, function(response) {
-		var session = JSON.parse(response)[0];
-		var userVote = {
-			"user": configuration.username,
-			"selectedCardIndices": [],
-			"totalEstimate": value
-		};
-		session.RequirementEstimates[index].votes[configuration.username] = userVote;
-		var xhr = createXHR(callback);
-		xhr.open("POST", "/WPISuite/API/planningpoker/planningpokersession/" + index);
-		xhr.send(JSON.stringify(session));
+function networkLogin(username, password, callback) {
+	var auth = 'Basic ' + window.btoa(username + ':' + password);
+	$.ajax({
+		url: '/WPISuite/API/login',
+		type: 'POST',
+		headers: { 'Authorization': auth },
+		success: callback,
+		error: function() { alert('Login failed.'); }
 	});
 }
 
-function createXHR(callback) {
-	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function() {
-		if (this.status == 200 && this.readyState == 4) {
-			callback(this.responseText);
+function networkProject(project, callback) {
+	$.ajax({
+		url: '/WPISuite/API/login',
+		type: 'PUT',
+		datatype: 'text',
+		data: project,
+		success: callback,
+		error: function() { alert('Login failed.'); }
+	});
+}
+
+function networkGetSession(index, callback) {
+	$.ajax({
+		url: '/WPISuite/API/planningpoker/planningpokersession/' + index,
+		type: 'GET',
+		success: function(data) {
+			window.configuration.session = JSON.parse(data)[0];
+			callback();
+		},
+		error: function() { alert('Login failed.'); }
+	});
+}
+
+function updateRequirementLists() {
+	$('#pendingList').empty();
+	$('#votedList').empty();
+	
+	configuration.session.RequirementEstimates.forEach(function(value, index) {
+		var output = '<li><a href="#votePage" data-requirement-index="' + index + '">'
+						+ value.name + '</a></li>';
+		if (configuration.username in value.votes) {
+			$('#votedList').append(output);
+		} else {
+			$('#pendingList').append(output);
 		}
-	};
-	return xhr;
+	});
+}
+
+function updateVotePage() {
+	$('#requirementName').empty();
+	$('#requirementDescription').empty();
+	var requirement = configuration.session.RequirementEstimates[configuration.requirementIndex];
+	
+	$('#requirementName').text(requirement.name);
+	$('#requirementDescription').text(requirement.description);
+	
+	if (configuration.username in requirement.votes) {
+		$('#vote').val(requirement.votes[configuration.username].totalEstimate);
+		$('#voteButton').text('Vote again');
+	} else {
+		$('#vote').val('');
+		$('#voteButton').text('Vote');
+	}
 }
