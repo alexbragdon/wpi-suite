@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -57,7 +57,7 @@ public class FinalEstimateButtonPanel extends JPanel {
 	public void buildLayout() {
 		JPanel midPanel = new JPanel();
 		final JLabel infoLabel = new JLabel(" Final Estimate");
-		errorLabel = new JLabel(" Sample error msg hahahahahhahaha ");
+		errorLabel = new JLabel(" ");
 		errorLabel.setForeground(Color.RED);
 		submitButton =new JButton("Submit");
 		submitButton.setPreferredSize(new Dimension(120, 100));

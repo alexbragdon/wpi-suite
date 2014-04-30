@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -32,6 +32,28 @@ import net.miginfocom.swing.MigLayout;
  */
 
 public class VoteStatisticPanel extends JPanel{
+	int user = 6;
+	String[] listData ={
+			"Ben"+generateSpace("Ben","12")+"12",
+			"Alex"+generateSpace("Alex","11")+"11",
+			"Xiaosong"+generateSpace("Xiaosong","10")+"10",
+			"Hellllll"+generateSpace("Hellllll","10")+"10",
+			"Hellllll"+generateSpace("Hellllll","10")+"10",
+//			"loooooooooog"+generateSpace("loooooooooog","10")+"10",
+//			"Ben"+generateSpace("Ben","12")+"12",
+//			"Alex"+generateSpace("Alex","11")+"11",
+//			"Xiaosong"+generateSpace("Xiaosong","10")+"10",
+//			"Hellllll"+generateSpace("Hellllll","10")+"10",
+//			"Hellllll"+generateSpace("Hellllll","10")+"10",
+//			"loooooooooog"+generateSpace("loooooooooog","10")+"10",
+//			"Ben"+generateSpace("Ben","12")+"12",
+//			"Alex"+generateSpace("Alex","11")+"11",
+//			"Xiaosong"+generateSpace("Xiaosong","10")+"10",
+//			"Hellllll"+generateSpace("Hellllll","10")+"10",
+//			"Hellllll"+generateSpace("Hellllll","10")+"10",
+//			"loooooooooog"+generateSpace("loooooooooog","10")+"10",
+			"Police"+generateSpace("Police","9") +"9"
+			};
 	
 	public VoteStatisticPanel() {
 		setLayout(new MigLayout());
@@ -49,27 +71,7 @@ public class VoteStatisticPanel extends JPanel{
 		// TODO Auto-generated method stub
 		JLabel infoLabel = new JLabel("Votes");
 		
-		String[] listData ={
-		"Ben"+generateSpace("Ben","12")+"12",
-		"Alex"+generateSpace("Alex","11")+"11",
-		"Xiaosong"+generateSpace("Xiaosong","10")+"10",
-		"Hellllll"+generateSpace("Hellllll","10")+"10",
-		"Hellllll"+generateSpace("Hellllll","10")+"10",
-		"loooooooooog"+generateSpace("loooooooooog","10")+"10",
-		"Ben"+generateSpace("Ben","12")+"12",
-		"Alex"+generateSpace("Alex","11")+"11",
-		"Xiaosong"+generateSpace("Xiaosong","10")+"10",
-		"Hellllll"+generateSpace("Hellllll","10")+"10",
-		"Hellllll"+generateSpace("Hellllll","10")+"10",
-		"loooooooooog"+generateSpace("loooooooooog","10")+"10",
-		"Ben"+generateSpace("Ben","12")+"12",
-		"Alex"+generateSpace("Alex","11")+"11",
-		"Xiaosong"+generateSpace("Xiaosong","10")+"10",
-		"Hellllll"+generateSpace("Hellllll","10")+"10",
-		"Hellllll"+generateSpace("Hellllll","10")+"10",
-		"loooooooooog"+generateSpace("loooooooooog","10")+"10",
-		"Police"+generateSpace("Police","9") +"9"
-		};
+		
 		
 		JList voteList = new JList(listData);
 		voteList.setFont(new Font("Ayuthaya", Font.PLAIN, 12));
@@ -93,7 +95,13 @@ public class VoteStatisticPanel extends JPanel{
 	 * @return the generated string
 	 */
 	public String generateSpace(String head, String tail){
-		int length = 22 - head.length() - tail.length();
+		int limit;
+		if(user>14){
+			limit = 22;
+		}else{
+			limit = 24;
+		}
+		int length = limit - head.length() - tail.length();
 		StringBuffer outputBuffer = new StringBuffer(length);
 		for (int i = 0; i < length; i++){
 		   outputBuffer.append(" ");

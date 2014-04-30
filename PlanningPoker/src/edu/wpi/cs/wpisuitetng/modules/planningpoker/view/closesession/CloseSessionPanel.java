@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -38,8 +39,9 @@ public class CloseSessionPanel extends JPanel {
     private final PlanningPokerSession session;
     private final boolean isEditable;
     private JScrollPane editPanel;
-    private CloseSessionButtonsPanel buttons;
     RequirementDescriptionPanel description;
+    private VoteStatisticPanel voteTable;
+    private FinalEstimateButtonPanel submitButtons;
 
     /**
      * Creates a new panel to enter estimates while closing the given session.
@@ -62,39 +64,59 @@ public class CloseSessionPanel extends JPanel {
         setLayout(new GridBagLayout());
         final GridBagConstraints c = new GridBagConstraints();
         
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        final GridBagConstraints c2 = new GridBagConstraints();
         editPanel = new JScrollPane(new JTable(new CloseSessionTableModel(session, isEditable)));
-        buttons = new CloseSessionButtonsPanel(this, isEditable);
+        voteTable = new VoteStatisticPanel();
+        c2.gridx = 0;
+        c2.gridy = 0;
+        c2.gridwidth = 4;
+        c2.gridheight = 1;
+        c2.weightx = 1.0;
+        c2.weighty = 1.0;
+        c2.fill = GridBagConstraints.BOTH;
+        panel.add(editPanel, c2);
+        c2.gridx = 4;
+        c2.gridy = 0;
+        c2.gridwidth = 1;
+        c2.gridheight = 1;
+        c2.weightx = 0.0;
+        c2.weighty = 1.0;
+        panel.add(voteTable, c2);
+        
         
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 3;
-        c.gridheight = 2;
+        c.gridwidth = 2;
+        c.gridheight = 1;
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.fill = GridBagConstraints.BOTH;
-        add(editPanel, c);
+        add(panel, c);
         
         description = new RequirementDescriptionPanel(session.getRequirements().get(0));
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 1;
         c.gridwidth = 1;
         c.gridheight = 1;
-        c.weightx = 0.8;
+        c.weightx = 0.7;
         c.weighty = 0.0;
         c.fill = GridBagConstraints.BOTH;
         add(description, c);
-        //add(editPanel, BorderLayout.CENTER);
-        //add(buttons, BorderLayout.SOUTH);
         
-        c.gridx = 0;
-        c.gridy = 2;
+        
+        submitButtons = new FinalEstimateButtonPanel();
+        c.gridx = 1;
+        c.gridy = 1;
         c.gridwidth = 1;
-        c.gridheight = 2;
-        c.weightx = 0.2;
+        c.gridheight = 1;
+        c.weightx = 0.3;
         c.weighty = 0.0;
         c.fill = GridBagConstraints.VERTICAL;
         c.anchor = GridBagConstraints.LINE_END;
-        add(buttons, c);
+        add(submitButtons, c);
+        
     }
 
     /**
