@@ -72,7 +72,7 @@ public class CloseSessionPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         final GridBagConstraints c2 = new GridBagConstraints();
-                table.changeSelection(0, 0, false, false);
+        table.changeSelection(0, 0, false, false);
         
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -157,10 +157,10 @@ public class CloseSessionPanel extends JPanel {
     
     /**
      * Update the field according to the selected requirements.
-     * @param selectedRequirement
+     * @param selectedRequirement the selected requirement
      */
     public void updateSelectedRequirement(final RequirementEstimate selectedRequirement){
-    	
+    	voteTable.updateListBox(selectedRequirement);
     }
     
     

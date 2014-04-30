@@ -8,21 +8,21 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.UserEstimate;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -34,31 +34,13 @@ import net.miginfocom.swing.MigLayout;
 
 public class VoteStatisticPanel extends JPanel{
 	private int user;
-	String[] listData ={
-			"Ben"+generateSpace("Ben","12")+"12",
-			"Alex"+generateSpace("Alex","11")+"11",
-			"Xiaosong"+generateSpace("Xiaosong","10")+"10",
-			"Hellllll"+generateSpace("Hellllll","10")+"10",
-			"Hellllll"+generateSpace("Hellllll","10")+"10",
-//			"loooooooooog"+generateSpace("loooooooooog","10")+"10",
-//			"Ben"+generateSpace("Ben","12")+"12",
-//			"Alex"+generateSpace("Alex","11")+"11",
-//			"Xiaosong"+generateSpace("Xiaosong","10")+"10",
-//			"Hellllll"+generateSpace("Hellllll","10")+"10",
-//			"Hellllll"+generateSpace("Hellllll","10")+"10",
-//			"loooooooooog"+generateSpace("loooooooooog","10")+"10",
-//			"Ben"+generateSpace("Ben","12")+"12",
-//			"Alex"+generateSpace("Alex","11")+"11",
-//			"Xiaosong"+generateSpace("Xiaosong","10")+"10",
-//			"Hellllll"+generateSpace("Hellllll","10")+"10",
-//			"Hellllll"+generateSpace("Hellllll","10")+"10",
-//			"loooooooooog"+generateSpace("loooooooooog","10")+"10",
-			"Police"+generateSpace("Police","9") +"9"
-			};
+	private DefaultListModel listData= new DefaultListModel();
 	
 	public VoteStatisticPanel(PlanningPokerSession session) {
-//		this.user = session.getRequirements().g;
 		setLayout(new MigLayout());
+		
+		RequirementEstimate selectedRequirement = session.getRequirements().get(0);
+		 updateListBox(selectedRequirement);
 
 		buildLayout();
 
@@ -109,6 +91,18 @@ public class VoteStatisticPanel extends JPanel{
 		   outputBuffer.append(" ");
 		}
 		return outputBuffer.toString();
+	}
+	
+	public void updateListBox(final RequirementEstimate selectedRequirement){
+		//int length = selectedRequirement.getVotes().size();
+		listData.removeAllElements();
+		for( UserEstimate votes : selectedRequirement.getVotes().values()){
+			String user = votes.getUser();
+			String estimate = Integer.toString(votes.getTotalEstimate());
+			listData.addElement(user + generateSpace(user, estimate) + estimate );
+		}
+		System.out.println("=========================");
+		
 	}
 
 }
