@@ -75,7 +75,6 @@ public class CloseSessionPanel extends JPanel {
         panel.setLayout(new GridBagLayout());
         final GridBagConstraints c2 = new GridBagConstraints();
         table.changeSelection(0, 0, false, false);
-        //table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -106,7 +105,7 @@ public class CloseSessionPanel extends JPanel {
         c2.gridwidth = 1;
         c2.gridheight = 2;
         c2.weightx = 0.0;
-        c2.weighty = 2.0;
+        c2.weighty = 1.0;
         panel.add(voteTable, c2);
         
         

@@ -8,6 +8,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
+import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,8 +41,8 @@ public class VoteStatisticPanel extends JPanel{
 			"Xiaosong"+generateSpace("Xiaosong","10")+"10",
 			"Hellllll"+generateSpace("Hellllll","10")+"10",
 			"Hellllll"+generateSpace("Hellllll","10")+"10",
-//			"loooooooooog"+generateSpace("loooooooooog","10")+"10",
-//			"Ben"+generateSpace("Ben","12")+"12",
+			"loooooooooog"+generateSpace("loooooooooog","10")+"10",
+			"Ben"+generateSpace("Ben","12")+"12",
 //			"Alex"+generateSpace("Alex","11")+"11",
 //			"Xiaosong"+generateSpace("Xiaosong","10")+"10",
 //			"Hellllll"+generateSpace("Hellllll","10")+"10",
@@ -50,20 +51,20 @@ public class VoteStatisticPanel extends JPanel{
 //			"Ben"+generateSpace("Ben","12")+"12",
 //			"Alex"+generateSpace("Alex","11")+"11",
 //			"Xiaosong"+generateSpace("Xiaosong","10")+"10",
-//			"Hellllll"+generateSpace("Hellllll","10")+"10",
-//			"Hellllll"+generateSpace("Hellllll","10")+"10",
-//			"loooooooooog"+generateSpace("loooooooooog","10")+"10",
+			"Hellllll"+generateSpace("Hellllll","10")+"10",
+			"Hellllll"+generateSpace("Hellllll","10")+"10",
+			"loooooooooog"+generateSpace("loooooooooog","10")+"10",
 			"Police"+generateSpace("Police","9") +"9"
 			};
 	
 	public VoteStatisticPanel(PlanningPokerSession session) {
 //		this.user = session.getRequirements().g;
-		setLayout(new MigLayout());
+		setLayout(new BorderLayout());
 
 		buildLayout();
 
-		setMinimumSize(new Dimension(210, 450));
-		setPreferredSize(new Dimension(210, 450));
+		setMinimumSize(new Dimension(210, 440));
+		setPreferredSize(new Dimension(210, 440));
 	}
 
 	/**
@@ -71,9 +72,9 @@ public class VoteStatisticPanel extends JPanel{
 	 */
 	private void buildLayout() {
 		// TODO Auto-generated method stub
-		JLabel infoLabel = new JLabel("Votes");
-		
-		
+		JLabel infoLabel = new JLabel("  Votes");
+		JPanel blankPanel = new JPanel();
+		JPanel blankPanel2 = new JPanel();
 		
 		JList voteList = new JList(listData);
 		voteList.setFont(new Font("Ayuthaya", Font.PLAIN, 12));
@@ -85,8 +86,11 @@ public class VoteStatisticPanel extends JPanel{
 		listScroller.setBorder(BorderFactory.createLineBorder(Color.black));
 		listScroller.setPreferredSize(new Dimension(200, 440));
 		
-		add(infoLabel,"wrap");
-		add(listScroller);
+		add(infoLabel, BorderLayout.NORTH);
+		add(blankPanel2, BorderLayout.WEST);
+		add(listScroller, BorderLayout.CENTER);
+		add(blankPanel, BorderLayout.EAST);
+		
 		
 	}
 	
@@ -98,10 +102,10 @@ public class VoteStatisticPanel extends JPanel{
 	 */
 	public String generateSpace(String head, String tail){
 		int limit;
-		if(user>14){
+		if(user > 16){
 			limit = 22;
 		}else{
-			limit = 24;
+			limit = 26;
 		}
 		int length = limit - head.length() - tail.length();
 		StringBuffer outputBuffer = new StringBuffer(length);
