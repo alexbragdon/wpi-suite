@@ -41,9 +41,14 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
                     boolean hasFocus, int row, int column) {
-        final Fraction fraction = (Fraction)value;
-        progressBar.setValue((int)(fraction.getValue() * MAX));
-        progressBar.setString(fraction.getNumerator() + "/" + fraction.getDenominator());
+        final Fraction fraction = (Fraction) value;
+        
+        if (fraction.isComplete()) {
+        	progressBar.setValue(progressBar.getMaximum());
+        } else {
+        	progressBar.setValue((int)(fraction.getValue() * MAX));
+        }
+        progressBar.setString(fraction.toString());
 
         if (fraction.getValue() >= 0.99 && fraction.getValue() <= 1.01) {
             progressBar.setForeground(new Color(102, 204, 102));
