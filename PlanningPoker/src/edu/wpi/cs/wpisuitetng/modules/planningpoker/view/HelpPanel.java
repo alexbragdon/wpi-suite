@@ -37,7 +37,9 @@ public class HelpPanel extends JPanel{
 		JLabel title = new JLabel("Planning Poker Help");
 		title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 28));
 		JLabel title2 = new JLabel("Getting Started");
-		title2.setFont(new Font(title.getFont().getName(), Font.PLAIN, 28));
+		title2.setFont(new Font(title2.getFont().getName(), Font.PLAIN, 28));
+		JLabel title3 = new JLabel("Creating a Game");
+		title3.setFont(new Font(title3.getFont().getName(), Font.PLAIN, 28));
 		
 		JTextArea description = new JTextArea();
 		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 18));
@@ -73,14 +75,32 @@ public class HelpPanel extends JPanel{
 				+ " The test button will send an email to the email that is currently in the type box, so you can check if it works before submitting it!"
 				+ " The cancel button will set the upper panel back into the 3-button standard form, and will ignore anything you typed in without submitting."
 				+ " Upon clicking the 'SMS Settings' button, the area around the button will once again change. This time, however, you will be prompted to enter a"
-				+ " Phone number, as well as a carrier. The 'Submit', 'Cancel' and 'Test' buttons all work the same way for SMS as they do for Email.");
+				+ " Phone number, as well as a carrier. The 'Submit', 'Cancel' and 'Test' buttons all work the same way for SMS as they do for Email."
+				+ " On the far left of the screen you will notice the 'Create Game' button. This will be addressed in the next section.");
 		final JScrollPane scrollPanel2 = new JScrollPane(description2);
 		scrollPanel2.setBorder(new LineBorder(color));
+		
+
+		JTextArea description3 = new JTextArea();
+		description3.setFont(new Font(description3.getFont().getName(), Font.PLAIN, 14));
+		description3.setPreferredSize(new Dimension(1500, 300));
+		description3.setBackground(color) ;
+		description3.setLineWrap(true);
+		description3.setWrapStyleWord(true);
+		description3.setEditable(false);
+		description3.setText("Now let's begin actually making a game! If you want to be a moderator, you should pay attention to this part of the tutorial in particular."
+				+ " On the upper left hand corner of the games window, you should notice the 'Create Game' button. When clicked, you will be taken to a tab in"
+				+ " which you can begin creating a game. These games are entirely customizable, and many of the features of a Planning Poker game are entirely up to you!"
+				+ "");
+		final JScrollPane scrollPanel3 = new JScrollPane(description3);
+		scrollPanel3.setBorder(new LineBorder(color));
 		
 		this.add(title, "wrap");
 		this.add(scrollPanel, "wrap");
 		this.add(title2, "wrap");
 		this.add(scrollPanel2,"wrap");
+		this.add(title3, "wrap");
+		
 		
 		this.setMinimumSize(new Dimension(1000, 800));
 		this.setPreferredSize(new Dimension(1000, 800));
