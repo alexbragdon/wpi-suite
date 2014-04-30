@@ -211,4 +211,9 @@ public class VotingOverviewPanel extends JPanel {
     	}
     	parent.showFinishIcon();
     }
+    
+    public String valueForVote() {
+    	int row = table.getSelectedRow();
+    	return Integer.toString((int) model.getValueAt(row, 3));
+    }
 }
