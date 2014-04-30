@@ -47,7 +47,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
  */
 public class JoiningSessionTable extends JTable {
 
-    private DefaultTableModel tableModel = null;
+    private JoiningSessionTableModel tableModel = null;
 
     private final Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
 
@@ -59,9 +59,9 @@ public class JoiningSessionTable extends JTable {
      * @param data Initial data to fill OverviewTable
      * @param columnNames Column headers of OverviewTable
      */
-    public JoiningSessionTable(Object[][] data, String[] columnNames, MySessionPanel mySessionPanel) {
+    public JoiningSessionTable(MySessionPanel mySessionPanel) {
         this.mySessionPanel = mySessionPanel;
-        tableModel = new DefaultTableModel(data, columnNames);
+        tableModel = new JoiningSessionTableModel();
         this.setModel(tableModel);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setDropMode(DropMode.ON);
