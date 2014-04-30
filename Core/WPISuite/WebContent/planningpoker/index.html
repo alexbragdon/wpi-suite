@@ -1,24 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Planning Poker Web App</title>
-    <script src="script.js"></script>
-    <!--<link rel="stylesheet" href="css/style.css">-->
+	<meta charset="utf-8">
+	<title>Planning Poker Web App</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+	<script src="script.js"></script>
 </head>
-<body onload="handleLoad();">
-    <h1>Planning Poker Web App</h1>
-    <fieldset>
-    	<legend>Login</legend>
-    	<label for="username">Username:</label>
-    	<input id="username" type="text" />
-    	<label for="password">Password:</label>
-    	<input id="password" type="password" />
-    	<label for="project">Project:</label>
-    	<input id="project" type="text" />
-    	<input type="button" value="Log in" onclick="run();" />
-    </fieldset>
-    <div id="output">
-    </div>
+<body>
+	<div id="loginPage" data-role="page">
+		<div data-role="header">
+			<h1>Planning Poker</h1>
+		</div>
+
+		<div role="main" class="ui-content">
+			<h3>Welcome! Please sign in.</h3>
+			<label for="username" class="ui-hidden-accessible">Username:</label>
+			<input id="username" value="" placeholder="username" type="text">
+			<label for="password" class="ui-hidden-accessible">Password:</label>
+			<input id="password" value="" placeholder="password" type="password">
+			<button type="button" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" onclick="location.hash='closedPage';">Sign in</button>
+		</div>
+	</div>
+
+	<div id="overviewPage" data-role="page">
+		<div data-role="header">
+			<h1>Select Requirement</h1>
+		</div>
+
+		<div role="main" class="ui-content">
+			<h3>Requirements without votes</h3>
+			<ul data-role="listview" data-inset="true">
+				<li><a href="#votePage">Requirement with a very long name that might not fit on the display</a></li>
+				<li><a href="#votePage">Requirement 2</a></li>
+				<li><a href="#votePage">Requirement 3</a></li>
+				<li><a href="#votePage">Requirement 4</a></li>
+				<li><a href="#votePage">Requirement 5</a></li>
+				<li><a href="#votePage">Requirement 6</a></li>
+				<li><a href="#votePage">Requirement 7</a></li>
+				<li><a href="#votePage">Requirement 8</a></li>
+				<li><a href="#votePage">Requirement 9</a></li>
+				<li><a href="#votePage">Requirement 10</a></li>
+				<li><a href="#votePage">Requirement 11</a></li>
+				<li><a href="#votePage">Requirement 12</a></li>
+				<li><a href="#votePage">Requirement 13</a></li>
+				<li><a href="#votePage">Requirement 14</a></li>
+				<li><a href="#votePage">Requirement 15</a></li>
+				<li><a href="#votePage">Requirement 16</a></li>
+				<li><a href="#votePage">Requirement 17</a></li>
+				<li><a href="#votePage">Requirement 18</a></li>
+				<li><a href="#votePage">Requirement 19</a></li>
+				<li><a href="#votePage">Requirement 20</a></li>
+			</ul>
+			<h3>Requirements with votes</h3>
+			<ul data-role="listview" data-inset="true">
+				<li><a href="#votePage">Requirement with a very long name that might not fit on the display</a></li>
+				<li><a href="#votePage">Requirement 2</a></li>
+				<li><a href="#votePage">Requirement 3</a></li>
+				<li><a href="#votePage">Requirement 4</a></li>
+				<li><a href="#votePage">Requirement 5</a></li>
+				<li><a href="#votePage">Requirement 6</a></li>
+				<li><a href="#votePage">Requirement 7</a></li>
+				<li><a href="#votePage">Requirement 8</a></li>
+				<li><a href="#votePage">Requirement 9</a></li>
+				<li><a href="#votePage">Requirement 10</a></li>
+				<li><a href="#votePage">Requirement 11</a></li>
+				<li><a href="#votePage">Requirement 12</a></li>
+				<li><a href="#votePage">Requirement 13</a></li>
+				<li><a href="#votePage">Requirement 14</a></li>
+				<li><a href="#votePage">Requirement 15</a></li>
+				<li><a href="#votePage">Requirement 16</a></li>
+				<li><a href="#votePage">Requirement 17</a></li>
+				<li><a href="#votePage">Requirement 18</a></li>
+				<li><a href="#votePage">Requirement 19</a></li>
+				<li><a href="#votePage">Requirement 20</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div id="votePage" data-role="page">
+		<div data-role="header">
+			<h1>Estimate Requirement</h1>
+		</div>
+
+		<div role="main" class="ui-content">
+			<h3>Prompt to save on exit</h3>
+			<p>As a user closing the application, I want to be prompted to save anything that has changed since the last save so that I can preserve useful work and discard erroneous work.</p>
+			<h3>Enter your estimate</h3>
+			<label for="voteField" class="ui-hidden-accessible">Estimate:</label>
+			<input data-clear-btn="true" placeholder="estimate" id="voteField" value="" type="number">
+			<button type="button" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" onclick="location.hash='overview';">Vote</button>
+		</div>
+	</div>
+
+	<div id="closedPage" data-role="page">
+		<div data-role="header">
+			<h1>Session Closed</h1>
+		</div>
+
+		<div role="main" class="ui-content">
+			<p>Sorry, the selected session is no longer open for voting.</p>
+		</div>
+	</div>
 </body>
 </html>
