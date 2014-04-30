@@ -45,8 +45,8 @@ public class FinalEstimateButtonPanel extends JPanel {
 		
 		buildLayout();
 		
-		setMinimumSize(new Dimension(290, 180));
-		setPreferredSize(new Dimension(290, 180));
+		setMinimumSize(new Dimension(320, 180));
+		setPreferredSize(new Dimension(320, 180));
 		
 	}
 	
@@ -56,7 +56,9 @@ public class FinalEstimateButtonPanel extends JPanel {
 	 */
 	public void buildLayout() {
 		JPanel midPanel = new JPanel();
-		final JLabel infoLabel = new JLabel(" Final Estimate");
+		JPanel emptyPanel = new JPanel();
+		emptyPanel.setMinimumSize(new Dimension(15, 100));
+		final JLabel infoLabel = new JLabel("Final Estimate");
 		errorLabel = new JLabel(" ");
 		errorLabel.setForeground(Color.RED);
 		submitButton = new JButton("Submit");
@@ -67,8 +69,9 @@ public class FinalEstimateButtonPanel extends JPanel {
 		estimateField.setEditable(true);
 		estimateField.setFont(new Font("default", Font.BOLD, 72));
 		midPanel.setLayout(new BorderLayout());
-		midPanel.setPreferredSize(new Dimension(240, 100));
+		midPanel.setPreferredSize(new Dimension(255, 100));
 		midPanel.add(estimateField, BorderLayout.WEST);
+		midPanel.add(emptyPanel, BorderLayout.CENTER);
 		midPanel.add(submitButton, BorderLayout.EAST);
 
 		try {
