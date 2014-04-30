@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
@@ -115,6 +116,7 @@ public class VotingPanel extends JPanel {
         c.gridheight = 1;
         if (hasDeck) {
         	// Need to get deck from the database here
+        	new GetDeckController(this, c);
         	
             final boolean isEditable = !session.getRequirements().get(0).getVotes()
                             .containsKey(ConfigManager.getConfig().getUserName());
@@ -180,6 +182,7 @@ public class VotingPanel extends JPanel {
      * @param decks A list of all decks in the database
      */
     public void buildCardPanel(GridBagConstraints c, Deck[] decks){
+    	/*
     	final boolean isEditable = !session.getRequirements().get(0).getVotes()
                 .containsKey(ConfigManager.getConfig().getUserName());
     	cards = new CardPanel("default", session.getRequirements().get(0), isEditable);
@@ -193,6 +196,7 @@ public class VotingPanel extends JPanel {
     	
     	cards.setButtonPanel(buttons);
         buttons.setCardPanel(cards);
+        */
     }
 
     /**

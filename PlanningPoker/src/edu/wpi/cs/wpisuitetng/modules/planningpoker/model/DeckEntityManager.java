@@ -88,10 +88,23 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	}
 
 	@Override
-	public Deck[] getEntity(Session arg0, String arg1)
+	public Deck[] getEntity(Session s, String name)
 			throws NotFoundException, WPISuiteException {
-		// TODO Auto-generated method stub
-		return null;
+		Deck[] decks = new Deck[1];
+		
+		// Get the deck by name
+		try {
+            decks = db.retrieve(Deck.class, "name", name, 
+                            s.getProject()).toArray(new Deck[0]);
+        } catch (WPISuiteException e) {
+            e.printStackTrace();
+        }
+		
+		if(decks.length < 1 || decks[0] == null) {
+            throw new NotFoundException("entity not found");
+        }
+		
+		return decks;
 	}
 
 	@Override

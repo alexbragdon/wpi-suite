@@ -9,6 +9,10 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import java.awt.GridBagConstraints;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.VotingPanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -19,13 +23,16 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @version Apr 29, 2014
  */
 public class GetDeckController {
-	private static final GetDeckController instance = null;
 	private final GetDeckObserver observer;
-
+	private VotingPanel votingPanel;
+	private GridBagConstraints votingPanelGridBagConstraints;
+	
 	/**
 	 * Construct a GetDeckController
 	 */
-	public GetDeckController() {
+	public GetDeckController(VotingPanel vp, GridBagConstraints c) {
+		votingPanel = vp;
+		votingPanelGridBagConstraints = c;
 		observer = new GetDeckObserver(this);
 	}
 
@@ -47,7 +54,7 @@ public class GetDeckController {
 	/**
 	 *
 	 */
-	public void sendToPanel(){
-		//
+	public void sendToPanel(Deck[] decks){
+		votingPanel.buildCardPanel(votingPanelGridBagConstraints, decks);
 	}
 }
