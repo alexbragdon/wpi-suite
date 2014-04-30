@@ -43,7 +43,7 @@ public class HelpPanel extends JPanel{
 		
 		JTextArea description = new JTextArea();
 		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 14));
-		description.setPreferredSize(new Dimension(1000, 100));
+		description.setPreferredSize(new Dimension(1000, 150));
 		description.setBackground(color) ;
 		description.setLineWrap(true);
 		description.setWrapStyleWord(true);
@@ -91,7 +91,9 @@ public class HelpPanel extends JPanel{
 		description3.setText("Now let's begin actually making a game! If you want to be a moderator, you should pay attention to this part of the tutorial in particular."
 				+ " On the upper left hand corner of the games window, you should notice the 'Create Game' button. When clicked, you will be taken to a tab in"
 				+ " which you can begin creating a game. These games are entirely customizable, and many of the features of a Planning Poker game are entirely up to you!"
-				+ "");
+				+ " The first things you should notice in the 'New Session' tab after clicking 'Create Game'"
+				+ " are two panels. The one on the left is used for setting up a game,"
+				+ " and the one on the right is used to create a personalized deck. ");
 		final JScrollPane scrollPanel3 = new JScrollPane(description3);
 		scrollPanel3.setBorder(new LineBorder(color));
 		
