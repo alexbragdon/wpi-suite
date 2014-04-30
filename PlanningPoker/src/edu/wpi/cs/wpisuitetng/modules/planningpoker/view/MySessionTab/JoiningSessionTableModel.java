@@ -64,6 +64,7 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 	 */
 	public void addSession(PlanningPokerSession session) {
 		sessions.add(session);
+		this.fireTableDataChanged();
 	}
 
 	@Override
@@ -140,6 +141,7 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 	 */
 	public void updateModel(List<PlanningPokerSession> newModel) {
 		sessions = newModel;
+		this.fireTableDataChanged();
 	}
 
 	/**
@@ -148,5 +150,6 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 	 */
 	public void removeRow(int row) {
 		sessions.remove(row);
+		this.fireTableDataChanged();
 	}
 }
