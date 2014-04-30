@@ -72,7 +72,7 @@ public class CloseSessionPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         final GridBagConstraints c2 = new GridBagConstraints();
-                table.changeSelection(0, 0, false, false);
+        table.changeSelection(0, 0, false, false);
         
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -116,7 +116,7 @@ public class CloseSessionPanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         add(panel, c);
         
-        description = new RequirementDescriptionPanel(session.getRequirements().get(0));
+        description = new RequirementDescriptionPanel(session.getRequirements().get(table.getSelectedRow()));
         c.gridx = 0;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -160,7 +160,7 @@ public class CloseSessionPanel extends JPanel {
      * @param selectedRequirement
      */
     public void updateSelectedRequirement(final RequirementEstimate selectedRequirement){
-    	
+    	description.updateDescription(selectedRequirement);
     }
     
     
