@@ -8,6 +8,11 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
+<<<<<<< HEAD
+=======
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+>>>>>>> FETCH_HEAD
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -34,18 +39,22 @@ import net.miginfocom.swing.MigLayout;
 
 public class VoteStatisticPanel extends JPanel{
 	private int user;
+
 	private DefaultListModel listData= new DefaultListModel();
 	
+
+	
 	public VoteStatisticPanel(PlanningPokerSession session) {
-		setLayout(new MigLayout());
-		
+//		this.user = session.getRequirements().g;
+		setLayout(new BorderLayout());
 		RequirementEstimate selectedRequirement = session.getRequirements().get(0);
 		 updateListBox(selectedRequirement);
 
+
 		buildLayout();
 
-		setMinimumSize(new Dimension(210, 450));
-		setPreferredSize(new Dimension(210, 450));
+		setMinimumSize(new Dimension(210, 440));
+		setPreferredSize(new Dimension(210, 440));
 	}
 
 	/**
@@ -53,9 +62,9 @@ public class VoteStatisticPanel extends JPanel{
 	 */
 	private void buildLayout() {
 		// TODO Auto-generated method stub
-		JLabel infoLabel = new JLabel("Votes");
-		
-		
+		JLabel infoLabel = new JLabel("  Votes");
+		JPanel blankPanel = new JPanel();
+		JPanel blankPanel2 = new JPanel();
 		
 		JList voteList = new JList(listData);
 		voteList.setFont(new Font("Ayuthaya", Font.PLAIN, 12));
@@ -67,8 +76,11 @@ public class VoteStatisticPanel extends JPanel{
 		listScroller.setBorder(BorderFactory.createLineBorder(Color.black));
 		listScroller.setPreferredSize(new Dimension(200, 440));
 		
-		add(infoLabel,"wrap");
-		add(listScroller);
+		add(infoLabel, BorderLayout.NORTH);
+		add(blankPanel2, BorderLayout.WEST);
+		add(listScroller, BorderLayout.CENTER);
+		add(blankPanel, BorderLayout.EAST);
+		
 		
 	}
 	
@@ -80,10 +92,10 @@ public class VoteStatisticPanel extends JPanel{
 	 */
 	public String generateSpace(String head, String tail){
 		int limit;
-		if(user>14){
+		if(user > 16){
 			limit = 22;
 		}else{
-			limit = 24;
+			limit = 26;
 		}
 		int length = limit - head.length() - tail.length();
 		StringBuffer outputBuffer = new StringBuffer(length);

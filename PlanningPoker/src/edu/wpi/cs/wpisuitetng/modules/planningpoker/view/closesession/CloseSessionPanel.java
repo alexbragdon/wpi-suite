@@ -18,6 +18,7 @@ import java.util.Date;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -62,6 +63,7 @@ public class CloseSessionPanel extends JPanel {
         
         this.isEditable = isEditable;
         table = new JTable(new CloseSessionTableModel(session, isEditable));
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         buildLayout();
     }
 
@@ -103,7 +105,7 @@ public class CloseSessionPanel extends JPanel {
         c2.gridwidth = 1;
         c2.gridheight = 2;
         c2.weightx = 0.0;
-        c2.weighty = 2.0;
+        c2.weighty = 1.0;
         panel.add(voteTable, c2);
         
         
@@ -116,7 +118,7 @@ public class CloseSessionPanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         add(panel, c);
         
-        description = new RequirementDescriptionPanel(session.getRequirements().get(0));
+        description = new RequirementDescriptionPanel(session.getRequirements().get(table.getSelectedRow()));
         c.gridx = 0;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -161,6 +163,7 @@ public class CloseSessionPanel extends JPanel {
      */
     public void updateSelectedRequirement(final RequirementEstimate selectedRequirement){
     	voteTable.updateListBox(selectedRequirement);
+    	description.updateDescription(selectedRequirement);
     }
     
     
