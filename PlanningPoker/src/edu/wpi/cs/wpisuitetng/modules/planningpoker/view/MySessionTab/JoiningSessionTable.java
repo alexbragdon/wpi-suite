@@ -126,36 +126,9 @@ public class JoiningSessionTable extends JTable {
      * @param session PlanningPokerSession
      */
     public void addSessions(PlanningPokerSession session) {
-        Date date = new Date(session.getDate().getTime());
-        String dateString = "--";
-        if (session.getType() == SessionType.DISTRIBUTED) {
-            final Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.set(Calendar.HOUR_OF_DAY, session.getHour());
-            calendar.set(Calendar.MINUTE, session.getMin());
-            date = calendar.getTime();
-            dateString = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(date);
-        }
 
-        int votes = 0;
-        for (RequirementEstimate requirement : session.getRequirements()) {
-            if (requirement.getVotes().containsKey(ConfigManager.getConfig().getUserName())) {
-                votes++;
-            }
-        }
-
-        String displayVotes;
-
-        if (session.getRequirements().size() == votes) {
-            displayVotes = "Complete!";
-        } else {
-            displayVotes = String.valueOf(votes) + "/"
-                            + String.valueOf(session.getRequirements().size());
-        }
-
-        tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(),
-                        dateString, displayVotes });
-
+    	
+        tableModel.addSession(session);
     }
 
     /**
