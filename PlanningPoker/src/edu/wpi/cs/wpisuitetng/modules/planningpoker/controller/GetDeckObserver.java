@@ -9,6 +9,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
@@ -16,7 +17,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 * @author Team Romulus
 * @version Apr 29, 2014
 */
-public class GetDeckObserver {
+public class GetDeckObserver implements RequestObserver {
 	private final GetDeckController controller;
 
     /**

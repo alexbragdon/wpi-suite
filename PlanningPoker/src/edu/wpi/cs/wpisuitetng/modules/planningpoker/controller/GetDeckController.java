@@ -20,35 +20,34 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class GetDeckController {
 	private static final GetDeckController instance = null;
-    private final GetDeckObserver observer;
+	private final GetDeckObserver observer;
 
-    /**
-     * Construct a GetDeckController
-     */
-    public GetDeckController() {
-        observer = new GetDeckObserver(this);
-    }
+	/**
+	 * Construct a GetDeckController
+	 */
+	public GetDeckController() {
+		observer = new GetDeckObserver(this);
+	}
 
-    /**
-     * Gets all users from the database
-     * 
-     * @param ebp EmailButtonPanel 
-     * @param username 
-     */
-    public void requestAllDecks() 
-    {
-        final Request request = 
-                        Network.getInstance().makeRequest("core/user/", HttpMethod.GET);
-        //request.addObserver(observer); // add an observer to process the response
-        request.send();
-    }
+	/**
+	 * Gets all users from the database
+	 * 
+	 * @param ebp EmailButtonPanel 
+	 * @param username 
+	 */
+	public void requestAllDecks() 
+	{
+		final Request request = 
+				Network.getInstance().makeRequest(
+						"planningpoker/deck", HttpMethod.GET);
+		request.addObserver(observer); // add an observer to process the response
+		request.send();
+	}
 
-    /**
-     *
-     *
-     * @param users
-     */
-    public void sendToPanel(){
-        //
-    }
+	/**
+	 *
+	 */
+	public void sendToPanel(){
+		//
+	}
 }
