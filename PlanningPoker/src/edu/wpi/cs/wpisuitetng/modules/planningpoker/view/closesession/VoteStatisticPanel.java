@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -32,7 +33,7 @@ import net.miginfocom.swing.MigLayout;
  */
 
 public class VoteStatisticPanel extends JPanel{
-	int user = 6;
+	private int user;
 	String[] listData ={
 			"Ben"+generateSpace("Ben","12")+"12",
 			"Alex"+generateSpace("Alex","11")+"11",
@@ -55,13 +56,14 @@ public class VoteStatisticPanel extends JPanel{
 			"Police"+generateSpace("Police","9") +"9"
 			};
 	
-	public VoteStatisticPanel() {
+	public VoteStatisticPanel(PlanningPokerSession session) {
+//		this.user = session.getRequirements().g;
 		setLayout(new MigLayout());
 
 		buildLayout();
 
-		setMinimumSize(new Dimension(210, 300));
-		setPreferredSize(new Dimension(210, 300));
+		setMinimumSize(new Dimension(210, 450));
+		setPreferredSize(new Dimension(210, 450));
 	}
 
 	/**
@@ -81,7 +83,7 @@ public class VoteStatisticPanel extends JPanel{
 		
 		JScrollPane listScroller = new JScrollPane(voteList);
 		listScroller.setBorder(BorderFactory.createLineBorder(Color.black));
-		listScroller.setPreferredSize(new Dimension(200, 300));
+		listScroller.setPreferredSize(new Dimension(200, 440));
 		
 		add(infoLabel,"wrap");
 		add(listScroller);

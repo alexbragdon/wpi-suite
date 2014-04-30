@@ -18,6 +18,8 @@ import java.util.Date;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
@@ -42,6 +44,8 @@ public class CloseSessionPanel extends JPanel {
     RequirementDescriptionPanel description;
     private VoteStatisticPanel voteTable;
     private FinalEstimateButtonPanel submitButtons;
+    private JTable table;
+
 
     /**
      * Creates a new panel to enter estimates while closing the given session.
@@ -57,6 +61,7 @@ public class CloseSessionPanel extends JPanel {
         }
         
         this.isEditable = isEditable;
+        table = new JTable(new CloseSessionTableModel(session, isEditable));
         buildLayout();
     }
 
@@ -67,8 +72,24 @@ public class CloseSessionPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         final GridBagConstraints c2 = new GridBagConstraints();
-        editPanel = new JScrollPane(new JTable(new CloseSessionTableModel(session, isEditable)));
-        voteTable = new VoteStatisticPanel();
+                table.changeSelection(0, 0, false, false);
+        
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                updateSelectedRequirement(getSelectedRequirement());
+
+//                if (getSelectedRequirement().getVotes().containsKey(user)) {
+//                    parent.getCards().disableEditing(true);
+//                } else {
+//                    parent.getCards().disableEditing(false);
+//                    parent.getButtonPanel().getVoteButton().setEnabled(false);
+//                }
+            }
+        });
+        
+        editPanel = new JScrollPane(table);
+        voteTable = new VoteStatisticPanel(session);
         c2.gridx = 0;
         c2.gridy = 0;
         c2.gridwidth = 4;
@@ -119,6 +140,30 @@ public class CloseSessionPanel extends JPanel {
         
     }
 
+    /**
+     * Gets the selected requirement.
+     * 
+     * @return selected requirement, or null if no requirement is selected
+     */
+    public RequirementEstimate getSelectedRequirement() {
+        int row = table.getSelectedRow();
+        if (row != -1) {
+            row = table.convertRowIndexToModel(row);
+            return session.getRequirements().get(row);
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * Update the field according to the selected requirements.
+     * @param selectedRequirement
+     */
+    public void updateSelectedRequirement(final RequirementEstimate selectedRequirement){
+    	
+    }
+    
+    
     /**
      * Called by the buttons panel when close is pressed.
      */
