@@ -43,9 +43,8 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
                     boolean hasFocus, int row, int column) {
         final Fraction fraction = (Fraction) value;
         
-        /* The purpose of this code is to make 0/0 fractions still show
-         * up as complete.
-         */
+
+        //make 0/0 fractions still show
         if (fraction.isComplete()) { //if the fraction is n/n
         	progressBar.setValue(progressBar.getMaximum()); //fill the bar
         } else {
