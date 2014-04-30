@@ -216,4 +216,11 @@ public class VotingOverviewPanel extends JPanel {
     	}
     	parent.showFinishIcon();
     }
+    
+    public String valueForVote() {
+    	int row = table.getSelectedRow();
+    	if (!model.getValueAt(row, 3).equals("--")) {
+    		return Integer.toString((int) model.getValueAt(row, 3));
+    	} else return "InvalidEntryNeverEnterThis23492910398290349";
+    }
 }

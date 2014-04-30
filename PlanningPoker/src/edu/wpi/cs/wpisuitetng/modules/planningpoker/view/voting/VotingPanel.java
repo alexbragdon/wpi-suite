@@ -333,5 +333,8 @@ public class VotingPanel extends JPanel {
         request.setBody(session.toJSON());
         request.send();
     }
-
+    
+    public VotingOverviewPanel getOverview() {
+    	return overview;
+    }
 }
