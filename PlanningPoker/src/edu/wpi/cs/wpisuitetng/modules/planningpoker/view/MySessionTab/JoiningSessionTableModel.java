@@ -76,7 +76,7 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		switch (columnIndex) {
-		case ID_COLUMN : return String.class;
+		case ID_COLUMN : return Integer.class;
 		case NAME_COLUMN : return String.class;
 
 		//Display as string so the "--" can be properly rendered
