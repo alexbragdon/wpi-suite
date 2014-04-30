@@ -51,6 +51,8 @@ public class VotingOverviewPanel extends JPanel {
     private VotingPanel parent;
 
     private int UserNum;
+    
+    private boolean done = false;
 
     /**
      * Creates a overview panel for voting with the given model.
@@ -125,12 +127,15 @@ public class VotingOverviewPanel extends JPanel {
                 requirements = session.getRequirements();
                 model.updateModel(session.getRequirements());
                 updateOverallProgress();
+                
                 if (session.isComplete()) {
-                	disableAndDisplayVotingEnded();
+                    done = true;
+                    disableAndDisplayVotingEnded();
                 }
-                if (session.hasEveryoneVoted(UserNum)) {
-                    parent.closeSession();
+                
+                if (!done && session.hasEveryoneVoted(UserNum)) {
                     notifyParent();
+                    parent.closeSession();
                 }
             }
         }
