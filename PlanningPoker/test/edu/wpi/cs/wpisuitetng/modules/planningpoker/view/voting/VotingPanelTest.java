@@ -50,6 +50,9 @@ public class VotingPanelTest {
         vp.getButtonPanel();
     }
     
-   
+   @Test
+   public void TestSetUserNum(){
+       vp.setUserNum(2);
+   }
     
 }
