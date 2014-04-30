@@ -42,7 +42,7 @@ public class HelpPanel extends JPanel{
 		title3.setFont(new Font(title3.getFont().getName(), Font.PLAIN, 28));
 		
 		JTextArea description = new JTextArea();
-		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 18));
+		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 14));
 		description.setPreferredSize(new Dimension(1000, 100));
 		description.setBackground(color) ;
 		description.setLineWrap(true);
@@ -100,6 +100,7 @@ public class HelpPanel extends JPanel{
 		this.add(title2, "wrap");
 		this.add(scrollPanel2,"wrap");
 		this.add(title3, "wrap");
+		this.add(scrollPanel3, "wrap");
 		
 		
 		this.setMinimumSize(new Dimension(1000, 800));
