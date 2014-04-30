@@ -64,7 +64,6 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 	 */
 	public void addSession(PlanningPokerSession session) {
 		sessions.add(session);
-		fireTableChangedAll();
 	}
 
 	@Override
@@ -141,17 +140,6 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 	 */
 	public void updateModel(List<PlanningPokerSession> newModel) {
 		sessions = newModel;
-		fireTableChangedAll();
-	}
-
-	/**
-	 * Fires a TableChanged event to all listeners for every cell in the table.
-	 * This method serves as shorthand as the same code is used many times
-	 * in this class
-	 */
-	private void fireTableChangedAll() {
-		fireTableChanged(new TableModelEvent(this, 0, getRowCount() - 1,
-				TableModelEvent.ALL_COLUMNS, TableModelEvent.UPDATE));
 	}
 
 	/**
@@ -160,6 +148,5 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 	 */
 	public void removeRow(int row) {
 		sessions.remove(row);
-		fireTableChangedAll();
 	}
 }
