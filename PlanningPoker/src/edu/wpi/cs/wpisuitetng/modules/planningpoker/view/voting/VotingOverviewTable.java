@@ -78,7 +78,7 @@ public class VotingOverviewTable extends JTable {
     
     @Override
     public String getToolTipText(MouseEvent event) {
-        Point p = event.getPoint();
+        Point p = event.getPoint(); 
         int rowIndex = rowAtPoint(p);
         
         RequirementEstimate requirement;
@@ -112,7 +112,7 @@ public class VotingOverviewTable extends JTable {
                 description = requirment.getDescription();
             } 
         } 
-        
+
         if (found && description.length() >= 77 ) {
             BreakIterator bi = BreakIterator.getWordInstance();
             bi.setText(description);
