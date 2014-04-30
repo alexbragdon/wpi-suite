@@ -1,5 +1,16 @@
 $(function() {
 	$('#loginButton').click(login);
+	
+	window.configuration = {};
+	var matches = document.URL.match(/planningpoker\/([^\/]+)\/([\d]+)\//);
+	if (matches !== null) {
+		configuration.project = matches[1];
+		configuration.sessionIndex = parseInt(matches[2]);
+	} else {
+		console.log('Unable to read URL configuration.');
+		configuration.project = '';
+		configuration.sessionIndex = 1;
+	}
 	//$('#voteButton').click(vote);
 });
 
@@ -13,11 +24,8 @@ $(document).on('click', 'a', function(event) {
 });
 
 function login() {
-	var project = 'default';
-	var index = 1;
 	var username = $('#username').val();
-	window.configuration = {};
-	window.configuration.username = username;
+	configuration.username = username;
 	var password = $('#password').val();
 	
 	if (username == '' || password == '') {
@@ -26,8 +34,8 @@ function login() {
 	}
 	
 	networkLogin(username, password, function() {
-		networkProject(project, function() {
-			networkGetSession(index, function() {
+		networkProject(configuration.project, function() {
+			networkGetSession(configuration.sessionIndex, function() {
 				$('#sessionName').text(configuration.session.Name);
 				$('#sessionDescription').text(configuration.session.Description);
 				updateRequirementLists();
