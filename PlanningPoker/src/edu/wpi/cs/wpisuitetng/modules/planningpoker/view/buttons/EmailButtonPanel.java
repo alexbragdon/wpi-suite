@@ -91,10 +91,12 @@ public class EmailButtonPanel extends ToolbarGroupView {
 
         // Email settings button
         try {
-            final Image img = ImageIO.read(getClass().getResource("emailButton.png"));
-            emailButton.setIcon(new ImageIcon(img));
-            SMSButton.setIcon(new ImageIcon(img));
-            helpButton.setIcon(new ImageIcon(img));
+            final Image emailImg = ImageIO.read(getClass().getResource("emailButton.png"));
+            final Image smsImg = ImageIO.read(getClass().getResource("smsButton.png"));
+            final Image helpImg = ImageIO.read(getClass().getResource("help.png"));
+            emailButton.setIcon(new ImageIcon(emailImg));
+            SMSButton.setIcon(new ImageIcon(smsImg));
+            helpButton.setIcon(new ImageIcon(helpImg));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
