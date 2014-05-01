@@ -230,21 +230,28 @@ public class RequirementEstimate {
     }
     
     public boolean isEqual(Requirement r) {
-        /*
         if (this.id != r.getId()) {
             return false;
         }
-        */
         if (!this.name.equals(r.getName())) {
             return false;
         }
-        /*
         if (this.type != r.getType()) {
             return false;
         }
         if (this.priority != r.getPriority()) {
             return false;
-        }*/
+        }
         return true;
+    }
+    
+    /**
+     * 
+     * Updates the estimate feild in the requirement in the DB, along with a note.
+     * Uses the finalEstimate field here and goes to accociated requirement
+     *
+     */
+    public void exportToRequirementManager() {
+        
     }
 }
