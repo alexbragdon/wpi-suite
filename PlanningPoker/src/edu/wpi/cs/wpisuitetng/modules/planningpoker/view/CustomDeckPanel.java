@@ -159,4 +159,8 @@ public class CustomDeckPanel extends JPanel {
 	public void createCard(){
 	//	private JPanel 
 	}
+	
+	public void remove(){
+		
+	}
 }
