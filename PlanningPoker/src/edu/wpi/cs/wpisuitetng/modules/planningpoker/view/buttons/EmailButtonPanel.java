@@ -339,7 +339,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
     public void setSMSSettings(User u){
     	u.setCarrier((String) CarrierChooser.getSelectedItem());
     	u.setSmsEnabled(SMSCheckBox.isSelected());
-    	u.setPhoneNumber(SMSField.getText());
+    	u.setPhoneNumber(SMSField.getText().replaceAll("[^\\d]", ""));
     	System.out.println(u.toJSON());
     	EditUserController.getInstance().setEmail(u);
     }
