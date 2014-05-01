@@ -28,14 +28,15 @@ public class CustomCardPanel extends JPanel {
 		this.parent = parent;
 		cards = new ArrayList<CustomCardValuePanel>();
 		this.setLayout(new MigLayout());
-		addCard(); // Add a blank card to the panel to initialize
+		//addCard(); // Add a blank card to the panel to initialize
+		checkCreateRemoveCard();
 	}
 	
 	/**
 	 * Adds a card to the panel and list of cards
 	 */
 	public void addCard(){
-		CustomCardValuePanel newCard = new CustomCardValuePanel(this);
+		CustomCardValuePanel newCard = new CustomCardValuePanel("", this);
 		cards.add(newCard);
 		add(newCard,"wrap");
 		repaint();
@@ -64,7 +65,38 @@ public class CustomCardPanel extends JPanel {
 		return cards;
 	}
 	
+	/**
+	 * Pass the card value to parent so that it can be shown
+	 * @param cardValue
+	 */
 	public void passCardValue(String cardValue){
 		parent.updateCard(cardValue);
+	}
+	
+	/**
+	 * If every card has number, create a new blank card.
+	 * If there are two blank card, delete one of them.
+	 */
+	public void checkCreateRemoveCard(){
+		if(cards.size() == 0){
+			addCard();
+		}else{
+			int blankCard = 0;
+			for(CustomCardValuePanel  card : cards){
+				if (card.isCardBlank()) blankCard ++;
+			}
+			if(blankCard == 0){
+				addCard();
+			}
+			if(blankCard == 2){
+				for(CustomCardValuePanel  card : cards){
+					if (card.isCardBlank()) {
+						cards.remove(card);
+						remove(card);
+						repaint();
+					}
+				}
+			}
+		}
 	}
 }

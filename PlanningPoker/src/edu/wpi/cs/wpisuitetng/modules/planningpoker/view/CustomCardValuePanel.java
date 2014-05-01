@@ -14,6 +14,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -36,12 +38,14 @@ import net.miginfocom.swing.MigLayout;
  * @version Apr 30, 2014
  */
 public class CustomCardValuePanel extends JPanel {
+	private String cardNum;
 	private JLabel label;
 	private JTextField textField;
 	private JButton button;
 	private CustomCardPanel parent;
 
-	public CustomCardValuePanel(CustomCardPanel customCardPanel){
+	public CustomCardValuePanel(String cardNum,CustomCardPanel customCardPanel){
+		this.cardNum = cardNum;
 		this.parent = customCardPanel;
 		setLayout(new MigLayout("insets 0 0 0 0"));
 		this.setPreferredSize(new Dimension(200, 35));
@@ -76,12 +80,21 @@ public class CustomCardValuePanel extends JPanel {
 	 * Method to setup listener for the text field and button.
 	 */
 	private void setupListener() {
-		textField.addMouseListener(new MouseAdapter(){
-            @Override
-            public void mouseClicked(MouseEvent e){
-            	parent.passCardValue(textField.getText());
-            }
-        });
+		
+		textField.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				// TODO Auto-generated method stub
+				parent.passCardValue(textField.getText());
+            	parent.checkCreateRemoveCard();
+				
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+			}
+		});
 		
 		textField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
@@ -93,6 +106,7 @@ public class CustomCardValuePanel extends JPanel {
 					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
 				}
+				parent.checkCreateRemoveCard();
 			}
 
 			@Override
@@ -104,6 +118,7 @@ public class CustomCardValuePanel extends JPanel {
 					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
 				}
+				parent.checkCreateRemoveCard();
 			}
 
 			@Override
@@ -115,12 +130,14 @@ public class CustomCardValuePanel extends JPanel {
 					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
 				}
+				parent.checkCreateRemoveCard();
 			}
 		});
 		
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeThisCard();
+				parent.checkCreateRemoveCard();
 			}
 		});
 		
@@ -130,6 +147,7 @@ public class CustomCardValuePanel extends JPanel {
 	 * Removes this card from the CustomCardPanel
 	 */
 	public void removeThisCard(){
+		parent.passCardValue("");
 		parent.removeCard(this);
 	}
 	
@@ -172,5 +190,13 @@ public class CustomCardValuePanel extends JPanel {
 	 */
 	public JTextField getTextField() {
 		return textField;
+	}
+	
+	/**
+	 * Check if this card is a blank card.
+	 * @return true if the card is blank, false otherwise
+	 */
+	public boolean isCardBlank(){
+		return this.textField.getText().equals("");
 	}
 }

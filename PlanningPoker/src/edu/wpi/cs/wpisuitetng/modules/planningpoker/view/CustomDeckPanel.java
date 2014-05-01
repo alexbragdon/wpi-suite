@@ -28,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController;
@@ -61,8 +62,6 @@ public class CustomDeckPanel extends JPanel {
 	private CustomCardPanel scrollPanel;
 	
 	
-	JButton tempButton;
-	
 	public CustomDeckPanel(SessionPanel parent){
 		this.parent = parent;
 		
@@ -86,6 +85,7 @@ public class CustomDeckPanel extends JPanel {
 		//scrollPanel.setPreferredSize(new Dimension(200,310));
 		newCardScroll = new JScrollPane(scrollPanel);
 		newCardScroll.setPreferredSize(new Dimension(235, 320));
+		newCardScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
 		
 		this.deckName = new JLabel("Deck name    ");
 		this.deckNameTxt = new JTextField();
@@ -103,8 +103,6 @@ public class CustomDeckPanel extends JPanel {
 		deckNamePanel.setLayout(new BorderLayout());
 		singleSelect.setSelected(true);
 		
-		tempButton = new JButton("create");
-		
 		setupListeners();
 		
 		add(title, "wrap");
@@ -120,9 +118,6 @@ public class CustomDeckPanel extends JPanel {
 		add(this.dontKnowCard,"wrap");
 		add(this.createDeck);
 		add(this.cancelDeck);
-		
-		
-		add(tempButton);
 	}
 	
 	public void setupListeners(){
@@ -158,12 +153,6 @@ public class CustomDeckPanel extends JPanel {
 			}
 		});
 		
-		tempButton.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				scrollPanel.addCard();
-			}
-		});
 	}
 	
 	protected Deck createDeckFromFields() {
