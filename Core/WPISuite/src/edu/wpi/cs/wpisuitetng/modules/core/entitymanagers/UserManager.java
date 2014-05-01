@@ -264,6 +264,16 @@ public class UserManager implements EntityManager<User> {
 			}
 			
 			toUpdate.setHasNotificationsEnabled(changes.getHasNotificationsEnabled());
+			
+			if (changes.getCarrier() != null) {
+				toUpdate.setCarrier(changes.getCarrier());
+			}
+			
+			if (changes.getPhoneNumber() != null) {
+				toUpdate.setPhoneNumber(changes.getPhoneNumber());
+			}
+			
+			toUpdate.setSmsEnabled(changes.hasSmsEnabled());
 	
 			if((changes.getRole() != null))
 			{
