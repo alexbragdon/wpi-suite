@@ -20,29 +20,32 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
  * @author Team Romulus
  * @version Apr 30, 2014
  */
-public class CloseButtonPanelTest {
-    private CloseButtonPanel CBP;
-    
+public class CloseOpenButtonTest {
+    private CloseOpenButton COB;
+    private MainView mv;
     @Before
     public void setUp(){
-        MainView mv = new MainView();
+        mv = new MainView();
         ToolbarView tbv = new ToolbarView(true, mv);
-        CBP = tbv.GetCloseButtonPanel();
+        CloseButtonPanel CBP = tbv.GetCloseButtonPanel();
+        COB = new CloseOpenButton(CBP);
     }
     
     @Test
-    public void TestGetterandSetter(){
-        CBP.getCloseButton();
-        CBP.setSelectedPanelIndex(0);
-        CBP.isSessionActive();
-        CBP.setSessionActive(false);
+    public void TestUpdate(){
+        COB.Update(0, false);
+        COB.Update(0, true);
+        COB.Update(1, false);
+        COB.Update(2, false);
     }
     
     @Test
-    public void TestPressCloseButton(){
-        //CBP.setSelectedPanelIndex(0);
-        CBP.setSessionActive(true);
-        CBP.pressCloseButton();
-        
+    public void TestCloseSession(){
+        COB.CloseSession(mv);
+    }
+    
+    @Test
+    public void TestOpenSession(){
+        COB.OpenSession(mv);
     }
 }

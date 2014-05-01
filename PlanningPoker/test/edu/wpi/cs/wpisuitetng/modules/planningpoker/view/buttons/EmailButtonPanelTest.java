@@ -8,9 +8,12 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 
@@ -20,29 +23,27 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
  * @author Team Romulus
  * @version Apr 30, 2014
  */
-public class CloseButtonPanelTest {
-    private CloseButtonPanel CBP;
-    
+public class EmailButtonPanelTest {
+    private EmailButtonPanel EBP;
+
     @Before
     public void setUp(){
         MainView mv = new MainView();
         ToolbarView tbv = new ToolbarView(true, mv);
-        CBP = tbv.GetCloseButtonPanel();
+        EBP = tbv.GetEmailButtonPanel();
     }
-    
+
     @Test
-    public void TestGetterandSetter(){
-        CBP.getCloseButton();
-        CBP.setSelectedPanelIndex(0);
-        CBP.isSessionActive();
-        CBP.setSessionActive(false);
+    public void TestContainTenDigit(){
+        assertTrue(EBP.containTenDigit("1234567890"));
+        assertFalse(EBP.containTenDigit("1234567x90"));
     }
-    
+
     @Test
-    public void TestPressCloseButton(){
-        //CBP.setSelectedPanelIndex(0);
-        CBP.setSessionActive(true);
-        CBP.pressCloseButton();
-        
+    public void TestSetUser(){
+        User user = new User("Tester Test", "test", "test", 123);
+        user.setEmail("test@test.edu");
+        EBP.setUser(user);
+        EBP.canValidateSMS();
     }
 }

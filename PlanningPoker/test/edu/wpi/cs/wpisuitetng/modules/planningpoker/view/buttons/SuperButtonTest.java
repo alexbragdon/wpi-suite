@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SuperButton;
 
 /**
  * Description
@@ -20,29 +21,22 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
  * @author Team Romulus
  * @version Apr 30, 2014
  */
-public class CloseButtonPanelTest {
-    private CloseButtonPanel CBP;
+public class SuperButtonTest {
+    private SuperButton SB;
     
     @Before
     public void setUp(){
         MainView mv = new MainView();
         ToolbarView tbv = new ToolbarView(true, mv);
-        CBP = tbv.GetCloseButtonPanel();
+        SuperButtonPanel SBP = tbv.GetSuperButtonPanel();
+        SB = new SuperButton(SBP);
     }
     
     @Test
-    public void TestGetterandSetter(){
-        CBP.getCloseButton();
-        CBP.setSelectedPanelIndex(0);
-        CBP.isSessionActive();
-        CBP.setSessionActive(false);
-    }
-    
-    @Test
-    public void TestPressCloseButton(){
-        //CBP.setSelectedPanelIndex(0);
-        CBP.setSessionActive(true);
-        CBP.pressCloseButton();
-        
+    public void TestUpdate(){
+        SB.Update(0, false);
+        SB.Update(0, true);
+        SB.Update(1, false);
+        SB.Update(2, false);
     }
 }

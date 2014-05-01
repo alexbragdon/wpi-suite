@@ -20,29 +20,38 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
  * @author Team Romulus
  * @version Apr 30, 2014
  */
-public class CloseButtonPanelTest {
-    private CloseButtonPanel CBP;
+public class SuperButtonPanelTest {
+    private SuperButtonPanel SBP;
     
     @Before
     public void setUp(){
         MainView mv = new MainView();
         ToolbarView tbv = new ToolbarView(true, mv);
-        CBP = tbv.GetCloseButtonPanel();
+        SBP = tbv.GetSuperButtonPanel();
     }
     
     @Test
     public void TestGetterandSetter(){
-        CBP.getCloseButton();
-        CBP.setSelectedPanelIndex(0);
-        CBP.isSessionActive();
-        CBP.setSessionActive(false);
+        SBP.getSuperButton();
+        SBP.getSelectedPanelIndex();
+        SBP.setSelectedPanelIndex(0);
+        SBP.isSessionActive();
+        SBP.setSessionActive(false);
     }
     
     @Test
-    public void TestPressCloseButton(){
-        //CBP.setSelectedPanelIndex(0);
-        CBP.setSessionActive(true);
-        CBP.pressCloseButton();
+    public void TestPressSuperButton(){
+        SBP.setSelectedPanelIndex(0);
+        SBP.setSessionActive(false);
+        SBP.pressSuperButton();
         
+        SBP.setSessionActive(true);
+        SBP.pressSuperButton();
+        
+        SBP.setSelectedPanelIndex(1);
+        SBP.pressSuperButton();
+        
+        SBP.setSelectedPanelIndex(2);
+        SBP.pressSuperButton();
     }
 }

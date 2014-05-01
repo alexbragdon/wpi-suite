@@ -395,7 +395,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
     	return count == 10;
     }
     
-    public boolean isInteger(char s) {
+    private boolean isInteger(char s) {
         String numbers = "0123456789";
         for (int i = 0; i < numbers.length(); i++) {
         	if (numbers.charAt(i) == s) {
