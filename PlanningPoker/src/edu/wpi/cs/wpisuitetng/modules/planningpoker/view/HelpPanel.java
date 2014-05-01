@@ -42,8 +42,8 @@ public class HelpPanel extends JPanel{
 		title3.setFont(new Font(title3.getFont().getName(), Font.PLAIN, 28));
 		
 		JTextArea description = new JTextArea();
-		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 14));
-		description.setPreferredSize(new Dimension(1000, 150));
+		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 12));
+		description.setPreferredSize(new Dimension(1500, 60));
 		description.setBackground(color) ;
 		description.setLineWrap(true);
 		description.setWrapStyleWord(true);
@@ -56,7 +56,7 @@ public class HelpPanel extends JPanel{
 		
 		JTextArea description2 = new JTextArea();
 		description2.setFont(new Font(description2.getFont().getName(), Font.PLAIN, 12));
-		description2.setPreferredSize(new Dimension(1500, 300));
+		description2.setPreferredSize(new Dimension(1500, 200));
 		description2.setBackground(color) ;
 		description2.setLineWrap(true);
 		description2.setWrapStyleWord(true);
@@ -83,7 +83,7 @@ public class HelpPanel extends JPanel{
 
 		JTextArea description3 = new JTextArea();
 		description3.setFont(new Font(description3.getFont().getName(), Font.PLAIN, 12));
-		description3.setPreferredSize(new Dimension(1500, 300));
+		description3.setPreferredSize(new Dimension(1500, 200));
 		description3.setBackground(color) ;
 		description3.setLineWrap(true);
 		description3.setWrapStyleWord(true);
@@ -110,8 +110,8 @@ public class HelpPanel extends JPanel{
 		this.add(scrollPanel3, "wrap");
 		
 		
-		this.setMinimumSize(new Dimension(1000, 800));
-		this.setPreferredSize(new Dimension(1000, 800));
+		this.setMinimumSize(new Dimension(1550, 800));
+		this.setPreferredSize(new Dimension(1550, 800));
 		
 	}
 
