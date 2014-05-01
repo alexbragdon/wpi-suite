@@ -35,11 +35,13 @@ public class HelpPanel extends JPanel{
 		
 		this.setLayout(new MigLayout());
 		JLabel title = new JLabel("Planning Poker Help");
-		title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 28));
+		title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 24));
 		JLabel title2 = new JLabel("Getting Started");
-		title2.setFont(new Font(title2.getFont().getName(), Font.PLAIN, 28));
+		title2.setFont(new Font(title2.getFont().getName(), Font.PLAIN, 24));
 		JLabel title3 = new JLabel("Creating a Game");
-		title3.setFont(new Font(title3.getFont().getName(), Font.PLAIN, 28));
+		title3.setFont(new Font(title3.getFont().getName(), Font.PLAIN, 24));
+		JLabel title4 = new JLabel("Voting in a Game");
+		title4.setFont(new Font(title4.getFont().getName(), Font.PLAIN, 24));
 		
 		JTextArea description = new JTextArea();
 		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 14));
@@ -110,10 +112,21 @@ public class HelpPanel extends JPanel{
 				+ " Simply fill in any positive integer, and move on to the next box. Once you have done this for as many cards as you want, hit the 'Create Deck'"
 				+ " button. Note that at any time, you can remove a card by clicking on the small 'X' next to the box that contains the cards number. In addition,"
 				+ " you can cancel the creation of your deck at any time by clicking on the 'Cancel Deck Creation' card. Once you have either finished your deck,"
-				+ " or decided to cancel it's creation, the window will revert to the requirements selection panel.s");
+				+ " or decided to cancel it's creation, the window will revert to the requirements selection panel.");
 		
 		final JScrollPane scrollPanel3 = new JScrollPane(description3);
 		scrollPanel3.setBorder(new LineBorder(color));
+		
+		JTextArea description4 = new JTextArea();
+		description4.setFont(new Font(description.getFont().getName(), Font.PLAIN, 14));
+		description4.setPreferredSize(new Dimension(1500, 150));
+		description4.setBackground(color) ;
+		description4.setLineWrap(true);
+		description4.setWrapStyleWord(true);
+		description4.setEditable(false);
+		description4.setText("");
+		final JScrollPane scrollPanel4 = new JScrollPane(description);
+		scrollPanel4.setBorder(new LineBorder(color));
 		
 		this.add(title, "wrap");
 		this.add(scrollPanel, "wrap");
@@ -121,6 +134,7 @@ public class HelpPanel extends JPanel{
 		this.add(scrollPanel2,"wrap");
 		this.add(title3, "wrap");
 		this.add(scrollPanel3, "wrap");
+		this.add(title4, "wrap");
 		
 		
 		this.setMinimumSize(new Dimension(1000, 800));
