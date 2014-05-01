@@ -12,14 +12,19 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
@@ -46,13 +51,15 @@ public class CustomDeckPanel extends JPanel {
 	
 	private JButton createDeck;
 	private JButton cancelDeck;
-	
 	private SessionPanel parent;
-	
 	private JLabel title;
-	
-	private JPanel custonCardPanel;
+	private final JLabel numLabel;
+	private final JLabel imgLabel;
+	private Image cardImg;
 	private JPanel deckNamePanel;
+	private JScrollPane newCardScroll;
+	
+	private int index;
 	
 	// TODO: Need some sort of data structure to hold textboxes and card values
 	
@@ -61,6 +68,24 @@ public class CustomDeckPanel extends JPanel {
 		
 		this.setLayout(new MigLayout());
 		// TODO: Create a decent layout for this panel
+		
+		index = 0;
+		
+		imgLabel = new JLabel();
+		imgLabel.setLayout(new BorderLayout());
+		numLabel = new JLabel("23");
+		numLabel.setFont(numLabel.getFont().deriveFont(Font.PLAIN, 120));
+		numLabel.setHorizontalAlignment(JLabel.CENTER);
+		try {
+			this.cardImg = ImageIO.read(getClass().getResource("blank-medium.png"));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		imgLabel.setIcon(new ImageIcon(this.cardImg));
+		imgLabel.add(numLabel);
+		
+		newCardScroll = new JScrollPane();
+		newCardScroll.setPreferredSize(new Dimension(280, 320));
 		
 		this.deckName = new JLabel("Deck name    ");
 		this.deckNameTxt = new JTextField();
@@ -73,11 +98,10 @@ public class CustomDeckPanel extends JPanel {
 		this.cancelDeck = new JButton("Cancel Deck Creation");
 		title = new JLabel("Create a new deck");
 		title.setFont(new Font(title.getFont().getName(), Font.BOLD, 15));
-		custonCardPanel = new JPanel();
-		custonCardPanel.setPreferredSize(new Dimension(800, 400));
 		deckNamePanel = new JPanel();
 		deckNamePanel.setPreferredSize(new Dimension(320, 30));
 		deckNamePanel.setLayout(new BorderLayout());
+		singleSelect.setSelected(true);
 		
 		setupListeners();
 		
@@ -85,7 +109,8 @@ public class CustomDeckPanel extends JPanel {
 		deckNamePanel.add(this.deckName, BorderLayout.WEST);
 		deckNamePanel.add(this.deckNameTxt, BorderLayout.CENTER);
 		add(deckNamePanel,"span x, wrap");
-		add(custonCardPanel,"span x, wrap");
+		add(imgLabel);
+		add(newCardScroll,"wrap");
 		add(this.selectionMode, "wrap");
 		add(singleSelect,"wrap");
 		add(multiSelect,"wrap");
@@ -115,5 +140,23 @@ public class CustomDeckPanel extends JPanel {
 				parent.getShowDeck().setEnabled(true);
 			}
 		});
+		
+		singleSelect.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				multiSelect.setSelected(false);
+			}
+		});
+		
+		multiSelect.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				singleSelect.setSelected(false);
+			}
+		});
+	}
+	
+	public void createCard(){
+	//	private JPanel 
 	}
 }
