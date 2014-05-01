@@ -8,7 +8,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -96,10 +95,17 @@ public class CustomCardValuePanel extends JPanel {
 		
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// parent.remove();
+				removeThisCard();
 			}
 		});
 		
+	}
+	
+	/**
+	 * Removes this card from the CustomCardPanel
+	 */
+	public void removeThisCard(){
+		parent.removeCard(this);
 	}
 	
 	/**

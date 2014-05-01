@@ -9,6 +9,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -21,8 +22,8 @@ public class CustomCardPanel extends JPanel {
 	private List<CustomCardValuePanel> cards;
 	
 	public CustomCardPanel(){
-		CustomCardValuePanel newCard = new CustomCardValuePanel(this);
-		cards.add(newCard);		
+		cards = new ArrayList<CustomCardValuePanel>();
+		addCard(); // Add a blank card to the panel to initialize
 	}
 	
 	/**
@@ -38,8 +39,10 @@ public class CustomCardPanel extends JPanel {
 	/**
 	 * Removes a card after hitting the corresponding "x" button
 	 */
-	public void removeCard(){
-		
+	public void removeCard(CustomCardValuePanel c){
+		cards.remove(c);
+		remove(c);
+		repaint();
 	}
 	
 	/**
