@@ -26,6 +26,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -79,9 +80,9 @@ public class EmailButtonPanel extends ToolbarGroupView {
             "<html>Help</html>");
     /**
      * 
-     * Constructor for EmailButtonPannel
+     * Constructor for EmailButtonPanel
      *
-     * @param parent Where this pannel goes
+     * @param parent Where this panel goes
      */
     public EmailButtonPanel(final MainView parent) {
         super("");
@@ -120,7 +121,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         SMSSubmitButton.setEnabled(false);
         SMSTestButton = new JButton("Test");
 
-        // Button for cancelling an email address
+        // Button for canceling an email address
         emailCancelButton = new JButton("Cancel");
         SMSCancelButton = new JButton("Cancel");
         // Validation label
@@ -188,8 +189,14 @@ public class EmailButtonPanel extends ToolbarGroupView {
             @Override
             public void actionPerformed(ActionEvent e) {
             	canValidateSMS();
-                emailScrollPanel.setVisible(false);
-                SMSPanel.setVisible(true);
+                if(displayUser == null){
+                    new GetAllUsersController().requestAllUsers(EmailButtonPanel.this, 
+                                    ConfigManager.getConfig().getUserName()); 
+                    switchToEditSMS();
+                 
+                } else {
+                	switchToEditSMS();
+                }
             }
         });
 		
@@ -204,13 +211,10 @@ public class EmailButtonPanel extends ToolbarGroupView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(displayUser == null){
-                    // Send email to all users
                     new GetAllUsersController().requestAllUsers(EmailButtonPanel.this, 
                                     ConfigManager.getConfig().getUserName()); 
-                }
-
-                else{
-                    switchToEdit();
+                } else{
+                	switchToEdit();
                 }
             }
         });
@@ -219,6 +223,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (canValidateSMS()) {
+                	setSMSSettings(displayUser);
                     emailScrollPanel.setVisible(true);
                     SMSPanel.setVisible(false);
                 } else {
@@ -330,6 +335,14 @@ public class EmailButtonPanel extends ToolbarGroupView {
         u.setHasNotificationsEnabled(emailCheckBox.isSelected());
         EditUserController.getInstance().setEmail(u);
     }
+    
+    public void setSMSSettings(User u){
+    	u.setCarrier((String) CarrierChooser.getSelectedItem());
+    	u.setSmsEnabled(SMSCheckBox.isSelected());
+    	u.setPhoneNumber(SMSField.getText());
+    	System.out.println(u.toJSON());
+    	EditUserController.getInstance().setEmail(u);
+    }
 
     /**
      * 
@@ -411,12 +424,11 @@ public class EmailButtonPanel extends ToolbarGroupView {
      */
     public void setUser(User user) {
         displayUser = user;
-        switchToEdit();
     }
 
     /**
      * 
-     * Change Pannel mode to Edit
+     * Change Panel mode to Edit
      *
      */
     public void switchToEdit(){
@@ -425,5 +437,13 @@ public class EmailButtonPanel extends ToolbarGroupView {
         emailPanel.setVisible(true);
         emailCheckBox.setSelected(displayUser.getHasNotificationsEnabled());
         emailSubmitButton.setEnabled(canValidateEmail());
+    }
+    
+    public void switchToEditSMS() {
+    	CarrierChooser.setSelectedItem(displayUser.getCarrier());
+    	SMSCheckBox.setSelected(displayUser.hasSmsEnabled());
+    	SMSField.setText(displayUser.getPhoneNumber());
+    	emailScrollPanel.setVisible(false);
+        SMSPanel.setVisible(true);
     }
 }
