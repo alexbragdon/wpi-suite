@@ -8,6 +8,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -39,13 +40,17 @@ public class CustomCardValuePanel extends JPanel {
 
 	public CustomCardValuePanel(CustomCardPanel customCardPanel){
 		this.parent = customCardPanel;
-		setLayout(new MigLayout());
-		setPreferredSize(new Dimension(250, 30));
+		setLayout(new MigLayout("insets 0 0 0 0"));
+		this.setPreferredSize(new Dimension(200, 35));
+		this.setMaximumSize(new Dimension(200, 35));
+		this.setMinimumSize(new Dimension(200, 35));
 		
 		label = new JLabel("  ");
+		label.setPreferredSize(new Dimension(35, 30));
 		textField = new JTextField();
-		textField.setPreferredSize(new Dimension(100, 25));
+		textField.setPreferredSize(new Dimension(100, 50));
 		button = new JButton();
+		button.setPreferredSize(new Dimension(35, 30));
 		try {
 			Image img = ImageIO.read(getClass().getResource("cancel-icon.png"));
 			button.setIcon(new ImageIcon(img));
@@ -55,6 +60,7 @@ public class CustomCardValuePanel extends JPanel {
 		
 		setupListener();
 		
+		this.setBackground(Color.red);
 		add(label);
 		add(textField);
 		add(button);
@@ -69,8 +75,10 @@ public class CustomCardValuePanel extends JPanel {
 			public void changedUpdate(DocumentEvent e) {
 				if(!validateField()){
 					label.setText("  ");
+					parent.passCardValue("");
 				}else{
 					label.setText("\u2713");
+					parent.passCardValue(textField.getText());
 				}
 			}
 
@@ -78,8 +86,10 @@ public class CustomCardValuePanel extends JPanel {
 			public void insertUpdate(DocumentEvent e) {
 				if(!validateField()){
 					label.setText("  ");
+					parent.passCardValue("");
 				}else{
 					label.setText("\u2713");
+					parent.passCardValue(textField.getText());
 				}
 			}
 
@@ -87,8 +97,10 @@ public class CustomCardValuePanel extends JPanel {
 			public void removeUpdate(DocumentEvent e) {
 				if(!validateField()){
 					label.setText("  ");
+					parent.passCardValue("");
 				}else{
 					label.setText("\u2713");
+					parent.passCardValue(textField.getText());
 				}
 			}
 		});

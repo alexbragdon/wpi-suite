@@ -14,15 +14,20 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import net.miginfocom.swing.MigLayout;
+
 /**
  * @author Team Romulus
  * @version Iteration-6
  */
 public class CustomCardPanel extends JPanel {
 	private List<CustomCardValuePanel> cards;
+	private CustomDeckPanel parent;
 	
-	public CustomCardPanel(){
+	public CustomCardPanel(CustomDeckPanel parent){
+		this.parent = parent;
 		cards = new ArrayList<CustomCardValuePanel>();
+		this.setLayout(new MigLayout());
 		addCard(); // Add a blank card to the panel to initialize
 	}
 	
@@ -32,7 +37,7 @@ public class CustomCardPanel extends JPanel {
 	public void addCard(){
 		CustomCardValuePanel newCard = new CustomCardValuePanel(this);
 		cards.add(newCard);
-		add(newCard, "wrap");
+		add(newCard,"wrap");
 		repaint();
 	}
 	
@@ -57,5 +62,9 @@ public class CustomCardPanel extends JPanel {
 	 */
 	public List<CustomCardValuePanel> getCards() {
 		return cards;
+	}
+	
+	public void passCardValue(String cardValue){
+		parent.updateCard(cardValue);
 	}
 }

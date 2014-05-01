@@ -60,6 +60,9 @@ public class CustomDeckPanel extends JPanel {
 	private JScrollPane newCardScroll;
 	private CustomCardPanel scrollPanel;
 	
+	
+	JButton tempButton;
+	
 	public CustomDeckPanel(SessionPanel parent){
 		this.parent = parent;
 		
@@ -67,7 +70,7 @@ public class CustomDeckPanel extends JPanel {
 		
 		imgLabel = new JLabel();
 		imgLabel.setLayout(new BorderLayout());
-		numLabel = new JLabel("23");
+		numLabel = new JLabel("");
 		numLabel.setFont(numLabel.getFont().deriveFont(Font.PLAIN, 120));
 		numLabel.setHorizontalAlignment(JLabel.CENTER);
 		try {
@@ -78,8 +81,8 @@ public class CustomDeckPanel extends JPanel {
 		imgLabel.setIcon(new ImageIcon(this.cardImg));
 		imgLabel.add(numLabel);
 		
-		scrollPanel = new CustomCardPanel();
-		scrollPanel.setLayout(new MigLayout());
+		scrollPanel = new CustomCardPanel(this);
+		//scrollPanel.setLayout(new MigLayout());
 		scrollPanel.setPreferredSize(new Dimension(260,310));
 		newCardScroll = new JScrollPane(scrollPanel);
 		newCardScroll.setPreferredSize(new Dimension(280, 320));
@@ -100,6 +103,8 @@ public class CustomDeckPanel extends JPanel {
 		deckNamePanel.setLayout(new BorderLayout());
 		singleSelect.setSelected(true);
 		
+		tempButton = new JButton("create");
+		
 		setupListeners();
 		
 		add(title, "wrap");
@@ -114,6 +119,9 @@ public class CustomDeckPanel extends JPanel {
 		add(this.dontKnowCard,"wrap");
 		add(this.createDeck);
 		add(this.cancelDeck);
+		
+		
+		add(tempButton);
 	}
 	
 	public void setupListeners(){
@@ -148,6 +156,13 @@ public class CustomDeckPanel extends JPanel {
 				singleSelect.setSelected(false);
 			}
 		});
+		
+		tempButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				scrollPanel.addCard();
+			}
+		});
 	}
 	
 	protected Deck createDeckFromFields() {
@@ -167,5 +182,9 @@ public class CustomDeckPanel extends JPanel {
 		
 		newDeck.setCards(cardInts);
 		return newDeck;
+	}
+	
+	public void updateCard(String cardValue){
+		numLabel.setText(cardValue);
 	}
 }
