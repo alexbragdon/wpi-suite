@@ -12,11 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -54,6 +51,8 @@ public class VotingOverviewPanel extends JPanel {
     private VotingPanel parent;
 
     private int UserNum;
+    
+    private boolean done = false;
 
     /**
      * Creates a overview panel for voting with the given model.
@@ -128,12 +127,15 @@ public class VotingOverviewPanel extends JPanel {
                 requirements = session.getRequirements();
                 model.updateModel(session.getRequirements());
                 updateOverallProgress();
+                
                 if (session.isComplete()) {
-                	disableAndDisplayVotingEnded();
+                    done = true;
+                    disableAndDisplayVotingEnded();
                 }
-                if (session.hasEveryoneVoted(UserNum)) {
-                    parent.closeSession();
+                
+                if (!done && session.hasEveryoneVoted(UserNum)) {
                     notifyParent();
+                    parent.closeSession();
                 }
             }
         }
@@ -203,7 +205,7 @@ public class VotingOverviewPanel extends JPanel {
     
     public void disableAndDisplayVotingEnded() {
     	if (!session.getDeck().equals("-None-")) {
-    		parent.getCards().clearCardSelection();
+    		//parent.getCards().clearCardSelection();
     		parent.getCards().disableEditing(true);
     		parent.getButtonPanel().getClearButton().setEnabled(false);
     		parent.getButtonPanel().getVoteButton().setEnabled(false);
@@ -213,5 +215,12 @@ public class VotingOverviewPanel extends JPanel {
     	parent.getButtonPanel().getEstimateField().setEnabled(false);
     	}
     	parent.showFinishIcon();
+    }
+    
+    public String valueForVote() {
+    	int row = table.getSelectedRow();
+    	if (!model.getValueAt(row, 3).equals("--")) {
+    		return Integer.toString((int) model.getValueAt(row, 3));
+    	} else return "InvalidEntryNeverEnterThis23492910398290349";
     }
 }

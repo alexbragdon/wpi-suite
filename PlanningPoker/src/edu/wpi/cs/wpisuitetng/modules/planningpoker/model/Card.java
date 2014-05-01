@@ -164,11 +164,11 @@ public class Card extends JPanel {
 	private void refreshImage() {
 		if (selected && isEditable) {
 			imgLabel.setIcon(new ImageIcon(cardSelectedImg));
-		} else if (!selected && isEditable) {
+		} if (!selected && isEditable) {
 			imgLabel.setIcon(new ImageIcon(cardImg));
-		} else if (selected && !isEditable) {
+		} if (selected && !isEditable) {
 			imgLabel.setIcon(new ImageIcon(cardSelectedDisabledImg));
-		} else {
+		} if (!selected && !isEditable) {
 			imgLabel.setIcon(new ImageIcon(cardDisabledImg));
 		}
 	}

@@ -11,6 +11,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionRequirementPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -93,7 +95,7 @@ public class GetRequirementsController implements ActionListener {
 	 * 
 	 * @param requirements array of requirements received from the server
 	 */
-	public void receivedRequirements(Requirement[] requirements) {
+	public void receivedRequirements(ArrayList<Requirement> requirements) {
 		// Make sure the response was not null
 		if (requirements != null) {
 			panel.addRequirements(requirements);

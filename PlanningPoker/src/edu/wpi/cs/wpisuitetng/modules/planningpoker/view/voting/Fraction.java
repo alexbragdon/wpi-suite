@@ -40,8 +40,20 @@ public class Fraction {
         return numerator;
     }
     
+    /**
+     * Returns true if the all votes have been cast
+     * @return true if the fraction's value is 1
+     */
+    public boolean isComplete() {
+    	return (numerator == denominator);
+    }
+    
     @Override
     public String toString() {
+    	if (numerator == denominator) {
+    		return "Complete!";
+    	}
+    	
     	return numerator + "/" + denominator;
     }
     

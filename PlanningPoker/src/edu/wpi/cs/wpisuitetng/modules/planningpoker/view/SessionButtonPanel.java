@@ -45,14 +45,14 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
                     ViewMode viewMode, PlanningPokerSession session) {
         switch (viewMode) {
             case EDIT:
-                saveButton = new JButton("Update");
+                saveButton = new JButton("Update Game");
                 clearButton = new JButton("Undo changes");
                 cancelButton = new JButton("Cancel");
                 openButton = new JButton("Open Game");
                 openButton.setToolTipText("Open this game.");
                 break;
             case CREATE:
-                saveButton = new JButton("Create");
+                saveButton = new JButton("Create Game");
                 clearButton = new JButton("Clear");
                 cancelButton = new JButton("Cancel");
                 openButton = new JButton("Create and Open");
