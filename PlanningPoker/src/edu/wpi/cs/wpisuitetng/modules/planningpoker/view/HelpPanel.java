@@ -43,7 +43,7 @@ public class HelpPanel extends JPanel{
 		
 		JTextArea description = new JTextArea();
 		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 14));
-		description.setPreferredSize(new Dimension(1000, 150));
+		description.setPreferredSize(new Dimension(1500, 150));
 		description.setBackground(color) ;
 		description.setLineWrap(true);
 		description.setWrapStyleWord(true);
@@ -56,7 +56,7 @@ public class HelpPanel extends JPanel{
 		
 		JTextArea description2 = new JTextArea();
 		description2.setFont(new Font(description2.getFont().getName(), Font.PLAIN, 12));
-		description2.setPreferredSize(new Dimension(1500, 300));
+		description2.setPreferredSize(new Dimension(1500, 200));
 		description2.setBackground(color) ;
 		description2.setLineWrap(true);
 		description2.setWrapStyleWord(true);
@@ -83,7 +83,7 @@ public class HelpPanel extends JPanel{
 
 		JTextArea description3 = new JTextArea();
 		description3.setFont(new Font(description3.getFont().getName(), Font.PLAIN, 12));
-		description3.setPreferredSize(new Dimension(1500, 300));
+		description3.setPreferredSize(new Dimension(1500, 150));
 		description3.setBackground(color) ;
 		description3.setLineWrap(true);
 		description3.setWrapStyleWord(true);
@@ -94,11 +94,24 @@ public class HelpPanel extends JPanel{
 				+ " The first things you should notice in the 'New Session' tab after clicking 'Create Game'"
 				+ " are two panels. The one on the left is used for setting up a game,"
 				+ " and the one on the right is used to insert Requirements. It is also used for creating decks. But for now, let's begin by creating a game with a premade deck."
-				+ " Begin creating your deck by clicking on the text box uner 'Name', and input what you want the name of your game to be."
+				+ " Begin creating your deck by clicking on the text box under 'Name', and input what you want the name of your game to be."
 				+ " After that, do the same thing with the Description of your game. After doing that, you can set a time limit if you want to."
 				+ " After toggling the 'End at' button (if you want to set a time limit), input what time of the day you want your project to end."
 				+ " Keep in mind that time is going to be interpreted in 24-hour military time. After this, you need to enter what day you want the game to end."
-				+ " You can do this by clicking the small calendar symbol next to the second text box! ");
+				+ " You can do this by clicking the small calendar symbol next to the second text box! All that is left to complete this game is to import"
+				+ " Any requirements you think you may need. To do this, you may need to import requirements from the requirements manager. After choosing your requirements,"
+				+ " you are now able to hit the 'Create Game' button at the bottom left of the window. Note that at any time, you can clear all fields by hitting the"
+				+ " 'Clear' button, and can cancel your creation by hitting the 'Cancel' button. Now, let's talk about creating your very own custom deck."
+				+ " If you want to make a game that utilizes a custom deck, you can do so up to the point at which you choose a pre-made deck, but instead"
+				+ " Select 'Create a New Deck'. Upon doing so, the window containing the requirements will be replaced with the Deck Creation window. In order to"
+				+ " Create your new deck, first enter what you would like the name of your deck to be. Then, you must indicate wether or not you want your"
+				+ " deck to allow single selections or multiple selections, and you must indicate if you want your deck to iclude an 'I don't know' card."
+				+ " After you have done this, you can begin to input what cards you want in your deck. To do this, use the text boxes next to the large card."
+				+ " Simply fill in any positive integer, and move on to the next box. Once you have done this for as many cards as you want, hit the 'Create Deck'"
+				+ " button. Note that at any time, you can remove a card by clicking on the small 'X' next to the box that contains the cards number. In addition,"
+				+ " you can cancel the creation of your deck at any time by clicking on the 'Cancel Deck Creation' card. Once you have either finished your deck,"
+				+ " or decided to cancel it's creation, the window will revert to the requirements selection panel.s");
+		
 		final JScrollPane scrollPanel3 = new JScrollPane(description3);
 		scrollPanel3.setBorder(new LineBorder(color));
 		
