@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,9 +34,9 @@ public class SessionClosedSmsTemplateTest {
     
     @Before
     public void setUp(){
-        ArrayList<RequirementEstimate> requirement = new ArrayList<RequirementEstimate>();
+        final List<RequirementEstimate> requirement = new ArrayList<RequirementEstimate>();
         requirement.add(new RequirementEstimate(0, "Test1", 0, true));
-        PlanningPokerSession session = new PlanningPokerSession(
+        final PlanningPokerSession session = new PlanningPokerSession(
                         1,  "Test", "test", new Date(), 0,  0,
                         requirement, SessionType.DISTRIBUTED, true, 
                         true, "admin", "-None-");

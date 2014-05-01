@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,8 +29,8 @@ public class VotingOverviewTableModelTest {
 
     @Before
     public void setUp(){
-        RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
-        ArrayList<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
+        final RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
+        final List<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
         listEst.add(testReq);
         votm = new VotingOverviewTableModel(listEst, 1, "admin");
     }
@@ -51,7 +52,7 @@ public class VotingOverviewTableModelTest {
     @Test
     public void testGetterandSetter(){
         votm.setTeamCount(3);
-        assertEquals(3,votm.getTeamCount());
+        assertEquals(3, votm.getTeamCount());
     }
     
     @Test

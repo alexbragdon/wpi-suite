@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,20 +27,19 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
  * @version Apr 21, 2014
  */
 public class EmailSenderTest {
-    //private EmailMessage msg;
     private EmailSender emailSender;
     private User user;
     
     @Before
     public void setUp(){
-        ArrayList<RequirementEstimate> requirement = new ArrayList<RequirementEstimate>();
+        final List<RequirementEstimate> requirement = new ArrayList<RequirementEstimate>();
         requirement.add(new RequirementEstimate(0, "Test1", 0, true));
-        PlanningPokerSession session = new PlanningPokerSession(
+        final PlanningPokerSession session = new PlanningPokerSession(
                         1,  "Test", "test", new Date(), 0,  0,
                         requirement, SessionType.DISTRIBUTED, true, 
                         true, "admin", "-None-");
         session.setCompletionTime(new Date());
-        SessionClosedEmailTemplate template;
+        final SessionClosedEmailTemplate template;
         template = new SessionClosedEmailTemplate(
                         session);
         emailSender = new EmailSender(template);

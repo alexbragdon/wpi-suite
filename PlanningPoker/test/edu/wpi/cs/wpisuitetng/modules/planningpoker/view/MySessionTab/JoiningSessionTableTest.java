@@ -38,7 +38,7 @@ public class JoiningSessionTableTest {
     
     @Test
     public void testAddSessions(){
-        PlanningPokerSession session = new PlanningPokerSession();
+        final PlanningPokerSession session = new PlanningPokerSession();
         session.setType(SessionType.DISTRIBUTED);
         System.out.println(session.toString());
         jst.addSessions(session);

@@ -41,7 +41,7 @@ public class ModeratingSessionTableTest {
     
     @Test
     public void testAddSessions(){
-        PlanningPokerSession session = new PlanningPokerSession();
+        final PlanningPokerSession session = new PlanningPokerSession();
         session.setType(SessionType.DISTRIBUTED);
         mst.addSessions(session);
         session.setActive(true);

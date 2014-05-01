@@ -25,8 +25,8 @@ public class SuperButtonPanelTest {
     
     @Before
     public void setUp(){
-        MainView mv = new MainView();
-        ToolbarView tbv = new ToolbarView(true, mv);
+        final MainView mv = new MainView();
+        final ToolbarView tbv = new ToolbarView(true, mv);
         SBP = tbv.GetSuperButtonPanel();
     }
     

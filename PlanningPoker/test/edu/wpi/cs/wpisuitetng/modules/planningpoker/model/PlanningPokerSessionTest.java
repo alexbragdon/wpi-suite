@@ -16,21 +16,21 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+
 
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockRequest;
+
+
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+
+
+
+
+
+
 
 /**
  * Tests the Functionality of the "PlanningPokerSession.java" source file.
@@ -38,16 +38,16 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
  *
  */
 
-public class PlanningPokerSessionTests {
+public class PlanningPokerSessionTest {
 	
 
 	private PlanningPokerSession testSession;
 	private PlanningPokerSession otherSession;
-	private int testNum = 2;
+	private final int testNum = 2;
 	@Before
 	public void setUp() throws Exception {
 		testSession = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
-				new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "aGuy", null);	
+				new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "aGuy", null);
 		otherSession = new PlanningPokerSession(10, "BrandNewSession", "BeepBeep", new Date(), 10, 12,
 				new ArrayList<RequirementEstimate>(), SessionType.DISTRIBUTED, true, true, "coolGuy", null);
 	}
@@ -126,9 +126,8 @@ public class PlanningPokerSessionTests {
 		testSession.delete();
 		testSession.save();
 		assertNull(testSession.identify(""));
-		testSession.setCompletionTime(new Date());
-		//114 + 1900 = 2014 
-		assertEquals(114,testSession.getCompletionTime().getYear());
+		testSession.setCompletionTime(new Date()); 
+		assertEquals(114, testSession.getCompletionTime().getYear());
 	}
 
 }
