@@ -107,6 +107,12 @@ public class CustomCardValuePanel extends JPanel {
 					parent.passCardValue(textField.getText());
 				}
 				parent.checkCreateRemoveCard();
+				
+				if(parent.allCardValid()){
+					parent.notifyParentValid();
+				}else{
+					parent.notifyParentInvalid();
+				}
 			}
 
 			@Override
@@ -119,6 +125,13 @@ public class CustomCardValuePanel extends JPanel {
 					parent.passCardValue(textField.getText());
 				}
 				parent.checkCreateRemoveCard();
+				
+				if(parent.allCardValid()){
+					parent.notifyParentValid();
+				}else{
+					parent.notifyParentInvalid();
+				}
+				parent.checkDeletion();
 			}
 
 			@Override
@@ -131,6 +144,13 @@ public class CustomCardValuePanel extends JPanel {
 					parent.passCardValue(textField.getText());
 				}
 				parent.checkCreateRemoveCard();
+				
+				if(parent.allCardValid()){
+					parent.notifyParentValid();
+				}else{
+					parent.notifyParentInvalid();
+				}
+				parent.checkDeletion();
 			}
 		});
 		
@@ -138,6 +158,13 @@ public class CustomCardValuePanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				removeThisCard();
 				parent.checkCreateRemoveCard();
+				
+				if(parent.allCardValid()){
+					parent.notifyParentValid();
+				}else{
+					parent.notifyParentInvalid();
+				}
+				parent.checkDeletion();
 			}
 		});
 		
@@ -155,7 +182,7 @@ public class CustomCardValuePanel extends JPanel {
 	 * Validate the user input
 	 * @return true if the input is integer from 1 to 99, false otherwise
 	 */
-	private boolean validateField(){
+	public boolean validateField(){
 		boolean validate = true;
 		String vote = textField.getText();
 		if(vote.length() == 0 || vote.length() >=3){

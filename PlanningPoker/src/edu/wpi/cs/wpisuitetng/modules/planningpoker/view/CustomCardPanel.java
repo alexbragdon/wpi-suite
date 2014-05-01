@@ -99,4 +99,49 @@ public class CustomCardPanel extends JPanel {
 			}
 		}
 	}
+	
+	/**
+	 * Check if all the entered card is valid and ready to create deck
+	 * If all card valid, there should be 1 empty card and 1 or more valid card
+	 * @return
+	 */
+	public boolean allCardValid(){
+		int blankCard = 0;
+		int validCard = 0;
+		for(CustomCardValuePanel  card : cards){
+			if (card.isCardBlank()) blankCard ++;
+			if (card.validateField()) validCard ++;
+		}
+		return (blankCard == 1) && (validCard == (cards.size() -1));
+	}
+	
+	/**
+	 * When deleting cards, check if there is only one card.
+	 * If there is only one card, show error message and disable create button.
+	 */
+	public void checkDeletion(){
+		if(cards.size() == 1) notifyParentNoCard();
+	}
+	
+	/**
+	 * Notify parent panel to do the corresponding actions if there is invalid cards.
+	 */
+	public void notifyParentInvalid(){
+		parent.cardInvalid();
+	}
+	
+	/**
+	 * Notify parent panel to do the corresponding actions if all cards are valid.
+	 */
+    public void notifyParentValid(){
+		parent.cardValid();
+	}
+    
+	/**
+	 * Notify parent panel to do the corresponding actions if there is no card.
+	 * The default empty card doesn't count.
+	 */
+    public void notifyParentNoCard(){
+		parent.noCardError();
+	}
 }

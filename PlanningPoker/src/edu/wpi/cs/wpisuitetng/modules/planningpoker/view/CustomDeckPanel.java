@@ -10,14 +10,13 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -29,6 +28,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController;
@@ -60,6 +61,7 @@ public class CustomDeckPanel extends JPanel {
 	private JPanel deckNamePanel;
 	private JScrollPane newCardScroll;
 	private CustomCardPanel scrollPanel;
+	private JLabel errorLabel;
 	
 	
 	public CustomDeckPanel(SessionPanel parent){
@@ -81,8 +83,6 @@ public class CustomDeckPanel extends JPanel {
 		imgLabel.add(numLabel);
 		
 		scrollPanel = new CustomCardPanel(this);
-		//scrollPanel.setLayout(new MigLayout());
-		//scrollPanel.setPreferredSize(new Dimension(200,310));
 		newCardScroll = new JScrollPane(scrollPanel);
 		newCardScroll.setPreferredSize(new Dimension(235, 320));
 		newCardScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
@@ -103,6 +103,11 @@ public class CustomDeckPanel extends JPanel {
 		deckNamePanel.setLayout(new BorderLayout());
 		singleSelect.setSelected(true);
 		
+		errorLabel = new JLabel(" ");
+		errorLabel.setForeground(Color.RED);
+		
+		createDeck.setEnabled(false);
+		
 		setupListeners();
 		
 		add(title, "wrap");
@@ -114,10 +119,12 @@ public class CustomDeckPanel extends JPanel {
 		add(this.selectionMode, "wrap");
 		add(singleSelect,"wrap");
 		add(multiSelect,"wrap");
-		add(new JLabel("   "), "wrap");
+		add(errorLabel, "span 2, wrap");
 		add(this.dontKnowCard,"wrap");
 		add(this.createDeck);
 		add(this.cancelDeck);
+		
+		validateDeckName();
 	}
 	
 	public void setupListeners(){
@@ -153,6 +160,25 @@ public class CustomDeckPanel extends JPanel {
 			}
 		});
 		
+		deckNameTxt.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				validateDeckName();
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validateDeckName();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				validateDeckName();
+			}
+		});
+		
 	}
 	
 	protected Deck createDeckFromFields() {
@@ -174,7 +200,54 @@ public class CustomDeckPanel extends JPanel {
 		return newDeck;
 	}
 	
+	/**
+	 * Validate the deck name.
+	 * If the deck name is valid, keeps on validating the cards.
+	 */
+	private void validateDeckName(){
+		if(deckNameTxt.getText().length() == 0){
+			errorLabel.setText("*Please enter the name of this customed deck.");
+			createDeck.setEnabled(false);
+		}else if (deckNameTxt.getText().length() > 0 && deckNameTxt.getText().charAt(0) == ' '){
+			errorLabel.setText("*Deck name cannot start with a space.");
+			createDeck.setEnabled(false);
+		}else{
+			errorLabel.setText(" ");
+			createDeck.setEnabled(true);
+			scrollPanel.checkDeletion();
+		}
+	}
+	
+	/**
+	 * Update the value of the card.
+	 * @param cardValue the card value integer in string form.
+	 */
 	public void updateCard(String cardValue){
 		numLabel.setText(cardValue);
 	}
+	
+	/**
+	 * Show error message and disable button when notified.
+	 */
+	public void cardInvalid(){
+		errorLabel.setText("*Card deck invalid. Except for the last one, card(s) without green check(s) is(are) invalid.");
+		createDeck.setEnabled(false);
+	}
+	
+	/**
+	 * Clear error message and enable button when notified.
+	 */
+	public void cardValid(){
+    	errorLabel.setText(" ");
+		createDeck.setEnabled(true);
+	}
+	
+	/**
+	 * Show error message and disable button when notified.
+	 */
+	public void noCardError(){
+    	errorLabel.setText("*Please enter at least one card to create deck.");
+		createDeck.setEnabled(false);
+	}
+	
 }
