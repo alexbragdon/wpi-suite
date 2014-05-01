@@ -24,6 +24,8 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import net.miginfocom.swing.MigLayout;
+
 /**
  * Models the new cards.
  *
@@ -38,14 +40,15 @@ public class CustomCardPanel extends JPanel {
 
 	public CustomCardPanel(CustomDeckPanel parent){
 		this.parent = parent;
-		setLayout(new BorderLayout());
+		setLayout(new MigLayout());
 		setPreferredSize(new Dimension(250, 30));
 		
 		label = new JLabel("  ");
 		textField = new JTextField();
+		textField.setPreferredSize(new Dimension(100, 25));
 		button = new JButton();
 		try {
-			Image img = ImageIO.read(getClass().getResource("blank-medium.png"));
+			Image img = ImageIO.read(getClass().getResource("cancel-icon.png"));
 			button.setIcon(new ImageIcon(img));
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -127,8 +130,7 @@ public class CustomCardPanel extends JPanel {
 	public boolean isInteger(String s) {
 		try { 
 			Integer.parseInt(s); 
-		} catch(NumberFormatException e) { 
-		    e.printStackTrace();
+		} catch(NumberFormatException e) {
 			return false; 
 		}
 		return true;
