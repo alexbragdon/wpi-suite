@@ -134,6 +134,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      */
     // TODO replace JPanel with something real
     private SessionButtonPanel buttonPanel;
+    
 
 
     /**
@@ -158,6 +159,13 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         viewMode = ViewMode.CREATE;
         dt = new Date();
         this.buildLayout();
+    }
+   
+    public SessionPanel(PlanningPokerSession session, boolean opened) {
+    	displaySession = session;
+    	viewMode = ViewMode.OPENED;
+    	dt = new Date();
+    	this.buildLayout();
     }
 
     /**
@@ -282,9 +290,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      */
     private void buildLayout() {
 
-        if(viewMode == ViewMode.EDIT){
+        if(viewMode == ViewMode.EDIT || viewMode == ViewMode.OPENED){
             selectedDeck = displaySession.getDeck();
         }
+        
         deckChooser.setSelectedItem(selectedDeck); //default to the "-None-" deck
         chosenSequence = new JLabel(decks.deckToString(selectedDeck));
 
@@ -539,8 +548,26 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             case CREATE:
                 nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date())
                                 + " Planning Poker");
-                break;
+                break;   
+            case OPENED:
+                isOpen = displaySession.isActive();
+                nameField.setText(displaySession.getName());
+                desField.setText(displaySession.getDescription());
+                dateChooser.setDate(displaySession.getDate());
+                hourSpin.setValue(displaySession.getHour());
+                minuteSpin.setValue(displaySession.getMin());
+            	isOpen = true;
+            	nameField.setEnabled(false);
+            	desField.setEnabled(false);
+            	dateChooser.setEnabled(false);
+            	hourSpin.setEnabled(false);
+            	minuteSpin.setEnabled(false);
+            	timeEnable.setEnabled(false);
+            	deckChooser.setEnabled(false);
+            	break;
+            	
         }
+        
 
         updateButtonPanel();
     }
@@ -639,6 +666,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             }
         });   
     }
+    
 
     /**
      * Updates the bottom buttons to reflect validation and change state.
@@ -758,31 +786,36 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         dateChooser.setDate(displaySession.getDate());
         hourSpin.setValue(displaySession.getHour());
         minuteSpin.setValue(displaySession.getMin());
+        if (viewMode != ViewMode.OPENED) {
+        	if (selectedDeckChanged) {
+        		int selectedIndex = deckChooser.getSelectedIndex();
+            	if (selectedIndex == 0) {
+            		selectedIndex = 1;
+            	} else {
+            		selectedIndex = 0;
+            	}
+            	deckChooser.setSelectedIndex(selectedIndex);
+        	}
 
-        if (selectedDeckChanged) {
-            int selectedIndex = deckChooser.getSelectedIndex();
-            if (selectedIndex == 0) {
-                selectedIndex = 1;
-            } else {
-                selectedIndex = 0;
-            }
-            deckChooser.setSelectedIndex(selectedIndex);
+        	requirementsPanel.refreshRequirementSelection();
+        	if (displaySession.getType() == SessionType.DISTRIBUTED) {
+        		timeEnable.setSelected(true);
+        		dateChooser.setEnabled(true);
+        		hourSpin.setEnabled(true);
+        		minuteSpin.setEnabled(true);
+        	} else {
+        		timeEnable.setSelected(false);
+        		dateChooser.setEnabled(false);
+        		hourSpin.setEnabled(false);
+        		minuteSpin.setEnabled(false);
+        	}
+        	buttonPanel.getButtonSave().setEnabled(false);
+        	buttonPanel.getButtonClear().setEnabled(false);
+        	}
+        else {
+        	buttonPanel.getButtonClear().setVisible(false);
         }
-
-        requirementsPanel.refreshRequirementSelection();
-        if (displaySession.getType() == SessionType.DISTRIBUTED) {
-            timeEnable.setSelected(true);
-            dateChooser.setEnabled(true);
-            hourSpin.setEnabled(true);
-            minuteSpin.setEnabled(true);
-        } else {
-            timeEnable.setSelected(false);
-            dateChooser.setEnabled(false);
-            hourSpin.setEnabled(false);
-            minuteSpin.setEnabled(false);
-        }
-        buttonPanel.getButtonSave().setEnabled(false);
-        buttonPanel.getButtonClear().setEnabled(false);
+        
     }
 
     /**
@@ -865,7 +898,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     }
 
 
-    /**
+    public ViewMode getViewMode() {
+		return viewMode;
+	}
+
+	/**
      * 
      * Description goes here.
      *
@@ -930,4 +967,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             e.printStackTrace();
         }
     }
+    
 }
+

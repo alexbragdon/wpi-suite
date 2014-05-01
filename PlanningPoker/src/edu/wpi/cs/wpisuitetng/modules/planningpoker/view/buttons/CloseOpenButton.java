@@ -21,6 +21,8 @@ import javax.swing.SwingConstants;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -104,8 +106,12 @@ public class CloseOpenButton extends JButton {
     public void OpenSession(MainView parent) {
         final PlanningPokerSession session = new PlanningPokerSession();
         final PlanningPokerSession tableSession = getSelectedSession(parent, 0);
+        int index = parent.indexOfTab("Edit " + session.getName());
         if (tableSession == null) {
             return;
+        }
+        if (index > -1) {
+        	parent.removeTabAt(index);
         }
         session.copyFrom(tableSession);
         session.setActive(true);
@@ -114,6 +120,7 @@ public class CloseOpenButton extends JButton {
                         HttpMethod.POST);
         request.setBody(session.toJSON());
         request.send();
+        
     }
 
     private PlanningPokerSession getSelectedSession(MainView parent, int panel) {
