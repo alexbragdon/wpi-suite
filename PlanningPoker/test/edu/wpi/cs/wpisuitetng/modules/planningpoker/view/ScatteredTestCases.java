@@ -80,7 +80,7 @@ public class ScatteredTestCases {
 	@Test
 	public void testGetButton(){
 		assertEquals("Undo changes",sbp.getButtonClear().getText());
-		assertEquals("Update",sbp.getButtonSave().getText());
+		assertEquals("Update Game",sbp.getButtonSave().getText());
 		assertEquals("Cancel",sbp.getButtonCancel().getText());
 	}
 	@Test

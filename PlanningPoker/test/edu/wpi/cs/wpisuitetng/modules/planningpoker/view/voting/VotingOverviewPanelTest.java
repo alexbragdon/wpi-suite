@@ -66,4 +66,13 @@ public class VotingOverviewPanelTest {
         vop.getRequirements();
         vop.getSession();
     }
+    
+    @Test
+    public void testPassUserNum(){
+        vop.passUserNum(2);
+    }
+    @Test
+    public void testDisableAndDisplayVotingEnded(){
+        vop.disableAndDisplayVotingEnded();
+    }
 }
