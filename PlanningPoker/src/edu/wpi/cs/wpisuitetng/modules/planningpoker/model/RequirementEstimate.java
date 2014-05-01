@@ -96,6 +96,7 @@ public class RequirementEstimate {
         this.isExported = false;
         this.type = r.getType();
         this.priority = r.getPriority();
+        this.description = r.getDescription();
     }
     
     public void setDescription(String description) {
