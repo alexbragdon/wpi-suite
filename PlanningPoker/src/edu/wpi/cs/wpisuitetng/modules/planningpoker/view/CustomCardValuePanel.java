@@ -10,9 +10,12 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -47,10 +50,14 @@ public class CustomCardValuePanel extends JPanel {
 		
 		label = new JLabel("  ");
 		label.setPreferredSize(new Dimension(35, 30));
+		label.setFont(new Font("Serif", Font.PLAIN, 20));
+		label.setForeground(Color.GREEN);
 		textField = new JTextField();
+		textField.setFont(new Font("Serif", Font.BOLD, 20));
 		textField.setPreferredSize(new Dimension(100, 50));
 		button = new JButton();
-		button.setPreferredSize(new Dimension(35, 30));
+		button.setPreferredSize(new Dimension(30, 30));
+		button.setMinimumSize(new Dimension(30, 30));
 		try {
 			Image img = ImageIO.read(getClass().getResource("cancel-icon.png"));
 			button.setIcon(new ImageIcon(img));
@@ -60,7 +67,6 @@ public class CustomCardValuePanel extends JPanel {
 		
 		setupListener();
 		
-		this.setBackground(Color.red);
 		add(label);
 		add(textField);
 		add(button);
@@ -70,6 +76,13 @@ public class CustomCardValuePanel extends JPanel {
 	 * Method to setup listener for the text field and button.
 	 */
 	private void setupListener() {
+		textField.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+            	parent.passCardValue(textField.getText());
+            }
+        });
+		
 		textField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void changedUpdate(DocumentEvent e) {
@@ -77,7 +90,7 @@ public class CustomCardValuePanel extends JPanel {
 					label.setText("  ");
 					parent.passCardValue("");
 				}else{
-					label.setText("\u2713");
+					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
 				}
 			}
@@ -88,7 +101,7 @@ public class CustomCardValuePanel extends JPanel {
 					label.setText("  ");
 					parent.passCardValue("");
 				}else{
-					label.setText("\u2713");
+					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
 				}
 			}
@@ -99,7 +112,7 @@ public class CustomCardValuePanel extends JPanel {
 					label.setText("  ");
 					parent.passCardValue("");
 				}else{
-					label.setText("\u2713");
+					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
 				}
 			}

@@ -83,9 +83,9 @@ public class CustomDeckPanel extends JPanel {
 		
 		scrollPanel = new CustomCardPanel(this);
 		//scrollPanel.setLayout(new MigLayout());
-		scrollPanel.setPreferredSize(new Dimension(260,310));
+		//scrollPanel.setPreferredSize(new Dimension(200,310));
 		newCardScroll = new JScrollPane(scrollPanel);
-		newCardScroll.setPreferredSize(new Dimension(280, 320));
+		newCardScroll.setPreferredSize(new Dimension(235, 320));
 		
 		this.deckName = new JLabel("Deck name    ");
 		this.deckNameTxt = new JTextField();
@@ -116,6 +116,7 @@ public class CustomDeckPanel extends JPanel {
 		add(this.selectionMode, "wrap");
 		add(singleSelect,"wrap");
 		add(multiSelect,"wrap");
+		add(new JLabel("   "), "wrap");
 		add(this.dontKnowCard,"wrap");
 		add(this.createDeck);
 		add(this.cancelDeck);
