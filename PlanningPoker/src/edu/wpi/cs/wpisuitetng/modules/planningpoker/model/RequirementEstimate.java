@@ -186,7 +186,7 @@ public class RequirementEstimate {
         
         if (numberEstimates != 0) {
             average = totalEstimate / ((double) numberEstimates);
-            average = Math.round(average);
+            //average = Math.round(average);
         }
         
         return average;
@@ -224,7 +224,7 @@ public class RequirementEstimate {
         } else {
             // Size is even: Return the the average of the thing's total on 
             // either size of the thing divided by 2
-            return (sortedVotes.get(size / 2) 
+            return (double) (sortedVotes.get(size / 2) 
                             + sortedVotes.get((size / 2) - 1)) / 2;
         }
     }
