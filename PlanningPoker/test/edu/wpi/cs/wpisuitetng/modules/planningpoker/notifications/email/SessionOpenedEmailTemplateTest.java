@@ -42,7 +42,7 @@ public class SessionOpenedEmailTemplateTest {
                         true, "admin", "-None-");
 
         template = new SessionOpenedEmailTemplate(
-                        session);
+                        session, "default", "http://localhost:8080/WPISuite/");
         user = new User("Tester Test", "test", "test", 123);
     }
 
@@ -53,8 +53,9 @@ public class SessionOpenedEmailTemplateTest {
         assertEquals(subject, msg.getSubject());
         String body = "Hello Tester Test,\n\nadmin has begun planning poker game \"Test\".\n\n" +
                         "Description:\n\ttest\n\n" + "Requirements:\n\tTest1\n\n"+
-                        "Voting ends on "+new SimpleDateFormat("EEEE, MMMM d 'at' 0:00").format(new Date()) + 
-                        ".\n\n- The planning poker team";
+                        "Voting ends on "+new SimpleDateFormat("EEEE, MMMM d 'at' 0:00").format(new Date()) + ".\n\n" +
+                        "You can also vote at http://localhost:8080/WPISuite/planningpoker/default/1/index.html" +
+                        "\n\n- The planning poker team";
         assertEquals(body, msg.getBody());
     }
 
