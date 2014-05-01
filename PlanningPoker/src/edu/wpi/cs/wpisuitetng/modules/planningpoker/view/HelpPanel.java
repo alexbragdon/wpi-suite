@@ -55,7 +55,7 @@ public class HelpPanel extends JPanel{
 		scrollPanel.setBorder(new LineBorder(color));
 		
 		JTextArea description2 = new JTextArea();
-		description2.setFont(new Font(description2.getFont().getName(), Font.PLAIN, 14));
+		description2.setFont(new Font(description2.getFont().getName(), Font.PLAIN, 12));
 		description2.setPreferredSize(new Dimension(1500, 300));
 		description2.setBackground(color) ;
 		description2.setLineWrap(true);
@@ -82,7 +82,7 @@ public class HelpPanel extends JPanel{
 		
 
 		JTextArea description3 = new JTextArea();
-		description3.setFont(new Font(description3.getFont().getName(), Font.PLAIN, 14));
+		description3.setFont(new Font(description3.getFont().getName(), Font.PLAIN, 12));
 		description3.setPreferredSize(new Dimension(1500, 300));
 		description3.setBackground(color) ;
 		description3.setLineWrap(true);
@@ -93,7 +93,12 @@ public class HelpPanel extends JPanel{
 				+ " which you can begin creating a game. These games are entirely customizable, and many of the features of a Planning Poker game are entirely up to you!"
 				+ " The first things you should notice in the 'New Session' tab after clicking 'Create Game'"
 				+ " are two panels. The one on the left is used for setting up a game,"
-				+ " and the one on the right is used to create a personalized deck. ");
+				+ " and the one on the right is used to insert Requirements. It is also used for creating decks. But for now, let's begin by creating a game with a premade deck."
+				+ " Begin creating your deck by clicking on the text box uner 'Name', and input what you want the name of your game to be."
+				+ " After that, do the same thing with the Description of your game. After doing that, you can set a time limit if you want to."
+				+ " After toggling the 'End at' button (if you want to set a time limit), input what time of the day you want your project to end."
+				+ " Keep in mind that time is going to be interpreted in 24-hour military time. After this, you need to enter what day you want the game to end."
+				+ " You can do this by clicking the small calendar symbol next to the second text box! ");
 		final JScrollPane scrollPanel3 = new JScrollPane(description3);
 		scrollPanel3.setBorder(new LineBorder(color));
 		
