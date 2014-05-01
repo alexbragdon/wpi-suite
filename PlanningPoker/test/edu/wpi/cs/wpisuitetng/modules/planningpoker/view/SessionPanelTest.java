@@ -206,7 +206,7 @@ public class SessionPanelTest {
 		sesPan.setDesField("Test Description");
 		sesPan.makeTimeDisabled();
 		sesPan.openPressed();
-		assertEquals(0, vec.getSize());
+		assertEquals(1, vec.getSize());
 	}
 	
 }

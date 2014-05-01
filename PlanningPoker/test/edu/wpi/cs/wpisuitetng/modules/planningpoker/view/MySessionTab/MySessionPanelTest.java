@@ -22,6 +22,7 @@ import org.junit.Test;
 
 
 
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
@@ -100,10 +101,49 @@ public class MySessionPanelTest {
         reqList.add(new RequirementEstimate(1, "2", 2, true));
         final Date dt = new Date();
         final PlanningPokerSession[] sessions = {
-                        new PlanningPokerSession(3123, "Test Session", "Hello The World", dt, 0, 0,
-                                        reqList, SessionType.DISTRIBUTED, false, false, "admin", "-None-")
+                        new PlanningPokerSession(1, "Test Session", "Hello The World", dt, 0, 0,
+                                        reqList, SessionType.DISTRIBUTED, true, true, "admin", "-None-"),
+                        new PlanningPokerSession(2, "Test Session", "Hello The World", dt, 0, 0,
+                                        reqList, SessionType.DISTRIBUTED, true, true, "admin", "-None-")
         };
         msp.closeTimedOutSessions(sessions);
+    }
+    
+    @Test
+    public void testRedraw(){
+        msp.redraw();
+    }
+    
+    @Test
+    public void TestLastTwoDays(){
+        reqList = new ArrayList<RequirementEstimate>();
+        reqList.add(new RequirementEstimate(1, "2", 2, true));
+        PlanningPokerSession session = new PlanningPokerSession(1, "Test Session", "Hello The World", new Date(), 0, 0,
+                        reqList, SessionType.DISTRIBUTED, true, true, "admin", "-None-");
+        session.setComplete(true);
+        msp.lastTwoDays(session);
+        msp.lastWeek(session);
+        msp.lastMonth(session);
+    }
+    
+    @Test
+    public void TestCloseSession(){
+        Network.initNetwork(new MockNetwork());
+        Network.getInstance().setDefaultNetworkConfiguration(
+                new NetworkConfiguration("http://wpisuitetng"));
+
+        final Date dt = new Date();
+        reqList = new ArrayList<RequirementEstimate>();
+        reqList.add(new RequirementEstimate(1, "2", 2, true));
+        final PlanningPokerSession[]  sessions2 = { 
+                        new PlanningPokerSession(3123, "Test Session", "Hello The World", dt, 23, 59,
+                                        reqList, SessionType.DISTRIBUTED, false, true, "admin", "-None-"),
+                        new PlanningPokerSession(1111, "Test Session", "Hello The World", dt, 23, 59,
+                                        reqList, SessionType.REALTIME, true, false, "admin", "-None-")
+        };
+        msp.populateTables(sessions2);
+        msp.closeSession(1111);
+        msp.openSession(3123);
     }
 
 }

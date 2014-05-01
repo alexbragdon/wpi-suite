@@ -45,5 +45,8 @@ public class EmailButtonPanelTest {
         user.setEmail("test@test.edu");
         EBP.setUser(user);
         EBP.canValidateSMS();
+        EBP.switchToEdit();
+        EBP.switchToEditSMS();
     }
+    
 }

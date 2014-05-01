@@ -51,7 +51,7 @@ public class ViewEventControllerTest {
 		List<RequirementEstimate> ListReq = new ArrayList<RequirementEstimate>();
 		ListReq.add(new RequirementEstimate(1, "2", 2, true));
 		ses = new PlanningPokerSession(0, "Test Session", "Hello The World", new Date(), 12, 0,
-		                ListReq, SessionType.REALTIME, false, false, "admin", null);
+		                ListReq, SessionType.REALTIME, false, false, "admin", "-None-");
 	}
 	
 	@Test
@@ -87,6 +87,19 @@ public class ViewEventControllerTest {
 		vec.closeSession(ses);
 		assertEquals(prevTabCount + 1, mv.getTabCount());
 		
+	}
+	@Test
+	public void TestHelpSession(){
+	    vec.helpSession();
+	}
+	@Test
+	public void TestGetSize(){
+	    vec.getSize();
+	}
+	@Test
+	public void TestVoteAndEditOnSession(){
+	    vec.voteOnSession(ses);
+	    vec.editSession(ses);
 	}
 
 }
