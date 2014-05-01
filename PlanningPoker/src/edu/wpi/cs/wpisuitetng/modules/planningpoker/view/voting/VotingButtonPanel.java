@@ -85,6 +85,12 @@ public class VotingButtonPanel extends JPanel{
 		setupListeners();
 	}
 
+	private boolean estimateCheck() {
+		if (mode.equals(ViewMode.WITHOUTDECK)) {
+			return estimateField.getText().equals("?");
+		} else return false;
+	}
+	
 	private void buildLayoutWithoutDeck() {
 		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("Enter estimate  ");
@@ -223,7 +229,7 @@ public class VotingButtonPanel extends JPanel{
 		PropertyChangeListener listener = new PropertyChangeListener(){
 			@Override
 			public void propertyChange(PropertyChangeEvent p) {
-				if(estimateLabel.getText().equals("--") || estimateField.getText().equals("?")){
+				if(estimateLabel.getText().equals("--") || estimateCheck()){
 					voteButton.setEnabled(false);
 				}
 
