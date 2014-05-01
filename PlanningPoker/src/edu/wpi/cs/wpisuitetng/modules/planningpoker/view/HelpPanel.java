@@ -44,13 +44,13 @@ public class HelpPanel extends JPanel{
 		title4.setFont(new Font(title4.getFont().getName(), Font.PLAIN, 24));
 		
 		JTextArea description = new JTextArea();
-		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 14));
+		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 12));
 		description.setPreferredSize(new Dimension(1500, 150));
 		description.setBackground(color) ;
 		description.setLineWrap(true);
 		description.setWrapStyleWord(true);
 		description.setEditable(false);
-		description.setText("Welcome to Planning Poker, a game that can help you with organizing requirements!"
+		description.setText("Welcome to Planning Poker, a module for WPI Suite that can make estimating requirements a game!!"
 				+ " Using Planning Poker, you can create games for your group to vote on, as well as play games that other members of your group have made."
 				+ " Hopefully, this guide will present you with all the information you need to begin creating and playing Planning Poker Games.");
 		final JScrollPane scrollPanel = new JScrollPane(description);
@@ -124,7 +124,18 @@ public class HelpPanel extends JPanel{
 		description4.setLineWrap(true);
 		description4.setWrapStyleWord(true);
 		description4.setEditable(false);
-		description4.setText("");
+		description4.setText("Now that you've found out how to create games, now let's find out how to vote in them! To begin with, you must return to the"
+				+ " 'My Games' tab. Now, let's focus on the center table, the 'Games I am Voting in' Table. In this table, you will see all of the"
+				+ " Planning Poker games that you have yet to vote in. In order to vote in one of the games on this table, simply double click it."
+				+ " Doing this will open a new tab. In this tab, you will be able to vote on the requirements in a game, inspect the descriptions"
+				+ " of each requirement in the game, see how much of your team has voted on each individual requirement, and see how much longer you have"
+				+ " to vote (if the game has a time deadline). Let's begin by selecting a requirement to inspect and vote on. In the center of the window,"
+				+ " you will see a table with a list of all of the requirements in the game you are playing. To select one, simply click on it. This will"
+				+ " highlight it, indicating you have selected it. Now that you have selected a requirement, you will have noticed that the bottom of the"
+				+ " window has changed somewhat, specifically in the lower left hand corner. The description of the currently highlighted requirement"
+				+ " is displayed here. Before you begin voting, it is strongly recommended that you pay close attention to the description of the requirement."
+				+ " Voting without having a detailed knowledge of what the requirement entails could result in the final estimate being skewed in either direction."
+				+ "");
 		final JScrollPane scrollPanel4 = new JScrollPane(description);
 		scrollPanel4.setBorder(new LineBorder(color));
 		
