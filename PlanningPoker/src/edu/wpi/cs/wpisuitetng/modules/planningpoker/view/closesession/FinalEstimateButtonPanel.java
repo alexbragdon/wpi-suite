@@ -40,7 +40,6 @@ import net.miginfocom.swing.MigLayout;
 public class FinalEstimateButtonPanel extends JPanel {
     private CloseSessionPanel parent;
 	private JButton submitButton;
-	private JButton exportButton;
 	private JTextField estimateField;
 	private JLabel errorLabel;
 	
@@ -69,9 +68,6 @@ public class FinalEstimateButtonPanel extends JPanel {
 		submitButton = new JButton("Submit");
 		submitButton.setEnabled(false);
 		submitButton.setPreferredSize(new Dimension(120, 100));
-		exportButton = new JButton("Export");
-		exportButton.setEnabled(true);
-		exportButton.setPreferredSize(new Dimension(120, 100));
 		estimateField = new JTextField("--");
 		estimateField.setPreferredSize(new Dimension(120, 100));
 		estimateField.setEditable(true);
@@ -80,19 +76,7 @@ public class FinalEstimateButtonPanel extends JPanel {
 		midPanel.setPreferredSize(new Dimension(255, 100));
 		midPanel.add(estimateField, BorderLayout.WEST);
 		midPanel.add(emptyPanel, BorderLayout.CENTER);
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new BorderLayout());
-		buttonPanel.setPreferredSize(new Dimension(250, 100));
-		buttonPanel.add(submitButton, BorderLayout.WEST);
-		buttonPanel.add(emptyPanel, BorderLayout.CENTER);
-		buttonPanel.add(exportButton, BorderLayout.EAST);
-		midPanel.add(buttonPanel, BorderLayout.EAST);
-		
-		exportButton.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        parent.getSelectedRequirement().exportToRequirementManager();
-		    }
-		});
+		midPanel.add(submitButton, BorderLayout.EAST);
 
 		try {
 			final Image img = ImageIO.read(getClass().getResource(
