@@ -12,11 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
-import javax.swing.UIManager;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -55,6 +52,11 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 		progressBar.setString(fraction.toString());
 
 		progressBar.setForeground(getColor(fraction));
+		progressBar.repaint();
+		if ((fraction.getNumerator() == 0) && (fraction.getDenominator() != 0)) {
+			System.out.println("Setting to red!");
+			progressBar.setForeground(Color.RED);
+		}
 
 		return progressBar;
 	}
