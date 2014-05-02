@@ -356,7 +356,7 @@ public class Requirement extends AbstractModel {
 			int originalEstimate = this.estimate;
 			int newEstimate = estimate;
 			String message = ("Estimate changed from '" + originalEstimate + "' to '" + newEstimate + "'");
-			this.history.add(message);
+            this.history.add(message);
 			this.setEstimateEdited(true);
 		}	
 		
