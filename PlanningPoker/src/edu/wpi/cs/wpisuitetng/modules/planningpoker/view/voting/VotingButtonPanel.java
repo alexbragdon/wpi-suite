@@ -223,6 +223,8 @@ public class VotingButtonPanel extends JPanel{
 			public void actionPerformed(ActionEvent m) {
 				cards.clearCardSelection();
 				clearButton.setEnabled(false);
+				voteButton.setEnabled(false);
+				estimateLabel.setText("--");
 			}
 		});
 
@@ -234,7 +236,7 @@ public class VotingButtonPanel extends JPanel{
 				}
 
 				else{
-					voteButton.setEnabled(true);
+					//voteButton.setEnabled(true);
 				}
 			}
 		};
@@ -249,6 +251,7 @@ public class VotingButtonPanel extends JPanel{
 		add(votePanel,"span 1 2,wrap");
 		add(estimateLabel);
 		
+		voteButton.setEnabled(false);
 	}
 
 	/**
@@ -367,5 +370,9 @@ public class VotingButtonPanel extends JPanel{
 	
 	public JButton getDontKnowButton() {
 		return dontKnowButton;
+	}
+	
+	public VotingPanel getVoting() {
+		return parentPanel;
 	}
 }
