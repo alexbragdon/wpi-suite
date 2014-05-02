@@ -43,7 +43,7 @@ public class SessionOpenedEmailTemplateTest {
                         true, "admin", "-None-");
 
         template = new SessionOpenedEmailTemplate(
-                        session);
+                        session, "default", "http://localhost:8080/WPISuite/");
         user = new User("Tester Test", "test", "test", 123);
     }
 
