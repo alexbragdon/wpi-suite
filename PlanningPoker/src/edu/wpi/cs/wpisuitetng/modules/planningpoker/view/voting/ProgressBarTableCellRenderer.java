@@ -64,10 +64,9 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 	 */
 	private static Color getColor(Fraction fraction) {
 		
-		//TODO: Dim colors
-
-		final Color INITIAL = Color.RED;
-		final Color FINAL = Color.GREEN;
+		final Color INITIAL = new Color(204, 102, 102);
+		final Color MIDDLE = new Color(204, 204, 102);
+		final Color FINAL = new Color(102, 204, 102);
 
 		//Doing this prevents inaccuracies doing double calculations
 		if (fraction.isComplete()) {
@@ -86,23 +85,24 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 		int compareToHalf = compareToHalf(fraction);
 
 		if (compareToHalf == 0) { //Fraction is exactly one half
-			return Color.YELLOW;
+			return MIDDLE;
 		}
 
 		int midpt = fraction.getDenominator() / 2;
 		if ((fraction.getDenominator() % 2) == 1) {
 			midpt++;
 		}
-
-		double step = 255 / ((double) midpt);
+		
+		double step = (FINAL.getRed() - INITIAL.getRed()) / ((double) midpt);
 		if (compareToHalf < 0) { //Less than one half
 			int g = (int) step * fraction.getNumerator();
-			return new Color(255, g, 0);
+			return new Color(INITIAL.getRed(), g + INITIAL.getGreen(), 0);
 		}
 
 		//Greater than one half
 		int r = ((int) step * (fraction.getDenominator() - fraction.getNumerator()));
-		return new Color(r, 255, 0);
+		System.out.println("r: " + r);
+		return new Color(INITIAL.getRed() - r, FINAL.getGreen(), 0);
 	}
 
 	/**
@@ -121,5 +121,15 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 		}
 
 		return -1;
+	}
+	
+	//TEST METHOD
+	public static void main(String[] args) {
+		int total = 3;
+		for (int i = 0; i <= total; i++) {
+			Fraction f = new Fraction(i, total);
+			System.out.print(f + ": ");
+			System.out.println(getColor(f).toString());
+		}
 	}
 }
