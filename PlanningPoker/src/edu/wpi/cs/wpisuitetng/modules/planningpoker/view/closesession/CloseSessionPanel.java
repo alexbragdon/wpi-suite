@@ -46,6 +46,8 @@ public class CloseSessionPanel extends JPanel {
     private VoteStatisticPanel voteTable;
     private FinalEstimateButtonPanel submitButtons;
     private JTable table;
+    
+    RequirementEstimate currentRequirement;
 
 
     /**
@@ -122,7 +124,7 @@ public class CloseSessionPanel extends JPanel {
         add(description, c);
         
         
-        submitButtons = new FinalEstimateButtonPanel();
+        submitButtons = new FinalEstimateButtonPanel(this);
         c.gridx = 1;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -157,6 +159,8 @@ public class CloseSessionPanel extends JPanel {
     public void updateSelectedRequirement(final RequirementEstimate selectedRequirement){
     	voteTable.updateListBox(selectedRequirement);
     	description.updateDescription(selectedRequirement);
+    	
+    	currentRequirement = selectedRequirement;
     }
     
     
@@ -183,6 +187,27 @@ public class CloseSessionPanel extends JPanel {
      */
     public void cancelPressed() {
         remove();
+    }
+    
+    /**
+     * Function to add final estimate.
+     * This happens when the submit final estimate button is clicked.
+     */
+    public void votePressed(){
+    	for (final RequirementEstimate req : session.getRequirements()) {
+            if (currentRequirement.getName().equals(req.getName())) {
+                currentRequirement = req;
+            }
+        }
+    	currentRequirement.setFinalEstimate(Integer.parseInt(submitButtons.getEstimateField().getText()));
+    	
+    	final PlanningPokerSession newSession = new PlanningPokerSession(session.getID(),
+                session.getName(), session.getDescription(), session.getDate(),
+                session.getHour(), session.getMin(), session.getRequirements(),
+                session.getType(), session.isActive(), session.isComplete(),
+                session.getModerator(), session.getDeck());
+    	
+    	EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
     }
 
     /**
