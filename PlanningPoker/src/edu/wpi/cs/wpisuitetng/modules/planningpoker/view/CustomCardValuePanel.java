@@ -53,8 +53,8 @@ public class CustomCardValuePanel extends JPanel {
 		this.setMinimumSize(new Dimension(200, 35));
 		
 		label = new JLabel("  ");
-		label.setPreferredSize(new Dimension(35, 30));
-		label.setFont(new Font("Serif", Font.PLAIN, 20));
+		label.setPreferredSize(new Dimension(45, 35));
+		label.setFont(new Font("Serif", Font.PLAIN, 30));
 		label.setForeground(Color.GREEN);
 		textField = new JTextField();
 		textField.setFont(new Font("Serif", Font.BOLD, 20));
@@ -85,7 +85,11 @@ public class CustomCardValuePanel extends JPanel {
 			@Override
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-				parent.passCardValue(textField.getText());
+				if(validateField()){
+					parent.passCardValue(textField.getText());
+				}else{
+					parent.passCardValue(" ");
+				}
             	parent.checkCreateRemoveCard();
 				
 			}

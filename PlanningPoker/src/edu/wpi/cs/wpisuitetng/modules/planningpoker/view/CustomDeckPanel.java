@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -28,6 +29,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -42,10 +45,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSelectionType;
  */
 @SuppressWarnings("serial")
 public class CustomDeckPanel extends JPanel {
+	private Color color = UIManager.getColor ( "Panel.background" );
 	private JLabel deckName;
 	private JTextField deckNameTxt;
 	
-	private JLabel selectionMode;
 	private JRadioButton singleSelect;
 	private JRadioButton multiSelect;
 	
@@ -62,6 +65,9 @@ public class CustomDeckPanel extends JPanel {
 	private JScrollPane newCardScroll;
 	private CustomCardPanel scrollPanel;
 	private JLabel errorLabel;
+	private JPanel radioButtonPanel;
+	
+	TitledBorder titleBorder;
 	
 	
 	public CustomDeckPanel(SessionPanel parent){
@@ -69,33 +75,33 @@ public class CustomDeckPanel extends JPanel {
 		
 		this.setLayout(new MigLayout());
 		
+		radioButtonPanel = new JPanel();
+		radioButtonPanel.setLayout(new MigLayout("insets 0 0 0 0"));
+		radioButtonPanel.setPreferredSize(new Dimension(250, 80));
+		radioButtonPanel.setMaximumSize(new Dimension(250, 80));
 		imgLabel = new JLabel();
 		imgLabel.setLayout(new BorderLayout());
 		numLabel = new JLabel("");
 		numLabel.setFont(numLabel.getFont().deriveFont(Font.PLAIN, 120));
 		numLabel.setHorizontalAlignment(JLabel.CENTER);
-		try {
-			this.cardImg = ImageIO.read(getClass().getResource("blank-medium.png"));
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-		imgLabel.setIcon(new ImageIcon(this.cardImg));
-		imgLabel.add(numLabel);
+		
+
 		
 		scrollPanel = new CustomCardPanel(this);
 		newCardScroll = new JScrollPane(scrollPanel);
 		newCardScroll.setPreferredSize(new Dimension(235, 320));
+		newCardScroll.setBorder(BorderFactory.createLineBorder(color));
 		newCardScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
 		
 		this.deckName = new JLabel("Deck name    ");
 		this.deckNameTxt = new JTextField();
 		deckNameTxt.setPreferredSize(new Dimension(200, 25));
-		this.selectionMode = new JLabel("Deck selection mode");
 		this.singleSelect = new JRadioButton("Single selection");
 		this.multiSelect = new JRadioButton("Multiple selection");
 		this.dontKnowCard = new JCheckBox("Have an \"I don't know\" card");
 		this.createDeck = new JButton("Create Deck");
 		this.cancelDeck = new JButton("Cancel Deck Creation");
+		titleBorder = BorderFactory.createTitledBorder("Deck selection mode");
 		title = new JLabel("Create a new deck");
 		title.setFont(new Font(title.getFont().getName(), Font.BOLD, 15));
 		deckNamePanel = new JPanel();
@@ -108,6 +114,19 @@ public class CustomDeckPanel extends JPanel {
 		
 		createDeck.setEnabled(false);
 		
+		try {
+			this.cardImg = ImageIO.read(getClass().getResource("blank-medium.png"));
+			Image image2 = ImageIO.read(getClass().getResource("cancel-icon.png"));
+			Image image1 = ImageIO.read(getClass().getResource("save-icon.png"));
+			createDeck.setIcon(new ImageIcon(image1));
+			cancelDeck.setIcon(new ImageIcon(image2));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		imgLabel.setIcon(new ImageIcon(this.cardImg));
+		imgLabel.add(numLabel);
+		
+		
 		setupListeners();
 		
 		add(title, "wrap");
@@ -116,10 +135,11 @@ public class CustomDeckPanel extends JPanel {
 		add(deckNamePanel,"span x, wrap");
 		add(imgLabel);
 		add(newCardScroll,"wrap");
-		add(this.selectionMode, "wrap");
-		add(singleSelect,"wrap");
-		add(multiSelect,"wrap");
 		add(errorLabel, "span 2, wrap");
+		radioButtonPanel.add(singleSelect,"wrap");
+		radioButtonPanel.add(multiSelect);
+		radioButtonPanel.setBorder(titleBorder);
+		add(radioButtonPanel, "wrap");
 		add(this.dontKnowCard,"wrap");
 		add(this.createDeck);
 		add(this.cancelDeck);
@@ -150,6 +170,7 @@ public class CustomDeckPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				multiSelect.setSelected(false);
+				if(!multiSelect.isSelected()) singleSelect.setSelected(true);
 			}
 		});
 		
@@ -157,6 +178,7 @@ public class CustomDeckPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				singleSelect.setSelected(false);
+				if(!singleSelect.isSelected()) multiSelect.setSelected(true);
 			}
 		});
 		
