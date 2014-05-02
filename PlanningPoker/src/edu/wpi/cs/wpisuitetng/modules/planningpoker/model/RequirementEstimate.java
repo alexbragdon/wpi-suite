@@ -22,6 +22,10 @@ import javax.swing.JOptionPane;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementPriority;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementType;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.TransactionHistory;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * A RequirementEstimate represents the estimates associated with one requirement.
@@ -247,12 +251,20 @@ public class RequirementEstimate {
     }
     
     /**
-     * 
+     *   
      * Updates the estimate feild in the requirement in the DB, along with a note.
      * Uses the finalEstimate field here and goes to accociated requirement
      *
      */
     public void exportToRequirementManager() {
-        
+        Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.POST); // POST == update
+        Requirement newRequirement = new Requirement(this.id, this.name, this.description);
+        String message = ("Estimated updated from Planning Poker:");
+        TransactionHistory requirementHistory = newRequirement.getHistory();
+        requirementHistory.add(message);
+        newRequirement.setHistory(requirementHistory);        
+        newRequirement.setEstimate(this.finalEstimate);
+        request.setBody(newRequirement.toJSON()); // put the new requirement in the body of the request
+        request.send(); 
     }
 }
