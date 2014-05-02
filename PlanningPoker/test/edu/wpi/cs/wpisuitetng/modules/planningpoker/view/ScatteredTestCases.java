@@ -11,24 +11,24 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import static org.junit.Assert.*;
 
-import java.awt.Graphics;
+
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+
+
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
+
 
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.planningpoker;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ClosableTabComponent;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionButtonPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
+
+
+
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.icons.PokerIcon;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
@@ -67,7 +67,7 @@ public class ScatteredTestCases {
 	
 	@Test
 	public void testActionPreformed(){
-		ActionEvent event = new ActionEvent(this, 1, "");
+		final ActionEvent event = new ActionEvent(this, 1, "");
 		ctc.addTab();
 		ctc.actionPerformed(event);
 	}
@@ -79,9 +79,9 @@ public class ScatteredTestCases {
 	}
 	@Test
 	public void testGetButton(){
-		assertEquals("Undo changes",sbp.getButtonClear().getText());
-		assertEquals("Update",sbp.getButtonSave().getText());
-		assertEquals("Cancel",sbp.getButtonCancel().getText());
+		assertEquals("Undo changes", sbp.getButtonClear().getText());
+		assertEquals("Update Game", sbp.getButtonSave().getText());
+		assertEquals("Cancel", sbp.getButtonCancel().getText());
 	}
 	@Test
 	public void testCreateViewMode(){

@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
-public class RequirementEstimateTests {
+
+public class RequirementEstimateTest {
 	private RequirementEstimate testReq;
 	@Before
 	public void setUp() throws Exception {

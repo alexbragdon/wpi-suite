@@ -190,8 +190,7 @@ public class MySessionPanel extends JPanel {
             if (row == -1) {
                 return -1;
             }
-            return Integer.parseInt((String) joiningPanel.getTable()
-                    .getValueAt(row, 0));
+            return (int) joiningPanel.getTable().getValueAt(row, 0);
         case 2:
             row = closedPanel.getTable().getSelectedRow();
             if (row == -1) {
@@ -395,6 +394,15 @@ public class MySessionPanel extends JPanel {
                 request.send();
             }
         }
+    }
+
+    /**
+     * Returns the current sessions.
+     *
+     * @return sessions
+     */
+    public PlanningPokerSession[] getSessions() {
+        return sessions;
     }
 
 }

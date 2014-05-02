@@ -47,7 +47,7 @@ public class CardPanel extends JPanel {
 	 * VotingButtonPanel
 	 */
 	private VotingButtonPanel buttons;
-	
+
 	private List<Card> cards = new ArrayList<Card>();
 
 	private boolean zeroSelected = false;
@@ -121,7 +121,7 @@ public class CardPanel extends JPanel {
 
 		UserEstimate currentUserEst = currentReq.getVotes().get(ConfigManager.getConfig().getUserName());
 		if (currentUserEst != null) {
-		    currentUserEst.setSelectedCardIndices(selectedCardsIndices);
+			currentUserEst.setSelectedCardIndices(selectedCardsIndices);
 		}
 	}
 
@@ -134,16 +134,14 @@ public class CardPanel extends JPanel {
 		this.currentReq = r;
 		clearCardSelection();
 		UserEstimate currentUserEst = r.getVotes().get(ConfigManager.getConfig().getUserName());
-		
+
 		if(currentUserEst != null){
-    		selectedCardsIndices = currentUserEst.getSelectedCardIndices();
-    		
-    		if(currentUserEst != null){
-        		for(int i = 0; i < selectedCardsIndices.size(); i++){
-        			Card temp = cardIndices.get(selectedCardsIndices.get(i));
-        			temp.setSelected(true);
-        		}
-    		}
+			selectedCardsIndices = currentUserEst.getSelectedCardIndices();
+
+			for(int i = 0; i < selectedCardsIndices.size(); i++){
+				Card temp = cardIndices.get(selectedCardsIndices.get(i));
+				temp.setSelected(true);
+			}
 		}
 	}
 
@@ -166,7 +164,7 @@ public class CardPanel extends JPanel {
 			buttons.getEstimateLabel().setText("--");
 			buttons.getClearButton().setEnabled(false);
 		}
-		
+
 		else if(totalEstimate == 0){
 			buttons.getEstimateLabel().setText("?");
 			buttons.getClearButton().setEnabled(true);
@@ -193,8 +191,8 @@ public class CardPanel extends JPanel {
 			Card temp = cardIndices.get(selectedCardsIndices.get(i));
 			temp.setSelected(false);
 		}
-		
-        selectedCardsIndices.clear();
+
+		//selectedCardsIndices.clear();
 
 		calculateTotalEstimate();
 	}
@@ -208,7 +206,7 @@ public class CardPanel extends JPanel {
 	 * @return the zeroSelected
 	 */
 	public boolean isZeroSelected() {
-		
+
 		return zeroSelected;
 	}
 
@@ -226,7 +224,7 @@ public class CardPanel extends JPanel {
 		Card unknown = cardIndices.get(0);
 		unknown.setSelected(false);
 	}
-	
+
 	/**
 	 * Disables or enables editing.
 	 */

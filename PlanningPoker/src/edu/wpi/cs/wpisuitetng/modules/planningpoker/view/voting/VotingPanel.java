@@ -13,6 +13,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.net.URL;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -25,6 +26,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.UserEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * Displays a panel for voting on Planning Poker Sessions.
@@ -136,8 +140,8 @@ public class VotingPanel extends JPanel {
         final URL url = getClass().getResource("complete.png");
         final ImageIcon imageicon = new ImageIcon(url);
         label = new JLabel(imageicon);
-        panel.setPreferredSize(new Dimension(270, 200));
-        panel.setMinimumSize(new Dimension(180, 200));
+        panel.setPreferredSize(new Dimension(180, 180));
+        panel.setMinimumSize(new Dimension(180, 180));
         panel.add(label);
         label.setVisible(false);
         c.gridx = 1;
@@ -244,6 +248,7 @@ public class VotingPanel extends JPanel {
             try {
                 totalEstimate = Integer.parseInt(buttons.getEstimateLabel().getText());
             } catch (NumberFormatException e) {
+                e.printStackTrace();
                 totalEstimate = 0;
             }
             currentRequirement.getVotes().put(
@@ -318,5 +323,18 @@ public class VotingPanel extends JPanel {
     public void setUserNum(final int users) {
         this.UserNum = users;
     }
-
+    
+    public void closeSession(){
+        session.setComplete(true);
+        session.setCompletionTime(new Date());
+        EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+        Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close",
+                        HttpMethod.POST);
+        request.setBody(session.toJSON());
+        request.send();
+    }
+    
+    public VotingOverviewPanel getOverview() {
+    	return overview;
+    }
 }

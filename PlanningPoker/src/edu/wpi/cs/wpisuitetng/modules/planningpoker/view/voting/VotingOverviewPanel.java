@@ -51,6 +51,8 @@ public class VotingOverviewPanel extends JPanel {
     private VotingPanel parent;
 
     private int UserNum;
+    
+    private boolean done = false;
 
     /**
      * Creates a overview panel for voting with the given model.
@@ -119,18 +121,25 @@ public class VotingOverviewPanel extends JPanel {
      * @param sessions
      */
     public void checkProgress(PlanningPokerSession[] sessions) {
-
         for (int i = 0; i < sessions.length; i++) {
             if (session.getID() == sessions[i].getID()) {
                 session = sessions[i];
                 requirements = session.getRequirements();
                 model.updateModel(session.getRequirements());
                 updateOverallProgress();
-                if (session.hasEveryoneVoted(UserNum)) {
+                
+                if (session.isComplete()) {
+                    done = true;
+                    disableAndDisplayVotingEnded();
+                }
+                
+                if (!done && session.hasEveryoneVoted(UserNum)) {
                     notifyParent();
+                    parent.closeSession();
                 }
             }
         }
+        
     }
 
     /**
@@ -193,5 +202,25 @@ public class VotingOverviewPanel extends JPanel {
     public List<RequirementEstimate> getRequirements() {
         return requirements;
     }
-
+    
+    public void disableAndDisplayVotingEnded() {
+    	if (!session.getDeck().equals("-None-")) {
+    		//parent.getCards().clearCardSelection();
+    		parent.getCards().disableEditing(true);
+    		parent.getButtonPanel().getClearButton().setEnabled(false);
+    		parent.getButtonPanel().getVoteButton().setEnabled(false);
+    	} else {
+    	parent.getButtonPanel().getVoteButton().setEnabled(false);
+    	parent.getButtonPanel().getDontKnowButton().setEnabled(false);
+    	parent.getButtonPanel().getEstimateField().setEnabled(false);
+    	}
+    	parent.showFinishIcon();
+    }
+    
+    public String valueForVote() {
+    	int row = table.getSelectedRow();
+    	if (!model.getValueAt(row, 3).equals("--")) {
+    		return Integer.toString((int) model.getValueAt(row, 3));
+    	} else return "InvalidEntryNeverEnterThis23492910398290349";
+    }
 }

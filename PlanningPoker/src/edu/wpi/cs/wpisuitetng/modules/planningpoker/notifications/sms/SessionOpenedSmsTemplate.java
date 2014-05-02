@@ -64,7 +64,7 @@ public class SessionOpenedSmsTemplate implements INotificationTemplate<SmsMessag
                 body.append('0');
             }
             body.append(session.getMin());
-            body.append(".");
+            body.append('.');
         }
         
         return new SmsMessage(user.getCarrier(), user.getPhoneNumber(), body.toString());

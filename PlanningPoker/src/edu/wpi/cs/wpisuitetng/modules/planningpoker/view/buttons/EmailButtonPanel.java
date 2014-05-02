@@ -24,7 +24,9 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -38,6 +40,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditUserControlle
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetAllUsersController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
  * @author Team Romulus
@@ -49,89 +52,187 @@ public class EmailButtonPanel extends ToolbarGroupView {
                     "<html>Email<br />Settings</html>");
     private final ScrollablePanel emailScrollPanel = new ScrollablePanel();
     private final ScrollablePanel emailPanel = new ScrollablePanel();
-    private final JPanel buttonPanel = new JPanel();
+    private final JPanel emailButtonPanel = new JPanel();
+    private final JPanel emailTopPanel = new JPanel();
     private final JTextField emailField;
-    private final JButton submitButton;
-    private final JButton cancelButton;
-    private final JLabel infoLabel;
-    private final JCheckBox checkBox;
-    private String displayString;
+    private final JButton emailSubmitButton;
+    private final JButton emailCancelButton;
+    private final JButton emailTestButton;
+    private final JLabel emailInfoLabel;
+    private final JCheckBox emailCheckBox;
     private User displayUser;
-
+    
+    private final JButton SMSButton = new JButton(
+            "<html>SMS<br />Settings</html>");
+    private final ScrollablePanel SMSPanel = new ScrollablePanel();
+    private final JPanel SMSButtonPanel = new JPanel();
+    private final JPanel SMSTopPanel = new JPanel();
+    private final JTextField SMSField;
+    private final JButton SMSSubmitButton;
+    private final JButton SMSCancelButton;
+    private final JButton SMSTestButton;
+    private final JLabel SMSInfoLabel;
+    private final JCheckBox SMSCheckBox;
+    private String[] carriers = { "AT&T", "T-Mobile", "Verizon","Sprint"};
+    private final JComboBox<String> CarrierChooser = new JComboBox<String>(carriers);
+    
+    private final JButton helpButton = new JButton(
+            "<html>Help</html>");
     /**
      * 
-     * Constructor for EmailButtonPannel
+     * Constructor for EmailButtonPanel
      *
-     * @param parent Where this pannel goes
+     * @param parent Where this panel goes
      */
     public EmailButtonPanel(final MainView parent) {
         super("");
-        this.setPreferredWidth(350);
+        this.setPreferredWidth(420);
+        this.setMinimumSize(new Dimension(420, 200));
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
         // Email settings button
         try {
-            final Image img = ImageIO.read(getClass().getResource("emailButton.png"));
-            emailButton.setIcon(new ImageIcon(img));
+            final Image emailImg = ImageIO.read(getClass().getResource("emailButton.png"));
+            final Image smsImg = ImageIO.read(getClass().getResource("smsButton.png"));
+            final Image helpImg = ImageIO.read(getClass().getResource("help.png"));
+            emailButton.setIcon(new ImageIcon(emailImg));
+            SMSButton.setIcon(new ImageIcon(smsImg));
+            helpButton.setIcon(new ImageIcon(helpImg));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         
         emailButton.setToolTipText("Edit email for notifications");
+        SMSButton.setToolTipText("Edit phone number for notifications");
+        helpButton.setToolTipText("Show help page for Planning Poker Game");
 
         // Field for entering email
         emailField = new JTextField();
-        emailField.setSize(new Dimension(200, 25));
+        emailField.setPreferredSize(new Dimension(325, 20));
+        SMSField = new JTextField();
+        SMSField.setPreferredSize(new Dimension(230, 20));
 
         // Button for submitting new email
-        submitButton = new JButton("Submit");
-        submitButton.setEnabled(false);
+        emailSubmitButton = new JButton("Submit");
+        emailSubmitButton.setEnabled(false);
+        emailTestButton = new JButton("Test");
+        
+        SMSSubmitButton = new JButton("Submit");
+        SMSSubmitButton.setEnabled(false);
+        SMSTestButton = new JButton("Test");
 
-        // Button for cancelling an email address
-        cancelButton = new JButton("Cancel");
-
+        // Button for canceling an email address
+        emailCancelButton = new JButton("Cancel");
+        SMSCancelButton = new JButton("Cancel");
         // Validation label
-        infoLabel = new JLabel(" ");
-        infoLabel.setForeground(Color.red);
-        checkBox = new JCheckBox();
-        checkBox.setToolTipText("Check to receive emails about game status");
+        emailInfoLabel = new JLabel(" ");
+        emailInfoLabel.setForeground(Color.red);
+        SMSInfoLabel = new JLabel(" ");
+        SMSInfoLabel.setForeground(Color.red);
+        emailCheckBox = new JCheckBox();
+        emailCheckBox.setToolTipText("Check to receive emails about game status");
+        SMSCheckBox = new JCheckBox();
+        SMSCheckBox.setToolTipText("Check to receive SMS about game status");
 
-        buttonPanel.setLayout(new BorderLayout());
+        emailButtonPanel.setLayout(new MigLayout("insets 0 0 0 0"));
         JPanel checkPanel = new JPanel();
         checkPanel.setLayout(new BorderLayout());
-        checkPanel.add(checkBox, BorderLayout.WEST);
-        checkPanel.add(new JLabel("Email Notification?   "), BorderLayout.CENTER);
-        buttonPanel.add(checkPanel, BorderLayout.WEST);
-        //buttonPanel.add(new JLabel("Email notification?"));
-        buttonPanel.add(submitButton, BorderLayout.CENTER);
-        buttonPanel.add(cancelButton, BorderLayout.EAST);
+        checkPanel.add(emailCheckBox, BorderLayout.WEST);
+        checkPanel.add(new JLabel("Email Notification?   "));
+        emailButtonPanel.add(checkPanel);
+        emailButtonPanel.add(emailSubmitButton);
+        emailButtonPanel.add(emailCancelButton);
+        emailButtonPanel.add(emailTestButton);
+        
+        SMSButtonPanel.setLayout(new MigLayout("insets 0 0 0 0"));
+        JPanel SMScheckPanel = new JPanel();
+        SMScheckPanel.setLayout(new BorderLayout());
+        SMScheckPanel.add(SMSCheckBox, BorderLayout.WEST);
+        SMScheckPanel.add(new JLabel("SMS Notification?   "));
+        SMSButtonPanel.add(SMScheckPanel);
+        SMSButtonPanel.add(SMSSubmitButton);
+        SMSButtonPanel.add(SMSCancelButton);
+        SMSButtonPanel.add(SMSTestButton);
 
-		emailScrollPanel.setLayout(new MigLayout("insets 15 175 0 0"));
+        
+		emailScrollPanel.setLayout(new MigLayout("insets 0 13 0 0"));
+		emailScrollPanel.add(SMSButton);
 		emailScrollPanel.add(emailButton);
+		emailScrollPanel.add(helpButton);
 
 		emailPanel.setLayout(new MigLayout("insets 0 10 0 10"));
+		SMSPanel.setLayout(new MigLayout("insets 0 10 0 10"));
 		
 		
-		emailPanel.add(emailField, "width 300px, height 20px, wmin 10, wrap");
-		emailPanel.add(infoLabel, "height 20px,wrap");
-		emailPanel.add(buttonPanel, "height 18px");
-
+		emailTopPanel.add(new JLabel("Email:  "));
+		emailTopPanel.add(emailField,"wrap");
+		emailTopPanel.setLayout(new MigLayout("insets 0 5 0 0"));
+		emailTopPanel.setOpaque(false);
+		emailPanel.add(emailTopPanel, "wrap");
+		emailPanel.add(emailInfoLabel, "height 20px,wrap");
+		emailPanel.add(emailButtonPanel, "height 18px");
+		
+		CarrierChooser.setSelectedIndex(3);
+		//petList.addActionListener(this);
+		SMSTopPanel.add(new JLabel("SMS:  "));
+		SMSTopPanel.add(SMSField);
+		SMSTopPanel.add(CarrierChooser);
+		SMSTopPanel.setLayout(new MigLayout("insets 10 0 0 0"));
+		SMSTopPanel.setOpaque(false);
+		SMSPanel.add(SMSTopPanel, "wrap");
+		SMSPanel.add(SMSInfoLabel, "height 20px,wrap");
+		SMSPanel.add(SMSButtonPanel, "height 18px");
+		
+		
+		
+		SMSButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	canValidateSMS();
+                if(displayUser == null){
+                    new GetAllUsersController().requestAllUsers(EmailButtonPanel.this, 
+                                    ConfigManager.getConfig().getUserName()); 
+                    switchToEditSMS();
+                 
+                } else {
+                	switchToEditSMS();
+                }
+            }
+        });
+		
+		helpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ViewEventController.getInstance().helpSession();
+            }
+        });
+		
         emailButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(displayUser == null){
-                    // Send email to all users
                     new GetAllUsersController().requestAllUsers(EmailButtonPanel.this, 
                                     ConfigManager.getConfig().getUserName()); 
+                } else{
+                	switchToEdit();
                 }
-
-                else{
-                    switchToEdit();
+            }
+        });
+        
+        SMSSubmitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (canValidateSMS()) {
+                	setSMSSettings(displayUser);
+                    emailScrollPanel.setVisible(true);
+                    SMSPanel.setVisible(false);
+                } else {
+                    SMSInfoLabel.setText("*SMS format incorrect");
                 }
             }
         });
 
-        submitButton.addActionListener(new ActionListener() {
+        emailSubmitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (canValidateEmail()) {
@@ -139,52 +240,87 @@ public class EmailButtonPanel extends ToolbarGroupView {
                     emailScrollPanel.setVisible(true);
                     emailPanel.setVisible(false);
                 } else {
-                    infoLabel.setText("*Email format incorrect");
+                    emailInfoLabel.setText("*Email format incorrect");
                 }
             }
         });
 
-        cancelButton.addActionListener(new ActionListener() {
+        SMSCancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                emailScrollPanel.setVisible(true);
+                SMSPanel.setVisible(false);
+                SMSInfoLabel.setText(" ");
+
+            }
+        });
+        
+        
+        emailCancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 emailScrollPanel.setVisible(true);
                 emailPanel.setVisible(false);
-                infoLabel.setText(" ");
+                emailInfoLabel.setText(" ");
 
             }
         });
 
+        
+        SMSField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {}
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SMSSubmitButton.setEnabled(canValidateSMS());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                SMSSubmitButton.setEnabled(canValidateSMS());
+            }
+        });
+
+        
+        
         emailField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent e) {}
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                submitButton.setEnabled(canValidateEmail());
+                emailSubmitButton.setEnabled(canValidateEmail());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                submitButton.setEnabled(canValidateEmail());
+                emailSubmitButton.setEnabled(canValidateEmail());
             }
         });
 
-        checkBox.addActionListener(new ActionListener(){
+        emailCheckBox.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent a) {
-                submitButton.setEnabled(canValidateEmail());
+                emailSubmitButton.setEnabled(canValidateEmail());
             }
         });
 
         emailPanel.setOpaque(false);
+        SMSPanel.setOpaque(false);
         emailScrollPanel.setOpaque(false);
-        buttonPanel.setOpaque(false);
-        checkBox.setOpaque(false);
+        emailButtonPanel.setOpaque(false);
+        SMSButtonPanel.setOpaque(false);
+        emailCheckBox.setOpaque(false);
         checkPanel.setOpaque(false);
+        SMSCheckBox.setOpaque(false);
+        SMScheckPanel.setOpaque(false);
         emailScrollPanel.setVisible(true);
         emailPanel.setVisible(false);
+        SMSPanel.setVisible(false);
 
         this.add(emailPanel);
+        this.add(SMSPanel);
         this.add(emailScrollPanel);
     }
 
@@ -196,8 +332,16 @@ public class EmailButtonPanel extends ToolbarGroupView {
      */
     public void setEmailAddress(User u){
         u.setEmail(emailField.getText());
-        u.setHasNotificationsEnabled(checkBox.isSelected());
+        u.setHasNotificationsEnabled(emailCheckBox.isSelected());
         EditUserController.getInstance().setEmail(u);
+    }
+    
+    public void setSMSSettings(User u){
+    	u.setCarrier((String) CarrierChooser.getSelectedItem());
+    	u.setSmsEnabled(SMSCheckBox.isSelected());
+    	u.setPhoneNumber(SMSField.getText().replaceAll("[^\\d]", ""));
+    	System.out.println(u.toJSON());
+    	EditUserController.getInstance().setEmail(u);
     }
 
     /**
@@ -211,46 +355,95 @@ public class EmailButtonPanel extends ToolbarGroupView {
         boolean changes = false;
         
         if (emailField.getText().length() == 0) {
-            infoLabel.setText("*Please enter your email");
+            emailInfoLabel.setText("*Please enter your email");
             valid = false;
         } else if (emailField.getText().length() > 0 && emailField.getText().charAt(0) == ' ') {
-            infoLabel.setText("*Email cannot start with space");
+            emailInfoLabel.setText("*Email cannot start with space");
             valid = false;
         } else if (!emailField.getText().matches(".+@.+\\.[a-z]+")) {
-            infoLabel.setText("*Invalid email format");
+            emailInfoLabel.setText("*Invalid email format");
             valid = false;
         } else {
-            infoLabel.setText("");
+            emailInfoLabel.setText("");
             valid = true;
         }
         
         if (!emailField.getText().equals(displayUser.getEmail())){
             changes = true;
-        } else if (checkBox.isSelected() != displayUser.getHasNotificationsEnabled()){
+        } else if (emailCheckBox.isSelected() != displayUser.getHasNotificationsEnabled()){
             changes = true;
         }
 
         return valid && changes;
     }
+    
+    
+    public boolean canValidateSMS() {
+        boolean valid = false;
+        
+        if (SMSField.getText().length() == 0) {
+            SMSInfoLabel.setText("*Please enter your phone number");
+            valid = false;
+        } else if (SMSField.getText().length() > 0 && SMSField.getText().charAt(0) == ' ') {
+            SMSInfoLabel.setText("*Phone number cannot start with space");
+            valid = false;
+        } else if (!containTenDigit(SMSField.getText())) {
+            SMSInfoLabel.setText("*Invalid phone number length");
+            valid = false;
+        } else {
+            SMSInfoLabel.setText("");
+            valid = true;
+        }
+        return valid;
+    }
+    
+    public boolean containTenDigit(String string){
+    	int count = 0;
+    	for(int i = 0; i < string.length(); i ++){
+    		if(isInteger(string.charAt(i))){
+    			count ++;
+    		}
+    	}
+    	
+    	return count == 10;
+    }
+    
+    private boolean isInteger(char s) {
+        String numbers = "0123456789";
+        for (int i = 0; i < numbers.length(); i++) {
+        	if (numbers.charAt(i) == s) {
+        		return true;
+        	}
+        }
+        return false;
+    }
+    
 
     /**
      * @param user
      */
     public void setUser(User user) {
         displayUser = user;
-        switchToEdit();
     }
 
     /**
      * 
-     * Change Pannel mode to Edit
+     * Change Panel mode to Edit
      *
      */
     public void switchToEdit(){
         emailField.setText(displayUser.getEmail());
         emailScrollPanel.setVisible(false);
         emailPanel.setVisible(true);
-        checkBox.setSelected(displayUser.getHasNotificationsEnabled());
-        submitButton.setEnabled(canValidateEmail());
+        emailCheckBox.setSelected(displayUser.getHasNotificationsEnabled());
+        emailSubmitButton.setEnabled(canValidateEmail());
+    }
+    
+    public void switchToEditSMS() {
+    	CarrierChooser.setSelectedItem(displayUser.getCarrier());
+    	SMSCheckBox.setSelected(displayUser.hasSmsEnabled());
+    	SMSField.setText(displayUser.getPhoneNumber());
+    	emailScrollPanel.setVisible(false);
+        SMSPanel.setVisible(true);
     }
 }

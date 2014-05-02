@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,9 +35,9 @@ public class SessionOpenedEmailTemplateTest {
 
     @Before
     public void setUp(){
-        ArrayList<RequirementEstimate> requirement = new ArrayList<RequirementEstimate>();
+        final List<RequirementEstimate> requirement = new ArrayList<RequirementEstimate>();
         requirement.add(new RequirementEstimate(0, "Test1", 0, true));
-        PlanningPokerSession session = new PlanningPokerSession(
+        final PlanningPokerSession session = new PlanningPokerSession(
                         1,  "Test", "test", new Date(), 0,  0,
                         requirement, SessionType.DISTRIBUTED, true, 
                         true, "admin", "-None-");
@@ -48,14 +49,13 @@ public class SessionOpenedEmailTemplateTest {
 
     @Test
     public void testGenerateMessage(){
-        EmailMessage msg = template.generateMessage(user);
-        String subject = "New planning poker game Test";
+        final EmailMessage msg = template.generateMessage(user);
+        final String subject = "New planning poker game Test";
         assertEquals(subject, msg.getSubject());
-        String body = "Hello Tester Test,\n\nadmin has begun planning poker game \"Test\".\n\n" +
-                        "Description:\n\ttest\n\n" + "Requirements:\n\tTest1\n\n"+
-                        "Voting ends on "+new SimpleDateFormat("EEEE, MMMM d 'at' 0:00").format(new Date()) + ".\n\n" +
-                        "You can also vote at http://localhost:8080/WPISuite/planningpoker/default/1/index.html" +
-                        "\n\n- The planning poker team";
+        final String body = "Hello Tester Test,\n\nadmin has begun planning poker game \"Test\".\n\n" +
+                        "Description:\n\ttest\n\n" + "Requirements:\n\tTest1\n\n" +
+                        "Voting ends on " + new SimpleDateFormat("EEEE, MMMM d 'at' 0:00").format(new Date()) + 
+                        ".\n\n- The planning poker team";
         assertEquals(body, msg.getBody());
     }
 

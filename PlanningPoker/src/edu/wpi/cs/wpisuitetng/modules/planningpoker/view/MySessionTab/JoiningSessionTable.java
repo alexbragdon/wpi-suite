@@ -27,6 +27,7 @@ import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import java.io.IOException;
 import java.text.BreakIterator;
@@ -38,6 +39,8 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.Fraction;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.ProgressBarTableCellRenderer;
 
 /**
  * Description
@@ -47,7 +50,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
  */
 public class JoiningSessionTable extends JTable {
 
-    private DefaultTableModel tableModel = null;
+    private JoiningSessionTableModel tableModel = null;
 
     private final Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
 
@@ -59,15 +62,17 @@ public class JoiningSessionTable extends JTable {
      * @param data Initial data to fill OverviewTable
      * @param columnNames Column headers of OverviewTable
      */
-    public JoiningSessionTable(Object[][] data, String[] columnNames, MySessionPanel mySessionPanel) {
+    public JoiningSessionTable(MySessionPanel mySessionPanel) {
         this.mySessionPanel = mySessionPanel;
-        tableModel = new DefaultTableModel(data, columnNames);
+        tableModel = new JoiningSessionTableModel();
         this.setModel(tableModel);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setDropMode(DropMode.ON);
         this.getTableHeader().setReorderingAllowed(false);
         this.setAutoCreateRowSorter(true);
         setFillsViewportHeight(true);
+        
+        setupTable();
         
         @SuppressWarnings("serial")
         TransferHandler dnd = new TransferHandler() {
@@ -112,6 +117,20 @@ public class JoiningSessionTable extends JTable {
     }
 
     /**
+     * Set up the table including adding the correct rendering
+     */
+    private void setupTable() {
+    	
+        TableColumn ID_COLUMN = getColumnModel().getColumn(0);
+        ID_COLUMN.setPreferredWidth(0);
+        ID_COLUMN.setMaxWidth(0);
+        ID_COLUMN.setPreferredWidth(0);
+		
+    	//Render Fractions as a progress bar
+    	this.setDefaultRenderer(Fraction.class, new ProgressBarTableCellRenderer());
+	}
+
+	/**
      * Method clear.
      */
     public void clear() {
@@ -126,36 +145,9 @@ public class JoiningSessionTable extends JTable {
      * @param session PlanningPokerSession
      */
     public void addSessions(PlanningPokerSession session) {
-        Date date = new Date(session.getDate().getTime());
-        String dateString = "--";
-        if (session.getType() == SessionType.DISTRIBUTED) {
-            final Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.set(Calendar.HOUR_OF_DAY, session.getHour());
-            calendar.set(Calendar.MINUTE, session.getMin());
-            date = calendar.getTime();
-            dateString = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(date);
-        }
 
-        int votes = 0;
-        for (RequirementEstimate requirement : session.getRequirements()) {
-            if (requirement.getVotes().containsKey(ConfigManager.getConfig().getUserName())) {
-                votes++;
-            }
-        }
-
-        String displayVotes;
-
-        if (session.getRequirements().size() == votes) {
-            displayVotes = "Complete!";
-        } else {
-            displayVotes = String.valueOf(votes) + "/"
-                            + String.valueOf(session.getRequirements().size());
-        }
-
-        tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(),
-                        dateString, displayVotes });
-
+    	
+        tableModel.addSession(session);
     }
 
     /**
