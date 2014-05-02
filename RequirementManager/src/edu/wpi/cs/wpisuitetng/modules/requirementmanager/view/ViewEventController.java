@@ -13,7 +13,9 @@ import java.awt.Component;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
@@ -292,7 +294,14 @@ public class ViewEventController {
      * Lets the user import requirements.
      */
     public void importRequirements() {
-        JOptionPane.showMessageDialog(null, "Importing happens here.");
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                        "JSON File", "json");
+        chooser.setFileFilter(filter);
+        int result = chooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            JOptionPane.showMessageDialog(null, "Importing will happen here.");
+        }
     }
 
 	/** 
