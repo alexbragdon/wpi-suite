@@ -22,6 +22,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
@@ -56,11 +57,11 @@ public class CloseSessionPanel extends JPanel {
      */
     public CloseSessionPanel(PlanningPokerSession session, boolean isEditable) {
         this.session = session;
-        
+
         for (RequirementEstimate req : session.getRequirements()) {
             req.setFinalEstimate((int)Math.round(req.calculateMean()));
         }
-        
+
         this.isEditable = isEditable;
         table = new JTable(new CloseSessionTableModel(session, isEditable));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -70,19 +71,19 @@ public class CloseSessionPanel extends JPanel {
     private void buildLayout() {
         setLayout(new GridBagLayout());
         final GridBagConstraints c = new GridBagConstraints();
-        
+
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         final GridBagConstraints c2 = new GridBagConstraints();
         table.changeSelection(0, 0, false, false);
-        
+
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 updateSelectedRequirement(getSelectedRequirement());
             }
         });
-        
+
         editPanel = new JScrollPane(table);
         voteTable = new VoteStatisticPanel(session);
         c2.gridx = 0;
@@ -100,8 +101,8 @@ public class CloseSessionPanel extends JPanel {
         c2.weightx = 0.0;
         c2.weighty = 1.0;
         panel.add(voteTable, c2);
-        
-        
+
+
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 2;
@@ -110,7 +111,7 @@ public class CloseSessionPanel extends JPanel {
         c.weighty = 1.0;
         c.fill = GridBagConstraints.BOTH;
         add(panel, c);
-        
+
         description = new RequirementDescriptionPanel(session.getRequirements().get(table.getSelectedRow()));
         c.gridx = 0;
         c.gridy = 2;
@@ -120,19 +121,21 @@ public class CloseSessionPanel extends JPanel {
         c.weighty = 0.0;
         c.fill = GridBagConstraints.BOTH;
         add(description, c);
-        
-        
-        submitButtons = new FinalEstimateButtonPanel(this);
-        c.gridx = 1;
-        c.gridy = 2;
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.weightx = 0.3;
-        c.weighty = 0.0;
-        c.fill = GridBagConstraints.VERTICAL;
-        c.anchor = GridBagConstraints.LAST_LINE_END;
-        add(submitButtons, c);
-        
+
+        final String username = ConfigManager.getConfig().getUserName();
+        if (session.getModerator().equals(username)) {
+            submitButtons = new FinalEstimateButtonPanel(this);
+            c.gridx = 1;
+            c.gridy = 2;
+            c.gridwidth = 1;
+            c.gridheight = 1;
+            c.weightx = 0.3;
+            c.weighty = 0.0;
+            c.fill = GridBagConstraints.VERTICAL;
+            c.anchor = GridBagConstraints.LAST_LINE_END;
+            add(submitButtons, c);
+        }
+
     }
 
     /**
@@ -149,17 +152,17 @@ public class CloseSessionPanel extends JPanel {
             return null;
         }
     }
-    
+
     /**
      * Update the field according to the selected requirements.
      * @param selectedRequirement the selected requirement
      */
     public void updateSelectedRequirement(final RequirementEstimate selectedRequirement){
-    	voteTable.updateListBox(selectedRequirement);
-    	description.updateDescription(selectedRequirement);
+        voteTable.updateListBox(selectedRequirement);
+        description.updateDescription(selectedRequirement);
     }
-    
-    
+
+
     /**
      * Called by the buttons panel when close is pressed.
      */
@@ -176,8 +179,8 @@ public class CloseSessionPanel extends JPanel {
         }
         remove();
     }
-    
-    
+
+
     /**
      * Called by the buttons panel when cancel is pressed. Removes the tab.
      */
