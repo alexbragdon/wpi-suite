@@ -43,17 +43,18 @@ public class HelpPanel extends JPanel{
 		JLabel title4 = new JLabel("Voting in a Game");
 		title4.setFont(new Font(title4.getFont().getName(), Font.PLAIN, 24));
 		
-		JTextArea description1 = new JTextArea();
-		description1.setFont(new Font(description1.getFont().getName(), Font.PLAIN, 12));
-		description1.setPreferredSize(new Dimension(1500, 40));
-		description1.setBackground(color) ;
-		description1.setLineWrap(true);
-		description1.setWrapStyleWord(true);
-		description1.setEditable(false);
-		description1.setText("Welcome to Planning Poker, a module for WPI Suite that can make estimating requirements a game!!"
+
+		JTextArea description = new JTextArea();
+		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 12));
+		description.setPreferredSize(new Dimension(1500, 60));
+		description.setBackground(color) ;
+		description.setLineWrap(true);
+		description.setWrapStyleWord(true);
+		description.setEditable(false);
+		description.setText("Welcome to Planning Poker, a module for WPI Suite that can make estimating requirements a game!!"
 				+ " Using Planning Poker, you can create games for your group to vote on, as well as play games that other members of your group have made."
 				+ " Hopefully, this guide will present you with all the information you need to begin creating and playing Planning Poker Games.");
-		final JScrollPane scrollPanel1 = new JScrollPane(description1);
+		final JScrollPane scrollPanel1 = new JScrollPane(description);
 		scrollPanel1.setBorder(new LineBorder(color));
 		
 		JTextArea description2A = new JTextArea();
@@ -126,7 +127,7 @@ public class HelpPanel extends JPanel{
 
 		JTextArea description3 = new JTextArea();
 		description3.setFont(new Font(description3.getFont().getName(), Font.PLAIN, 12));
-		description3.setPreferredSize(new Dimension(1500, 150));
+		description3.setPreferredSize(new Dimension(1500, 200));
 		description3.setBackground(color) ;
 		description3.setLineWrap(true);
 		description3.setWrapStyleWord(true);
@@ -194,8 +195,8 @@ public class HelpPanel extends JPanel{
 		this.add(title4, "wrap");
 		
 		
-		this.setMinimumSize(new Dimension(1000, 800));
-		this.setPreferredSize(new Dimension(1000, 800));
+		this.setMinimumSize(new Dimension(1550, 800));
+		this.setPreferredSize(new Dimension(1550, 800));
 		
 	}
 
