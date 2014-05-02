@@ -42,6 +42,8 @@ public class HelpPanel extends JPanel{
 		title3.setFont(new Font(title3.getFont().getName(), Font.PLAIN, 24));
 		JLabel title4 = new JLabel("Voting in a Game");
 		title4.setFont(new Font(title4.getFont().getName(), Font.PLAIN, 24));
+		JLabel title5 = new JLabel("Seeing the Results of a Game");
+		title5.setFont(new Font(title4.getFont().getName(), Font.PLAIN, 24));
 		
 
 		JTextArea description = new JTextArea();
@@ -137,52 +139,7 @@ public class HelpPanel extends JPanel{
         final JScrollPane scrollPanel3A = new JScrollPane(description3A);
         scrollPanel3A.setBorder(new LineBorder(color));
         
-        JTextArea description3B = new JTextArea();
-        description3B.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
-        description3B.setPreferredSize(new Dimension(1500, 20));
-        description3B.setBackground(color) ;
-        description3B.setLineWrap(true);
-        description3B.setWrapStyleWord(true);
-        description3B.setEditable(false);
-        description3B.setText("o   To create a game with a pre-made deck, input a name, description, and time"
-                            + " Limit (If you want one), and a day you want your game to end.");
-        final JScrollPane scrollPanel3B = new JScrollPane(description3B);
-        scrollPanel3B.setBorder(new LineBorder(color));
         
-        JTextArea description3C = new JTextArea();
-        description3C.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
-        description3C.setPreferredSize(new Dimension(1500, 20));
-        description3C.setBackground(color) ;
-        description3C.setLineWrap(true);
-        description3C.setWrapStyleWord(true);
-        description3C.setEditable(false);
-        description3C.setText("o  If you want to create a custom deck, select 'Create new Deck.' This will bring up the deck creation window.");
-        final JScrollPane scrollPanel3C = new JScrollPane(description3C);
-        scrollPanel3C.setBorder(new LineBorder(color));
-        
-        JTextArea description3D = new JTextArea();
-        description3D.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
-        description3D.setPreferredSize(new Dimension(1500, 20));
-        description3D.setBackground(color) ;
-        description3D.setLineWrap(true);
-        description3D.setWrapStyleWord(true);
-        description3D.setEditable(false);
-        description3D.setText("o   Once that window is up, you can select wether you want the user to select one or multiple cards,"
-                            + "You can also decide if you want an 'I don't know' card in your deck.");
-        final JScrollPane scrollPanel3D = new JScrollPane(description3D);
-        scrollPanel3D.setBorder(new LineBorder(color));
-        
-        JTextArea description3E = new JTextArea();
-        description3E.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
-        description3E.setPreferredSize(new Dimension(1500, 20));
-        description3E.setBackground(color) ;
-        description3E.setLineWrap(true);
-        description3E.setWrapStyleWord(true);
-        description3E.setEditable(false);
-        description3E.setText("o   After that, you can decide the name of the deck, and what cards are in your deck by filling"
-                            + " in the boxes next to the large card image. When you are done, hit 'Create Deck'.");
-        final JScrollPane scrollPanel3E = new JScrollPane(description3E);
-        scrollPanel3E.setBorder(new LineBorder(color));
         
         JTextArea description3F = new JTextArea();
         description3F.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
@@ -274,7 +231,7 @@ public class HelpPanel extends JPanel{
         description4B.setEditable(false);
         description4B.setText("o   In the resulting tab, you will see a list of all of the requirements in the game,"
                             + " the progress of your team in voting for said requirements, and the amount of time left to vote in the game.");
-        final JScrollPane scrollPanel4B = new JScrollPane(description3B);
+        final JScrollPane scrollPanel4B = new JScrollPane(description4B);
         scrollPanel4B.setBorder(new LineBorder(color));
         
         JTextArea description4C = new JTextArea();
@@ -286,7 +243,7 @@ public class HelpPanel extends JPanel{
         description4C.setEditable(false);
         description4C.setText("o  In order to vote on a requirement, click on it. It will highlight, and you should see the description of the requirement,"
                             + " as well as the cards you can use to vote for the requirement (if any).");
-        final JScrollPane scrollPanel4C = new JScrollPane(description3C);
+        final JScrollPane scrollPanel4C = new JScrollPane(description4C);
         scrollPanel4C.setBorder(new LineBorder(color));
         
         JTextArea description4D = new JTextArea();
@@ -298,7 +255,7 @@ public class HelpPanel extends JPanel{
         description4D.setEditable(false);
         description4D.setText("o   After carefully studying the description, click on all cards to choose an estimate for the requirement. If the deck is multi-"
                             + "selection, you can click multiple cards to add their numbers together. If single selection, you can only choose 1 card.");
-        final JScrollPane scrollPanel4D = new JScrollPane(description3D);
+        final JScrollPane scrollPanel4D = new JScrollPane(description4D);
         scrollPanel4D.setBorder(new LineBorder(color));
         
         JTextArea description4E = new JTextArea();
@@ -309,7 +266,7 @@ public class HelpPanel extends JPanel{
         description4E.setWrapStyleWord(true);
         description4E.setEditable(false);
         description4E.setText("o   If the selected game doesn't have a deck associated with it, you can manually input what you want your estimate to be.");
-        final JScrollPane scrollPanel4E = new JScrollPane(description3E);
+        final JScrollPane scrollPanel4E = new JScrollPane(description4E);
         scrollPanel4E.setBorder(new LineBorder(color));
 		
 		this.add(title, "wrap");
@@ -323,10 +280,6 @@ public class HelpPanel extends JPanel{
 		this.add(scrollPanel2F,"wrap");
 		this.add(title3, "wrap");
 		this.add(scrollPanel3A,"wrap");
-		//this.add(scrollPanel3B,"wrap");
-		//this.add(scrollPanel3C,"wrap");
-		//this.add(scrollPanel3D,"wrap");
-		//this.add(scrollPanel3E,"wrap");
 		this.add(scrollPanel3F,"wrap");
 		this.add(scrollPanel3G,"wrap");
 		this.add(scrollPanel3H,"wrap");
@@ -339,9 +292,10 @@ public class HelpPanel extends JPanel{
 		this.add(scrollPanel4C,"wrap");
 		this.add(scrollPanel4D,"wrap");
 		this.add(scrollPanel4E,"wrap");
+		this.add(title5, "wrap");
 		
 		
-		this.setMinimumSize(new Dimension(1550, 800));
+		this.setMinimumSize(new Dimension(1600, 800));
 		this.setPreferredSize(new Dimension(1550, 800));
 		
 	}
