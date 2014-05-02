@@ -52,11 +52,6 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 		progressBar.setString(fraction.toString());
 
 		progressBar.setForeground(getColor(fraction));
-		progressBar.repaint();
-		if ((fraction.getNumerator() == 0) && (fraction.getDenominator() != 0)) {
-			System.out.println("Setting to red!");
-			progressBar.setForeground(Color.RED);
-		}
 
 		return progressBar;
 	}
@@ -68,6 +63,8 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 	 * @return The shade of red/green that represents the transition
 	 */
 	private static Color getColor(Fraction fraction) {
+		
+		//TODO: Dim colors
 
 		final Color INITIAL = Color.RED;
 		final Color FINAL = Color.GREEN;
