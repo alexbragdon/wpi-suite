@@ -28,8 +28,8 @@ public class EmailButtonPanelTest {
 
     @Before
     public void setUp(){
-        MainView mv = new MainView();
-        ToolbarView tbv = new ToolbarView(true, mv);
+        final MainView mv = new MainView();
+        final ToolbarView tbv = new ToolbarView(true, mv);
         EBP = tbv.GetEmailButtonPanel();
     }
 
@@ -41,9 +41,12 @@ public class EmailButtonPanelTest {
 
     @Test
     public void TestSetUser(){
-        User user = new User("Tester Test", "test", "test", 123);
+        final User user = new User("Tester Test", "test", "test", 123);
         user.setEmail("test@test.edu");
         EBP.setUser(user);
         EBP.canValidateSMS();
+        EBP.switchToEdit();
+        EBP.switchToEditSMS();
     }
+    
 }

@@ -26,8 +26,8 @@ public class CloseOpenButtonTest {
     @Before
     public void setUp(){
         mv = new MainView();
-        ToolbarView tbv = new ToolbarView(true, mv);
-        CloseButtonPanel CBP = tbv.GetCloseButtonPanel();
+        final ToolbarView tbv = new ToolbarView(true, mv);
+        final CloseButtonPanel CBP = tbv.GetCloseButtonPanel();
         COB = new CloseOpenButton(CBP);
     }
     

@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class PlanningPokerNotificationTests {
+public class PlanningPokerNotificationTest {
     private PlanningPokerNotification testNote, testNote2;
     @Before
     public void setUp(){
@@ -39,7 +39,7 @@ public class PlanningPokerNotificationTests {
 
     @Test
     public void testThirdConstructor(){
-         PlanningPokerNotification testNote3 = new PlanningPokerNotification(testNote2);
+         final PlanningPokerNotification testNote3 = new PlanningPokerNotification(testNote2);
          assertEquals("admin", testNote3.getUsername());
          assertEquals("Notification Test", testNote3.getNotificiation());
     }

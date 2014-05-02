@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,12 +38,12 @@ public class CloseSessionPanelTest {
 	private CloseSessionPanel csp;
 	private CloseSessionButtonsPanel csbp;
 	private CloseSessionTableModel cstm;
-	private ArrayList<RequirementEstimate> reqList;
+	private List<RequirementEstimate> reqList;
 	
 	@Before
 	public void setUp() throws Exception {
 		reqList = new ArrayList<RequirementEstimate>();
-		reqList.add(new RequirementEstimate(1,"2",2,true));
+		reqList.add(new RequirementEstimate(1, "2", 2, true));
 		ses = new PlanningPokerSession(3123, "Test Session", "Hello The World", new Date(), 23, 59,
 				reqList, SessionType.REALTIME, false, false, "admin", "-None-");
 		csp = new CloseSessionPanel(ses, true);
@@ -57,7 +58,7 @@ public class CloseSessionPanelTest {
 	}
 	@Test
 	public void testOtherFunctions(){
-		assertEquals(ses,csp.getSession());
+		assertEquals(ses, csp.getSession());
 		csp.cancelPressed();
 	}
 	@Test

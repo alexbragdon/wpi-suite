@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SuperButton;
+
 
 /**
  * Description
@@ -26,9 +26,9 @@ public class SuperButtonTest {
     
     @Before
     public void setUp(){
-        MainView mv = new MainView();
-        ToolbarView tbv = new ToolbarView(true, mv);
-        SuperButtonPanel SBP = tbv.GetSuperButtonPanel();
+        final MainView mv = new MainView();
+        final ToolbarView tbv = new ToolbarView(true, mv);
+        final SuperButtonPanel SBP = tbv.GetSuperButtonPanel();
         SB = new SuperButton(SBP);
     }
     

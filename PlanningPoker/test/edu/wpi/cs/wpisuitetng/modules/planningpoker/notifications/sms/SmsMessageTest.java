@@ -29,9 +29,9 @@ public class SmsMessageTest {
     
     @Test
     public void TestGetterAndSetter(){
-        String Carrier = SM.getCarrier();
-        String Number = SM.getNumber();
-        String Body = SM.getBody();
+        final String Carrier = SM.getCarrier();
+        final String Number = SM.getNumber();
+        final String Body = SM.getBody();
         
         assertEquals(Carrier, "AT&T");
         assertEquals(Number, "1234567890");

@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,25 +34,25 @@ public class VotingOverviewTableTest {
 
     @Before
     public void setUp(){
-        RequirementEstimate testReq = new RequirementEstimate(1, "I oh so love tests", 123, false);
-        RequirementEstimate testReq1 = new RequirementEstimate(2, "I oh so love tests", 123, false);
-        RequirementEstimate testReq2 = new RequirementEstimate(3, "I oh so love test", 123, false);
+        final RequirementEstimate testReq = new RequirementEstimate(1, "I oh so love tests", 123, false);
+        final RequirementEstimate testReq1 = new RequirementEstimate(2, "I oh so love tests", 123, false);
+        final RequirementEstimate testReq2 = new RequirementEstimate(3, "I oh so love test", 123, false);
         testReq.setDescription("I hate thisssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
         testReq1.setDescription("I like this.");
-        ArrayList<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
+        final List<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
         listEst.add(testReq);
         listEst.add(testReq1);
         listEst.add(testReq2);
-        VotingOverviewTableModel votm = new VotingOverviewTableModel(listEst, 1, "admin");
+        final VotingOverviewTableModel votm = new VotingOverviewTableModel(listEst, 1, "admin");
 
         Network.initNetwork(new MockNetwork());
         Network.getInstance().setDefaultNetworkConfiguration(
                         new NetworkConfiguration("http://wpisuitetng"));
 
 
-        PlanningPokerSession session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
+        final PlanningPokerSession session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
                         listEst, SessionType.REALTIME, false, false, "aGuy", "-None-");    
-        VotingOverviewPanel vop = new VotingOverviewPanel(listEst, 1, "admin", new VotingPanel(session1),  session1);
+        final VotingOverviewPanel vop = new VotingOverviewPanel(listEst, 1, "admin", new VotingPanel(session1),  session1);
 
         VOT = new VotingOverviewTable(votm, vop);
     }
@@ -64,14 +65,14 @@ public class VotingOverviewTableTest {
     @Test
     public void TestGetDescription(){
         VOT.getDescription(1);
-        VOT.getDescription(2);
+        VOT.getDescription(2); 
         VOT.getDescription(10);
     }
 
     @Test
     public void TestGetToolTipText(){
-        MouseEvent event = new MouseEvent(VOT, 1, 2, 3, 4, 5, 6, false);
-        String text = VOT.getToolTipText(event);
+        final MouseEvent event = new MouseEvent(VOT, 1, 2, 3, 4, 5, 6, false);
+        final String text = VOT.getToolTipText(event);
         System.out.println(text);
     }
 }

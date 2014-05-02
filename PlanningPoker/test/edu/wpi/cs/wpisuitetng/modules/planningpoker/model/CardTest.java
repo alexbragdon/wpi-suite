@@ -23,14 +23,14 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.CardPanel;
  */
 public class CardTest {
     private Card card;
-    
+
     @Before
     public void setUp(){
         card = new Card(1, new CardPanel("TestCard", 
-                                        new RequirementEstimate(0, "TestEst", 2, true), 
-                                        true), true);
+                        new RequirementEstimate(0, "TestEst", 2, true), 
+                        true), true);
     }
-    
+
     @Test
     public void testGettersandSetter(){
         assertEquals(1, card.getCardNum());
@@ -41,5 +41,12 @@ public class CardTest {
         card.getNumLabel();
         card.getImgLabel();
     }
+
+    @Test
+    public void TestEnableAndDisableSelection(){
+        card.enableSelection();
+        card.disableSelection();
+    }
     
+
 }

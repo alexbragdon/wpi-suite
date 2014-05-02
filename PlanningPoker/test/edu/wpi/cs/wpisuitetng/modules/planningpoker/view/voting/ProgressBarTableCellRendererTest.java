@@ -29,11 +29,11 @@ public class ProgressBarTableCellRendererTest {
     
     @Test
     public void TestGetTableCellRendererComponent(){
-        PBTCR.getTableCellRendererComponent(new JTable() , new Fraction(0, 5), true, true, 1, 1);
+        PBTCR.getTableCellRendererComponent(new JTable(), new Fraction(0, 5), true, true, 1, 1);
     }
     
     @Test
     public void TestGetTableCellRendererComponent1(){
-        PBTCR.getTableCellRendererComponent(new JTable() , new Fraction(1, 1), true, true, 1, 1);
+        PBTCR.getTableCellRendererComponent(new JTable(), new Fraction(1, 1), true, true, 1, 1);
     }
 }

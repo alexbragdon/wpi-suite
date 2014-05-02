@@ -25,8 +25,8 @@ public class CloseButtonPanelTest {
     
     @Before
     public void setUp(){
-        MainView mv = new MainView();
-        ToolbarView tbv = new ToolbarView(true, mv);
+        final MainView mv = new MainView();
+        final ToolbarView tbv = new ToolbarView(true, mv);
         CBP = tbv.GetCloseButtonPanel();
     }
     
@@ -40,7 +40,6 @@ public class CloseButtonPanelTest {
     
     @Test
     public void TestPressCloseButton(){
-        //CBP.setSelectedPanelIndex(0);
         CBP.setSessionActive(true);
         CBP.pressCloseButton();
         
