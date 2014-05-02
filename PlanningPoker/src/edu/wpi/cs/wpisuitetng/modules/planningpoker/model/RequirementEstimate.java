@@ -252,11 +252,12 @@ public class RequirementEstimate {
     
     /**
      *   
-     * Updates the estimate feild in the requirement in the DB, along with a note.
+     * Updates the estimate feild in the requirement in the DB, along with a note
      * Uses the finalEstimate field here and goes to accociated requirement
      *
      */
     public void exportToRequirementManager() {
+        isExported = true;
         Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.POST); // POST == update
         Requirement newRequirement = new Requirement(this.id, this.name, this.description);
         String message = ("Estimated updated from Planning Poker:");

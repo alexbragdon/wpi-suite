@@ -122,7 +122,7 @@ public class CloseSessionPanel extends JPanel {
         add(description, c);
         
         
-        submitButtons = new FinalEstimateButtonPanel();
+        submitButtons = new FinalEstimateButtonPanel(this);
         c.gridx = 1;
         c.gridy = 2;
         c.gridwidth = 1;

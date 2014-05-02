@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -36,11 +38,14 @@ import net.miginfocom.swing.MigLayout;
  */
 
 public class FinalEstimateButtonPanel extends JPanel {
+    private CloseSessionPanel parent;
 	private JButton submitButton;
+	private JButton exportButton;
 	private JTextField estimateField;
 	private JLabel errorLabel;
 	
-	public FinalEstimateButtonPanel(){
+	public FinalEstimateButtonPanel(CloseSessionPanel parent){
+	    this.parent = parent;
 		setLayout(new MigLayout());
 		
 		buildLayout();
@@ -64,6 +69,9 @@ public class FinalEstimateButtonPanel extends JPanel {
 		submitButton = new JButton("Submit");
 		submitButton.setEnabled(false);
 		submitButton.setPreferredSize(new Dimension(120, 100));
+		exportButton = new JButton("Export");
+		exportButton.setEnabled(true);
+		exportButton.setPreferredSize(new Dimension(120, 100));
 		estimateField = new JTextField("--");
 		estimateField.setPreferredSize(new Dimension(120, 100));
 		estimateField.setEditable(true);
@@ -72,7 +80,20 @@ public class FinalEstimateButtonPanel extends JPanel {
 		midPanel.setPreferredSize(new Dimension(255, 100));
 		midPanel.add(estimateField, BorderLayout.WEST);
 		midPanel.add(emptyPanel, BorderLayout.CENTER);
-		midPanel.add(submitButton, BorderLayout.EAST);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BorderLayout());
+		buttonPanel.setPreferredSize(new Dimension(250, 100));
+		buttonPanel.add(submitButton, BorderLayout.WEST);
+		buttonPanel.add(emptyPanel, BorderLayout.CENTER);
+		buttonPanel.add(exportButton, BorderLayout.EAST);
+		midPanel.add(buttonPanel, BorderLayout.EAST);
+		
+		exportButton.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        parent.getSelectedRequirement().setFinalEstimate(5);
+		        parent.getSelectedRequirement().exportToRequirementManager();
+		    }
+		});
 
 		try {
 			final Image img = ImageIO.read(getClass().getResource(
