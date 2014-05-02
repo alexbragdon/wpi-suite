@@ -257,15 +257,17 @@ public class RequirementEstimate {
      *
      */
     public void exportToRequirementManager() {
-        isExported = true;
-        Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.POST); // POST == update
-        Requirement newRequirement = new Requirement(this.id, this.name, this.description);
-        String message = ("Estimated updated from Planning Poker:");
-        TransactionHistory requirementHistory = newRequirement.getHistory();
-        requirementHistory.add(message);
-        newRequirement.setHistory(requirementHistory);        
-        newRequirement.setEstimate(this.finalEstimate);
-        request.setBody(newRequirement.toJSON()); // put the new requirement in the body of the request
-        request.send(); 
+        if (!isExported) {
+            isExported = true;
+            Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.POST); // POST == update
+            Requirement newRequirement = new Requirement(this.id, this.name, this.description);
+            String message = ("Estimated updated from Planning Poker Game"); // TODO: Add name of game to Transaction History Message
+            TransactionHistory requirementHistory = newRequirement.getHistory();
+            requirementHistory.add(message);
+            newRequirement.setHistory(requirementHistory);        
+            newRequirement.setEstimate(this.finalEstimate);
+            request.setBody(newRequirement.toJSON()); // put the new requirement in the body of the request
+            request.send(); 
+        }
     }
 }
