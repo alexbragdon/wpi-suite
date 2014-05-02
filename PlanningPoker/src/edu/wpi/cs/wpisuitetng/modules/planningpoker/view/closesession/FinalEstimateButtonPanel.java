@@ -90,7 +90,6 @@ public class FinalEstimateButtonPanel extends JPanel {
 		
 		exportButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-		        parent.getSelectedRequirement().setFinalEstimate(5);
 		        parent.getSelectedRequirement().exportToRequirementManager();
 		    }
 		});
