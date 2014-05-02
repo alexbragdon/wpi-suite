@@ -68,6 +68,7 @@ public class CustomDeckPanel extends JPanel {
 	private JPanel radioButtonPanel;
 	
 	TitledBorder titleBorder;
+	TitledBorder cardTitle;
 	
 	
 	public CustomDeckPanel(SessionPanel parent){
@@ -85,17 +86,24 @@ public class CustomDeckPanel extends JPanel {
 		numLabel.setFont(numLabel.getFont().deriveFont(Font.PLAIN, 120));
 		numLabel.setHorizontalAlignment(JLabel.CENTER);
 		
+		JPanel emptyPanel1 = new JPanel();
+		JPanel emptyPanel2 = new JPanel();
+		emptyPanel1.setPreferredSize(new Dimension(1, 400));
+		emptyPanel2.setPreferredSize(new Dimension(50, 400));
+		emptyPanel1.setMinimumSize(new Dimension(1, 400));
+		emptyPanel2.setMinimumSize(new Dimension(50, 400));
 
-		
+		cardTitle = BorderFactory.createTitledBorder("           Enter card values");
+		cardTitle.setBorder(BorderFactory.createLineBorder(color));
 		scrollPanel = new CustomCardPanel(this);
 		newCardScroll = new JScrollPane(scrollPanel);
-		newCardScroll.setPreferredSize(new Dimension(235, 320));
-		newCardScroll.setBorder(BorderFactory.createLineBorder(color));
+		newCardScroll.setPreferredSize(new Dimension(235, 460));
+		newCardScroll.setBorder(cardTitle);
 		newCardScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
 		
 		this.deckName = new JLabel("Deck name    ");
 		this.deckNameTxt = new JTextField();
-		deckNameTxt.setPreferredSize(new Dimension(200, 25));
+		deckNameTxt.setPreferredSize(new Dimension(300, 35));
 		this.singleSelect = new JRadioButton("Single selection");
 		this.multiSelect = new JRadioButton("Multiple selection");
 		this.dontKnowCard = new JCheckBox("Have an \"I don't know\" card");
@@ -105,7 +113,7 @@ public class CustomDeckPanel extends JPanel {
 		title = new JLabel("Create a new deck");
 		title.setFont(new Font(title.getFont().getName(), Font.BOLD, 15));
 		deckNamePanel = new JPanel();
-		deckNamePanel.setPreferredSize(new Dimension(320, 30));
+		deckNamePanel.setPreferredSize(new Dimension(450, 35));
 		deckNamePanel.setLayout(new BorderLayout());
 		singleSelect.setSelected(true);
 		
@@ -133,8 +141,10 @@ public class CustomDeckPanel extends JPanel {
 		deckNamePanel.add(this.deckName, BorderLayout.WEST);
 		deckNamePanel.add(this.deckNameTxt, BorderLayout.CENTER);
 		add(deckNamePanel,"span x, wrap");
+		add(emptyPanel1,"span 1 4");
 		add(imgLabel);
-		add(newCardScroll,"wrap");
+		add(emptyPanel2,"span 1 4");
+		add(newCardScroll,"span 1 4,wrap");
 		add(errorLabel, "span 2, wrap");
 		radioButtonPanel.add(singleSelect,"wrap");
 		radioButtonPanel.add(multiSelect);
@@ -228,7 +238,7 @@ public class CustomDeckPanel extends JPanel {
 	 */
 	private void validateDeckName(){
 		if(deckNameTxt.getText().length() == 0){
-			errorLabel.setText("*Please enter the name of this customed deck.");
+			errorLabel.setText("*Enter the name of this customed deck.");
 			createDeck.setEnabled(false);
 		}else if (deckNameTxt.getText().length() > 0 && deckNameTxt.getText().charAt(0) == ' '){
 			errorLabel.setText("*Deck name cannot start with a space.");
@@ -252,7 +262,7 @@ public class CustomDeckPanel extends JPanel {
 	 * Show error message and disable button when notified.
 	 */
 	public void cardInvalid(){
-		errorLabel.setText("*Card deck invalid. Except for the last one, card(s) without green check(s) is(are) invalid.");
+		errorLabel.setText("*Card deck invalid. Check entries.");
 		createDeck.setEnabled(false);
 	}
 	
@@ -268,7 +278,7 @@ public class CustomDeckPanel extends JPanel {
 	 * Show error message and disable button when notified.
 	 */
 	public void noCardError(){
-    	errorLabel.setText("*Please enter at least one card to create deck.");
+    	errorLabel.setText("*Enter at least one card to create deck.");
 		createDeck.setEnabled(false);
 	}
 	

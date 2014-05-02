@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -62,6 +63,7 @@ public class CustomCardValuePanel extends JPanel {
 		button = new JButton();
 		button.setPreferredSize(new Dimension(30, 30));
 		button.setMinimumSize(new Dimension(30, 30));
+		button.setFocusable(false);
 		try {
 			Image img = ImageIO.read(getClass().getResource("cancel-icon.png"));
 			button.setIcon(new ImageIcon(img));
@@ -106,12 +108,14 @@ public class CustomCardValuePanel extends JPanel {
 				if(!validateField()){
 					label.setText("  ");
 					parent.passCardValue("");
+					textField.setBorder(BorderFactory.createLineBorder(Color.RED));
 				}else{
 					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
+					textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				}
 				parent.checkCreateRemoveCard();
-				
+				button.setVisible(true);
 				if(parent.allCardValid()){
 					parent.notifyParentValid();
 				}else{
@@ -124,12 +128,14 @@ public class CustomCardValuePanel extends JPanel {
 				if(!validateField()){
 					label.setText("  ");
 					parent.passCardValue("");
+					textField.setBorder(BorderFactory.createLineBorder(Color.RED));
 				}else{
 					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
+					textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				}
 				parent.checkCreateRemoveCard();
-				
+				button.setVisible(true);
 				if(parent.allCardValid()){
 					parent.notifyParentValid();
 				}else{
@@ -143,12 +149,14 @@ public class CustomCardValuePanel extends JPanel {
 				if(!validateField()){
 					label.setText("  ");
 					parent.passCardValue("");
+					textField.setBorder(BorderFactory.createLineBorder(Color.RED));
 				}else{
 					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
+					textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				}
 				parent.checkCreateRemoveCard();
-				
+				button.setVisible(true);
 				if(parent.allCardValid()){
 					parent.notifyParentValid();
 				}else{
@@ -229,5 +237,13 @@ public class CustomCardValuePanel extends JPanel {
 	 */
 	public boolean isCardBlank(){
 		return this.textField.getText().equals("");
+	}
+	
+	/**
+	 * @return the button
+	 */
+	public JButton getButton() {
+		
+		return button;
 	}
 }

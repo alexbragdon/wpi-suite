@@ -98,6 +98,11 @@ public class CustomCardPanel extends JPanel {
 				}
 			}
 		}
+		for(CustomCardValuePanel  card : cards){
+			if (card.isCardBlank()){
+				card.getButton().setVisible(false);
+			}
+		}
 	}
 	
 	/**
