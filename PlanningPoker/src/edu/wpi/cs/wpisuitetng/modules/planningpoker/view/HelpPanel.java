@@ -30,7 +30,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class HelpPanel extends JPanel{
 	private Color color = UIManager.getColor ( "Panel.background" );
-	
+
 	public HelpPanel(){
 		
 		this.setLayout(new MigLayout());
@@ -125,61 +125,192 @@ public class HelpPanel extends JPanel{
         scrollPanel2F.setBorder(new LineBorder(color));
 		
 
-		JTextArea description3 = new JTextArea();
-		description3.setFont(new Font(description3.getFont().getName(), Font.PLAIN, 12));
-		description3.setPreferredSize(new Dimension(1500, 200));
-		description3.setBackground(color) ;
-		description3.setLineWrap(true);
-		description3.setWrapStyleWord(true);
-		description3.setEditable(false);
-		description3.setText("Now let's begin actually making a game! If you want to be a moderator, you should pay attention to this part of the tutorial in particular."
-				+ " On the upper left hand corner of the games window, you should notice the 'Create Game' button. When clicked, you will be taken to a tab in"
-				+ " which you can begin creating a game. These games are entirely customizable, and many of the features of a Planning Poker game are entirely up to you!"
-				+ " The first things you should notice in the 'New Session' tab after clicking 'Create Game'"
-				+ " are two panels. The one on the left is used for setting up a game,"
-				+ " and the one on the right is used to insert Requirements. It is also used for creating decks. But for now, let's begin by creating a game with a premade deck."
-				+ " Begin creating your deck by clicking on the text box under 'Name', and input what you want the name of your game to be."
-				+ " After that, do the same thing with the Description of your game. After doing that, you can set a time limit if you want to."
-				+ " After toggling the 'End at' button (if you want to set a time limit), input what time of the day you want your project to end."
-				+ " Keep in mind that time is going to be interpreted in 24-hour military time. After this, you need to enter what day you want the game to end."
-				+ " You can do this by clicking the small calendar symbol next to the second text box! All that is left to complete this game is to import"
-				+ " Any requirements you think you may need. To do this, you may need to import requirements from the requirements manager. After choosing your requirements,"
-				+ " you are now able to hit the 'Create Game' button at the bottom left of the window. Note that at any time, you can clear all fields by hitting the"
-				+ " 'Clear' button, and can cancel your creation by hitting the 'Cancel' button. Now, let's talk about creating your very own custom deck."
-				+ " If you want to make a game that utilizes a custom deck, you can do so up to the point at which you choose a pre-made deck, but instead"
-				+ " Select 'Create a New Deck'. Upon doing so, the window containing the requirements will be replaced with the Deck Creation window. In order to"
-				+ " Create your new deck, first enter what you would like the name of your deck to be. Then, you must indicate wether or not you want your"
-				+ " deck to allow single selections or multiple selections, and you must indicate if you want your deck to iclude an 'I don't know' card."
-				+ " After you have done this, you can begin to input what cards you want in your deck. To do this, use the text boxes next to the large card."
-				+ " Simply fill in any positive integer, and move on to the next box. Once you have done this for as many cards as you want, hit the 'Create Deck'"
-				+ " button. Note that at any time, you can remove a card by clicking on the small 'X' next to the box that contains the cards number. In addition,"
-				+ " you can cancel the creation of your deck at any time by clicking on the 'Cancel Deck Creation' card. Once you have either finished your deck,"
-				+ " or decided to cancel it's creation, the window will revert to the requirements selection panel.");
+        JTextArea description3A = new JTextArea();
+        description3A.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description3A.setPreferredSize(new Dimension(1500, 20));
+        description3A.setBackground(color) ;
+        description3A.setLineWrap(true);
+        description3A.setWrapStyleWord(true);
+        description3A.setEditable(false);
+        description3A.setText("o   Clicking on the 'Create Game' tab opens the 'New Session' Tab. Here,"
+                            + " You can create your very own customized planningpoker game.");
+        final JScrollPane scrollPanel3A = new JScrollPane(description3A);
+        scrollPanel3A.setBorder(new LineBorder(color));
+        
+        JTextArea description3B = new JTextArea();
+        description3B.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description3B.setPreferredSize(new Dimension(1500, 20));
+        description3B.setBackground(color) ;
+        description3B.setLineWrap(true);
+        description3B.setWrapStyleWord(true);
+        description3B.setEditable(false);
+        description3B.setText("o   To create a game with a pre-made deck, input a name, description, and time"
+                            + " Limit (If you want one), and a day you want your game to end.");
+        final JScrollPane scrollPanel3B = new JScrollPane(description3B);
+        scrollPanel3B.setBorder(new LineBorder(color));
+        
+        JTextArea description3C = new JTextArea();
+        description3C.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description3C.setPreferredSize(new Dimension(1500, 20));
+        description3C.setBackground(color) ;
+        description3C.setLineWrap(true);
+        description3C.setWrapStyleWord(true);
+        description3C.setEditable(false);
+        description3C.setText("o  If you want to create a custom deck, select 'Create new Deck.' This will bring up the deck creation window.");
+        final JScrollPane scrollPanel3C = new JScrollPane(description3C);
+        scrollPanel3C.setBorder(new LineBorder(color));
+        
+        JTextArea description3D = new JTextArea();
+        description3D.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description3D.setPreferredSize(new Dimension(1500, 20));
+        description3D.setBackground(color) ;
+        description3D.setLineWrap(true);
+        description3D.setWrapStyleWord(true);
+        description3D.setEditable(false);
+        description3D.setText("o   Once that window is up, you can select wether you want the user to select one or multiple cards,"
+                            + "You can also decide if you want an 'I don't know' card in your deck.");
+        final JScrollPane scrollPanel3D = new JScrollPane(description3D);
+        scrollPanel3D.setBorder(new LineBorder(color));
+        
+        JTextArea description3E = new JTextArea();
+        description3E.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description3E.setPreferredSize(new Dimension(1500, 20));
+        description3E.setBackground(color) ;
+        description3E.setLineWrap(true);
+        description3E.setWrapStyleWord(true);
+        description3E.setEditable(false);
+        description3E.setText("o   After that, you can decide the name of the deck, and what cards are in your deck by filling"
+                            + " in the boxes next to the large card image. When you are done, hit 'Create Deck'.");
+        final JScrollPane scrollPanel3E = new JScrollPane(description3E);
+        scrollPanel3E.setBorder(new LineBorder(color));
+        
+        JTextArea description3F = new JTextArea();
+        description3F.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description3F.setPreferredSize(new Dimension(1500, 20));
+        description3F.setBackground(color) ;
+        description3F.setLineWrap(true);
+        description3F.setWrapStyleWord(true);
+        description3F.setEditable(false);
+        description3F.setText("o   To create a game with a pre-made deck, input a name, description, and time"
+                + " Limit (If you want one), and a day you want your game to end.");
+        final JScrollPane scrollPanel3F = new JScrollPane(description3F);
+        scrollPanel3F.setBorder(new LineBorder(color));
+        
+        JTextArea description3G = new JTextArea();
+        description3G.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description3G.setPreferredSize(new Dimension(1500, 20));
+        description3G.setBackground(color) ;
+        description3G.setLineWrap(true);
+        description3G.setWrapStyleWord(true);
+        description3G.setEditable(false);
+        description3G.setText("o  If you want to create a custom deck, select 'Create new Deck.' This will bring up the deck creation window.");
+        final JScrollPane scrollPanel3G = new JScrollPane(description3G);
+        scrollPanel3G.setBorder(new LineBorder(color));
 		
-		final JScrollPane scrollPanel3 = new JScrollPane(description3);
-		scrollPanel3.setBorder(new LineBorder(color));
-		
-		JTextArea description4 = new JTextArea();
-		description4.setFont(new Font(description4.getFont().getName(), Font.PLAIN, 14));
-		description4.setPreferredSize(new Dimension(1500, 150));
-		description4.setBackground(color) ;
-		description4.setLineWrap(true);
-		description4.setWrapStyleWord(true);
-		description4.setEditable(false);
-		description4.setText("Now that you've found out how to create games, now let's find out how to vote in them! To begin with, you must return to the"
-				+ " 'My Games' tab. Now, let's focus on the center table, the 'Games I am Voting in' Table. In this table, you will see all of the"
-				+ " Planning Poker games that you have yet to vote in. In order to vote in one of the games on this table, simply double click it."
-				+ " Doing this will open a new tab. In this tab, you will be able to vote on the requirements in a game, inspect the descriptions"
-				+ " of each requirement in the game, see how much of your team has voted on each individual requirement, and see how much longer you have"
-				+ " to vote (if the game has a time deadline). Let's begin by selecting a requirement to inspect and vote on. In the center of the window,"
-				+ " you will see a table with a list of all of the requirements in the game you are playing. To select one, simply click on it. This will"
-				+ " highlight it, indicating you have selected it. Now that you have selected a requirement, you will have noticed that the bottom of the"
-				+ " window has changed somewhat, specifically in the lower left hand corner. The description of the currently highlighted requirement"
-				+ " is displayed here. Before you begin voting, it is strongly recommended that you pay close attention to the description of the requirement."
-				+ " Voting without having a detailed knowledge of what the requirement entails could result in the final estimate being skewed in either direction."
-				+ "");
-		final JScrollPane scrollPanel4 = new JScrollPane(description4);
-		scrollPanel4.setBorder(new LineBorder(color));
+        JTextArea description3H = new JTextArea();
+        description3H.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description3H.setPreferredSize(new Dimension(1500, 20));
+        description3H.setBackground(color) ;
+        description3H.setLineWrap(true);
+        description3H.setWrapStyleWord(true);
+        description3H.setEditable(false);
+        description3H.setText("o   Once that window is up, you can select wether you want the user to select one or multiple cards,"
+                + "You can also decide if you want an 'I don't know' card in your deck.");
+        final JScrollPane scrollPanel3H = new JScrollPane(description3H);
+        scrollPanel3H.setBorder(new LineBorder(color));
+
+        JTextArea description3I = new JTextArea();
+        description3I.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description3I.setPreferredSize(new Dimension(1500, 20));
+        description3I.setBackground(color) ;
+        description3I.setLineWrap(true);
+        description3I.setWrapStyleWord(true);
+        description3I.setEditable(false);
+        description3I.setText("o   After that, you can decide the name of the deck, and what cards are in your deck by filling"
+                + " in the boxes next to the large card image. When you are done, hit 'Create Deck'.");
+        final JScrollPane scrollPanel3I = new JScrollPane(description3I);
+        scrollPanel3I.setBorder(new LineBorder(color));
+
+        JTextArea description3J = new JTextArea();
+        description3J.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description3J.setPreferredSize(new Dimension(1500, 20));
+        description3J.setBackground(color) ;
+        description3J.setLineWrap(true);
+        description3J.setWrapStyleWord(true);
+        description3J.setEditable(false);
+        description3J.setText("o   To add requirements, either create your own or import them from the requirements manager.");
+        final JScrollPane scrollPanel3J = new JScrollPane(description3J);
+        scrollPanel3J.setBorder(new LineBorder(color));
+
+        JTextArea description3K = new JTextArea();
+        description3K.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description3K.setPreferredSize(new Dimension(1500, 20));
+        description3K.setBackground(color) ;
+        description3K.setLineWrap(true);
+        description3K.setWrapStyleWord(true);
+        description3K.setEditable(false);
+        description3K.setText("o   After your game is ready to be created, simply hit the 'Create Game' button to create it.");
+        final JScrollPane scrollPanel3K = new JScrollPane(description3K);
+        scrollPanel3K.setBorder(new LineBorder(color));
+        
+        JTextArea description4A = new JTextArea();
+        description4A.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description4A.setPreferredSize(new Dimension(1500, 20));
+        description4A.setBackground(color) ;
+        description4A.setLineWrap(true);
+        description4A.setWrapStyleWord(true);
+        description4A.setEditable(false);
+        description4A.setText("o   In order to vote on a game, go back to the 'Games' Tab. You will notice that there are games in the center column."
+                            + " These are the games you need to vote in. In order to vote, simply double click on the game you want to vote in.");
+        final JScrollPane scrollPanel4A = new JScrollPane(description4A);
+        scrollPanel4A.setBorder(new LineBorder(color));
+        
+        JTextArea description4B = new JTextArea();
+        description4B.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description4B.setPreferredSize(new Dimension(1500, 20));
+        description4B.setBackground(color) ;
+        description4B.setLineWrap(true);
+        description4B.setWrapStyleWord(true);
+        description4B.setEditable(false);
+        description4B.setText("o   In the resulting tab, you will see a list of all of the requirements in the game,"
+                            + " the progress of your team in voting for said requirements, and the amount of time left to vote in the game.");
+        final JScrollPane scrollPanel4B = new JScrollPane(description3B);
+        scrollPanel4B.setBorder(new LineBorder(color));
+        
+        JTextArea description4C = new JTextArea();
+        description4C.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description4C.setPreferredSize(new Dimension(1500, 20));
+        description4C.setBackground(color) ;
+        description4C.setLineWrap(true);
+        description4C.setWrapStyleWord(true);
+        description4C.setEditable(false);
+        description4C.setText("o  In order to vote on a requirement, click on it. It will highlight, and you should see the description of the requirement,"
+                            + " as well as the cards you can use to vote for the requirement (if any).");
+        final JScrollPane scrollPanel4C = new JScrollPane(description3C);
+        scrollPanel4C.setBorder(new LineBorder(color));
+        
+        JTextArea description4D = new JTextArea();
+        description4D.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description4D.setPreferredSize(new Dimension(1500, 20));
+        description4D.setBackground(color) ;
+        description4D.setLineWrap(true);
+        description4D.setWrapStyleWord(true);
+        description4D.setEditable(false);
+        description4D.setText("o   After carefully studying the description, click on all cards to choose an estimate for the requirement. If the deck is multi-"
+                            + "selection, you can click multiple cards to add their numbers together. If single selection, you can only choose 1 card.");
+        final JScrollPane scrollPanel4D = new JScrollPane(description3D);
+        scrollPanel4D.setBorder(new LineBorder(color));
+        
+        JTextArea description4E = new JTextArea();
+        description4E.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description4E.setPreferredSize(new Dimension(1500, 20));
+        description4E.setBackground(color) ;
+        description4E.setLineWrap(true);
+        description4E.setWrapStyleWord(true);
+        description4E.setEditable(false);
+        description4E.setText("o   If the selected game doesn't have a deck associated with it, you can manually input what you want your estimate to be.");
+        final JScrollPane scrollPanel4E = new JScrollPane(description3E);
+        scrollPanel4E.setBorder(new LineBorder(color));
 		
 		this.add(title, "wrap");
 		this.add(scrollPanel1, "wrap");
@@ -191,8 +322,23 @@ public class HelpPanel extends JPanel{
 		this.add(scrollPanel2E,"wrap");
 		this.add(scrollPanel2F,"wrap");
 		this.add(title3, "wrap");
-		this.add(scrollPanel3, "wrap");
+		this.add(scrollPanel3A,"wrap");
+		//this.add(scrollPanel3B,"wrap");
+		//this.add(scrollPanel3C,"wrap");
+		//this.add(scrollPanel3D,"wrap");
+		//this.add(scrollPanel3E,"wrap");
+		this.add(scrollPanel3F,"wrap");
+		this.add(scrollPanel3G,"wrap");
+		this.add(scrollPanel3H,"wrap");
+		this.add(scrollPanel3I,"wrap");
+		this.add(scrollPanel3J,"wrap");
+		this.add(scrollPanel3K,"wrap");
 		this.add(title4, "wrap");
+		this.add(scrollPanel4A,"wrap");
+		this.add(scrollPanel4B,"wrap");
+		this.add(scrollPanel4C,"wrap");
+		this.add(scrollPanel4D,"wrap");
+		this.add(scrollPanel4E,"wrap");
 		
 		
 		this.setMinimumSize(new Dimension(1550, 800));
