@@ -52,12 +52,12 @@ public class CardPanel extends JPanel {
 
 	private boolean zeroSelected = false;
 
-	public CardPanel(String deckName, RequirementEstimate r, boolean isEditable){
+	public CardPanel(int[] deckList, RequirementEstimate r, boolean isEditable){
 		this.selectedCardsIndices = new ArrayList<Integer>();
 		this.setLayout(new BorderLayout());
 
 		// TODO: Create decks in the database
-		viewDeck = new int[]{0, 1, 1, 2, 3, 5, 8, 13, 21};
+		viewDeck = deckList;
 
 		// Set up panel and layout
 		JPanel cardsPanel = new JPanel();

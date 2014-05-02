@@ -210,7 +210,6 @@ public class CustomDeckPanel extends JPanel {
 				validateDeckName();
 			}
 		});
-
 	}
 
 	protected Deck createDeckFromFields() {
@@ -223,10 +222,23 @@ public class CustomDeckPanel extends JPanel {
 			newDeck.setType(DeckSelectionType.MULTI);
 		}
 
-		int[] cardInts = new int[scrollPanel.getCards().size()];		
-		for(int i = 0; i < scrollPanel.getCards().size() - 1; i++){
-			cardInts[i] = Integer.parseInt(scrollPanel.getCards().get(i).getTextField().getText());
-			System.out.println("Parsed string" + scrollPanel.getCards().get(i).getTextField().getText());
+		int[] cardInts;
+		
+		if(dontKnowCard.isSelected()){
+			cardInts = new int[scrollPanel.getCards().size()];
+		} else {
+			cardInts = new int[scrollPanel.getCards().size() - 1];
+		}
+
+		if(dontKnowCard.isSelected()){
+			cardInts[0] = 0;
+			for(int i = 1; i < scrollPanel.getCards().size(); i++){
+				cardInts[i] = Integer.parseInt(scrollPanel.getCards().get(i - 1).getTextField().getText());
+			}
+		} else {
+			for(int i = 0; i < scrollPanel.getCards().size() - 1; i++){
+				cardInts[i] = Integer.parseInt(scrollPanel.getCards().get(i).getTextField().getText());
+			}
 		}
 
 		newDeck.setCards(cardInts);

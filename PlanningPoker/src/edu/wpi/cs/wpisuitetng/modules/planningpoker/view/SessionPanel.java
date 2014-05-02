@@ -22,8 +22,12 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -52,6 +56,8 @@ import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDeckController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
@@ -101,6 +107,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      */
     private final DeckSet decks = DeckSet.getInstance();
 
+    /*
+     * 
+     */
+    private HashMap<String, Deck> decksInDatabase = new HashMap<String, Deck>();
+    
     /**
      * The drop-down menu to select the deck
      */
@@ -503,7 +514,22 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         this.add(contentPanel, BorderLayout.CENTER); // Add scroll pane to panel
         this.add(buttonPanel, BorderLayout.SOUTH);
         canValidateFields(true);
-
+		
+        // Timer to retrieve decks from the database
+		// Timer to refresh decks from the database
+		TimerTask refreshDecks = new TimerTask() {
+			public void run() {
+				try {
+					getAllDecks();
+				} catch (RuntimeException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+        
+        Timer getDecks = new Timer(true);
+		getDecks.scheduleAtFixedRate(refreshDecks, 0, 1000);
+        
         setupListeners();
 
         dateChooser.setEnabled(false);
@@ -538,7 +564,33 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         updateButtonPanel();
     }
 
-    // Listeners for the text boxes
+    protected void getAllDecks() {
+		new GetDeckController(this).requestAllDecks();
+	}
+    
+    public void addDecksToList(Deck[] decks){
+    	// Return early if the lists are the same size.
+    	// Else, do more work as shown in the for loop
+    	
+    	if(decks.length == deckChooser.getItemCount()){
+    		return;
+    	}
+    	
+    	ArrayList<String> deckNamesInComboBox = new ArrayList<String>();
+    	
+    	for(int i = 0; i < deckChooser.getItemCount(); i++){
+    		deckNamesInComboBox.add(deckChooser.getItemAt(i));
+    	}
+    	
+    	for(Deck d : decks){
+    		if(!deckNamesInComboBox.contains(d.getName())){
+    			deckChooser.addItem(d.getName());
+    			decksInDatabase.put(d.getName(), d);
+    		}
+    	}
+    }
+
+	// Listeners for the text boxes
     private void setupListeners() {
 
         deckChooser.addItemListener(new ItemListener() {
@@ -561,7 +613,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                     */
                 	
                     // Add space for better display
-                    chosenSequence.setText("  " + decks.deckToString(selectedDeck)); 
+                	if(selectedDeck == "Default" || selectedDeck == "-None-"){
+                		chosenSequence.setText("  " + decks.deckToString(selectedDeck));
+                	} else{
+                		chosenSequence.setText("  " + decksInDatabase.get(selectedDeck).cardsToString());
+                	}
+                	
                     updateButtonPanel();
                 }
             }

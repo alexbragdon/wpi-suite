@@ -24,7 +24,7 @@ public class Deck extends AbstractModel {
 	private String name;
 	private int[] cards;
 	private DeckSelectionType type;
-	
+
 	public Deck(String name, int[] cards, DeckSelectionType type){
 		this.name = name;
 		this.cards = cards;
@@ -76,7 +76,7 @@ public class Deck extends AbstractModel {
 	@Override
 	public void delete() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -97,67 +97,88 @@ public class Deck extends AbstractModel {
 	public String toJSON() {
 		return new Gson().toJson(this, Deck.class);
 	}
-	
-	/**
-     * Method fromJson.
-     * @param json String
-     * @return Deck
-     */
-    public static Deck fromJson(String json) {
-        final Gson parser = new Gson();
-        return parser.fromJson(json, Deck.class);
-    }
 
-    /**
-     * Method fromJsonArray.
-     * @param json String
-     * @return Deck[]
-     */
-    public static Deck[] fromJsonArray(String json) {
-        final Gson parser = new Gson();
-        return parser.fromJson(json, Deck[].class);
-    }
-    
-    /**
-     * obj The object to compare against
-     */
-    public boolean equals(Object obj){
-    	if (this == obj) {
-            return true;
-        }
-    	
-        if (obj == null) {
-            return false;
-        }
-        
-        if (!(obj instanceof Deck)) {
-            return false;
-        }
-        
-        final Deck other = (Deck)obj;
-        
-        if (!name.equals(other.getName())) {
-            return false;
-        }
-        
-        if (!cards.equals(other.getCards())) {
-            return false;
-        }
-        
-        if(!type.equals(other.type)){
-        	return false;
-        }
-    	
-    	return true;
-    }
-    
-    /**
-     * Method copyFrom
-     * @param updatedDeck Deck
-     */
-    public void copyFrom(Deck updatedDeck) {
-        name = updatedDeck.getName();
-        cards = updatedDeck.getCards();
-        type = updatedDeck.getType();
-    }
+	/**
+	 * Method fromJson.
+	 * @param json String
+	 * @return Deck
+	 */
+	public static Deck fromJson(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, Deck.class);
+	}
+
+	/**
+	 * Method fromJsonArray.
+	 * @param json String
+	 * @return Deck[]
+	 */
+	public static Deck[] fromJsonArray(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, Deck[].class);
+	}
+
+	/**
+	 * obj The object to compare against
+	 */
+	public boolean equals(Object obj){
+		if (this == obj) {
+			return true;
+		}
+
+		if (obj == null) {
+			return false;
+		}
+
+		if (!(obj instanceof Deck)) {
+			return false;
+		}
+
+		final Deck other = (Deck)obj;
+
+		if (!name.equals(other.getName())) {
+			return false;
+		}
+
+		if (!cards.equals(other.getCards())) {
+			return false;
+		}
+
+		if(!type.equals(other.type)){
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Method copyFrom
+	 * @param updatedDeck Deck
+	 */
+	public void copyFrom(Deck updatedDeck) {
+		name = updatedDeck.getName();
+		cards = updatedDeck.getCards();
+		type = updatedDeck.getType();
+	}
+
+	/**
+	 * Converts the deck's values to a string
+	 * @return String
+	 */
+	public String cardsToString(){
+		String cardsString = "";
+
+		int cardCount = 0;
+		for(int i : cards){
+			cardCount++;
+			
+			if(cardCount == cards.length){
+				cardsString += Integer.toString(i);
+			} else{
+				cardsString += Integer.toString(i) + ", ";
+			}
+		}
+
+		return cardsString;
+	}
 }
