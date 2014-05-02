@@ -121,10 +121,14 @@ public class CloseButtonPanel extends ToolbarGroupView {
                 parentView.getMySession().getModeratingPanel().getTable().clearSelection();
                 parentView.getMySession().getJoiningPanel().getTable().clearSelection();
                 parentView.getMySession().getClosedPanel().getTable().clearSelection();
+                closeButton.setVisible(false);
+                parentView.getToolbarView().GetSuperButtonPanel().getSuperButton().setVisible(false);
             } else {
                 parentView.getMySession().getModeratingPanel().getTable().clearSelection();
                 parentView.getMySession().getJoiningPanel().getTable().clearSelection();
                 parentView.getMySession().getClosedPanel().getTable().clearSelection();
+                closeButton.setVisible(false);
+                parentView.getToolbarView().GetSuperButtonPanel().getSuperButton().setVisible(false);
                 return;
             }
 
