@@ -40,7 +40,7 @@ public class VotingPanelTest {
         listEst.add(testReq);
         PlanningPokerSession session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
                         listEst, SessionType.DISTRIBUTED, false, false, "aGuy", "deck");    
-        vp = new VotingPanel(session1);
+        vp = new VotingPanel(session1, null);
     }
 
     @Test

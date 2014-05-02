@@ -14,11 +14,18 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
 import java.awt.Image;
 import java.io.IOException;
+import java.util.TimerTask;
+import java.util.Timer;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.FindPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDeckController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
@@ -34,8 +41,10 @@ public class SuperButton extends JButton {
     private Image viewImg; // $codepro.audit.disable variableShouldBeFinal
     private Image voteImg; // $codepro.audit.disable variableShouldBeFinal
     private Image closeImg; // $codepro.audit.disable variableShouldBeFinal
+    
+    private Deck[] decksInDatabase;
 
-    /**
+	/**
      * 
      * Constructor for The Super Button
      *
@@ -60,6 +69,19 @@ public class SuperButton extends JButton {
 
         this.setVisible(false);
         parent.setVisible(false);
+        
+        TimerTask refreshDecks = new TimerTask() {
+			public void run() {
+				try {
+					getAllDecks();
+				} catch (RuntimeException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+        
+        Timer getDecks = new Timer(true);
+		getDecks.scheduleAtFixedRate(refreshDecks, 0, 1000);
     }
 
     /**
@@ -138,7 +160,7 @@ public class SuperButton extends JButton {
         if (session == null) {
             return;
         }
-        ViewEventController.getInstance().voteOnSession(session);
+        ViewEventController.getInstance().voteOnSession(session, decksInDatabase);
         setVisible(false);
         superButtonParent.setVisible(false);
     }
@@ -196,4 +218,22 @@ public class SuperButton extends JButton {
         }
         return session;
     }
+    
+    /**
+	 * @return the decksInDatabase
+	 */
+	public Deck[] getDecksInDatabase() {
+		return decksInDatabase;
+	}
+
+	/**
+	 * @param decksInDatabase the decksInDatabase to set
+	 */
+	public void setDecksInDatabase(Deck[] decksInDatabase) {
+		this.decksInDatabase = decksInDatabase;
+	}
+	
+    protected void getAllDecks() {
+		new GetDeckController(this).requestAllDecks();
+	}
 }

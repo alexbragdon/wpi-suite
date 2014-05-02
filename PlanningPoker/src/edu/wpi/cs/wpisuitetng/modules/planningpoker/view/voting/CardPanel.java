@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Card;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSelectionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.UserEstimate;
 
@@ -52,11 +53,10 @@ public class CardPanel extends JPanel {
 
 	private boolean zeroSelected = false;
 
-	public CardPanel(int[] deckList, RequirementEstimate r, boolean isEditable){
+	public CardPanel(int[] deckList, RequirementEstimate r, boolean isEditable, DeckSelectionType deckSelectionType){
 		this.selectedCardsIndices = new ArrayList<Integer>();
 		this.setLayout(new BorderLayout());
-
-		// TODO: Create decks in the database
+		
 		viewDeck = deckList;
 
 		// Set up panel and layout

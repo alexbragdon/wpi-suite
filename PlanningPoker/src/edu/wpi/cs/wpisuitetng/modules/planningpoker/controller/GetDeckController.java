@@ -13,6 +13,8 @@ import java.awt.GridBagConstraints;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.MySessionPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SuperButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.VotingPanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -25,14 +27,14 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class GetDeckController {
 	private final GetDeckObserver observer;
-	private VotingPanel votingPanel;
+	private SuperButton sb;
 	private SessionPanel sp;
 
 	/**
 	 * Construct a GetDeckController
 	 */
-	public GetDeckController(VotingPanel vp) {
-		votingPanel = vp;
+	public GetDeckController(SuperButton sb) {
+		this.sb = sb;
 		observer = new GetDeckObserver(this);
 	}
 
@@ -67,8 +69,8 @@ public class GetDeckController {
 			sp.addDecksToList(decks);
 		}
 		
-		else if(votingPanel != null){
-			votingPanel.setDecks(decks);
+		else if(sb != null){
+			sb.setDecksInDatabase(decks);
 		}
 	}
 }

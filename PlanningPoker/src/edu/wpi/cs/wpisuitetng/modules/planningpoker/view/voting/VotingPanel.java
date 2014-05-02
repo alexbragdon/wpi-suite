@@ -23,6 +23,7 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSelectionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.UserEstimate;
@@ -69,17 +70,18 @@ public class VotingPanel extends JPanel {
 	 * 
 	 * @param session the session
 	 */
-	public VotingPanel(final PlanningPokerSession session) {
+	public VotingPanel(final PlanningPokerSession session, Deck[] decks) {
 		this.session = session;
+		this.decksInDatabase = decks;
 
 		if (session.getDeck().equals("-None-")) {
 			this.hasDeck = false;
 		} else {
 			this.hasDeck = true;
 		}
-
-		// Get all decks
-		new GetDeckController(this).requestAllDecks();
+		
+		buildLayout(session);
+		updateSelectedRequirement(session.getRequirements().get(0));
 	}
 
 	/**
@@ -135,12 +137,12 @@ public class VotingPanel extends JPanel {
 			// Pass list of integers of card values in here
 			if(session.getDeck().equals("Default")){
 				int[] votingDeck = new int[]{0, 1, 1, 2, 3, 5, 8, 13, 21};
-				cards = new CardPanel(votingDeck, session.getRequirements().get(0), isEditable);
+				cards = new CardPanel(votingDeck, session.getRequirements().get(0), isEditable, DeckSelectionType.MULTI);
 			} else {
 				for(Deck d : decksInDatabase){
 					// This is the deck we want to use for the session
 					if(session.getDeck().equals(d.getName())){
-						cards = new CardPanel(d.getCards(), session.getRequirements().get(0), isEditable);
+						cards = new CardPanel(d.getCards(), session.getRequirements().get(0), isEditable, d.getType());
 					}
 				}
 			}
@@ -364,12 +366,5 @@ public class VotingPanel extends JPanel {
 				HttpMethod.POST);
 		request.setBody(session.toJSON());
 		request.send();
-	}
-
-	public void setDecks(Deck[] decks) {
-		this.decksInDatabase = decks;
-		buildLayout(session);
-		updateSelectedRequirement(session.getRequirements().get(0));
-		repaint();
 	}
 }
