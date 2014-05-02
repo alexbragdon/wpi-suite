@@ -48,12 +48,12 @@ public class CustomDeckPanel extends JPanel {
 	private Color color = UIManager.getColor ( "Panel.background" );
 	private JLabel deckName;
 	private JTextField deckNameTxt;
-	
+
 	private JRadioButton singleSelect;
 	private JRadioButton multiSelect;
-	
+
 	private JCheckBox dontKnowCard;
-	
+
 	private JButton createDeck;
 	private JButton cancelDeck;
 	private SessionPanel parent;
@@ -66,16 +66,16 @@ public class CustomDeckPanel extends JPanel {
 	private CustomCardPanel scrollPanel;
 	private JLabel errorLabel;
 	private JPanel radioButtonPanel;
-	
+
 	TitledBorder titleBorder;
 	TitledBorder cardTitle;
-	
-	
+
+
 	public CustomDeckPanel(SessionPanel parent){
 		this.parent = parent;
-		
+
 		this.setLayout(new MigLayout());
-		
+
 		radioButtonPanel = new JPanel();
 		radioButtonPanel.setLayout(new MigLayout("insets 0 0 0 0"));
 		radioButtonPanel.setPreferredSize(new Dimension(250, 80));
@@ -85,7 +85,7 @@ public class CustomDeckPanel extends JPanel {
 		numLabel = new JLabel("");
 		numLabel.setFont(numLabel.getFont().deriveFont(Font.PLAIN, 120));
 		numLabel.setHorizontalAlignment(JLabel.CENTER);
-		
+
 		JPanel emptyPanel1 = new JPanel();
 		JPanel emptyPanel2 = new JPanel();
 		emptyPanel1.setPreferredSize(new Dimension(1, 400));
@@ -100,7 +100,7 @@ public class CustomDeckPanel extends JPanel {
 		newCardScroll.setPreferredSize(new Dimension(235, 460));
 		newCardScroll.setBorder(cardTitle);
 		newCardScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
-		
+
 		this.deckName = new JLabel("Deck name    ");
 		this.deckNameTxt = new JTextField();
 		deckNameTxt.setPreferredSize(new Dimension(300, 35));
@@ -116,12 +116,12 @@ public class CustomDeckPanel extends JPanel {
 		deckNamePanel.setPreferredSize(new Dimension(450, 35));
 		deckNamePanel.setLayout(new BorderLayout());
 		singleSelect.setSelected(true);
-		
+
 		errorLabel = new JLabel(" ");
 		errorLabel.setForeground(Color.RED);
-		
+
 		createDeck.setEnabled(false);
-		
+
 		try {
 			this.cardImg = ImageIO.read(getClass().getResource("blank-medium.png"));
 			Image image2 = ImageIO.read(getClass().getResource("cancel-icon.png"));
@@ -133,10 +133,10 @@ public class CustomDeckPanel extends JPanel {
 		}
 		imgLabel.setIcon(new ImageIcon(this.cardImg));
 		imgLabel.add(numLabel);
-		
-		
+
+
 		setupListeners();
-		
+
 		add(title, "wrap");
 		deckNamePanel.add(this.deckName, BorderLayout.WEST);
 		deckNamePanel.add(this.deckNameTxt, BorderLayout.CENTER);
@@ -153,10 +153,10 @@ public class CustomDeckPanel extends JPanel {
 		add(this.dontKnowCard,"wrap");
 		add(this.createDeck);
 		add(this.cancelDeck);
-		
+
 		validateDeckName();
 	}
-	
+
 	public void setupListeners(){
 		createDeck.addActionListener(new ActionListener(){
 			@Override
@@ -167,7 +167,7 @@ public class CustomDeckPanel extends JPanel {
 				parent.getShowDeck().setEnabled(true);
 			}
 		});
-		
+
 		cancelDeck.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -175,7 +175,7 @@ public class CustomDeckPanel extends JPanel {
 				parent.getShowDeck().setEnabled(true);
 			}
 		});
-		
+
 		singleSelect.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -183,7 +183,7 @@ public class CustomDeckPanel extends JPanel {
 				if(!multiSelect.isSelected()) singleSelect.setSelected(true);
 			}
 		});
-		
+
 		multiSelect.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -191,7 +191,7 @@ public class CustomDeckPanel extends JPanel {
 				if(!singleSelect.isSelected()) multiSelect.setSelected(true);
 			}
 		});
-		
+
 		deckNameTxt.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void changedUpdate(DocumentEvent e) {
@@ -210,28 +210,29 @@ public class CustomDeckPanel extends JPanel {
 				validateDeckName();
 			}
 		});
-		
+
 	}
-	
+
 	protected Deck createDeckFromFields() {
 		Deck newDeck = new Deck("Empty", null, DeckSelectionType.SINGLE);
 		newDeck.setName(deckNameTxt.getText());
-		
+
 		if(singleSelect.isSelected()){
 			newDeck.setType(DeckSelectionType.SINGLE);
 		} else {
 			newDeck.setType(DeckSelectionType.MULTI);
 		}
-		
+
 		int[] cardInts = new int[scrollPanel.getCards().size()];		
-		for(int i = 0; i < scrollPanel.getCards().size(); i++){
+		for(int i = 0; i < scrollPanel.getCards().size() - 1; i++){
 			cardInts[i] = Integer.parseInt(scrollPanel.getCards().get(i).getTextField().getText());
+			System.out.println("Parsed string" + scrollPanel.getCards().get(i).getTextField().getText());
 		}
-		
+
 		newDeck.setCards(cardInts);
 		return newDeck;
 	}
-	
+
 	/**
 	 * Validate the deck name.
 	 * If the deck name is valid, keeps on validating the cards.
@@ -249,7 +250,7 @@ public class CustomDeckPanel extends JPanel {
 			scrollPanel.checkDeletion();
 		}
 	}
-	
+
 	/**
 	 * Update the value of the card.
 	 * @param cardValue the card value integer in string form.
@@ -257,7 +258,7 @@ public class CustomDeckPanel extends JPanel {
 	public void updateCard(String cardValue){
 		numLabel.setText(cardValue);
 	}
-	
+
 	/**
 	 * Show error message and disable button when notified.
 	 */
@@ -265,21 +266,21 @@ public class CustomDeckPanel extends JPanel {
 		errorLabel.setText("*Card deck invalid. Check entries.");
 		createDeck.setEnabled(false);
 	}
-	
+
 	/**
 	 * Clear error message and enable button when notified.
 	 */
 	public void cardValid(){
-    	errorLabel.setText(" ");
+		errorLabel.setText(" ");
 		createDeck.setEnabled(true);
 	}
-	
+
 	/**
 	 * Show error message and disable button when notified.
 	 */
 	public void noCardError(){
-    	errorLabel.setText("*Enter at least one card to create deck.");
+		errorLabel.setText("*Enter at least one card to create deck.");
 		createDeck.setEnabled(false);
 	}
-	
+
 }
