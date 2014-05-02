@@ -43,44 +43,85 @@ public class HelpPanel extends JPanel{
 		JLabel title4 = new JLabel("Voting in a Game");
 		title4.setFont(new Font(title4.getFont().getName(), Font.PLAIN, 24));
 		
-		JTextArea description = new JTextArea();
-		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 12));
-		description.setPreferredSize(new Dimension(1500, 150));
-		description.setBackground(color) ;
-		description.setLineWrap(true);
-		description.setWrapStyleWord(true);
-		description.setEditable(false);
-		description.setText("Welcome to Planning Poker, a module for WPI Suite that can make estimating requirements a game!!"
+		JTextArea description1 = new JTextArea();
+		description1.setFont(new Font(description1.getFont().getName(), Font.PLAIN, 12));
+		description1.setPreferredSize(new Dimension(1500, 40));
+		description1.setBackground(color) ;
+		description1.setLineWrap(true);
+		description1.setWrapStyleWord(true);
+		description1.setEditable(false);
+		description1.setText("Welcome to Planning Poker, a module for WPI Suite that can make estimating requirements a game!!"
 				+ " Using Planning Poker, you can create games for your group to vote on, as well as play games that other members of your group have made."
 				+ " Hopefully, this guide will present you with all the information you need to begin creating and playing Planning Poker Games.");
-		final JScrollPane scrollPanel = new JScrollPane(description);
-		scrollPanel.setBorder(new LineBorder(color));
+		final JScrollPane scrollPanel1 = new JScrollPane(description1);
+		scrollPanel1.setBorder(new LineBorder(color));
 		
-		JTextArea description2 = new JTextArea();
-		description2.setFont(new Font(description2.getFont().getName(), Font.PLAIN, 12));
-		description2.setPreferredSize(new Dimension(1500, 200));
-		description2.setBackground(color) ;
-		description2.setLineWrap(true);
-		description2.setWrapStyleWord(true);
-		description2.setEditable(false);
-		description2.setText("Lets get started! The First thing you should have seen upon opening Planing Poker is the 'Games' tab. This will be the tab you will see more than any other."
-				+ " It will organize and display any and all games that you are going to be involved with!"
-				+ " You may have noticed the three tables that are in the center of the window. These tables are used to organize all of the games that you are involved with!"
-				+ " The first of the three tables is the 'Games I'm Moderating' table. This table will list and display all of the games that you will create, or have already created."
-				+ " As you create games, it will automatically add them to the list!"
-				+ " The Second table is the 'Games I am voting in' table. This table will list and display any games that you are allowed to vote in and haven't already."
-				+ " The Third table is the 'Game History' table. This table lists and displays any completed games that you have voted in, as well as any completed games you have moderated."
-				+ " Above the three panels, you will notice 4 buttons. One of these is the help button, which brings up this tab when clicked."
-				+ " The next two buttons are 'Email Settings' and 'SMS Settings'. Both of these buttons serve similar purposes, in that they both can control if you get notified when something happens to a game you are involved with."
-				+ " Upon clicking the 'Email Settings' button, the area near the button will change, and prompt you to enter an email address. Underneath the box in which you can"
-				+ " type in your email, there are three buttons. Submit, cancel, and test. The Submit button will remain unselectable until you type in a valid email address."
-				+ " The test button will send an email to the email that is currently in the type box, so you can check if it works before submitting it!"
-				+ " The cancel button will set the upper panel back into the 3-button standard form, and will ignore anything you typed in without submitting."
-				+ " Upon clicking the 'SMS Settings' button, the area around the button will once again change. This time, however, you will be prompted to enter a"
-				+ " Phone number, as well as a carrier. The 'Submit', 'Cancel' and 'Test' buttons all work the same way for SMS as they do for Email."
-				+ " On the far left of the screen you will notice the 'Create Game' button. This will be addressed in the next section.");
-		final JScrollPane scrollPanel2 = new JScrollPane(description2);
-		scrollPanel2.setBorder(new LineBorder(color));
+		JTextArea description2A = new JTextArea();
+        description2A.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description2A.setPreferredSize(new Dimension(1500, 20));
+        description2A.setBackground(color) ;
+        description2A.setLineWrap(true);
+        description2A.setWrapStyleWord(true);
+        description2A.setEditable(false);
+        description2A.setText("o   The Games tab displays all games that you have something to do with in 3 tables.");
+        final JScrollPane scrollPanel2A = new JScrollPane(description2A);
+        scrollPanel2A.setBorder(new LineBorder(color));
+        
+        JTextArea description2B = new JTextArea();
+        description2B.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description2B.setPreferredSize(new Dimension(1500, 20));
+        description2B.setBackground(color) ;
+        description2B.setLineWrap(true);
+        description2B.setWrapStyleWord(true);
+        description2B.setEditable(false);
+        description2B.setText("o   The 'Games I'm moderating table displays any games that you have created.");
+        final JScrollPane scrollPanel2B = new JScrollPane(description2B);
+        scrollPanel2B.setBorder(new LineBorder(color));
+        
+        JTextArea description2C = new JTextArea();
+        description2C.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description2C.setPreferredSize(new Dimension(1500, 20));
+        description2C.setBackground(color) ;
+        description2C.setLineWrap(true);
+        description2C.setWrapStyleWord(true);
+        description2C.setEditable(false);
+        description2C.setText("o   The 'Games I'm voting in' table lists any games you need to vote in.");
+        final JScrollPane scrollPanel2C = new JScrollPane(description2C);
+        scrollPanel2C.setBorder(new LineBorder(color));
+        
+        JTextArea description2D = new JTextArea();
+        description2D.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description2D.setPreferredSize(new Dimension(1500, 20));
+        description2D.setBackground(color) ;
+        description2D.setLineWrap(true);
+        description2D.setWrapStyleWord(true);
+        description2D.setEditable(false);
+        description2D.setText("o   The 'Game history' table displays any completed games you have voted in or moderated.");
+        final JScrollPane scrollPanel2D = new JScrollPane(description2D);
+        scrollPanel2D.setBorder(new LineBorder(color));
+        
+        JTextArea description2E = new JTextArea();
+        description2E.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description2E.setPreferredSize(new Dimension(1500, 20));
+        description2E.setBackground(color) ;
+        description2E.setLineWrap(true);
+        description2E.setWrapStyleWord(true);
+        description2E.setEditable(false);
+        description2E.setText("o   Three buttons above the tables, 'Help', 'Email Settings', 'SMS Settings',and 'Create Game'.");
+        final JScrollPane scrollPanel2E = new JScrollPane(description2E);
+        scrollPanel2E.setBorder(new LineBorder(color));
+        
+        JTextArea description2F = new JTextArea();
+        description2F.setFont(new Font(description2A.getFont().getName(), Font.PLAIN, 12));
+        description2F.setPreferredSize(new Dimension(1500, 20));
+        description2F.setBackground(color) ;
+        description2F.setLineWrap(true);
+        description2F.setWrapStyleWord(true);
+        description2F.setEditable(false);
+        description2F.setText("o   The 'Email' button allows you to set up Email notifications, and the 'SMS' Button"
+                            + " allows you to set up notifications via text messages.");
+        final JScrollPane scrollPanel2F = new JScrollPane(description2F);
+        scrollPanel2F.setBorder(new LineBorder(color));
 		
 
 		JTextArea description3 = new JTextArea();
@@ -118,7 +159,7 @@ public class HelpPanel extends JPanel{
 		scrollPanel3.setBorder(new LineBorder(color));
 		
 		JTextArea description4 = new JTextArea();
-		description4.setFont(new Font(description.getFont().getName(), Font.PLAIN, 14));
+		description4.setFont(new Font(description4.getFont().getName(), Font.PLAIN, 14));
 		description4.setPreferredSize(new Dimension(1500, 150));
 		description4.setBackground(color) ;
 		description4.setLineWrap(true);
@@ -136,13 +177,18 @@ public class HelpPanel extends JPanel{
 				+ " is displayed here. Before you begin voting, it is strongly recommended that you pay close attention to the description of the requirement."
 				+ " Voting without having a detailed knowledge of what the requirement entails could result in the final estimate being skewed in either direction."
 				+ "");
-		final JScrollPane scrollPanel4 = new JScrollPane(description);
+		final JScrollPane scrollPanel4 = new JScrollPane(description4);
 		scrollPanel4.setBorder(new LineBorder(color));
 		
 		this.add(title, "wrap");
-		this.add(scrollPanel, "wrap");
+		this.add(scrollPanel1, "wrap");
 		this.add(title2, "wrap");
-		this.add(scrollPanel2,"wrap");
+		this.add(scrollPanel2A,"wrap");
+		this.add(scrollPanel2B,"wrap");
+		this.add(scrollPanel2C,"wrap");
+		this.add(scrollPanel2D,"wrap");
+		this.add(scrollPanel2E,"wrap");
+		this.add(scrollPanel2F,"wrap");
 		this.add(title3, "wrap");
 		this.add(scrollPanel3, "wrap");
 		this.add(title4, "wrap");
