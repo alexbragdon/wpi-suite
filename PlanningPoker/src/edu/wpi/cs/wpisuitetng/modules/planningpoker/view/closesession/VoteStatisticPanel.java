@@ -62,7 +62,7 @@ public class VoteStatisticPanel extends JPanel{
 		JPanel blankPanel2 = new JPanel();
 		
 		JList voteList = new JList(listData);
-		voteList.setFont(new Font("Courier New", Font.PLAIN, 12));
+		voteList.setFont(new Font("Courier New", Font.BOLD, 12));
 		voteList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		voteList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		voteList.setVisibleRowCount(-1);

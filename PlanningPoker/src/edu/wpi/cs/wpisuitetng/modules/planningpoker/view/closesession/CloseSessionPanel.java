@@ -124,7 +124,7 @@ public class CloseSessionPanel extends JPanel {
 
         final String username = ConfigManager.getConfig().getUserName();
         if (session.getModerator().equals(username)) {
-            submitButtons = new FinalEstimateButtonPanel();
+            submitButtons = new FinalEstimateButtonPanel(this);
             c.gridx = 1;
             c.gridy = 2;
             c.gridwidth = 1;
@@ -135,6 +135,7 @@ public class CloseSessionPanel extends JPanel {
             c.anchor = GridBagConstraints.LAST_LINE_END;
             add(submitButtons, c);
         }
+
     }
 
     /**
