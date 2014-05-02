@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetDeckController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.UserEstimate;
@@ -100,8 +102,22 @@ public class VotingPanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         add(overview, c);
 
+        buttons = new VotingButtonPanel(hasDeck ? ViewMode.WITHDECK : ViewMode.WITHOUTDECK, this);
+        c.gridx = 2;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.gridheight = 2;
+        c.weightx = 0.2;
+        c.weighty = 0.0;
+        c.fill = GridBagConstraints.VERTICAL;
+        c.anchor = GridBagConstraints.LINE_END;
+        add(buttons, c);
+        
         c.gridheight = 1;
         if (hasDeck) {
+        	// Need to get deck from the database here
+        	new GetDeckController(this, c);
+        	
             final boolean isEditable = !session.getRequirements().get(0).getVotes()
                             .containsKey(ConfigManager.getConfig().getUserName());
             cards = new CardPanel("default", session.getRequirements().get(0), isEditable);
@@ -154,21 +170,33 @@ public class VotingPanel extends JPanel {
         c.anchor = GridBagConstraints.LINE_END;
         add(panel, c);
 
-        buttons = new VotingButtonPanel(hasDeck ? ViewMode.WITHDECK : ViewMode.WITHOUTDECK, this);
-        c.gridx = 2;
-        c.gridy = 2;
-        c.gridwidth = 1;
-        c.gridheight = 2;
-        c.weightx = 0.2;
-        c.weighty = 0.0;
-        c.fill = GridBagConstraints.VERTICAL;
-        c.anchor = GridBagConstraints.LINE_END;
-        add(buttons, c);
-
         if (hasDeck) {
             cards.setButtonPanel(buttons);
             buttons.setCardPanel(cards);
         }
+    }
+    
+    /**
+     * 
+     * @param c The GridBagConstraints for the VotingPanel
+     * @param decks A list of all decks in the database
+     */
+    public void buildCardPanel(GridBagConstraints c, Deck[] decks){
+    	/*
+    	final boolean isEditable = !session.getRequirements().get(0).getVotes()
+                .containsKey(ConfigManager.getConfig().getUserName());
+    	cards = new CardPanel("default", session.getRequirements().get(0), isEditable);
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 3;
+        c.weightx = 0.0;
+        c.weighty = 0.0;
+        c.fill = GridBagConstraints.BOTH;
+        add(cards, c);
+    	
+    	cards.setButtonPanel(buttons);
+        buttons.setCardPanel(cards);
+        */
     }
 
     /**

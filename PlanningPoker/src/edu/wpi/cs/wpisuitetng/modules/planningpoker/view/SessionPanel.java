@@ -79,9 +79,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
     private PlanningPokerSession displaySession;
 
-    private final JButton showDeck = new JButton("Show Deck");
+    private final JButton showDeck = new JButton("Create Custom Deck");
 
-    private final ViewMode viewMode;
+	private final ViewMode viewMode;
 
     private JSpinner hourSpin;
 
@@ -121,9 +121,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     /**
      * Goes on right, allows user to select requirements.
      */
-    // TODO replace JPanel with something real
-    private SessionRequirementPanel requirementsPanel;
-
+    private JSplitPane contentPanel;
+	private SessionRequirementPanel requirementsPanel;
+	private CustomDeckPanel customDeckPanel;
+    
     /**
      * Date chooser to select when session ends
      */
@@ -293,7 +294,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         infoPanel = new ScrollablePanel();
         infoPanel.setLayout(new MigLayout("", "", "shrink"));
 
-        final JSplitPane contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel,
+        contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel,
                         requirementsPanel);
         // Change the info string to add info. Delete the second string
         final JLabel nameLabel = new JLabel("Name *");
@@ -440,25 +441,13 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 updateButtonPanel();
 			}
 			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mousePressed(MouseEvent e) {}
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseReleased(MouseEvent e) {}
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseEntered(MouseEvent e) {}
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void mouseExited(MouseEvent e) {}
         });
         timeCheck.setLayout(new BorderLayout());
         timeCheck.setMinimumSize(new Dimension(360, 20));
@@ -467,6 +456,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         timeCheck.add(new JLabel("Set an end time?"),BorderLayout.CENTER);
         timeCheck.add(showDeck, BorderLayout.EAST);
         
+        /*
+         * Want this button to be visible by default
         if (!(selectedDeck.equals("-None-")))
         {
             showDeck.setVisible(true);
@@ -475,6 +466,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         {
             showDeck.setVisible(false);
         }
+        */
+        
         infoPanel.add(timeCheck,"wrap");
         //infoPanel.add(showDeck, "wrap");
         buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -552,8 +545,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             @Override
             public void itemStateChanged(ItemEvent arg0) {
                 if (arg0.getStateChange() == ItemEvent.SELECTED) {
+                	selectedDeck = deckChooser.getSelectedItem().toString();
+                	
+                	/*
+                	 * Using the show deck now for create custom deck
                     selectedDeckChanged = !selectedDeckChanged;
-                    selectedDeck = deckChooser.getSelectedItem().toString();
                     if (!(selectedDeck.equals("-None-")))
                     {
                         showDeck.setVisible(true);
@@ -562,7 +558,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                     {
                         showDeck.setVisible(false);
                     }
-                    System.out.println("Item state changed to: " + selectedDeck);
+                    */
+                	
                     // Add space for better display
                     chosenSequence.setText("  " + decks.deckToString(selectedDeck)); 
                     updateButtonPanel();
@@ -573,7 +570,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         showDeck.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                ViewEventController.getInstance().viewDeck();
+            	// TODO: Have it open the custom deck panel
+                // ViewEventController.getInstance().viewDeck();
+            	createCustomDeck();
             }
         });
 
@@ -640,7 +639,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         });   
     }
 
-    /**
+	/**
      * Updates the bottom buttons to reflect validation and change state.
      */
     private void updateButtonPanel() {
@@ -930,4 +929,34 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             e.printStackTrace();
         }
     }
+    
+    /**
+	 * Sets up the custom deck panel
+	 */
+    protected void createCustomDeck() {
+    	showDeck.setEnabled(false);
+    	customDeckPanel = new CustomDeckPanel(this);
+    	contentPanel.setRightComponent(customDeckPanel);
+	}
+    
+    /**
+	 * @return the contentPanel
+	 */
+	public JSplitPane getContentPanel() {
+		return contentPanel;
+	}
+
+    /**
+	 * @return the requirementsPanel
+	 */
+	public SessionRequirementPanel getRequirementsPanel() {
+		return requirementsPanel;
+	}
+	
+    /**
+	 * @return the showDeck
+	 */
+	public JButton getShowDeck() {
+		return showDeck;
+	}
 }
