@@ -102,9 +102,7 @@ public class VotingPanel extends JPanel {
 
         c.gridheight = 1;
         if (hasDeck) {
-            final boolean isEditable = !session.getRequirements().get(0).getVotes()
-                            .containsKey(ConfigManager.getConfig().getUserName());
-            cards = new CardPanel("default", session.getRequirements().get(0), isEditable);
+            cards = new CardPanel("default", session.getRequirements().get(0), true);
             c.gridx = 0;
             c.gridy = 1;
             c.gridwidth = 3;
@@ -169,6 +167,7 @@ public class VotingPanel extends JPanel {
             cards.setButtonPanel(buttons);
             buttons.setCardPanel(cards);
         }
+        buttons.getVoteButton().setEnabled(false);
     }
 
     /**
@@ -277,7 +276,7 @@ public class VotingPanel extends JPanel {
 
         buttons.setFieldsEnabled(false);
         if (this.hasDeck) {
-            cards.disableEditing(true);
+            //cards.disableEditing(true);
         }
         
         // Find the next row to select
