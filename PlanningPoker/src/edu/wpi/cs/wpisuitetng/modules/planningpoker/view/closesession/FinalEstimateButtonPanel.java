@@ -110,6 +110,7 @@ public class FinalEstimateButtonPanel extends JPanel {
 					submitButton.setEnabled(true);
 					errorLabel.setText(" ");
 				}
+				parent.checkSameVote();
 			}
 
 			@Override
@@ -125,6 +126,7 @@ public class FinalEstimateButtonPanel extends JPanel {
 					submitButton.setEnabled(true);
 					errorLabel.setText(" ");
 				}
+				parent.checkSameVote();
 			}
 
 			@Override
@@ -140,12 +142,14 @@ public class FinalEstimateButtonPanel extends JPanel {
 					submitButton.setEnabled(true);
 					errorLabel.setText(" ");
 				}
+				parent.checkSameVote();
 			}
 		});
 		
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parent.votePressed();
+				submitButton.setEnabled(false);
 			}
 		});
 		
@@ -159,7 +163,7 @@ public class FinalEstimateButtonPanel extends JPanel {
 	 * Check if the vote in the spinner is valid.
 	 * @return true if the vote is valid, false otherwise
 	 */
-	private boolean validateSpinner(){
+	public boolean validateSpinner(){
 		boolean validate = true;
 		String vote = estimateField.getText();
 		if(vote.length() == 0 || vote.length() >=3){
@@ -193,5 +197,13 @@ public class FinalEstimateButtonPanel extends JPanel {
 	public JTextField getEstimateField() {
 		return estimateField;
 	}
+	
+	/**
+	 * @return the submitButton
+	 */
+	public JButton getButton() {
+		return submitButton;
+	}
+	
 	
 }

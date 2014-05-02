@@ -65,6 +65,7 @@ public class CloseSessionPanel extends JPanel {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         buildLayout();
         updateSelectedRequirement(getSelectedRequirement());
+        
     }
 
     private void buildLayout() {
@@ -159,6 +160,17 @@ public class CloseSessionPanel extends JPanel {
     	description.updateDescription(selectedRequirement);
     	
     	currentRequirement = selectedRequirement;
+    	
+//    	submitButtons.getButton().setText(Integer.toString(selectedRequirement.getFinalEstimate()));
+
+		if (!submitButtons.getEstimateField().getText().equals("--")) {
+			if (selectedRequirement.getFinalEstimate() == Integer.parseInt(submitButtons.getEstimateField().getText())) {
+				submitButtons.getButton().setEnabled(false);
+			} else {
+				submitButtons.getButton().setEnabled(true);
+			}
+		}
+		
     }
     
     
@@ -201,6 +213,7 @@ public class CloseSessionPanel extends JPanel {
                 session.getModerator(), session.getDeck());
     	
     	EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
+    	submitButtons.getButton().setEnabled(false);
     	table.repaint();
     }
 
@@ -213,5 +226,17 @@ public class CloseSessionPanel extends JPanel {
 
     public PlanningPokerSession getSession() {
         return session;
+    }
+    
+    /**
+     * If the selected requirement has the same final estimate as the number in the estimate text field,
+     * disabel the button.
+     */
+    public void checkSameVote(){
+    	if(submitButtons.validateSpinner() 
+    			&& Integer.parseInt(submitButtons.getEstimateField().getText()) == currentRequirement.getFinalEstimate()){
+    		submitButtons.getButton().setEnabled(false);
+    	}
+    	
     }
 }
