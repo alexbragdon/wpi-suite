@@ -15,6 +15,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -59,14 +60,11 @@ public class CloseSessionPanel extends JPanel {
     public CloseSessionPanel(PlanningPokerSession session, boolean isEditable) {
         this.session = session;
         
-        for (RequirementEstimate req : session.getRequirements()) {
-            req.setFinalEstimate((int)Math.round(req.calculateMean()));
-        }
-        
         this.isEditable = isEditable;
         table = new JTable(new CloseSessionTableModel(session, isEditable));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         buildLayout();
+        updateSelectedRequirement(getSelectedRequirement());
     }
 
     private void buildLayout() {
@@ -194,20 +192,16 @@ public class CloseSessionPanel extends JPanel {
      * This happens when the submit final estimate button is clicked.
      */
     public void votePressed(){
-    	for (final RequirementEstimate req : session.getRequirements()) {
-            if (currentRequirement.getName().equals(req.getName())) {
-                currentRequirement = req;
-            }
-        }
     	currentRequirement.setFinalEstimate(Integer.parseInt(submitButtons.getEstimateField().getText()));
     	
     	final PlanningPokerSession newSession = new PlanningPokerSession(session.getID(),
                 session.getName(), session.getDescription(), session.getDate(),
                 session.getHour(), session.getMin(), session.getRequirements(),
-                session.getType(), session.isActive(), session.isComplete(),
+                session.getType(), false, session.isComplete(),
                 session.getModerator(), session.getDeck());
     	
     	EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
+    	table.repaint();
     }
 
     /**
