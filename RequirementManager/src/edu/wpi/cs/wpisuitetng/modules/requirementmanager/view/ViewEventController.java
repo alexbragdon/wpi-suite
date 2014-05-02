@@ -13,6 +13,7 @@ import java.awt.Component;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
@@ -285,6 +286,13 @@ public class ViewEventController {
         }
         
         main.setSelectedComponent(exportPanel);
+    }
+    
+    /**
+     * Lets the user import requirements.
+     */
+    public void importRequirements() {
+        JOptionPane.showMessageDialog(null, "Importing happens here.");
     }
 
 	/** 
