@@ -49,7 +49,7 @@ public class SessionClosedSmsTemplate implements INotificationTemplate<SmsMessag
     public SmsMessage generateMessage(User user) {
         // TODO use the actual phone number
         StringBuilder body = new StringBuilder();
-        body.append("Planning poker game \"");
+        body.append("Planning poker session \"");
         body.append(session.getName());
         body.append("\", created by ");
         body.append(session.getModerator());
