@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.CardPanel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * Description
@@ -25,9 +26,13 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.CardPanel;
 public class CardTest {
     private Card card;
 
+    @Before
     public void setUp() {
-        card = new Card(1, new CardPanel(new int[] { 1, 3, 4 }, new RequirementEstimate(0,
-                        "TestEst", 2, true), true, DeckSelectionType.SINGLE), true);
+        Requirement req = new Requirement();
+        card = new Card(1, new CardPanel(new int[] { 1, 3, 4 }, 
+                                        new RequirementEstimate(req),
+                                        true, DeckSelectionType.SINGLE),
+                       true);
     }
 
     @Test

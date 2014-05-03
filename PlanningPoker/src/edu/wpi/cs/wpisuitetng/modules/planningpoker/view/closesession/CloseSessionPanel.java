@@ -142,7 +142,7 @@ public class CloseSessionPanel extends JPanel {
         add(submitButtons, c);
         submitButtons.setVisible(true);
         final String username = ConfigManager.getConfig().getUserName();
-        if (!session.getModerator().equals(username)) {
+        if (!session.getModerator().equals(username) || !session.isComplete()) {
             submitButtons.setVisible(false);
         }
     }

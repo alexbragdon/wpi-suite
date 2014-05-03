@@ -359,6 +359,7 @@ public class VotingPanel extends JPanel {
 	}
 
 	public void closeSession(){
+		session = overview.getSession(); //Force the update of the session
 		session.setComplete(true);
 		session.setCompletionTime(new Date());
 		EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
