@@ -175,11 +175,15 @@ public class CloseSessionPanel extends JPanel {
 
         if (submitButtons != null && submitButtons.getEstimateField() != null
                         && !submitButtons.getEstimateField().getText().equals("--")) {
-            if (selectedRequirement.getFinalEstimate() == Integer.parseInt(submitButtons
-                            .getEstimateField().getText())) {
+            try {
+                if (selectedRequirement.getFinalEstimate() == Integer.parseInt(submitButtons
+                                .getEstimateField().getText())) {
+                    submitButtons.getButton().setEnabled(false);
+                } else {
+                    submitButtons.getButton().setEnabled(true);
+                }
+            } catch (NumberFormatException e) {
                 submitButtons.getButton().setEnabled(false);
-            } else {
-                submitButtons.getButton().setEnabled(true);
             }
         }
 
