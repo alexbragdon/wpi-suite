@@ -77,6 +77,10 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 		if (fraction.getNumerator() == 0) {
 			return INITIAL;
 		}
+		
+		if (fraction.getDenominator() == 0) {
+			return INITIAL;
+		}
 
 		/* Map the transition from red to green with yellow as an
 		 * intermediate. By doing this the color brown is avoided.
