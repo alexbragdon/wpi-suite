@@ -8,8 +8,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +17,6 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -33,14 +30,9 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventControlle
  */
 public class ImportExportButtonsPanel extends ToolbarGroupView {
     /**
-     * The button that import requirements.
-     */
-    private JButton importButton = new JButton("<html>Import</html>");
-    
-    /**
      * The button that exports requirements.
      */
-    private JButton exportButton = new JButton("<html>Export</html>");
+    private JButton exportButton = new JButton("<html>Export<br />Requirements</html>");
     
     /**
      * A panel for holding this group's content.
@@ -54,29 +46,15 @@ public class ImportExportButtonsPanel extends ToolbarGroupView {
         super("");
         
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-        setPreferredWidth(300);
-
-        importButton.setHorizontalAlignment(SwingConstants.CENTER);
-        importButton.setPreferredSize(new Dimension(150, importButton.getPreferredSize().height));
+        setPreferredWidth(200);
         
         exportButton.setHorizontalAlignment(SwingConstants.CENTER);
-        exportButton.setPreferredSize(new Dimension(150, exportButton.getPreferredSize().height));
         try {
             Image img = ImageIO.read(getClass().getResource("export_req.png"));
             exportButton.setIcon(new ImageIcon(img));
-            
-            Image img2 = ImageIO.read(getClass().getResource("import_req.png"));
-            importButton.setIcon(new ImageIcon(img2));
         } catch (IOException e) {
             // Don't display an image if it didn't load
         }
-        
-        importButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ViewEventController.getInstance().importRequirements();                
-            }
-        });
         
         exportButton.addActionListener(new ActionListener() {
             @Override
@@ -85,7 +63,6 @@ public class ImportExportButtonsPanel extends ToolbarGroupView {
             }
         });
         
-        contentPanel.add(importButton);
         contentPanel.add(exportButton);
         contentPanel.setOpaque(false);
         add(contentPanel);

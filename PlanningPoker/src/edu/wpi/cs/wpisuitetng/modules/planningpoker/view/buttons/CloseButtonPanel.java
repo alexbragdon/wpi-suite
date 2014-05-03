@@ -26,8 +26,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPoker
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.SessionPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -82,20 +80,15 @@ public class CloseButtonPanel extends ToolbarGroupView {
     }
 
     public void pressCloseButton() {
-    	final PlanningPokerSession session = getSelectedSession(parentView, 0);
+
         // Edit session
         if (selectedPanelIndex == 0 && !isSessionActive) {
             closeButton.OpenSession(parentView);
             closeButton.setVisible(false);
             parentView.getToolbarView().GetSuperButtonPanel().getSuperButton().setVisible(false);
-            int index = parentView.indexOfTab("Edit " + session.getName());
-            if (index > -1) {
-            	//parentView.removeTabAt(index);
-            	ViewEventController.getInstance().gameIsOpened(session);
-            	parentView.removeTabAt(index);
-            }
         }
 
+        final PlanningPokerSession session = getSelectedSession(parentView, 0);
         if (session == null) {
             return;
         }
@@ -121,14 +114,10 @@ public class CloseButtonPanel extends ToolbarGroupView {
                 parentView.getMySession().getModeratingPanel().getTable().clearSelection();
                 parentView.getMySession().getJoiningPanel().getTable().clearSelection();
                 parentView.getMySession().getClosedPanel().getTable().clearSelection();
-                closeButton.setVisible(false);
-                parentView.getToolbarView().GetSuperButtonPanel().getSuperButton().setVisible(false);
             } else {
                 parentView.getMySession().getModeratingPanel().getTable().clearSelection();
                 parentView.getMySession().getJoiningPanel().getTable().clearSelection();
                 parentView.getMySession().getClosedPanel().getTable().clearSelection();
-                closeButton.setVisible(false);
-                parentView.getToolbarView().GetSuperButtonPanel().getSuperButton().setVisible(false);
                 return;
             }
 

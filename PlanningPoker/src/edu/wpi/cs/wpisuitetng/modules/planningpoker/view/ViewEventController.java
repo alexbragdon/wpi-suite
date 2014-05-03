@@ -83,15 +83,6 @@ public class ViewEventController {
         main.setSelectedComponent(newSession);
     }
     
-    public void gameIsOpened(PlanningPokerSession session) {
-              final SessionPanel sessionEditor = new SessionPanel(session, true);
-              final String tabName = "Edit " + session.getName();
-              main.addTab(tabName, null, sessionEditor, "Edit this game");
-              main.invalidate();
-              main.repaint();
-              listOfEditingSessions.put(session, main.getSelectedIndex());
-    }
-    
     /**
      * 
      * Description goes here.
@@ -147,8 +138,7 @@ public class ViewEventController {
             main.setSelectedComponent(component);
         }
     }
-  
-    
+
     /**
      * Opens a panel for closing the given session.
      *

@@ -6,13 +6,16 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,10 +23,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.RequirementDescriptionPanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -32,65 +35,55 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * The panel that appears when a session is closed by the moderator.
- * 
  * @author Team Romulus
  * @version Apr 13, 2014
  */
 @SuppressWarnings("serial")
 public class CloseSessionPanel extends JPanel {
     private final PlanningPokerSession session;
-
     private final boolean isEditable;
-
     private JScrollPane editPanel;
-
     RequirementDescriptionPanel description;
-
     private VoteStatisticPanel voteTable;
-
     private FinalEstimateButtonPanel submitButtons;
-
-    private final JTable table;
-
+    private JTable table;
+    
     RequirementEstimate currentRequirement;
+
 
     /**
      * Creates a new panel to enter estimates while closing the given session.
-     * 
+     *
      * @param session session to close
      * @param isEditable
      */
-    public CloseSessionPanel(final PlanningPokerSession session, final boolean isEditable) {
+    public CloseSessionPanel(PlanningPokerSession session, boolean isEditable) {
         this.session = session;
-
-        for (final RequirementEstimate req : session.getRequirements()) {
-            req.setFinalEstimate((int) Math.round(req.calculateMean()));
-        }
-
+        
         this.isEditable = isEditable;
         table = new JTable(new CloseSessionTableModel(session, isEditable));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         buildLayout();
         updateSelectedRequirement(getSelectedRequirement());
-
+        
     }
 
     private void buildLayout() {
         setLayout(new GridBagLayout());
         final GridBagConstraints c = new GridBagConstraints();
-
-        final JPanel panel = new JPanel();
+        
+        JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         final GridBagConstraints c2 = new GridBagConstraints();
         table.changeSelection(0, 0, false, false);
-
+        
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
-            public void valueChanged(final ListSelectionEvent e) {
+            public void valueChanged(ListSelectionEvent e) {
                 updateSelectedRequirement(getSelectedRequirement());
             }
         });
-
+        
         editPanel = new JScrollPane(table);
         voteTable = new VoteStatisticPanel(session);
         c2.gridx = 0;
@@ -108,7 +101,8 @@ public class CloseSessionPanel extends JPanel {
         c2.weightx = 0.0;
         c2.weighty = 1.0;
         panel.add(voteTable, c2);
-
+        
+        
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 2;
@@ -117,9 +111,8 @@ public class CloseSessionPanel extends JPanel {
         c.weighty = 1.0;
         c.fill = GridBagConstraints.BOTH;
         add(panel, c);
-
-        description = new RequirementDescriptionPanel(session.getRequirements().get(
-                        table.getSelectedRow()));
+        
+        description = new RequirementDescriptionPanel(session.getRequirements().get(table.getSelectedRow()));
         c.gridx = 0;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -128,22 +121,19 @@ public class CloseSessionPanel extends JPanel {
         c.weighty = 0.0;
         c.fill = GridBagConstraints.BOTH;
         add(description, c);
-
-        final String username = ConfigManager.getConfig().getUserName();
-        if (session.getModerator().equals(username)) {
-            submitButtons = new FinalEstimateButtonPanel(this);
-            c.gridx = 1;
-            c.gridy = 2;
-            c.gridwidth = 1;
-            c.gridheight = 1;
-            c.weightx = 0.3;
-            c.weighty = 0.0;
-            c.fill = GridBagConstraints.VERTICAL;
-            c.anchor = GridBagConstraints.LAST_LINE_END;
-            add(submitButtons, c);
-        }
-
-        //>>>>>>> Iteration-6-dev
+        
+        
+        submitButtons = new FinalEstimateButtonPanel(this);
+        c.gridx = 1;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.weightx = 0.3;
+        c.weighty = 0.0;
+        c.fill = GridBagConstraints.VERTICAL;
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        add(submitButtons, c);
+        
     }
 
     /**
@@ -160,31 +150,30 @@ public class CloseSessionPanel extends JPanel {
             return null;
         }
     }
-
+    
     /**
      * Update the field according to the selected requirements.
-     * 
      * @param selectedRequirement the selected requirement
      */
-    public void updateSelectedRequirement(final RequirementEstimate selectedRequirement) {
+    public void updateSelectedRequirement(final RequirementEstimate selectedRequirement){
+    	voteTable.updateListBox(selectedRequirement);
+    	description.updateDescription(selectedRequirement);
+    	
+    	currentRequirement = selectedRequirement;
+    	
+//    	submitButtons.getButton().setText(Integer.toString(selectedRequirement.getFinalEstimate()));
 
-        voteTable.updateListBox(selectedRequirement);
-        description.updateDescription(selectedRequirement);
-
-        currentRequirement = selectedRequirement;
-
-        if (submitButtons != null && submitButtons.getEstimateField() != null
-                        && !submitButtons.getEstimateField().getText().equals("--")) {
-            if (selectedRequirement.getFinalEstimate() == Integer.parseInt(submitButtons
-                            .getEstimateField().getText())) {
-                submitButtons.getButton().setEnabled(false);
-            } else {
-                submitButtons.getButton().setEnabled(true);
-            }
-        }
-
+		if (!submitButtons.getEstimateField().getText().equals("--")) {
+			if (selectedRequirement.getFinalEstimate() == Integer.parseInt(submitButtons.getEstimateField().getText())) {
+				submitButtons.getButton().setEnabled(false);
+			} else {
+				submitButtons.getButton().setEnabled(true);
+			}
+		}
+		
     }
-
+    
+    
     /**
      * Called by the buttons panel when close is pressed.
      */
@@ -193,40 +182,39 @@ public class CloseSessionPanel extends JPanel {
         session.setCompletionTime(new Date());
         try {
             EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
-            final Request request = Network.getInstance().makeRequest(
-                            "Advanced/planningpoker/notify/close", HttpMethod.POST);
+            Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close", HttpMethod.POST);
             request.setBody(session.toJSON());
             request.send();
-        } catch (final RuntimeException e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
         }
         remove();
     }
-
+    
+    
     /**
      * Called by the buttons panel when cancel is pressed. Removes the tab.
      */
     public void cancelPressed() {
         remove();
     }
-
+    
     /**
-     * Function to add final estimate. This happens when the submit final estimate button is
-     * clicked.
+     * Function to add final estimate.
+     * This happens when the submit final estimate button is clicked.
      */
-    public void votePressed() {
-        currentRequirement.setFinalEstimate(Integer.parseInt(submitButtons.getEstimateField()
-                        .getText()));
-
-        final PlanningPokerSession newSession = new PlanningPokerSession(session.getID(),
-                        session.getName(), session.getDescription(), session.getDate(),
-                        session.getHour(), session.getMin(), session.getRequirements(),
-                        session.getType(), false, session.isComplete(), session.getModerator(),
-                        session.getDeck());
-
-        EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
-        submitButtons.getButton().setEnabled(false);
-        table.repaint();
+    public void votePressed(){
+    	currentRequirement.setFinalEstimate(Integer.parseInt(submitButtons.getEstimateField().getText()));
+    	
+    	final PlanningPokerSession newSession = new PlanningPokerSession(session.getID(),
+                session.getName(), session.getDescription(), session.getDate(),
+                session.getHour(), session.getMin(), session.getRequirements(),
+                session.getType(), false, session.isComplete(),
+                session.getModerator(), session.getDeck());
+    	
+    	EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
+    	submitButtons.getButton().setEnabled(false);
+    	table.repaint();
     }
 
     /**
@@ -239,17 +227,16 @@ public class CloseSessionPanel extends JPanel {
     public PlanningPokerSession getSession() {
         return session;
     }
-
+    
     /**
-     * If the selected requirement has the same final estimate as the number in the estimate text
-     * field, disabel the button.
+     * If the selected requirement has the same final estimate as the number in the estimate text field,
+     * disabel the button.
      */
-    public void checkSameVote() {
-        if (submitButtons.validateSpinner()
-                        && Integer.parseInt(submitButtons.getEstimateField().getText()) == currentRequirement
-                                        .getFinalEstimate()) {
-            submitButtons.getButton().setEnabled(false);
-        }
-
+    public void checkSameVote(){
+    	if(submitButtons.validateSpinner() 
+    			&& Integer.parseInt(submitButtons.getEstimateField().getText()) == currentRequirement.getFinalEstimate()){
+    		submitButtons.getButton().setEnabled(false);
+    	}
+    	
     }
 }

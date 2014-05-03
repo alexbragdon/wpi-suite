@@ -29,7 +29,7 @@ public class NotificationEntityManagerTest {
         "\"Support email notifications\",\"votes\":{},\"finalEstimate\":0,\"isExported\":false}]," +
         "\"Type\":\"DISTRIBUTED\",\"isActive\":true,\"isComplete\":false,\"permissionMap\":{}}";
     
-    @Test(expected=UnsupportedOperationException.class)
+    @Test(expected=NotFoundException.class)
     public void testUnsupportedNotificationType() throws NotFoundException {
         final NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
         manager.advancedPost(null, "sing", testSession);

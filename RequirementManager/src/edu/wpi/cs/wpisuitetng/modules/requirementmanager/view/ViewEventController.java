@@ -10,28 +10,16 @@
 package edu.wpi.cs.wpisuitetng.modules.requirementmanager.view;
 
 import java.awt.Component;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.Iteration;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.IterationModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.export.ExportPanel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.export.ExportRequirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationOverviewPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.overview.OverviewPanel;
@@ -297,50 +285,6 @@ public class ViewEventController {
         }
         
         main.setSelectedComponent(exportPanel);
-    }
-    
-    /**
-     * Lets the user import requirements.
-     */
-    public void importRequirements() {
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                        "JSON File", "json");
-        chooser.setFileFilter(filter);
-        int result = chooser.showOpenDialog(null);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(chooser.getSelectedFile()))) {
-                StringBuilder builder = new StringBuilder();
-                String line = reader.readLine();
-                
-                while (line != null) {
-                    builder.append(line);
-                    builder.append(System.lineSeparator());
-                    line = reader.readLine();
-                }
-                
-                String input = builder.toString();
-                try {
-                    ExportRequirement[] requirements = new Gson().fromJson(input, ExportRequirement[].class);
-                    for (ExportRequirement exReq : requirements) {
-                        Requirement req = new Requirement(exReq);
-                        req.setId(RequirementModel.getInstance().getNextID());
-                        RequirementModel.getInstance().addRequirement(req);
-                        UpdateRequirementController.getInstance().updateRequirement(req);
-                        ViewEventController.getInstance().refreshTable();
-                        ViewEventController.getInstance().refreshTree();
-                        ViewEventController.getInstance().refreshEditRequirementPanel(req.getParent());
-                    }
-                } catch (JsonSyntaxException ex) {
-                    JOptionPane.showMessageDialog(null, "The file is not valid.");
-                }
-                
-            } catch (FileNotFoundException e1) {
-                e1.printStackTrace();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
     }
 
 	/** 

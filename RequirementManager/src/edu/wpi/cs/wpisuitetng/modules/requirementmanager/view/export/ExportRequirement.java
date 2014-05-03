@@ -26,37 +26,37 @@ public class ExportRequirement {
     /**
      * The requirement's name.
      */
-    private final String name;
+    private String name;
     
     /**
      * The requirement's description.
      */
-    private final String description;
+    private String description;
     
     /**
      * The type of the requirement.
      */
-    private final RequirementType type;
+    private RequirementType type;
     
     /**
      * The requirement's priority.
      */
-    private final RequirementPriority priority;
+    private RequirementPriority priority;
     
     /**
      * The notes associated with this requirement.
      */
-    private final NoteList notes;
+    private NoteList notes;
     
     /**
      * The transaction history for this requirement.
      */
-    private final TransactionHistory transactions;
+    private TransactionHistory transactions;
     
     /**
      * The requirement's acceptance tests.
      */
-    private final ArrayList<AcceptanceTest> tests;
+    private ArrayList<AcceptanceTest> tests;
     
     /**
      * Creates an ExportRequirement based on the given requirement.
@@ -71,33 +71,5 @@ public class ExportRequirement {
         notes = requirement.getNotes();
         transactions = requirement.getHistory();
         tests = requirement.getTests();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public RequirementType getType() {
-        return type;
-    }
-
-    public RequirementPriority getPriority() {
-        return priority;
-    }
-
-    public NoteList getNotes() {
-        return notes;
-    }
-
-    public TransactionHistory getTransactions() {
-        return transactions;
-    }
-
-    public ArrayList<AcceptanceTest> getTests() {
-        return tests;
     }
 }

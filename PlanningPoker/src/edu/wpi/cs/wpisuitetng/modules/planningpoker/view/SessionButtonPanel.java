@@ -61,17 +61,6 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
                                 "immediately make it active");
                 openButton.setEnabled(false);
                 break;
-            case OPENED:
-            	saveButton = new JButton("Update Game");
-            	saveButton.setEnabled(false);
-            	cancelButton = new JButton("Cancel");
-            	cancelButton.setEnabled(false);
-            	openButton = new JButton("Open Game");
-            	openButton.setEnabled(false);
-            	openButton.setToolTipText("Open this game.");
-            	clearButton = new JButton("Undo changes");
-            	clearButton.setEnabled(false);
-            	break;
             default:
                 // $codepro.audit.disable thrownExceptions
                 throw new RuntimeException("Invalid ViewMode"); 
@@ -106,10 +95,6 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
         	this.add(clearButton);
             this.add(cancelButton);
             break;
-        case OPENED:
-        	this.add(cancelButton);
-        	this.add(openButton);
-        	break;
         }
         
         saveButton.setToolTipText("Create the planning poker game and add it to Games I'm Moderating in the games tab");

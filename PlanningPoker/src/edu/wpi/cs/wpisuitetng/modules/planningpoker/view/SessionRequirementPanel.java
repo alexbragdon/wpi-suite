@@ -175,11 +175,9 @@ public class SessionRequirementPanel extends JPanel {
 		tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
 		table.getTableHeader().setReorderingAllowed(false);
 
-		if (viewMode == ViewMode.EDIT || viewMode == ViewMode.OPENED) {
+		if (viewMode == ViewMode.EDIT) {
 			refreshRequirementSelection();
 		}
-		
-		
 
 		checkBox = new CheckBoxHeader(table.getTableHeader());
 		tc.setHeaderRenderer(checkBox);
@@ -187,16 +185,6 @@ public class SessionRequirementPanel extends JPanel {
 		
 		this.add(tablePanel, BorderLayout.CENTER);
 		this.add(new JLabel("Select Requirements to Estimate"), BorderLayout.NORTH);
-		
-		
-		if (viewMode == ViewMode.OPENED) {
-			table.setRowSelectionAllowed(false);
-			table.setColumnSelectionAllowed(false);
-			table.setCellSelectionEnabled(false);
-			table.setEnabled(false);
-			checkBox.getCheck().setEnabled(false);
-		}
-		
 	}
 
 	protected String getDescription(int sessionID) {

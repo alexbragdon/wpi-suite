@@ -44,6 +44,7 @@ public class SessionClosedEmailTemplate implements INotificationTemplate<EmailMe
     public boolean shouldReceiveNotifications(User user) {
         // the user must want notifications and not be the moderator
         return user.getHasNotificationsEnabled() &&
+                        !user.getUsername().equals(session.getModerator()) &&
                         user.getEmail() != null &&
                         !user.getEmail().equals("");
     }

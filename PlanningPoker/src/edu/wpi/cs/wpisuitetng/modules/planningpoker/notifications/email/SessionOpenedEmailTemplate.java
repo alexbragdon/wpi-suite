@@ -30,18 +30,13 @@ public class SessionOpenedEmailTemplate implements INotificationTemplate<EmailMe
      */
     private final PlanningPokerSession session;
     
-    private final String host;
-    private final String project;
-    
     /**
      * Creates an email template for the given session.
      *
      * @param session session to use
      */
-    public SessionOpenedEmailTemplate(PlanningPokerSession session, String project, String host) {
+    public SessionOpenedEmailTemplate(PlanningPokerSession session) {
         this.session = session;
-        this.host = host;
-        this.project = project;
     }
     
     /*
@@ -51,6 +46,7 @@ public class SessionOpenedEmailTemplate implements INotificationTemplate<EmailMe
     public boolean shouldReceiveNotifications(User user) {
         // the user must want notifications and not be the moderator
         return user.getHasNotificationsEnabled() &&
+                        !user.getUsername().equals(session.getModerator()) &&
                         user.getEmail() != null &&
                         !user.getEmail().equals("");
     }
@@ -97,16 +93,6 @@ public class SessionOpenedEmailTemplate implements INotificationTemplate<EmailMe
             }
             body.append(session.getMin());
             body.append(".\n\n");
-        }
-        
-        if (session.getDeck().equals("-None-")) {
-            body.append("You can also vote at ");
-            body.append(host);
-            body.append("planningpoker/");
-            body.append(project);
-            body.append('/');
-            body.append(session.getID());
-            body.append("/index.html\n\n");
         }
         
         body.append("- The planning poker team");
