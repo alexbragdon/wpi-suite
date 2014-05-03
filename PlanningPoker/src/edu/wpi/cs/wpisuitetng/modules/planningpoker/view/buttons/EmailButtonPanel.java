@@ -277,7 +277,6 @@ public class EmailButtonPanel extends ToolbarGroupView {
                 Request request = Network.getInstance().makeRequest(
                                 "Advanced/planningpoker/notify/test", HttpMethod.POST);
                 request.setBody(displayUser.toJSON());
-                System.out.println("Test JSON body: " + request.getBody());
                 request.send();
                 
             }
@@ -289,12 +288,11 @@ public class EmailButtonPanel extends ToolbarGroupView {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Request request = Network.getInstance().makeRequest(
-                                "Advanced/planningpoker/notify/test", HttpMethod.POST);
-                request.setBody(displayUser.toJSON());
-                System.out.println("Test JSON body: " + request.getBody());
-                request.send();
-                
+//                Request request = Network.getInstance().makeRequest(
+//                                "Advanced/planningpoker/notify/test", HttpMethod.POST);
+//                request.setBody(displayUser.toJSON());
+//                request.send();
+//                
             }
             
         });

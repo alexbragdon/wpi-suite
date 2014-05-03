@@ -46,10 +46,10 @@ public class EmailTestTemplate  implements INotificationTemplate<EmailMessage>{
         final StringBuilder body = new StringBuilder();
         
         body.append("Hello " + user.getName()+
-                        "This the test message.\n"
+                        ":\n\nThis the test email.\n"
                         + "Thank your join in your Planning poker game.");
       
-        body.append("- The planning poker team");
+        body.append("\n\n- The planning poker team");
         
         return new EmailMessage(from, to, subject, body.toString());
     }

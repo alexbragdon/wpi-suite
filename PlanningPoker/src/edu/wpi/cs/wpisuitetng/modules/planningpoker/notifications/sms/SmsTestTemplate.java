@@ -38,8 +38,8 @@ public class SmsTestTemplate implements INotificationTemplate<SmsMessage> {
     @Override
     public SmsMessage generateMessage(User user) {
         String body = "Hello " + user.getName()+
-                        "This the test message.\n"
-                        + "Thank your join in your Planning poker game."+
+                        ":\nThis is the test message.\n"
+                        + "Thank your for joinning in Planning poker game."+
                         "\n- The planning poker team";
 
         return new SmsMessage(user.getCarrier(), user.getPhoneNumber(), body.toString());
