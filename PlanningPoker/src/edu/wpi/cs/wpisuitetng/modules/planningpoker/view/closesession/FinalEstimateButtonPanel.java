@@ -183,6 +183,13 @@ public class FinalEstimateButtonPanel extends JPanel {
     }
 
     /**
+     * @param estimateField the estimateField to set
+     */
+    public void setEstimateField(JTextField estimateField) {
+        this.estimateField = estimateField;
+    }
+
+    /**
      * Test whether the input String is a number.
      * 
      * @param s the input String
