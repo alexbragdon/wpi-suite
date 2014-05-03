@@ -86,10 +86,7 @@ public class VotingOverviewPanel extends JPanel {
             public void valueChanged(ListSelectionEvent e) {
                 parent.updateSelectedRequirement(getSelectedRequirement());
 
-                if (getSelectedRequirement().getVotes().containsKey(user)) {
-                    //parent.getCards().disableEditing(true);
-                } else {
-                    parent.getCards().disableEditing(false);
+                if (!getSelectedRequirement().getVotes().containsKey(user)) {
                     parent.getButtonPanel().getVoteButton().setEnabled(false);
                 }
             }
