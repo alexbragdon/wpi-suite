@@ -10,10 +10,17 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import net.miginfocom.swing.MigLayout;
 
 /**
  * Demos using HTML for formatting.
@@ -34,22 +41,20 @@ public class HTMLExample extends JFrame {
         });
     }
     
+    private JScrollPane scrollPane = new JScrollPane();
     private JLabel label = new JLabel();
     
     public HTMLExample() {
-        String html =
-            "<html>" +
-            "<div style=\"color: white; background-image: url('http://3.bp.blogspot.com/-o1Av8Xnty44/UdHlVcDTOkI/AAAAAAAADR8/-YPq3O7iuNU/s700/Gummy+Bears.jpg');\">" +
-            "<p>This is an example of using HTML in a label. You can use</p>" +
-            "<h1>Headings</h1>" +
-            "<ul>" +
-            "<li>lots</li>" +
-            "<li>of</li>" +
-            "<li>lists</li>" +
-            "</ul>" +
-            "<p>and other <em>fun</em> <strong>formatting</strong></p>" +
-            "</div>" +
-            "</html>";
+        String path = "/home/AlienGorilla/Dev/wpi-suite/wpi-suite/PlanningPoker/src/edu/wpi/cs/wpisuitetng/modules/planningpoker/view/help.html";
+        byte[] encoded;
+        try {
+            encoded = Files.readAllBytes(Paths.get(path));
+        } catch (IOException e) {
+            encoded = "There as an IOException".getBytes();
+            e.printStackTrace();
+        }
+        
+        String html = new String(encoded, StandardCharsets.UTF_8);
         label.setText(html);
         getContentPane().add(label);
         setSize(700, 450);

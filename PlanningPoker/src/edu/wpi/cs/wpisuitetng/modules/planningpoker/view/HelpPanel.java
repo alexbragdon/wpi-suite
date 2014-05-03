@@ -12,6 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.ScrollPane;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,7 +29,7 @@ import net.miginfocom.swing.MigLayout;
  * @version 1
  */
 
-public class HelpPanel extends JPanel{
+public class HelpPanel extends ScrollPane {
 	private Color color = UIManager.getColor ( "Panel.background" );
 
 	public HelpPanel(){
