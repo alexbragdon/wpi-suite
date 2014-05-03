@@ -100,9 +100,9 @@ public class NotificationEntityManager implements EntityManager<AbstractModel> {
                 break;
             case "test":
                 testUser = User.fromJSON(content);
-                //senders.add(new EmailSender(new EmailTestTemplate(testUser)));
-                senders.add(new SmsSender(new SmsTestTemplate(testUser)));
-                break;
+                INotificationSender sender = new SmsSender(new SmsTestTemplate(testUser));
+                sender.send(testUser);
+                return "success";
             default:
                 throw new NotFoundException("There is no " + string + " notification.");
         }
@@ -116,7 +116,7 @@ public class NotificationEntityManager implements EntityManager<AbstractModel> {
 
         return "success";
     }
-    
+
     /*
      * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPut(edu.wpi.cs.wpisuitetng.Session, java.lang.String[], java.lang.String)
      */
