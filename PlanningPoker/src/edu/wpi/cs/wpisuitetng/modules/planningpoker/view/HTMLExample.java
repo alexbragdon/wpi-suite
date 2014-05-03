@@ -8,6 +8,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -38,6 +39,7 @@ public class HTMLExample extends JFrame {
     public HTMLExample() {
         String html =
             "<html>" +
+            "<div style=\"color: white; background-image: url('http://3.bp.blogspot.com/-o1Av8Xnty44/UdHlVcDTOkI/AAAAAAAADR8/-YPq3O7iuNU/s700/Gummy+Bears.jpg');\">" +
             "<p>This is an example of using HTML in a label. You can use</p>" +
             "<h1>Headings</h1>" +
             "<ul>" +
@@ -45,10 +47,11 @@ public class HTMLExample extends JFrame {
             "<li>of</li>" +
             "<li>lists</li>" +
             "</ul>" +
-            "<p>and other <em>fun</em> <strong>formatting</strong>" +
+            "<p>and other <em>fun</em> <strong>formatting</strong></p>" +
+            "</div>" +
             "</html>";
         label.setText(html);
         getContentPane().add(label);
-        setSize(400, 300);
+        setSize(700, 450);
     }
 }
