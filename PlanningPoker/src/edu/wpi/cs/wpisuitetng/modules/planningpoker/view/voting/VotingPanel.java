@@ -215,6 +215,14 @@ public class VotingPanel extends JPanel {
 		if (hasDeck) {
 			cards.selectedRequirementChanged(selectedRequirement);
 			cards.updateSelectedIndices();
+			
+			if (selectedRequirement.getVotes().containsKey(ConfigManager.getConfig().getUserName()))
+			{
+				buttons.getVoteButton().setText("Revote");
+			}
+			else {
+				buttons.getVoteButton().setText("Vote");
+			}
 
 			try {
 				buttons.getEstimateLabel().setText(
@@ -228,6 +236,15 @@ public class VotingPanel extends JPanel {
 		}
 
 		else if (!hasDeck) {
+			
+			if (selectedRequirement.getVotes().containsKey(ConfigManager.getConfig().getUserName()))
+			{
+				buttons.getVoteButton().setText("Revote");
+			}
+			else {
+				buttons.getVoteButton().setText("Vote");
+			}
+			
 			try {
 				buttons.getEstimateField().setText(
 						Integer.toString(selectedRequirement.getVotes()
