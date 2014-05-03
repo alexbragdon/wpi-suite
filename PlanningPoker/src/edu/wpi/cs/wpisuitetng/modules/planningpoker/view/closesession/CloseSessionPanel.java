@@ -172,7 +172,7 @@ public class CloseSessionPanel extends JPanel {
         description.updateDescription(selectedRequirement);
 
         currentRequirement = selectedRequirement;
-
+      
         if (submitButtons != null && submitButtons.getEstimateField() != null
                         && !submitButtons.getEstimateField().getText().equals("--")) {
             if (selectedRequirement.getFinalEstimate() == Integer.parseInt(submitButtons
@@ -182,6 +182,9 @@ public class CloseSessionPanel extends JPanel {
                 submitButtons.getButton().setEnabled(true);
             }
         }
+        
+        submitButtons.getEstimateField().setText(getSelectedVote());
+        submitButtons.getError().setText(" ");
 
     }
 
@@ -226,6 +229,13 @@ public class CloseSessionPanel extends JPanel {
 
         EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
         submitButtons.getButton().setEnabled(false);
+        
+        final int row = table.getSelectedRow();        
+        int nextRow = row + 1;
+        if (nextRow < table.getRowCount()) {
+        	table.getSelectionModel().setSelectionInterval(nextRow, nextRow);
+        }
+        
         table.repaint();
     }
 
@@ -251,5 +261,11 @@ public class CloseSessionPanel extends JPanel {
             submitButtons.getButton().setEnabled(false);
         }
 
+    }
+    
+    public String getSelectedVote() {
+    	if (!table.getValueAt(table.getSelectedRow(), 5).equals("--")){
+    		return Integer.toString((Integer) table.getValueAt(table.getSelectedRow(), 5));
+    	} else return "--";
     }
 }
