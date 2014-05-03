@@ -13,7 +13,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 import java.awt.GridLayout;
 import java.util.Date;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 

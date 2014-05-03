@@ -25,7 +25,6 @@ import javax.swing.ListSelectionModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.UserEstimate;
-import net.miginfocom.swing.MigLayout;
 
 /**
  * Represents a fraction with a numerator and denominator.
@@ -91,7 +90,7 @@ public class VoteStatisticPanel extends JPanel{
 		int length = limit - head.length() - tail.length();
 		StringBuffer outputBuffer = new StringBuffer(length);
 		for (int i = 0; i < length; i++){
-		   outputBuffer.append(" ");
+		   outputBuffer.append(' ');
 		}
 		return outputBuffer.toString();
 	}

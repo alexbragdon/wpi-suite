@@ -81,7 +81,8 @@ public class TabPanel extends JPanel {
 			tabbedPane.setSelectedIndex(tabIndex);
 		}
 		catch (IndexOutOfBoundsException e) {
-			// an invalid tab was requested, do nothing
+			e.printStackTrace();
+		    // an invalid tab was requested, do nothing
 		}
 	}
 	

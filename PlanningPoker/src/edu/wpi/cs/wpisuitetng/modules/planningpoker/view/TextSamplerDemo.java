@@ -38,12 +38,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
  */
 
 import javax.swing.*;
-import javax.swing.text.*;
 
 import java.awt.*;              //for layout managers and more
 import java.awt.event.*;        //for action events
 
-import java.net.URL;
 import java.io.IOException;
 
 public class TextSamplerDemo extends JPanel
@@ -84,6 +82,7 @@ public class TextSamplerDemo extends JPanel
             try {
                 editorPane.setPage(helpURL);
             } catch (IOException e) {
+                e.printStackTrace();
                 System.err.println("Attempted to read a bad URL: " + helpURL);
             }
         } else {
