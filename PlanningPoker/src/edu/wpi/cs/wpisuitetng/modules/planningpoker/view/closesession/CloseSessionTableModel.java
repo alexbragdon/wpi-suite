@@ -85,7 +85,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return isEditable && columnIndex == 5;
+        return false;
     }
 
     /*
