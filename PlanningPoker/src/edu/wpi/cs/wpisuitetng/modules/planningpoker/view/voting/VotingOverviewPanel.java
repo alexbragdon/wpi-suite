@@ -167,13 +167,30 @@ public class VotingOverviewPanel extends JPanel {
                 votes++;
             }
         }
-        overallProgress.setValue(votes * 1000 / requirements.size());
+        Fraction fraction = new Fraction(votes, requirements.size());
+        overallProgress.setValue((int) (fraction.getValue() * 1000));
+        overallProgress.setForeground(ProgressBarTableCellRenderer.getColor(fraction));
         overallProgress.setString("Personal voting progress: "
-                        + Double.toString(votes * 100 / requirements.size()) + "%");
+                        + concat(fraction.getValue() * 100, 3) + "%");
         if (((double) votes / requirements.size()) <= 1.01
                         && ((double) votes / requirements.size()) >= 0.99) {
             overallProgress.setForeground(new Color(102, 204, 102));
         }
+    }
+    
+    /**
+     * Concatenates the double value to have the given length
+     * @param d The double
+     * @param digits The number of digits
+     * @return The double concatenated to the given number of digits
+     */
+    private static String concat(double d, int digits) {
+    	String s = Double.toString(d);
+    	if (s.length() <= digits) {
+    		return s;
+    	}
+    	
+    	return s.substring(0, digits + 1);
     }
 
     public PlanningPokerSession getSession() {
