@@ -74,11 +74,7 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 		}
 
 		//Doing this prevents inaccuracies doing double calculations
-		if (fraction.getNumerator() == 0) {
-			return INITIAL;
-		}
-		
-		if (fraction.getDenominator() == 0) {
+		if ((fraction.getNumerator() == 0) || (fraction.getDenominator() == 0)) {
 			return INITIAL;
 		}
 
