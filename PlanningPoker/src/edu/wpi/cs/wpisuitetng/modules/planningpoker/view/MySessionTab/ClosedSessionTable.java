@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import javax.swing.BorderFactory;
 import javax.swing.DropMode;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.TransferHandler;
@@ -101,7 +102,7 @@ public class ClosedSessionTable extends JTable {
                 int sessionID = Integer.parseInt(parts[0]);
 
                 mySessionPanel.closeSession(sessionID);
-
+                	
                 return true;
             }
         };
