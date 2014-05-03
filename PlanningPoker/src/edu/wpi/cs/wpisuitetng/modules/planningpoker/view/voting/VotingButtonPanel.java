@@ -91,7 +91,6 @@ public class VotingButtonPanel extends JPanel{
 	}
 	
 	private void buildLayoutWithoutDeck() {
-		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("Enter estimate  ");
 		final JLabel blankLabel = new JLabel("            ");
 		estimateField = new JTextField("0");
@@ -197,7 +196,6 @@ public class VotingButtonPanel extends JPanel{
 	}
 
 	private void buildLayoutWithDeck() {
-		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("Total selected");
 		estimateLabel = new JLabel("--");
 		clearButton = new JButton("<html>Clear<br />Selection</html>");
@@ -345,7 +343,6 @@ public class VotingButtonPanel extends JPanel{
 		try { 
 			Integer.parseInt(s); 
 		} catch(NumberFormatException e) { 
-		    e.printStackTrace();
 			return false; 
 		}
 		// only got here if we didn't return false

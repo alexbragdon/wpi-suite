@@ -14,7 +14,6 @@ import java.awt.Component;
 
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
-import javax.swing.UIManager;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -25,39 +24,102 @@ import javax.swing.table.TableCellRenderer;
  */
 public class ProgressBarTableCellRenderer implements TableCellRenderer {
 
-    private static final int MAX = 1000;
-    
-    private final JProgressBar progressBar;
-    
-    public ProgressBarTableCellRenderer() {
-        progressBar = new JProgressBar(0, MAX);
-        progressBar.setStringPainted(true);
-        
-    }
-    
-    /*
-     * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
-     */
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                    boolean hasFocus, int row, int column) {
-        final Fraction fraction = (Fraction) value;
-        
+	private static final int MAX = 1000;
 
-        //make 0/0 fractions still show
-        if (fraction.isComplete()) { //if the fraction is n/n
-        	progressBar.setValue(progressBar.getMaximum()); //fill the bar
-        } else {
-        	progressBar.setValue((int)(fraction.getValue() * MAX)); //else, set its progress
-        }
-        progressBar.setString(fraction.toString());
+	private final JProgressBar progressBar;
 
-        if (fraction.getValue() >= 0.99 && fraction.getValue() <= 1.01) {
-            progressBar.setForeground(new Color(102, 204, 102));
-        } else {
-            progressBar.setForeground(UIManager.getColor("ProgressBar.foreground"));
-        }
-        
-        return progressBar;
-    }
+	public ProgressBarTableCellRenderer() {
+		progressBar = new JProgressBar(0, MAX);
+		progressBar.setStringPainted(true);
+
+	}
+
+	/*
+	 * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+	 */
+	@Override
+	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+			boolean hasFocus, int row, int column) {
+		final Fraction fraction = (Fraction) value;
+
+
+		//make 0/0 fractions still show
+		if (fraction.isComplete()) { //if the fraction is n/n
+			progressBar.setValue(progressBar.getMaximum()); //fill the bar
+		} else {
+			progressBar.setValue((int)(fraction.getValue() * MAX)); //else, set its progress
+		}
+		progressBar.setString(fraction.toString());
+
+		progressBar.setForeground(getColor(fraction));
+
+		return progressBar;
+	}
+
+	/**
+	 * Return the color associated with the given values. The color
+	 * progresses form red (0%) to green (100%) in equal stages
+	 * @param fraction The fraction to use to compute the color
+	 * @return The shade of red/green that represents the transition
+	 */
+	public static Color getColor(Fraction fraction) {
+		
+		final Color INITIAL = new Color(204, 102, 102);
+		final Color MIDDLE = new Color(204, 204, 102);
+		final Color FINAL = new Color(102, 204, 102);
+
+		//Doing this prevents inaccuracies doing double calculations
+		if (fraction.isComplete()) {
+			return FINAL;
+		}
+
+		//Doing this prevents inaccuracies doing double calculations
+		if (fraction.getNumerator() == 0) {
+			return INITIAL;
+		}
+
+		/* Map the transition from red to green with yellow as an
+		 * intermediate. By doing this the color brown is avoided.
+		 */
+
+		int compareToHalf = compareToHalf(fraction);
+
+		if (compareToHalf == 0) { //Fraction is exactly one half
+			return MIDDLE;
+		}
+
+		int midpt = fraction.getDenominator() / 2;
+		if ((fraction.getDenominator() % 2) == 1) {
+			midpt++;
+		}
+		
+		double stepR = (INITIAL.getRed() - FINAL.getRed()) / ((double) midpt);
+		double stepG = (FINAL.getGreen() - INITIAL.getGreen()) / ((double) midpt);
+		if (compareToHalf < 0) { //Less than one half
+			int g = (int) stepG * fraction.getNumerator();
+			return new Color(MIDDLE.getRed(), g + INITIAL.getGreen(), INITIAL.getBlue());
+		}
+
+		//Greater than one half
+		int r = ((int) stepR * (fraction.getDenominator() - fraction.getNumerator()));
+		return new Color(FINAL.getRed() + r, FINAL.getGreen(), INITIAL.getBlue());
+	}
+
+	/**
+	 * Compare the fraction to one half
+	 * @param f The Fraction
+	 * @return return -1 if the fraction is less than one half, 0 if equal,
+	 * and one if greater
+	 */
+	private static int compareToHalf(Fraction f) {
+		if (f.getNumerator() * 2 == f.getDenominator()) {
+			return 0;
+		}
+
+		if (f.getNumerator() * 2 > f.getDenominator()) {
+			return 1;
+		}
+
+		return -1;
+	}
 }
