@@ -97,18 +97,12 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 		double stepG = (FINAL.getGreen() - INITIAL.getGreen()) / ((double) midpt);
 		if (compareToHalf < 0) { //Less than one half
 			int g = (int) stepG * fraction.getNumerator();
-			System.out.println("[" + MIDDLE.getRed() + ", " + g + INITIAL.getGreen() + ", " + INITIAL.getBlue());
-			Color c = new Color(MIDDLE.getRed(), g + INITIAL.getGreen(), INITIAL.getBlue());
-			System.out.println(c.toString());
-			return c;
+			return new Color(MIDDLE.getRed(), g + INITIAL.getGreen(), INITIAL.getBlue());
 		}
 
 		//Greater than one half
 		int r = ((int) stepR * (fraction.getDenominator() - fraction.getNumerator()));
-		System.out.println("[" + FINAL.getRed() + r + ", " + FINAL.getGreen() + ", " + INITIAL.getBlue());
-		Color c = new Color(FINAL.getRed() + r, FINAL.getGreen(), INITIAL.getBlue());
-		System.out.println(c.toString());
-		return c;
+		return new Color(FINAL.getRed() + r, FINAL.getGreen(), INITIAL.getBlue());
 	}
 
 	/**
