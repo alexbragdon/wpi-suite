@@ -191,9 +191,12 @@ public class EmailButtonPanel extends ToolbarGroupView {
                 if(displayUser == null){
                     new GetAllUsersController().requestAllUsers(EmailButtonPanel.this, 
                                     ConfigManager.getConfig().getUserName()); 
+                    emailScrollPanel.setVisible(false);
+                    SMSPanel.setVisible(true);
                     switchToEditSMS();
-                 
                 } else {
+                	emailScrollPanel.setVisible(false);
+                    SMSPanel.setVisible(true);
                 	switchToEditSMS();
                 }
             }
@@ -212,7 +215,12 @@ public class EmailButtonPanel extends ToolbarGroupView {
                 if(displayUser == null){
                     new GetAllUsersController().requestAllUsers(EmailButtonPanel.this, 
                                     ConfigManager.getConfig().getUserName()); 
+                    emailScrollPanel.setVisible(false);
+                    emailPanel.setVisible(true);
+                    switchToEdit();
                 } else{
+                	emailScrollPanel.setVisible(false);
+                    emailPanel.setVisible(true);
                 	switchToEdit();
                 }
             }
@@ -423,6 +431,12 @@ public class EmailButtonPanel extends ToolbarGroupView {
      */
     public void setUser(User user) {
         displayUser = user;
+        emailField.setText(displayUser.getEmail());
+        emailCheckBox.setSelected(displayUser.getHasNotificationsEnabled());
+        emailSubmitButton.setEnabled(canValidateEmail());
+        CarrierChooser.setSelectedItem(displayUser.getCarrier());
+    	SMSCheckBox.setSelected(displayUser.hasSmsEnabled());
+    	SMSField.setText(displayUser.getPhoneNumber());
     }
 
     /**
