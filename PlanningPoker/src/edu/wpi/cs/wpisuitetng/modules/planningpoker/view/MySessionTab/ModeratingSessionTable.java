@@ -26,6 +26,8 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -53,7 +55,7 @@ public class ModeratingSessionTable extends JTable {
      * @param columnNames Column headers of OverviewTable
      */
     public ModeratingSessionTable(Object[][] data, String[] columnNames,
-                    MySessionPanel mySessionPanel) {
+                    final MySessionPanel mySessionPanel) {
         this.mySessionPanel = mySessionPanel;
         tableModel = new DefaultTableModel(data, columnNames);
         this.setModel(tableModel);
@@ -66,8 +68,7 @@ public class ModeratingSessionTable extends JTable {
         } catch (HeadlessException e) {
             e.printStackTrace();
         }
-        setFillsViewportHeight(true);
-
+        setFillsViewportHeight(true);    
     }
 
     public int getSelectedID() { // $codepro.audit.disable
