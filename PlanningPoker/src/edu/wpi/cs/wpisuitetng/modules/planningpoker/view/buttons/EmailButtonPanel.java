@@ -41,6 +41,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetAllUsersContro
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * @author Team Romulus
@@ -120,6 +123,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         SMSSubmitButton = new JButton("Submit");
         SMSSubmitButton.setEnabled(false);
         SMSTestButton = new JButton("Test");
+        SMSTestButton.setEnabled(false);
 
         // Button for canceling an email address
         emailCancelButton = new JButton("Cancel");
@@ -265,7 +269,35 @@ public class EmailButtonPanel extends ToolbarGroupView {
 
             }
         });
+        
+        SMSTestButton.addActionListener(new ActionListener(){
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Request request = Network.getInstance().makeRequest(
+                                "Advanced/planningpoker/notify/test", HttpMethod.POST);
+                request.setBody(displayUser.toJSON());
+                System.out.println("Test JSON body: " + request.getBody());
+                request.send();
+                
+            }
+            
+        });
+        
+        
+        emailTestButton.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Request request = Network.getInstance().makeRequest(
+                                "Advanced/planningpoker/notify/test", HttpMethod.POST);
+                request.setBody(displayUser.toJSON());
+                System.out.println("Test JSON body: " + request.getBody());
+                request.send();
+                
+            }
+            
+        });
         
         SMSField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -274,11 +306,13 @@ public class EmailButtonPanel extends ToolbarGroupView {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 SMSSubmitButton.setEnabled(canValidateSMS());
+                SMSTestButton.setEnabled(canValidateSMS());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
                 SMSSubmitButton.setEnabled(canValidateSMS());
+                SMSTestButton.setEnabled(canValidateSMS());
             }
         });
 
