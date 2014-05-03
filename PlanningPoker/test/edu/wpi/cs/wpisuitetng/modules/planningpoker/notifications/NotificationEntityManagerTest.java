@@ -21,7 +21,7 @@ import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
  * @version Apr 17, 2014
  */
 public class NotificationEntityManagerTest {
-    private final String testSession = "{\"ID\":19,\"Name\":\"Test Session\"," +
+    private  String testSession = "{\"ID\":19,\"Name\":\"Test Session\"," +
         "\"Description\":\"This is a test session.\",\"date\":\"Apr 17, 2014 5:52:43 PM\"," +
         "\"moderator\":\"admin\",\"deck\":\"-None-\",\"Hour\":4,\"Min\":32," +
         "\"RequirementEstimates\":[{\"id\":2,\"name\":\"Add undo functionality\",\"votes\":{}," +
@@ -29,69 +29,69 @@ public class NotificationEntityManagerTest {
         "\"Support email notifications\",\"votes\":{},\"finalEstimate\":0,\"isExported\":false}]," +
         "\"Type\":\"DISTRIBUTED\",\"isActive\":true,\"isComplete\":false,\"permissionMap\":{}}";
     
-    @Test(expected=NotFoundException.class)
+    @Test(expected=UnsupportedOperationException.class)
     public void testUnsupportedNotificationType() throws NotFoundException {
-        NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
+        final NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
         manager.advancedPost(null, "sing", testSession);
     }
     
     @Test(expected=UnsupportedOperationException.class)
-    public void testCountNotSupported() {
-        NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
+    public  void testCountNotSupported() {
+        final NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
         manager.Count();
     }
     
     @Test(expected=UnsupportedOperationException.class)
-    public void testAdvancedGetNotSupported() {
-        NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
+    public  void testAdvancedGetNotSupported() {
+        final NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
         manager.advancedGet(null, null);
     }
     
     @Test(expected=UnsupportedOperationException.class)
-    public void testAdvancedPutNotSupported() {
-        NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
+    public  void testAdvancedPutNotSupported() {
+        final NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
         manager.advancedPut(null, null, null);
     }
     
     @Test(expected=UnsupportedOperationException.class)
-    public void testDeleteAllNotSupported() {
-        NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
+    public  void testDeleteAllNotSupported() {
+        final NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
         manager.deleteAll(null);
     }
     
     @Test(expected=UnsupportedOperationException.class)
-    public void testDeleteEntityNotSupported() {
-        NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
+    public  void testDeleteEntityNotSupported() {
+        final NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
         manager.deleteEntity(null, null);
     }
     
     @Test(expected=UnsupportedOperationException.class)
-    public void testGetAllNotSupported() {
-        NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
+    public  void testGetAllNotSupported() {
+        final NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
         manager.getAll(null);
     }
 
     @Test(expected=UnsupportedOperationException.class)
-    public void testGetEntityNotSupported() {
-        NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
+    public  void testGetEntityNotSupported() {
+        final NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
         manager.getEntity(null, null);
     }
     
     @Test(expected=UnsupportedOperationException.class)
-    public void testMakeEntityNotSupported() {
-        NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
+    public  void testMakeEntityNotSupported() {
+        final NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
         manager.makeEntity(null, null);
     }
     
     @Test(expected=UnsupportedOperationException.class)
-    public void testSaveNotSupported() {
-        NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
+    public  void testSaveNotSupported() {
+        final NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
         manager.save(null, null);
     }
     
     @Test(expected=UnsupportedOperationException.class)
-    public void testUpdateNotSupported() {
-        NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
+    public  void testUpdateNotSupported() {
+        final NotificationEntityManager manager = new NotificationEntityManager(new MockData(null));
         manager.update(null, null);
     }
 }

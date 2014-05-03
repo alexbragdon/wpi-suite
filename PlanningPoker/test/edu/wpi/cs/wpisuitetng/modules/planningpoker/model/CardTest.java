@@ -6,6 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 
 import static org.junit.Assert.*;
@@ -17,22 +18,20 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.CardPanel;
 
 /**
  * Description
- *
+ * 
  * @author Team Romulus
  * @version Apr 22, 2014
  */
 public class CardTest {
     private Card card;
-    
-    @Before
-    public void setUp(){
-        card = new Card(1, new CardPanel("TestCard", 
-                                        new RequirementEstimate(0, "TestEst", 2, true), 
-                                        true), true);
+
+    public void setUp() {
+        card = new Card(1, new CardPanel(new int[] { 1, 3, 4 }, new RequirementEstimate(0,
+                        "TestEst", 2, true), true, DeckSelectionType.SINGLE), true);
     }
-    
+
     @Test
-    public void testGettersandSetter(){
+    public void testGettersandSetter() {
         assertEquals(1, card.getCardNum());
         card.setSelected(false);
         assertFalse(card.isSelected());
@@ -41,5 +40,10 @@ public class CardTest {
         card.getNumLabel();
         card.getImgLabel();
     }
-    
+
+    @Test
+    public void TestEnableAndDisableSelection(){
+        card.enableSelection();
+        card.disableSelection();
+    }
 }

@@ -75,7 +75,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
         	if (tabbedPane.getComponentAt(index) instanceof SessionPanel)
         	{
         		final SessionPanel panel = (SessionPanel)tabbedPane.getComponentAt(index);
-        		if (!panel.hasChanges()) {
+        		if (!panel.hasChanges() || panel.getViewMode() == ViewMode.OPENED) {
         			ViewEventController.getInstance().removeTab(
         			                (JComponent)tabbedPane.getComponentAt(index));
         			return;

@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,13 +38,13 @@ public class VotingOverviewPanelTest {
     	Network.initNetwork(new MockNetwork());
 		Network.getInstance().setDefaultNetworkConfiguration(
 				new NetworkConfiguration("http://wpisuitetng"));
-        RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
-        ArrayList<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
+        final RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
+        final List<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
         listEst.add(testReq);
 
         session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
                         listEst, SessionType.REALTIME, false, false, "aGuy", "-None-");    
-        vop = new VotingOverviewPanel(listEst, 1, "admin", new VotingPanel(session1),  session1);
+        vop = new VotingOverviewPanel(listEst, 1, "admin", new VotingPanel(session1, null),  session1);
     }
 
     @Test
@@ -53,7 +54,7 @@ public class VotingOverviewPanelTest {
 
     @Test
     public void testCheckProgress(){
-        PlanningPokerSession[] sessions = {
+        final PlanningPokerSession[] sessions = {
                         session1
         };
         
@@ -65,5 +66,14 @@ public class VotingOverviewPanelTest {
         vop.getTable();
         vop.getRequirements();
         vop.getSession();
+    }
+    
+    @Test
+    public void testPassUserNum(){
+        vop.passUserNum(2);
+    }
+    @Test
+    public void testDisableAndDisplayVotingEnded(){
+        vop.disableAndDisplayVotingEnded();
     }
 }

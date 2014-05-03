@@ -32,6 +32,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.entitymanagers.UserManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.defecttracker.entitymanagers.CommentManager;
 import edu.wpi.cs.wpisuitetng.modules.defecttracker.entitymanagers.DefectManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSessionEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.NotificationEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.postboard.model.PostBoardEntityManager;
@@ -79,6 +80,7 @@ public class ManagerLayer {
 		map.put("requirementmanager" + "iteration", new IterationEntityManager(data));
 		map.put("planningpoker" + "planningpokersession", new PlanningPokerSessionEntityManager(data));
 		map.put("planningpoker" + "notify", new NotificationEntityManager(data));
+		map.put("planningpoker" + "deck", new DeckEntityManager(data));
 
 		//add just your module to this list
 		String[] fullModuleList = {"core","defecttracker","postboard","requirementmanager","planningpoker"};
@@ -320,11 +322,16 @@ public class ManagerLayer {
 	 * @return
 	 * @throws WPISuiteException
 	 */
-	public String advancedPost(String[] args, String content, Cookie[] cook) throws WPISuiteException
+	public String advancedPost(String[] args, String content, Cookie[] cook, String url) throws WPISuiteException
 	{
 		Session s = getSessionFromCookies(cook);
 		
-        return map.get(args[0]+args[1]).advancedPost(s,args[2],content);
+		EntityManager<?> manager = map.get(args[0]+args[1]);
+		if (manager instanceof NotificationEntityManager) {
+		    return ((NotificationEntityManager)manager).advancedPostWithUri(s,args[2],content,url);
+		} else {
+		    return manager.advancedPost(s, args[2], content);
+		}
 	}
 	
 	private Session getSessionFromCookies(Cookie[] cook) throws AuthenticationException, UnauthorizedException

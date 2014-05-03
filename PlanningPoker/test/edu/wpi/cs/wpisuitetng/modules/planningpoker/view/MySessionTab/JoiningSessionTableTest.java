@@ -27,9 +27,7 @@ public class JoiningSessionTableTest {
     
     @Before 
     public void setUp(){
-        final Object[][] data = {};
-        final String[] columnNames = { "ID", "Name", "End Time", "My Progress" };
-        jst = new JoiningSessionTable(data, columnNames, null);
+        jst = new JoiningSessionTable(null);
                         
     }
     
@@ -40,9 +38,9 @@ public class JoiningSessionTableTest {
     
     @Test
     public void testAddSessions(){
-        PlanningPokerSession session = new PlanningPokerSession();
+        final PlanningPokerSession session = new PlanningPokerSession();
         session.setType(SessionType.DISTRIBUTED);
-        
+        System.out.println(session.toString());
         jst.addSessions(session);
     }
     

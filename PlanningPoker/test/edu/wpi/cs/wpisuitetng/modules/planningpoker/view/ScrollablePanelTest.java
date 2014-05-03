@@ -17,7 +17,7 @@ import java.awt.Rectangle;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ScrollablePanel;
+
 
 /**
  * tests the functionality of the SessionPanel.java source file
@@ -39,13 +39,13 @@ public class ScrollablePanelTest {
 	}
 	@Test
 	public void testScrollableUnitIncrement(){
-		assertEquals(10, sp.getScrollableUnitIncrement(new Rectangle(0,0,-1,-1), 0, 0));
+		assertEquals(10, sp.getScrollableUnitIncrement(new Rectangle(0, 0, -1, -1), 0, 0));
 	}
 	@Test
 	public void testScrollableBlockIncrement(){
-		assertEquals(-11, sp.getScrollableBlockIncrement(new Rectangle(0,0,-1,-1), 0, 0));
+		assertEquals(-11, sp.getScrollableBlockIncrement(new Rectangle(0, 0, -1, -1), 0, 0));
 
-		assertEquals(-7, sp.getScrollableBlockIncrement(new Rectangle(1,2,3,4), 5, 6));
+		assertEquals(-7, sp.getScrollableBlockIncrement(new Rectangle(1, 2, 3, 4), 5, 6));
 	}
 	@Test
 	public void testScrollableTrackViewportSize(){

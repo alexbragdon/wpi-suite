@@ -45,14 +45,14 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
                     ViewMode viewMode, PlanningPokerSession session) {
         switch (viewMode) {
             case EDIT:
-                saveButton = new JButton("Update");
+                saveButton = new JButton("Update Game");
                 clearButton = new JButton("Undo changes");
                 cancelButton = new JButton("Cancel");
                 openButton = new JButton("Open Game");
                 openButton.setToolTipText("Open this game.");
                 break;
             case CREATE:
-                saveButton = new JButton("Create");
+                saveButton = new JButton("Create Game");
                 clearButton = new JButton("Clear");
                 cancelButton = new JButton("Cancel");
                 openButton = new JButton("Create and Open");
@@ -61,6 +61,17 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
                                 "immediately make it active");
                 openButton.setEnabled(false);
                 break;
+            case OPENED:
+            	saveButton = new JButton("Update Game");
+            	saveButton.setEnabled(false);
+            	cancelButton = new JButton("Cancel");
+            	cancelButton.setEnabled(false);
+            	openButton = new JButton("Open Game");
+            	openButton.setEnabled(false);
+            	openButton.setToolTipText("Open this game.");
+            	clearButton = new JButton("Undo changes");
+            	clearButton.setEnabled(false);
+            	break;
             default:
                 // $codepro.audit.disable thrownExceptions
                 throw new RuntimeException("Invalid ViewMode"); 
@@ -95,6 +106,10 @@ public class SessionButtonPanel extends JPanel implements SessionPanelListener {
         	this.add(clearButton);
             this.add(cancelButton);
             break;
+        case OPENED:
+        	this.add(cancelButton);
+        	this.add(openButton);
+        	break;
         }
         
         saveButton.setToolTipText("Create the planning poker game and add it to Games I'm Moderating in the games tab");

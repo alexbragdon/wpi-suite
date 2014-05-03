@@ -10,6 +10,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,11 +30,11 @@ public class CountDownOverviewPanelTest {
     
     @Before
     public void setUp(){
-        RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
-        ArrayList<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
+        final RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
+        final List<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
         listEst.add(testReq);
 
-        PlanningPokerSession session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
+        final PlanningPokerSession session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
                         listEst, SessionType.REALTIME, false, false, "aGuy", "-None-"); 
         cdop = new CountDownOverviewPanel(session1);
     }

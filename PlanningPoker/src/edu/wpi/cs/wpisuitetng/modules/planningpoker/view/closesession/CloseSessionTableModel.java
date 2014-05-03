@@ -34,6 +34,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
     public CloseSessionTableModel(PlanningPokerSession session, boolean isEditable) {
         this.session = session;
         this.isEditable = isEditable;
+        
     }
 
     /*
@@ -84,7 +85,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return isEditable && columnIndex == 5;
+        return false;
     }
 
     /*

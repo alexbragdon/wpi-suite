@@ -84,8 +84,13 @@ public class VotingButtonPanel extends JPanel{
 		setupListeners();
 	}
 
+	private boolean estimateCheck() {
+		if (mode.equals(ViewMode.WITHOUTDECK)) {
+			return estimateField.getText().equals("?");
+		} else return false;
+	}
+	
 	private void buildLayoutWithoutDeck() {
-		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("Enter estimate  ");
 		final JLabel blankLabel = new JLabel("            ");
 		estimateField = new JTextField("0");
@@ -98,8 +103,9 @@ public class VotingButtonPanel extends JPanel{
 		estimateField.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent e){
-            	if (estimateField.getText().equals("--")) {
+            	if (estimateField.getText().equals("--") || estimateField.getText().equals("?")) {
 					estimateField.setText("");
+					dontKnowButton.setEnabled(true);
 				}
             }
         });
@@ -108,10 +114,12 @@ public class VotingButtonPanel extends JPanel{
 			public void changedUpdate(DocumentEvent e) {
 				if(!validateSpinner()){
 					voteButton.setEnabled(false);
-					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
+					if (estimateField.getText().equals("--") || estimateField.getText().equals("") || estimateField.getText().equals("?")) {
 						errorLabel.setText(" ");
 					}else{
-						errorLabel.setText("*Please enter an integer from 1 to 99");
+						if (!estimateField.getText().equals(parentPanel.getOverview().valueForVote())) {
+							errorLabel.setText("*Please enter an integer from 1 to 99");
+						}
 					}
 				}else{
 					voteButton.setEnabled(true);
@@ -123,10 +131,12 @@ public class VotingButtonPanel extends JPanel{
 			public void insertUpdate(DocumentEvent e) {
 				if(!validateSpinner()){
 					voteButton.setEnabled(false);
-					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
+					if (estimateField.getText().equals("--") || estimateField.getText().equals("") || estimateField.getText().equals("?")) {
 						errorLabel.setText(" ");
 					}else{
-						errorLabel.setText("*Please enter an integer from 1 to 99");
+						if (!estimateField.getText().equals(parentPanel.getOverview().valueForVote())) {
+							errorLabel.setText("*Please enter an integer from 1 to 99");
+						}
 					}
 				}else{
 					voteButton.setEnabled(true);
@@ -138,10 +148,12 @@ public class VotingButtonPanel extends JPanel{
 			public void removeUpdate(DocumentEvent e) {
 				if(!validateSpinner()){
 					voteButton.setEnabled(false);
-					if (estimateField.getText().equals("--") || estimateField.getText().equals("")) {
+					if (estimateField.getText().equals("--") || estimateField.getText().equals("") || estimateField.getText().equals("?")) {
 						errorLabel.setText(" ");
 					}else{
-						errorLabel.setText("*Please enter an integer from 1 to 99");
+						if (!estimateField.getText().equals(parentPanel.getOverview().valueForVote())) {
+							errorLabel.setText("*Please enter an integer from 1 to 99");
+						}
 					}
 				}else{
 					voteButton.setEnabled(true);
@@ -184,7 +196,6 @@ public class VotingButtonPanel extends JPanel{
 	}
 
 	private void buildLayoutWithDeck() {
-		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("Total selected");
 		estimateLabel = new JLabel("--");
 		clearButton = new JButton("<html>Clear<br />Selection</html>");
@@ -209,18 +220,20 @@ public class VotingButtonPanel extends JPanel{
 			public void actionPerformed(ActionEvent m) {
 				cards.clearCardSelection();
 				clearButton.setEnabled(false);
+				voteButton.setEnabled(false);
+				estimateLabel.setText("--");
 			}
 		});
 
 		PropertyChangeListener listener = new PropertyChangeListener(){
 			@Override
 			public void propertyChange(PropertyChangeEvent p) {
-				if(estimateLabel.getText().equals("--")){
+				if(estimateLabel.getText().equals("--") || estimateCheck()){
 					voteButton.setEnabled(false);
 				}
 
 				else{
-					voteButton.setEnabled(true);
+					//voteButton.setEnabled(true);
 				}
 			}
 		};
@@ -235,6 +248,7 @@ public class VotingButtonPanel extends JPanel{
 		add(votePanel,"span 1 2,wrap");
 		add(estimateLabel);
 		
+		voteButton.setEnabled(false);
 	}
 
 	/**
@@ -250,7 +264,6 @@ public class VotingButtonPanel extends JPanel{
 
 	public void setFieldsEnabled(boolean isEnabled) {	    
 		if (mode == ViewMode.WITHOUTDECK){
-			estimateField.setEnabled(isEnabled);
 
 			if(validateSpinner()){
 				voteButton.setEnabled(isEnabled);
@@ -259,7 +272,6 @@ public class VotingButtonPanel extends JPanel{
 			else{
 				voteButton.setEnabled(false);
 			}
-			dontKnowButton.setEnabled(isEnabled);
 		}
 		
 		else if (mode == ViewMode.WITHDECK){
@@ -284,9 +296,10 @@ public class VotingButtonPanel extends JPanel{
 	 */
 	public void unknownSelected() {
 		zeroSelected = !zeroSelected;
-		voteButton.setEnabled(false);
-		estimateField.setEnabled(false);
 		parentPanel.dontKnowPressed();
+		estimateField.setText("?");
+		errorLabel.setText(" ");
+		dontKnowButton.setEnabled(false);
 	}
 
 	/**
@@ -312,13 +325,17 @@ public class VotingButtonPanel extends JPanel{
 		if(vote.length() == 0 || vote.length() >=3){
 			validate = false;
 		}
+		
 		if(!isInteger(vote)){
 			validate = false;
 		}else if(Integer.parseInt(vote) < 1){
 			validate = false;
 		}
-
-
+		
+		if (vote.equals(parentPanel.getOverview().valueForVote())) {
+			validate = false;
+		}
+		
 		return validate;
 	}
 
@@ -326,7 +343,6 @@ public class VotingButtonPanel extends JPanel{
 		try { 
 			Integer.parseInt(s); 
 		} catch(NumberFormatException e) { 
-		    e.printStackTrace();
 			return false; 
 		}
 		// only got here if we didn't return false
@@ -350,5 +366,9 @@ public class VotingButtonPanel extends JPanel{
 	
 	public JButton getDontKnowButton() {
 		return dontKnowButton;
+	}
+	
+	public VotingPanel getVoting() {
+		return parentPanel;
 	}
 }

@@ -64,7 +64,7 @@ public class WPIAdvancedServlet extends HttpServlet {
         
         res.setStatus(HttpServletResponse.SC_OK);
         try {
-        	out.println(ManagerLayer.getInstance().advancedPost(path,in.readLine(),req.getCookies()));
+        	out.println(ManagerLayer.getInstance().advancedPost(path,in.readLine(),req.getCookies(),req.getRequestURL().toString()));
 		} catch (WPISuiteException e) {
 			res.setStatus(e.getStatus());
 		}

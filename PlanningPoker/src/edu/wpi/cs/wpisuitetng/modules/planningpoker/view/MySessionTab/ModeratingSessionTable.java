@@ -53,7 +53,7 @@ public class ModeratingSessionTable extends JTable {
      * @param columnNames Column headers of OverviewTable
      */
     public ModeratingSessionTable(Object[][] data, String[] columnNames,
-                    MySessionPanel mySessionPanel) {
+                    final MySessionPanel mySessionPanel) {
         this.mySessionPanel = mySessionPanel;
         tableModel = new DefaultTableModel(data, columnNames);
         this.setModel(tableModel);
@@ -66,8 +66,7 @@ public class ModeratingSessionTable extends JTable {
         } catch (HeadlessException e) {
             e.printStackTrace();
         }
-        setFillsViewportHeight(true);
-
+        setFillsViewportHeight(true);    
     }
 
     public int getSelectedID() { // $codepro.audit.disable

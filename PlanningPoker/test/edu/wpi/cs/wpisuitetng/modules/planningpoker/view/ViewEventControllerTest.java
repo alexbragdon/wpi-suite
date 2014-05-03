@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +22,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+
+
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -38,7 +39,7 @@ public class ViewEventControllerTest {
 	private PlanningPokerSession ses;
 	
 	@Before
-	public void setUp() throws Exception {	
+	public void setUp() throws Exception {
 		Network.initNetwork(new MockNetwork());
 		Network.getInstance().setDefaultNetworkConfiguration(
 				new NetworkConfiguration("http://wpisuitetng"));
@@ -47,20 +48,22 @@ public class ViewEventControllerTest {
 		mv.setToolbarView(tbv);
 		vec = ViewEventController.getInstance();
 		vec.setMainView(mv);
+		List<RequirementEstimate> ListReq = new ArrayList<RequirementEstimate>();
+		ListReq.add(new RequirementEstimate(1, "2", 2, true));
 		ses = new PlanningPokerSession(0, "Test Session", "Hello The World", new Date(), 12, 0,
-				new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "admin", null);
+		                ListReq, SessionType.REALTIME, false, false, "admin", "-None-");
 	}
 	
 	@Test
 	public void testCreateSession(){
-		int prevTabCount = vec.getMainView().getTabCount();
+		final int prevTabCount = vec.getMainView().getTabCount();
 		vec.createSession();
 		vec.setToolBar(tbv);
 		assertEquals(prevTabCount + 1, vec.getMainView().getTabCount());
 	}
 	@Test
 	public void testTheRemovalOfCreatedSession(){
-		int prevTabCount = vec.getMainView().getTabCount();
+		final int prevTabCount = vec.getMainView().getTabCount();
 		vec.createSession();
 		vec.getMainView().removeTabAt(prevTabCount);
 		assertEquals(prevTabCount, vec.getMainView().getTabCount());
@@ -68,22 +71,35 @@ public class ViewEventControllerTest {
 
 	@Test
 	public void testViewClosedSession(){
-		int prevTabCount = mv.getTabCount();
+		final int prevTabCount = mv.getTabCount();
 		vec.viewClosedSession(ses);
-		assertEquals(prevTabCount +1, mv.getTabCount());
+		assertEquals(prevTabCount + 1, mv.getTabCount());
 	}
 	@Test
 	public void testViwDeck(){
-		int prevTabCount = mv.getTabCount();
+		final int prevTabCount = mv.getTabCount();
 		vec.viewDeck();
-		assertEquals(prevTabCount +1, mv.getTabCount());
+		assertEquals(prevTabCount + 1, mv.getTabCount());
 	}
 	@Test
 	public void testCloseSession(){
-		int prevTabCount = mv.getTabCount();
+		final int prevTabCount = mv.getTabCount();
 		vec.closeSession(ses);
-		assertEquals(prevTabCount +1, mv.getTabCount());
+		assertEquals(prevTabCount + 1, mv.getTabCount());
 		
+	}
+	@Test
+	public void TestHelpSession(){
+	    vec.helpSession();
+	}
+	@Test
+	public void TestGetSize(){
+	    vec.getSize();
+	}
+	@Test
+	public void TestVoteAndEditOnSession(){
+	    vec.voteOnSession(ses, null);
+	    vec.editSession(ses);
 	}
 
 }

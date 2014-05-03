@@ -19,12 +19,12 @@ import org.junit.Test;
 
 
 
-/*
+/**
  * Tests the Functionality of the "UserEstimate.java" file
  * 
  * @author Team3Romulus
  */
-public class UserEstimateTests {
+public class UserEstimateTest {
 	String username = "Dummy user";
 	List<Integer> indecesList = new ArrayList<Integer>();
 	int estimate = 20;

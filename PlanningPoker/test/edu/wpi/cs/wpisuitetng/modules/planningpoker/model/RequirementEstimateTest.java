@@ -13,16 +13,24 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.model;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementPriority;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementType;
 
-public class RequirementEstimateTests {
+
+
+public class RequirementEstimateTest {
 	private RequirementEstimate testReq;
+	
 	@Before
 	public void setUp() throws Exception {
+	    testReq= new RequirementEstimate(new Requirement()); 
 		testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
+		
 	}
 	@Test
 	public void TestFinalEstimateFunctions(){
@@ -80,4 +88,22 @@ public class RequirementEstimateTests {
 
         assertEquals(6, testReq.calculateMedian(), 0);
     }
+    
+    @Test
+    public void TestSetPriority(){
+        testReq.setPriority(RequirementPriority.BLANK);
+    }
+    
+    @Test
+    public void TestSetType(){
+        testReq.setType(RequirementType.BLANK);
+    }
+    
+    @Test
+    public void TestIsEqual(){
+        Requirement req = new Requirement();
+        testReq= new RequirementEstimate(req); 
+        assertTrue(testReq.isEqual(req));
+    }
+    
 }

@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 import javax.swing.JComponent;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.VotingPanel;
@@ -83,6 +84,15 @@ public class ViewEventController {
         main.setSelectedComponent(newSession);
     }
     
+    public void gameIsOpened(PlanningPokerSession session) {
+              final SessionPanel sessionEditor = new SessionPanel(session, true);
+              final String tabName = "Edit " + session.getName();
+              main.addTab(tabName, null, sessionEditor, "Edit this game");
+              main.invalidate();
+              main.repaint();
+              listOfEditingSessions.put(session, main.getSelectedIndex());
+    }
+    
     /**
      * 
      * Description goes here.
@@ -138,7 +148,8 @@ public class ViewEventController {
             main.setSelectedComponent(component);
         }
     }
-
+  
+    
     /**
      * Opens a panel for closing the given session.
      *
@@ -218,7 +229,7 @@ public class ViewEventController {
      *
      * @param session the session
      */
-    public void voteOnSession(PlanningPokerSession session) {
+    public void voteOnSession(PlanningPokerSession session, Deck[] decks) {
         boolean exists = false;
         Component component = null;
         
@@ -230,7 +241,7 @@ public class ViewEventController {
         }
         
         if (!(exists)) {
-            final VotingPanel panel = new VotingPanel(session);
+            final VotingPanel panel = new VotingPanel(session, decks);
             final String tabName = "Vote on " + session.getName();
             main.addTab(tabName, null, panel, "Vote on this game");
             main.invalidate();

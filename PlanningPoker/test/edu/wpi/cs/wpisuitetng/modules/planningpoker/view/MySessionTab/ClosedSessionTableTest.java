@@ -55,7 +55,7 @@ public class ClosedSessionTableTest {
     
     @Test
     public void testAddSessions(){
-        PlanningPokerSession session = new PlanningPokerSession();
+        final PlanningPokerSession session = new PlanningPokerSession();
         session.setType(SessionType.DISTRIBUTED);
         cst.addSessions(session);
         session.setCompletionTime(new Date());

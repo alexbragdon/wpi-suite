@@ -78,7 +78,8 @@ public class LoginController implements ActionListener {
 				sendLoginRequest();
 
 			} catch (MalformedURLException e1) { // failed, bad URL
-				JOptionPane.showMessageDialog(view,
+				e1.printStackTrace();
+			    JOptionPane.showMessageDialog(view,
 						"The server address \"" + URLText + "\" is not a valid URL!",
 						errorTitle, JOptionPane.ERROR_MESSAGE);
 			}

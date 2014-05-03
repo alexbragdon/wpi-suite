@@ -32,23 +32,23 @@ public class EmailMessageTest {
     }
     @Test
     public void testGetFromAddress(){
-        String fromAddress = testMessage.getFromAddress();
+        final String fromAddress = testMessage.getFromAddress();
         assertEquals("planningpokerwpi@gmail.com", fromAddress);
     }
 
     @Test
     public void testGetToAddress(){
-        String toAddress = testMessage.getToAddress();
+        final String toAddress = testMessage.getToAddress();
         assertEquals("test@wpi.edu", toAddress);
     }
     @Test
     public void testGetSubject(){
-        String subject = testMessage.getSubject();
+        final String subject = testMessage.getSubject();
         assertEquals("New planning poker session: Test Session", subject);
     }
     @Test
     public void testGetBody(){
-        String body = testMessage.getBody();
+        final String body = testMessage.getBody();
         assertEquals("Test", body);
     }
     

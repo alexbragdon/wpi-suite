@@ -30,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+
 
 /**
  * Description
@@ -101,7 +101,7 @@ public class ClosedSessionTable extends JTable {
                 int sessionID = Integer.parseInt(parts[0]);
 
                 mySessionPanel.closeSession(sessionID);
-
+                	
                 return true;
             }
         };

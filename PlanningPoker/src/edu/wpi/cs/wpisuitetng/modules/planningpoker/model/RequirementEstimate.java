@@ -17,11 +17,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JOptionPane;
-
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementPriority;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementType;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.TransactionHistory;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * A RequirementEstimate represents the estimates associated with one requirement.
@@ -96,6 +98,7 @@ public class RequirementEstimate {
         this.isExported = false;
         this.type = r.getType();
         this.priority = r.getPriority();
+        this.description = r.getDescription();
     }
     
     public void setDescription(String description) {
@@ -186,7 +189,7 @@ public class RequirementEstimate {
         
         if (numberEstimates != 0) {
             average = totalEstimate / ((double) numberEstimates);
-            average = Math.round(average);
+            //average = Math.round(average);
         }
         
         return average;
@@ -224,27 +227,45 @@ public class RequirementEstimate {
         } else {
             // Size is even: Return the the average of the thing's total on 
             // either size of the thing divided by 2
-            return (sortedVotes.get(size / 2) 
+            return (double) (sortedVotes.get(size / 2) 
                             + sortedVotes.get((size / 2) - 1)) / 2;
         }
     }
     
     public boolean isEqual(Requirement r) {
-        /*
         if (this.id != r.getId()) {
             return false;
         }
-        */
         if (!this.name.equals(r.getName())) {
             return false;
         }
-        /*
         if (this.type != r.getType()) {
             return false;
         }
         if (this.priority != r.getPriority()) {
             return false;
-        }*/
+        }
         return true;
+    }
+    
+    /**
+     *   
+     * Updates the estimate feild in the requirement in the DB, along with a note
+     * Uses the finalEstimate field here and goes to accociated requirement
+     *
+     */
+    public void exportToRequirementManager() {
+        if (!isExported) {
+            isExported = true;
+            Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.POST); // POST == update
+            Requirement newRequirement = new Requirement(this.id, this.name, this.description);
+            String message = ("Estimated updated from Planning Poker Game"); // TODO: Add name of game to Transaction History Message
+            TransactionHistory requirementHistory = newRequirement.getHistory();
+            requirementHistory.add(message);
+            newRequirement.setHistory(requirementHistory);        
+            newRequirement.setEstimate(this.finalEstimate);
+            request.setBody(newRequirement.toJSON()); // put the new requirement in the body of the request
+            request.send(); 
+        }
     }
 }

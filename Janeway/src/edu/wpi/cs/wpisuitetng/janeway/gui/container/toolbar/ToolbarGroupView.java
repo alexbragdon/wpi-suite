@@ -14,7 +14,6 @@
 package edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
