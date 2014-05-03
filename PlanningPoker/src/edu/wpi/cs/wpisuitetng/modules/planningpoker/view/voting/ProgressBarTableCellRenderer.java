@@ -62,7 +62,7 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 	 * @param fraction The fraction to use to compute the color
 	 * @return The shade of red/green that represents the transition
 	 */
-	private static Color getColor(Fraction fraction) {
+	public static Color getColor(Fraction fraction) {
 		
 		final Color INITIAL = new Color(204, 102, 102);
 		final Color MIDDLE = new Color(204, 204, 102);
