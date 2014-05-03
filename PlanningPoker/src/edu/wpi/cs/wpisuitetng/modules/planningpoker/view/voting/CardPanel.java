@@ -52,9 +52,12 @@ public class CardPanel extends JPanel {
 	private List<Card> cards = new ArrayList<Card>();
 
 	private boolean zeroSelected = false;
+	
+	private DeckSelectionType deckSelectionType;
 
 	public CardPanel(int[] deckList, RequirementEstimate r, boolean isEditable, DeckSelectionType deckSelectionType){
 		this.selectedCardsIndices = new ArrayList<Integer>();
+		this.deckSelectionType = deckSelectionType;
 		this.setLayout(new BorderLayout());
 		
 		viewDeck = deckList;
@@ -236,5 +239,12 @@ public class CardPanel extends JPanel {
 				card.disableSelection();
 			} else {card.enableSelection();}
 		}
+	}
+	
+	/**
+	 * @return the deckSelectionType
+	 */
+	public DeckSelectionType getDeckSelectionType() {
+		return deckSelectionType;
 	}
 }

@@ -578,6 +578,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     	
     	ArrayList<String> deckNamesInComboBox = new ArrayList<String>();
     	
+    	// Initialize array list
     	for(int i = 0; i < deckChooser.getItemCount(); i++){
     		deckNamesInComboBox.add(deckChooser.getItemAt(i));
     	}
@@ -586,6 +587,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     		if(!deckNamesInComboBox.contains(d.getName())){
     			deckChooser.addItem(d.getName());
     			decksInDatabase.put(d.getName(), d);
+    			repaint();
     		}
     	}
     }
