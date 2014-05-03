@@ -587,6 +587,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     		if(!deckNamesInComboBox.contains(d.getName())){
     			deckChooser.addItem(d.getName());
     			decksInDatabase.put(d.getName(), d);
+    			DeckSet.getInstance().addDeck(d);
     			repaint();
     		}
     	}

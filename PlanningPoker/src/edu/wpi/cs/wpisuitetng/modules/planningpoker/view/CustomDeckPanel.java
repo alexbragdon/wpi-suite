@@ -38,6 +38,7 @@ import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSelectionType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
 
 /**
  * @author Team Romulus
@@ -240,6 +241,8 @@ public class CustomDeckPanel extends JPanel {
 				cardInts[i] = Integer.parseInt(scrollPanel.getCards().get(i).getTextField().getText());
 			}
 		}
+		
+		DeckSet.getInstance().addDeck(newDeck);
 
 		newDeck.setCards(cardInts);
 		return newDeck;

@@ -105,4 +105,8 @@ public class DeckSet {
 				Arrays.copyOf(tempDeck.getCards(), 
 						tempDeck.getCards().length), tempDeck.getType());
 	}
+	
+	public void addDeck(Deck newDeck){
+		decks.put(newDeck.getName(), newDeck);
+	}
 }

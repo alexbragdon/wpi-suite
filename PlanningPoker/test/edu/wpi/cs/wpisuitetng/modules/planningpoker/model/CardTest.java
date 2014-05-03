@@ -28,7 +28,7 @@ public class CardTest {
     public void setUp(){
         card = new Card(1, new CardPanel(null, 
                                         new RequirementEstimate(0, "TestEst", 2, true), 
-                                        true), true);
+                                        true, DeckSelectionType.MULTI), true);
     }
     
     @Test
