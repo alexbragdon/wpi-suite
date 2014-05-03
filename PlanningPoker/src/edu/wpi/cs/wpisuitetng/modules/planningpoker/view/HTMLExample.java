@@ -19,6 +19,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -41,8 +44,8 @@ public class HTMLExample extends JFrame {
         });
     }
     
-    private JScrollPane scrollPane = new JScrollPane();
-    private JLabel label = new JLabel();
+    private JScrollPane scrollPane;
+    private JTextPane label = new JTextPane();
     
     public HTMLExample() {
         String path = "/home/AlienGorilla/Dev/wpi-suite/wpi-suite/PlanningPoker/src/edu/wpi/cs/wpisuitetng/modules/planningpoker/view/help.html";
@@ -55,8 +58,14 @@ public class HTMLExample extends JFrame {
         }
         
         String html = new String(encoded, StandardCharsets.UTF_8);
+        label.setContentType("text/html");
+        label.setEditable(false);
         label.setText(html);
-        getContentPane().add(label);
+        
+        scrollPane = new JScrollPane(label, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        
+        getContentPane().add(scrollPane);
         setSize(700, 450);
     }
 }
