@@ -93,16 +93,16 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 			midpt++;
 		}
 		
-		double step = (FINAL.getRed() - INITIAL.getRed()) / ((double) midpt);
+		double stepR = (INITIAL.getRed() - FINAL.getRed()) / ((double) midpt);
+		double stepG = (FINAL.getGreen() - INITIAL.getGreen()) / ((double) midpt);
 		if (compareToHalf < 0) { //Less than one half
-			int g = (int) step * fraction.getNumerator();
-			return new Color(INITIAL.getRed(), g + INITIAL.getGreen(), 0);
+			int g = (int) stepG * fraction.getNumerator();
+			return new Color(MIDDLE.getRed(), g + INITIAL.getGreen(), INITIAL.getBlue());
 		}
 
 		//Greater than one half
-		int r = ((int) step * (fraction.getDenominator() - fraction.getNumerator()));
-		System.out.println("r: " + r);
-		return new Color(INITIAL.getRed() - r, FINAL.getGreen(), 0);
+		int r = ((int) stepR * (fraction.getDenominator() - fraction.getNumerator()));
+		return new Color(FINAL.getRed() + r, FINAL.getGreen(), INITIAL.getBlue());
 	}
 
 	/**
@@ -121,15 +121,5 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 		}
 
 		return -1;
-	}
-	
-	//TEST METHOD
-	public static void main(String[] args) {
-		int total = 3;
-		for (int i = 0; i <= total; i++) {
-			Fraction f = new Fraction(i, total);
-			System.out.print(f + ": ");
-			System.out.println(getColor(f).toString());
-		}
 	}
 }
