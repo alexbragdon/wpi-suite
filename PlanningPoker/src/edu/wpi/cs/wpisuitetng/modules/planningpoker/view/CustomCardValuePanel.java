@@ -45,7 +45,11 @@ public class CustomCardValuePanel extends JPanel {
 	private JButton button;
 	private CustomCardPanel parent;
 
+	Color green = new Color(102, 204, 102);
+	Color red = new Color(204, 102, 102);
+
 	public CustomCardValuePanel(String cardNum,CustomCardPanel customCardPanel){
+		
 		this.cardNum = cardNum;
 		this.parent = customCardPanel;
 		setLayout(new MigLayout("insets 0 0 0 0"));
@@ -56,7 +60,7 @@ public class CustomCardValuePanel extends JPanel {
 		label = new JLabel("  ");
 		label.setPreferredSize(new Dimension(45, 35));
 		label.setFont(new Font("Serif", Font.PLAIN, 30));
-		label.setForeground(Color.GREEN);
+		label.setForeground(green);
 		textField = new JTextField();
 		textField.setFont(new Font("Serif", Font.BOLD, 20));
 		textField.setPreferredSize(new Dimension(100, 50));
@@ -108,7 +112,7 @@ public class CustomCardValuePanel extends JPanel {
 				if(!validateField()){
 					label.setText("  ");
 					parent.passCardValue("");
-					textField.setBorder(BorderFactory.createLineBorder(Color.RED));
+					textField.setBorder(BorderFactory.createLineBorder(red));
 				}else{
 					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
@@ -128,7 +132,7 @@ public class CustomCardValuePanel extends JPanel {
 				if(!validateField()){
 					label.setText("  ");
 					parent.passCardValue("");
-					textField.setBorder(BorderFactory.createLineBorder(Color.RED));
+					textField.setBorder(BorderFactory.createLineBorder(red));
 				}else{
 					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
@@ -149,7 +153,7 @@ public class CustomCardValuePanel extends JPanel {
 				if(!validateField()){
 					label.setText("  ");
 					parent.passCardValue("");
-					textField.setBorder(BorderFactory.createLineBorder(Color.RED));
+					textField.setBorder(BorderFactory.createLineBorder(red));
 				}else{
 					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
