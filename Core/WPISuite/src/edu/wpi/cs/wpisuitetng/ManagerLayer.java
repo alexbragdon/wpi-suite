@@ -320,11 +320,16 @@ public class ManagerLayer {
 	 * @return
 	 * @throws WPISuiteException
 	 */
-	public String advancedPost(String[] args, String content, Cookie[] cook) throws WPISuiteException
+	public String advancedPost(String[] args, String content, Cookie[] cook, String url) throws WPISuiteException
 	{
 		Session s = getSessionFromCookies(cook);
 		
-        return map.get(args[0]+args[1]).advancedPost(s,args[2],content);
+		EntityManager<?> manager = map.get(args[0]+args[1]);
+		if (manager instanceof NotificationEntityManager) {
+		    return ((NotificationEntityManager)manager).advancedPostWithUri(s,args[2],content,url);
+		} else {
+		    return manager.advancedPost(s, args[2], content);
+		}
 	}
 	
 	private Session getSessionFromCookies(Cookie[] cook) throws AuthenticationException, UnauthorizedException

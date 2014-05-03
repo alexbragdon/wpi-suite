@@ -12,6 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.database.Data;
@@ -71,13 +73,20 @@ public class NotificationEntityManager implements EntityManager<AbstractModel> {
      */
     @Override
     public String advancedPost(Session s, String string, String content) throws NotFoundException {
+        throw new UnsupportedOperationException("Use advancedPostWithUri instead.");
+    }
+
+    public String advancedPostWithUri(Session s, String string, String content, String url) throws NotFoundException {
         final String type = string.toLowerCase(Locale.US);
         final PlanningPokerSession session = PlanningPokerSession.fromJson(content);
+        final Matcher matcher = Pattern.compile("[\\w]+://[\\w\\d\\.:-]+/WPISuite/").matcher(url);
+        matcher.find();
+        final String host = matcher.group();
         final List<INotificationSender> senders = new ArrayList<INotificationSender>();
 
         switch (type) {
             case "open":
-                senders.add(new EmailSender(new SessionOpenedEmailTemplate(session)));
+                senders.add(new EmailSender(new SessionOpenedEmailTemplate(session, s.getProject().getName(), host)));
                 senders.add(new SmsSender(new SessionOpenedSmsTemplate(session)));
                 break;
             case "close":
@@ -97,7 +106,7 @@ public class NotificationEntityManager implements EntityManager<AbstractModel> {
 
         return "success";
     }
-
+    
     /*
      * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPut(edu.wpi.cs.wpisuitetng.Session, java.lang.String[], java.lang.String)
      */

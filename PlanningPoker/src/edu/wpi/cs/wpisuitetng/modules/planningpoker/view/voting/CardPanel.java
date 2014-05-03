@@ -235,4 +235,8 @@ public class CardPanel extends JPanel {
 			} else {card.enableSelection();}
 		}
 	}
+	
+	public VotingButtonPanel getButtons() {
+		return buttons;
+	}
 }

@@ -37,7 +37,6 @@ public class SessionOpenedSmsTemplate implements INotificationTemplate<SmsMessag
     @Override
     public boolean shouldReceiveNotifications(User user) {
         return user.hasSmsEnabled() &&
-                    !user.getUsername().equals(session.getModerator()) &&
                     user.getPhoneNumber() != null &&
                     !user.getPhoneNumber().equals("") &&
                     user.getCarrier() != null &&

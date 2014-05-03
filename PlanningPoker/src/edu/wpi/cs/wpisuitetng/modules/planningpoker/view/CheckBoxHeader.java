@@ -82,6 +82,10 @@ class CheckBoxHeader implements TableCellRenderer {
     	check.repaint();
     	tabelHeader.repaint();
     }
+    
+    public JCheckBox getCheck() {
+    	return check;
+    }
   
     /**
      * 
