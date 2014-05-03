@@ -98,6 +98,13 @@ public class CustomCardPanel extends JPanel {
 				}
 			}
 		}
+		checkCancelButton();
+	}
+	
+	/**
+	 * Make the cancel button invisible if that is the empty card
+	 */
+	public void checkCancelButton(){
 		for(CustomCardValuePanel  card : cards){
 			if (card.isCardBlank()){
 				card.getButton().setVisible(false);

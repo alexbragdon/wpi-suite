@@ -46,7 +46,6 @@ public class CustomCardValuePanel extends JPanel {
 	private CustomCardPanel parent;
 
 	Color green = new Color(102, 204, 102);
-	Color red = new Color(204, 102, 102);
 
 	public CustomCardValuePanel(String cardNum,CustomCardPanel customCardPanel){
 		
@@ -112,7 +111,7 @@ public class CustomCardValuePanel extends JPanel {
 				if(!validateField()){
 					label.setText("  ");
 					parent.passCardValue("");
-					textField.setBorder(BorderFactory.createLineBorder(red));
+					textField.setBorder(BorderFactory.createLineBorder(Color.RED));
 				}else{
 					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
@@ -132,7 +131,7 @@ public class CustomCardValuePanel extends JPanel {
 				if(!validateField()){
 					label.setText("  ");
 					parent.passCardValue("");
-					textField.setBorder(BorderFactory.createLineBorder(red));
+					textField.setBorder(BorderFactory.createLineBorder(Color.RED));
 				}else{
 					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
@@ -153,13 +152,14 @@ public class CustomCardValuePanel extends JPanel {
 				if(!validateField()){
 					label.setText("  ");
 					parent.passCardValue("");
-					textField.setBorder(BorderFactory.createLineBorder(red));
+					textField.setBorder(BorderFactory.createLineBorder(Color.RED));
 				}else{
 					label.setText("  \u2713");
 					parent.passCardValue(textField.getText());
 					textField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				}
-				parent.checkCreateRemoveCard();
+				//parent.checkCreateRemoveCard();
+				parent.checkCancelButton();
 				button.setVisible(true);
 				if(parent.allCardValid()){
 					parent.notifyParentValid();

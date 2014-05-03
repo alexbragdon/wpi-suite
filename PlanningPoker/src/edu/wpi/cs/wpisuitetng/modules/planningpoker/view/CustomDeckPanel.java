@@ -94,7 +94,9 @@ public class CustomDeckPanel extends JPanel {
 		emptyPanel1.setMinimumSize(new Dimension(1, 400));
 		emptyPanel2.setMinimumSize(new Dimension(50, 400));
 
-		cardTitle = BorderFactory.createTitledBorder("           Enter card values");
+		title = new JLabel("Create a new deck");
+		cardTitle = BorderFactory.createTitledBorder("               Enter card values *");
+		cardTitle.setTitleFont(new Font(title.getFont().getName(), Font.PLAIN, 14));
 		cardTitle.setBorder(BorderFactory.createLineBorder(color));
 		scrollPanel = new CustomCardPanel(this);
 		newCardScroll = new JScrollPane(scrollPanel);
@@ -102,16 +104,16 @@ public class CustomDeckPanel extends JPanel {
 		newCardScroll.setBorder(cardTitle);
 		newCardScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
 
-		this.deckName = new JLabel("Deck name    ");
+		this.deckName = new JLabel("Deck name *  ");
 		this.deckNameTxt = new JTextField();
 		deckNameTxt.setPreferredSize(new Dimension(300, 35));
+		deckNameTxt.setText("New Deck");
 		this.singleSelect = new JRadioButton("Single selection");
 		this.multiSelect = new JRadioButton("Multiple selection");
 		this.dontKnowCard = new JCheckBox("Have an \"I don't know\" card");
 		this.createDeck = new JButton("Create Deck");
 		this.cancelDeck = new JButton("Cancel Deck Creation");
 		titleBorder = BorderFactory.createTitledBorder("Deck selection mode");
-		title = new JLabel("Create a new deck");
 		title.setFont(new Font(title.getFont().getName(), Font.BOLD, 15));
 		deckNamePanel = new JPanel();
 		deckNamePanel.setPreferredSize(new Dimension(450, 35));
@@ -152,8 +154,14 @@ public class CustomDeckPanel extends JPanel {
 		radioButtonPanel.setBorder(titleBorder);
 		add(radioButtonPanel, "wrap");
 		add(this.dontKnowCard,"wrap");
-		add(this.createDeck);
-		add(this.cancelDeck);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.add(new JLabel("    "));
+		buttonPanel.add(createDeck);
+		buttonPanel.add(new JLabel("              "));
+		buttonPanel.add(cancelDeck);
+		add(buttonPanel,"span 4");
+//		add(this.createDeck);
+//		add(this.cancelDeck);
 
 		validateDeckName();
 	}
