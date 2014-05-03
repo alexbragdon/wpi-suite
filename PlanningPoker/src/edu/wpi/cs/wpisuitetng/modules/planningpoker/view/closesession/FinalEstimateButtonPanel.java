@@ -89,7 +89,9 @@ public class FinalEstimateButtonPanel extends JPanel {
         } catch (final IOException ex) {
             ex.printStackTrace();
         }
-
+        
+        estimateField.setText(parent.getSelectedVote());
+        
         estimateField.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {
@@ -209,6 +211,10 @@ public class FinalEstimateButtonPanel extends JPanel {
      */
     public JButton getButton() {
         return submitButton;
+    }
+    
+    public JLabel getError() {
+    	return errorLabel;
     }
 
 }

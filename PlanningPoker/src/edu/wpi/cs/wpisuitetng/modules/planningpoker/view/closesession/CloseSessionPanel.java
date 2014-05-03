@@ -142,8 +142,6 @@ public class CloseSessionPanel extends JPanel {
             c.anchor = GridBagConstraints.LAST_LINE_END;
             add(submitButtons, c);
         }
-
-        //>>>>>>> Iteration-6-dev
     }
 
     /**
@@ -182,7 +180,10 @@ public class CloseSessionPanel extends JPanel {
                 submitButtons.getButton().setEnabled(true);
             }
         }
-
+        if (submitButtons != null && submitButtons.getEstimateField() != null) {
+            submitButtons.getEstimateField().setText(getSelectedVote());
+            submitButtons.getError().setText(" ");
+        }
     }
 
     /**
@@ -226,6 +227,13 @@ public class CloseSessionPanel extends JPanel {
 
         EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
         submitButtons.getButton().setEnabled(false);
+
+        final int row = table.getSelectedRow();
+        int nextRow = row + 1;
+        if (nextRow < table.getRowCount()) {
+            table.getSelectionModel().setSelectionInterval(nextRow, nextRow);
+        }
+
         table.repaint();
     }
 
@@ -251,5 +259,12 @@ public class CloseSessionPanel extends JPanel {
             submitButtons.getButton().setEnabled(false);
         }
 
+    }
+
+    public String getSelectedVote() {
+        if (!table.getValueAt(table.getSelectedRow(), 5).equals("--")) {
+            return Integer.toString((Integer) table.getValueAt(table.getSelectedRow(), 5));
+        } else
+            return "--";
     }
 }
