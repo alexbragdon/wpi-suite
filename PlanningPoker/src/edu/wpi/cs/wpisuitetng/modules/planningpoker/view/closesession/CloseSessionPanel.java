@@ -140,14 +140,6 @@ public class CloseSessionPanel extends JPanel {
         
         final String username = ConfigManager.getConfig().getUserName();
 		if (!session.getModerator().equals(username)) {
-			// submitButtons.setVisible(false);
-//			c.gridx = 0;
-//			c.gridy = 2;
-//			c.gridwidth = 2;
-//			c.gridheight = 1;
-//			c.weightx = 0.7;
-//			c.weighty = 0.0;
-//			c.fill = GridBagConstraints.BOTH;
 			add(description, c);
 		}else{
 			exportButton.setMinimumSize(new Dimension(140, 100));
@@ -186,51 +178,9 @@ public class CloseSessionPanel extends JPanel {
 	        
 	        add(buttomPanel, c);
 			
-//	        c.gridx = 0;
-//	        c.gridy = 2;
-//	        c.gridwidth = 1;
-//	        c.gridheight = 1;
-//	        c.weightx = 0.7;
-//	        c.weighty = 0.0;
-//	        c.fill = GridBagConstraints.BOTH;
-//	        add(leftPanel, c);
-//			
-//	        c.gridx = 1;
-//	        c.gridy = 2;
-//	        c.gridwidth = 1;
-//	        c.gridheight = 1;
-//	        c.weightx = 0.3;
-//	        c.weighty = 0.0;
-//	        c.fill = GridBagConstraints.VERTICAL;
-//	        c.anchor = GridBagConstraints.LAST_LINE_END;
-//	        add(rightPanel, c);
-			
 		}
         
 
-//        description = new RequirementDescriptionPanel(session.getRequirements().get(
-//                        table.getSelectedRow()));
-//        c.gridx = 0;
-//        c.gridy = 2;
-//        c.gridwidth = 1;
-//        c.gridheight = 1;
-//        c.weightx = 0.7;
-//        c.weighty = 0.0;
-//        c.fill = GridBagConstraints.BOTH;
-//        c.anchor = GridBagConstraints.LAST_LINE_END;
-//        add(description, c);
-
-
-//        submitButtons = new FinalEstimateButtonPanel(this);
-//        c.gridx = 1;
-//        c.gridy = 2;
-//        c.gridwidth = 1;
-//        c.gridheight = 1;
-//        c.weightx = 0.3;
-//        c.weighty = 0.0;
-//        c.fill = GridBagConstraints.VERTICAL;
-//        add(submitButtons, c);
-//        submitButtons.setVisible(true);
         
         
     }
