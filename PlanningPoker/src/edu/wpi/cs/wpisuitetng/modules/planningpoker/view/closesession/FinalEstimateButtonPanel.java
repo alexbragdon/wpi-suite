@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -39,8 +41,11 @@ public class FinalEstimateButtonPanel extends JPanel {
 	private JButton submitButton;
 	private JTextField estimateField;
 	private JLabel errorLabel;
+	CloseSessionPanel parent;
 	
-	public FinalEstimateButtonPanel(){
+	public FinalEstimateButtonPanel(CloseSessionPanel parent){
+		this.parent = parent;
+		
 		setLayout(new MigLayout());
 		
 		buildLayout();
@@ -105,6 +110,7 @@ public class FinalEstimateButtonPanel extends JPanel {
 					submitButton.setEnabled(true);
 					errorLabel.setText(" ");
 				}
+				parent.checkSameVote();
 			}
 
 			@Override
@@ -120,6 +126,7 @@ public class FinalEstimateButtonPanel extends JPanel {
 					submitButton.setEnabled(true);
 					errorLabel.setText(" ");
 				}
+				parent.checkSameVote();
 			}
 
 			@Override
@@ -135,6 +142,14 @@ public class FinalEstimateButtonPanel extends JPanel {
 					submitButton.setEnabled(true);
 					errorLabel.setText(" ");
 				}
+				parent.checkSameVote();
+			}
+		});
+		
+		submitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parent.votePressed();
+				submitButton.setEnabled(false);
 			}
 		});
 		
@@ -144,7 +159,11 @@ public class FinalEstimateButtonPanel extends JPanel {
 
 	}
 
-	private boolean validateSpinner(){
+	/**
+	 * Check if the vote in the spinner is valid.
+	 * @return true if the vote is valid, false otherwise
+	 */
+	public boolean validateSpinner(){
 		boolean validate = true;
 		String vote = estimateField.getText();
 		if(vote.length() == 0 || vote.length() >=3){
@@ -167,10 +186,24 @@ public class FinalEstimateButtonPanel extends JPanel {
 		try { 
 			Integer.parseInt(s); 
 		} catch(NumberFormatException e) { 
-		    e.printStackTrace();
 			return false; 
 		}
 		return true;
 	}
+	
+	/**
+	 * @return the estimateField
+	 */
+	public JTextField getEstimateField() {
+		return estimateField;
+	}
+	
+	/**
+	 * @return the submitButton
+	 */
+	public JButton getButton() {
+		return submitButton;
+	}
+	
 	
 }

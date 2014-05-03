@@ -15,6 +15,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -46,6 +47,8 @@ public class CloseSessionPanel extends JPanel {
     private VoteStatisticPanel voteTable;
     private FinalEstimateButtonPanel submitButtons;
     private JTable table;
+    
+    RequirementEstimate currentRequirement;
 
 
     /**
@@ -57,14 +60,12 @@ public class CloseSessionPanel extends JPanel {
     public CloseSessionPanel(PlanningPokerSession session, boolean isEditable) {
         this.session = session;
         
-        for (RequirementEstimate req : session.getRequirements()) {
-            req.setFinalEstimate((int)Math.round(req.calculateMean()));
-        }
-        
         this.isEditable = isEditable;
         table = new JTable(new CloseSessionTableModel(session, isEditable));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         buildLayout();
+        updateSelectedRequirement(getSelectedRequirement());
+        
     }
 
     private void buildLayout() {
@@ -122,7 +123,7 @@ public class CloseSessionPanel extends JPanel {
         add(description, c);
         
         
-        submitButtons = new FinalEstimateButtonPanel();
+        submitButtons = new FinalEstimateButtonPanel(this);
         c.gridx = 1;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -157,6 +158,19 @@ public class CloseSessionPanel extends JPanel {
     public void updateSelectedRequirement(final RequirementEstimate selectedRequirement){
     	voteTable.updateListBox(selectedRequirement);
     	description.updateDescription(selectedRequirement);
+    	
+    	currentRequirement = selectedRequirement;
+    	
+//    	submitButtons.getButton().setText(Integer.toString(selectedRequirement.getFinalEstimate()));
+
+		if (!submitButtons.getEstimateField().getText().equals("--")) {
+			if (selectedRequirement.getFinalEstimate() == Integer.parseInt(submitButtons.getEstimateField().getText())) {
+				submitButtons.getButton().setEnabled(false);
+			} else {
+				submitButtons.getButton().setEnabled(true);
+			}
+		}
+		
     }
     
     
@@ -184,6 +198,24 @@ public class CloseSessionPanel extends JPanel {
     public void cancelPressed() {
         remove();
     }
+    
+    /**
+     * Function to add final estimate.
+     * This happens when the submit final estimate button is clicked.
+     */
+    public void votePressed(){
+    	currentRequirement.setFinalEstimate(Integer.parseInt(submitButtons.getEstimateField().getText()));
+    	
+    	final PlanningPokerSession newSession = new PlanningPokerSession(session.getID(),
+                session.getName(), session.getDescription(), session.getDate(),
+                session.getHour(), session.getMin(), session.getRequirements(),
+                session.getType(), false, session.isComplete(),
+                session.getModerator(), session.getDeck());
+    	
+    	EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
+    	submitButtons.getButton().setEnabled(false);
+    	table.repaint();
+    }
 
     /**
      * Removes the tab from Janeway.
@@ -194,5 +226,17 @@ public class CloseSessionPanel extends JPanel {
 
     public PlanningPokerSession getSession() {
         return session;
+    }
+    
+    /**
+     * If the selected requirement has the same final estimate as the number in the estimate text field,
+     * disabel the button.
+     */
+    public void checkSameVote(){
+    	if(submitButtons.validateSpinner() 
+    			&& Integer.parseInt(submitButtons.getEstimateField().getText()) == currentRequirement.getFinalEstimate()){
+    		submitButtons.getButton().setEnabled(false);
+    	}
+    	
     }
 }
