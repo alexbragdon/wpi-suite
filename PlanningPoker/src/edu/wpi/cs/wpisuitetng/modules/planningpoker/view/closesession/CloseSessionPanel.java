@@ -9,10 +9,14 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Date;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,6 +24,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import net.miginfocom.swing.MigLayout;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.EditPlanningPokerSessionController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
@@ -53,6 +58,9 @@ public class CloseSessionPanel extends JPanel {
     private final JTable table;
 
     RequirementEstimate currentRequirement;
+    
+    private JButton exportButton = new JButton(
+            "<html>Send to<br />requirement<br />manager</html>");
 
     /**
      * Creates a new panel to enter estimates while closing the given session.
@@ -117,34 +125,67 @@ public class CloseSessionPanel extends JPanel {
         c.weighty = 1.0;
         c.fill = GridBagConstraints.BOTH;
         add(panel, c);
-
+ 
         description = new RequirementDescriptionPanel(session.getRequirements().get(
-                        table.getSelectedRow()));
-        c.gridx = 0;
-        c.gridy = 2;
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.weightx = 0.7;
-        c.weighty = 0.0;
-        c.fill = GridBagConstraints.BOTH;
-        add(description, c);
-
-
+        table.getSelectedRow()));
         submitButtons = new FinalEstimateButtonPanel(this);
-        c.gridx = 1;
-        c.gridy = 2;
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.weightx = 0.3;
-        c.weighty = 0.0;
-        c.fill = GridBagConstraints.VERTICAL;
-        c.anchor = GridBagConstraints.LAST_LINE_END;
-        add(submitButtons, c);
-        submitButtons.setVisible(true);
+        
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 2;
+		c.gridheight = 1;
+		c.weightx = 0.7;
+		c.weighty = 0.0;
+		c.fill = GridBagConstraints.BOTH;
+        
         final String username = ConfigManager.getConfig().getUserName();
+        
+        /*
         if (!session.getModerator().equals(username) || !session.isComplete()) {
             submitButtons.setVisible(false);
         }
+        */
+        
+		if (!session.getModerator().equals(username)) {
+			add(description, c);
+		}else{
+			exportButton.setMinimumSize(new Dimension(140, 100));
+			
+			JPanel buttomPanel = new JPanel();
+			buttomPanel.setLayout(new GridBagLayout());
+	        final GridBagConstraints c3 = new GridBagConstraints();
+			
+			JPanel leftPanel = new JPanel();
+			leftPanel.setLayout(new BorderLayout());
+			JPanel rightPanel = new JPanel();
+			rightPanel.setLayout(new MigLayout("insets 35 0 0 0"));
+			rightPanel.setPreferredSize(new Dimension(200,100));
+			rightPanel.setMinimumSize(new Dimension(200,100));
+			
+			leftPanel.add(description, BorderLayout.CENTER);
+			leftPanel.add(submitButtons, BorderLayout.EAST);
+			
+			rightPanel.add(exportButton);
+			
+	        c3.gridx = 0;
+	        c3.gridy = 0;
+	        c3.gridwidth = 4;
+	        c3.gridheight = 1;
+	        c3.weightx = 1.0;
+	        c3.weighty = 1.0;
+	        c3.fill = GridBagConstraints.BOTH;
+	        buttomPanel.add(leftPanel, c3);
+	        c3.gridx = 4;
+	        c3.gridy = 0;
+	        c3.gridwidth = 1;
+	        c3.gridheight = 1;
+	        c3.weightx = 0.0;
+	        c3.weighty = 1.0;
+	        buttomPanel.add(rightPanel, c3);
+	        
+	        add(buttomPanel, c);
+			
+		}
     }
 
     /**
