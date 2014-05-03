@@ -123,25 +123,56 @@ public class Card extends JPanel {
 	 */
 	public void toggleCardSelection() {
 		if (isEditable) {
-			if (parent.isZeroSelected() && cardNum != 0) {
-				parent.unselectZero();
-				parent.setZeroSelected(false);
-			}
+			if(parent.getDeckSelectionType() == DeckSelectionType.SINGLE){
+				// ? is selected and will now be unselected
+				if (parent.isZeroSelected() && cardNum != 0) {
+					parent.unselectZero();
+					parent.setZeroSelected(false);
+				}
+				
+				// ? going to be unselected
+				if (parent.isZeroSelected() && cardNum == 0) {
+					parent.setZeroSelected(false);
+				}
 
-			if (parent.isZeroSelected() && cardNum == 0) {
-				parent.setZeroSelected(false);
-			}
+				// If not selected, deselect others
+				if (!selected) {
+					parent.clearCardSelection(); // Clear card selection first
+					
+					setSelected(true);
 
-			if (!selected) {
-				setSelected(true);
+					if (cardNum == 0) {
+						parent.unknownSelected();
+					}
+				}
 
-				if (cardNum == 0) {
-					parent.unknownSelected();
+				// Deselect card
+				else {
+					setSelected(false);
 				}
 			}
+			
+			else if(parent.getDeckSelectionType() == DeckSelectionType.MULTI){
+				if (parent.isZeroSelected() && cardNum != 0) {
+					parent.unselectZero();
+					parent.setZeroSelected(false);
+				}
 
-			else {
-				setSelected(false);
+				if (parent.isZeroSelected() && cardNum == 0) {
+					parent.setZeroSelected(false);
+				}
+
+				if (!selected) {
+					setSelected(true);
+
+					if (cardNum == 0) {
+						parent.unknownSelected();
+					}
+				}
+
+				else {
+					setSelected(false);
+				}
 			}
 			
 			System.out.println(parent.isZeroSelected());

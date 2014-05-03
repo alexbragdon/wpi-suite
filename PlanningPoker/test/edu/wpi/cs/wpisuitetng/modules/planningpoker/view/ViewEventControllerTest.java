@@ -98,7 +98,7 @@ public class ViewEventControllerTest {
 	}
 	@Test
 	public void TestVoteAndEditOnSession(){
-	    vec.voteOnSession(ses);
+	    vec.voteOnSession(ses, null);
 	    vec.editSession(ses);
 	}
 

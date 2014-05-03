@@ -52,7 +52,7 @@ public class VotingOverviewTableTest {
 
         final PlanningPokerSession session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
                         listEst, SessionType.REALTIME, false, false, "aGuy", "-None-");    
-        final VotingOverviewPanel vop = new VotingOverviewPanel(listEst, 1, "admin", new VotingPanel(session1),  session1);
+        final VotingOverviewPanel vop = new VotingOverviewPanel(listEst, 1, "admin", new VotingPanel(session1, null),  session1);
 
         VOT = new VotingOverviewTable(votm, vop);
     }

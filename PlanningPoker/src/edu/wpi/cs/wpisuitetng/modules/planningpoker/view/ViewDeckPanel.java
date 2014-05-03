@@ -50,7 +50,7 @@ public class ViewDeckPanel extends JPanel {
 		
 		// TODO: When more decks are added, make this more robust.
 		// Assume Fibonacci deck for now
-		final int[] cardValues = DeckSet.getInstance().getDeck("Default"); 
+		final int[] cardValues = DeckSet.getInstance().getDeck("Default").getCards(); 
 		
 		//Load card images
 		initializeMap(cardValues);
