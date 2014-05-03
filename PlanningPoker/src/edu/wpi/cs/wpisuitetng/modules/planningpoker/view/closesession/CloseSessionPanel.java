@@ -129,18 +129,21 @@ public class CloseSessionPanel extends JPanel {
         c.fill = GridBagConstraints.BOTH;
         add(description, c);
 
+
+        submitButtons = new FinalEstimateButtonPanel(this);
+        c.gridx = 1;
+        c.gridy = 2;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.weightx = 0.3;
+        c.weighty = 0.0;
+        c.fill = GridBagConstraints.VERTICAL;
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        add(submitButtons, c);
+        submitButtons.setVisible(true);
         final String username = ConfigManager.getConfig().getUserName();
-        if (session.getModerator().equals(username)) {
-            submitButtons = new FinalEstimateButtonPanel(this);
-            c.gridx = 1;
-            c.gridy = 2;
-            c.gridwidth = 1;
-            c.gridheight = 1;
-            c.weightx = 0.3;
-            c.weighty = 0.0;
-            c.fill = GridBagConstraints.VERTICAL;
-            c.anchor = GridBagConstraints.LAST_LINE_END;
-            add(submitButtons, c);
+        if (!session.getModerator().equals(username)) {
+            submitButtons.setVisible(false);
         }
     }
 
@@ -255,7 +258,7 @@ public class CloseSessionPanel extends JPanel {
     public void checkSameVote() {
         if (submitButtons.validateSpinner()
                         && Integer.parseInt(submitButtons.getEstimateField().getText()) == currentRequirement
-                                        .getFinalEstimate()) {
+                        .getFinalEstimate()) {
             submitButtons.getButton().setEnabled(false);
         }
 
