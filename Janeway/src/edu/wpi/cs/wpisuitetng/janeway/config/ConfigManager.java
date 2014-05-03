@@ -85,7 +85,8 @@ public class ConfigManager {
 			fin.close();
 		}
 		catch (FileNotFoundException e) {
-			// there is no config file, use the default one
+			e.printStackTrace();
+		    // there is no config file, use the default one
 		}
 		catch (ClassNotFoundException e) {
 			e.printStackTrace();
