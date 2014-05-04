@@ -143,6 +143,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         SMSSubmitButton = new JButton("Submit");
         SMSSubmitButton.setEnabled(false);
         SMSTestButton = new JButton("Test");
+        SMSTestButton.setToolTipText("Sends a test SMS message to the number entered.");
         SMSTestButton.setEnabled(false);
 
         // Button for canceling an email address
