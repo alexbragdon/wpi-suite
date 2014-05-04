@@ -310,9 +310,6 @@ public class VotingPanel extends JPanel {
 		EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
 
 		buttons.setFieldsEnabled(false);
-		if (this.hasDeck) {
-			cards.disableEditing(true);
-		}
 
 		// Find the next row to select
 		final int row = overview.getTable().getSelectedRow();
