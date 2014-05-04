@@ -9,6 +9,7 @@
  * Contributors:
  *    Team Romulus
  *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
 import java.awt.BorderLayout;
@@ -51,40 +52,60 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 @SuppressWarnings("serial")
 public class EmailButtonPanel extends ToolbarGroupView {
-    private final JButton emailButton = new JButton(
-                    "<html>Email<br />Settings</html>");
+    private final JButton emailButton = new JButton("<html>Email<br />Settings</html>");
+
     private final ScrollablePanel emailScrollPanel = new ScrollablePanel();
+
     private final ScrollablePanel emailPanel = new ScrollablePanel();
+
     private final JPanel emailButtonPanel = new JPanel();
+
     private final JPanel emailTopPanel = new JPanel();
+
     private final JTextField emailField;
+
     private final JButton emailSubmitButton;
+
     private final JButton emailCancelButton;
+
     private final JButton emailTestButton;
+
     private final JLabel emailInfoLabel;
+
     private final JCheckBox emailCheckBox;
+
     private User displayUser;
 
-    private final JButton SMSButton = new JButton(
-                    "<html>SMS<br />Settings</html>");
+    private final JButton SMSButton = new JButton("<html>SMS<br />Settings</html>");
+
     private final ScrollablePanel SMSPanel = new ScrollablePanel();
+
     private final JPanel SMSButtonPanel = new JPanel();
+
     private final JPanel SMSTopPanel = new JPanel();
+
     private final JTextField SMSField;
+
     private final JButton SMSSubmitButton;
+
     private final JButton SMSCancelButton;
+
     private final JButton SMSTestButton;
+
     private final JLabel SMSInfoLabel;
+
     private final JCheckBox SMSCheckBox;
-    private String[] carriers = { "AT&T", "T-Mobile", "Verizon","Sprint"};
+
+    private String[] carriers = { "AT&T", "T-Mobile", "Verizon", "Sprint" };
+
     private final JComboBox<String> CarrierChooser = new JComboBox<String>(carriers);
 
-    private final JButton helpButton = new JButton(
-                    "<html>Help</html>");
+    private final JButton helpButton = new JButton("<html>Help</html>");
+
     /**
      * 
      * Constructor for EmailButtonPanel
-     *
+     * 
      * @param parent Where this panel goes
      */
     public EmailButtonPanel(final MainView parent) {
@@ -158,7 +179,6 @@ public class EmailButtonPanel extends ToolbarGroupView {
         SMSButtonPanel.add(SMSCancelButton);
         SMSButtonPanel.add(SMSTestButton);
 
-
         emailScrollPanel.setLayout(new MigLayout("insets 0 13 0 0"));
         emailScrollPanel.add(SMSButton);
         emailScrollPanel.add(emailButton);
@@ -167,9 +187,8 @@ public class EmailButtonPanel extends ToolbarGroupView {
         emailPanel.setLayout(new MigLayout("insets 0 10 0 10"));
         SMSPanel.setLayout(new MigLayout("insets 0 10 0 10"));
 
-
         emailTopPanel.add(new JLabel("Email:  "));
-        emailTopPanel.add(emailField,"wrap");
+        emailTopPanel.add(emailField, "wrap");
         emailTopPanel.setLayout(new MigLayout("insets 0 5 0 0"));
         emailTopPanel.setOpaque(false);
         emailPanel.add(emailTopPanel, "wrap");
@@ -187,15 +206,13 @@ public class EmailButtonPanel extends ToolbarGroupView {
         SMSPanel.add(SMSInfoLabel, "height 20px,wrap");
         SMSPanel.add(SMSButtonPanel, "height 18px");
 
-
-
         SMSButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 canValidateSMS();
-                if(displayUser == null){
-                    new GetAllUsersController().requestAllUsers(EmailButtonPanel.this, 
-                                    ConfigManager.getConfig().getUserName()); 
+                if (displayUser == null) {
+                    new GetAllUsersController().requestAllUsers(EmailButtonPanel.this,
+                                    ConfigManager.getConfig().getUserName());
                     switchToEditSMS();
 
                 } else {
@@ -214,10 +231,10 @@ public class EmailButtonPanel extends ToolbarGroupView {
         emailButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(displayUser == null){
-                    new GetAllUsersController().requestAllUsers(EmailButtonPanel.this, 
-                                    ConfigManager.getConfig().getUserName()); 
-                } else{
+                if (displayUser == null) {
+                    new GetAllUsersController().requestAllUsers(EmailButtonPanel.this,
+                                    ConfigManager.getConfig().getUserName());
+                } else {
                     switchToEdit();
                 }
             }
@@ -259,7 +276,6 @@ public class EmailButtonPanel extends ToolbarGroupView {
             }
         });
 
-
         emailCancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -270,7 +286,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
             }
         });
 
-        SMSTestButton.addActionListener(new ActionListener(){
+        SMSTestButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (canValidateSMS()) {
@@ -279,7 +295,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
                     tmpuser.setPhoneNumber(SMSField.getText().replaceAll("[^\\d]", ""));
 
                     Request request = Network.getInstance().makeRequest(
-                                    "Advanced/planningpoker/notify/test", HttpMethod.POST);               
+                                    "Advanced/planningpoker/notify/test", HttpMethod.POST);
                     request.setBody(tmpuser.toJSON());
                     request.send();
                 } else {
@@ -289,8 +305,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
 
         });
 
-
-        emailTestButton.addActionListener(new ActionListener(){
+        emailTestButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -320,8 +335,6 @@ public class EmailButtonPanel extends ToolbarGroupView {
             }
         });
 
-
-
         emailField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent e) {}
@@ -337,7 +350,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
             }
         });
 
-        emailCheckBox.addActionListener(new ActionListener(){
+        emailCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
                 emailSubmitButton.setEnabled(canValidateEmail());
@@ -365,16 +378,16 @@ public class EmailButtonPanel extends ToolbarGroupView {
     /**
      * 
      * Set Email Address for a given user
-     *
+     * 
      * @param u User to set email address for
      */
-    public void setEmailAddress(User u){
+    public void setEmailAddress(User u) {
         u.setEmail(emailField.getText());
         u.setHasNotificationsEnabled(emailCheckBox.isSelected());
         EditUserController.getInstance().setEmail(u);
     }
 
-    public void setSMSSettings(User u){
+    public void setSMSSettings(User u) {
         u.setCarrier((String) CarrierChooser.getSelectedItem());
         u.setSmsEnabled(SMSCheckBox.isSelected());
         u.setPhoneNumber(SMSField.getText().replaceAll("[^\\d]", ""));
@@ -385,7 +398,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
     /**
      * 
      * Checks if email is valid
-     *
+     * 
      * @return True if email is valid
      */
     public boolean canValidateEmail() {
@@ -406,15 +419,14 @@ public class EmailButtonPanel extends ToolbarGroupView {
             valid = true;
         }
 
-        if (!emailField.getText().equals(displayUser.getEmail())){
+        if (!emailField.getText().equals(displayUser.getEmail())) {
             changes = true;
-        } else if (emailCheckBox.isSelected() != displayUser.getHasNotificationsEnabled()){
+        } else if (emailCheckBox.isSelected() != displayUser.getHasNotificationsEnabled()) {
             changes = true;
         }
 
         return valid && changes;
     }
-
 
     public boolean canValidateSMS() {
         boolean valid = false;
@@ -435,11 +447,11 @@ public class EmailButtonPanel extends ToolbarGroupView {
         return valid;
     }
 
-    public boolean containTenDigit(String string){
+    public boolean containTenDigit(String string) {
         int count = 0;
-        for(int i = 0; i < string.length(); i ++){
-            if(isInteger(string.charAt(i))){
-                count ++;
+        for (int i = 0; i < string.length(); i++) {
+            if (isInteger(string.charAt(i))) {
+                count++;
             }
         }
 
@@ -456,7 +468,6 @@ public class EmailButtonPanel extends ToolbarGroupView {
         return false;
     }
 
-
     /**
      * @param user
      */
@@ -467,9 +478,9 @@ public class EmailButtonPanel extends ToolbarGroupView {
     /**
      * 
      * Change Panel mode to Edit
-     *
+     * 
      */
-    public void switchToEdit(){
+    public void switchToEdit() {
         emailField.setText(displayUser.getEmail());
         emailScrollPanel.setVisible(false);
         emailPanel.setVisible(true);
