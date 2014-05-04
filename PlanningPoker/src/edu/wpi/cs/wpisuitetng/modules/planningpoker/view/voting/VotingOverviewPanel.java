@@ -168,7 +168,7 @@ public class VotingOverviewPanel extends JPanel {
         overallProgress.setValue((int) (fraction.getValue() * 1000));
         overallProgress.setForeground(ProgressBarTableCellRenderer.getColor(fraction));
         overallProgress.setString("Personal voting progress: "
-                        + concat(fraction.getValue() * 100, 3) + "%");
+                        + (int) (fraction.getValue() * 100)+ "%");
         if (((double) votes / requirements.size()) <= 1.01
                         && ((double) votes / requirements.size()) >= 0.99) {
             overallProgress.setForeground(new Color(102, 204, 102));
