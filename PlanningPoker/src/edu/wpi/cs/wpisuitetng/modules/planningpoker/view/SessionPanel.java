@@ -318,7 +318,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
 		deckChooser = new JComboBox<String>(decks.getNames());
 		deckChooser.setSelectedItem(selectedDeck); // default to the "-None-"
-													// deck
+		// deck
 		chosenSequence = new JLabel(decks.deckToString(selectedDeck));
 
 		buttonPanel = new SessionButtonPanel(this, viewMode, displaySession);
@@ -351,7 +351,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 						currentHour = 0;
 						calendar.set(Calendar.MONTH, 3);
 						calendar.set(Calendar.DAY_OF_MONTH, 1); // Next day is
-																// MAR 1st
+						// MAR 1st
 					}
 				} else {// Not last day
 					if (currentHour >= 24) {
@@ -365,7 +365,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 						currentHour = 0;
 						calendar.set(Calendar.MONTH, 3);
 						calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is
-																// MAR 1st
+						// MAR 1st
 					}
 				} else {// Not last day
 					if (currentHour >= 24) {
@@ -379,12 +379,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				if (currentHour >= 24) {
 					currentHour = 0;
 					calendar.set(Calendar.YEAR, currentYear + 1 + 1900);// To
-																		// the
-																		// next
-																		// year
+					// the
+					// next
+					// year
 					calendar.set(Calendar.MONTH, 1);
 					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is JAN
-															// 1st
+					// 1st
 				}
 			} else {
 				if (currentHour >= 24) {
@@ -398,8 +398,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				if (currentHour >= 24) {
 					currentHour = 0;
 					calendar.set(Calendar.MONTH, currentMonth + 1);// To the
-																	// next
-																	// month
+					// next
+					// month
 					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is 1st
 				}
 			} else {
@@ -413,8 +413,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				if (currentHour >= 24) {
 					currentHour = 0;
 					calendar.set(Calendar.MONTH, currentMonth + 1);// To the
-																	// next
-																	// month
+					// next
+					// month
 					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is 1st
 				}
 			} else {
@@ -427,7 +427,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
 		dt = calendar.getTime();
 		dateChooser = new JCalendar(dt); // Create new JCalendar with now
-											// default selected
+		// default selected
 
 		hourSpin = new JSpinner(new SpinnerNumberModel(currentHour, 0, 23, 1));
 		final JFormattedTextField hourf = ((JSpinner.NumberEditor) hourSpin
@@ -656,7 +656,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			}
 
 			// For newly created decks
-			else if (!decksInDatabase.containsKey(d.getName())) {
+			else if (!decksInDatabase.containsKey(d.getName())
+					&& !deckNamesInComboBox.contains(d.getName())) {
 				decksInDatabase.put(d.getName(), d);
 				deckChooser.addItem(d.getName());
 				repaint();
