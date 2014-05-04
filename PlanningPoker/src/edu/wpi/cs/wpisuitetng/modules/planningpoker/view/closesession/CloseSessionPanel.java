@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -165,10 +166,15 @@ public class CloseSessionPanel extends JPanel {
 			rightPanel.setPreferredSize(new Dimension(200,100));
 			rightPanel.setMinimumSize(new Dimension(200,100));
 			
+			final JLabel infoLabel = new JLabel("");
+			infoLabel.setForeground(new Color(102, 204, 102));
+			
 			leftPanel.add(description, BorderLayout.CENTER);
 			leftPanel.add(submitButtons, BorderLayout.EAST);
 			
-			rightPanel.add(exportButton);
+			rightPanel.add(exportButton,"wrap");
+			rightPanel.add(infoLabel);
+			exportButton.setEnabled(!session.getRequirements().get(0).isExported());
 			
 	        c3.gridx = 0;
 	        c3.gridy = 0;
@@ -191,6 +197,8 @@ public class CloseSessionPanel extends JPanel {
 	        exportButton.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
 	                exportPressed();
+	                exportButton.setEnabled(false);
+	                infoLabel.setText("Requirements exported.");
 	            }
 	        });
 			
