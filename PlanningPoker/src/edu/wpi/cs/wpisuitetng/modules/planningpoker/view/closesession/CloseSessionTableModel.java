@@ -23,7 +23,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.Fraction;
 public class CloseSessionTableModel extends AbstractTableModel {
     private final PlanningPokerSession session;
     private final boolean isEditable;
-    private final String[] columns = { "Requirement Name", "Type", "Team Progress", "Mean", "Median", "Final Estimate" };
+    private final String[] columns = { "Requirement Name", "Type", "Team Progress", "Mean", "Median", "Final Estimate", "Exported" };
 
     /**
      * Creates a new table model for the given session.
@@ -34,7 +34,6 @@ public class CloseSessionTableModel extends AbstractTableModel {
     public CloseSessionTableModel(PlanningPokerSession session, boolean isEditable) {
         this.session = session;
         this.isEditable = isEditable;
-        
     }
 
     /*
@@ -74,6 +73,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
             case 3: return Double.class;
             case 4: return Double.class;
             case 5: return Integer.class;
+            case 6: return String.class;
             default: 
                 // $codepro.audit.disable thrownExceptions
                 throw new RuntimeException("Invalid column index"); 
@@ -109,6 +109,9 @@ public class CloseSessionTableModel extends AbstractTableModel {
                 return session.getRequirements().get(row).calculateMedian();
             case 5:
                 return session.getRequirements().get(row).getFinalEstimate();
+            case 6:
+//            	return session.getRequirements().get(row).isExported();
+            	return session.getRequirements().get(row).isExported() ? "      \u2713" : "";
             default:
                 // $codepro.audit.disable thrownExceptions
                 throw new RuntimeException("Invalid column"); 

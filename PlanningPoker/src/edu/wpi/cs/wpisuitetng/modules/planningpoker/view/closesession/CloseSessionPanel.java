@@ -81,6 +81,8 @@ public class CloseSessionPanel extends JPanel {
         this.isEditable = isEditable;
         table = new JTable(new CloseSessionTableModel(session, isEditable));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.getColumnModel().getColumn(6).setMinWidth(60);
+        table.getColumnModel().getColumn(6).setMaxWidth(60);
         buildLayout();
         updateSelectedRequirement(getSelectedRequirement());
 
