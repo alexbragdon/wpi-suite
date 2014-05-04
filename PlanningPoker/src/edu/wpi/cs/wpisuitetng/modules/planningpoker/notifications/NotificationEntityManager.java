@@ -23,11 +23,13 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email.EmailSender;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email.EmailTestTemplate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email.SessionClosedEmailTemplate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email.SessionOpenedEmailTemplate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.sms.SessionClosedSmsTemplate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.sms.SessionOpenedSmsTemplate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.sms.SmsSender;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.sms.SmsTestTemplate;
 
 // $codepro.audit.disable lineLength
 
@@ -78,7 +80,8 @@ public class NotificationEntityManager implements EntityManager<AbstractModel> {
 
     public String advancedPostWithUri(Session s, String string, String content, String url) throws NotFoundException {
         final String type = string.toLowerCase(Locale.US);
-        final PlanningPokerSession session = PlanningPokerSession.fromJson(content);
+        final PlanningPokerSession session;
+        final User testUser;
         final Matcher matcher = Pattern.compile("[\\w]+://[\\w\\d\\.:-]+/WPISuite/").matcher(url);
         matcher.find();
         final String host = matcher.group();
@@ -86,13 +89,20 @@ public class NotificationEntityManager implements EntityManager<AbstractModel> {
 
         switch (type) {
             case "open":
+                session = PlanningPokerSession.fromJson(content);
                 senders.add(new EmailSender(new SessionOpenedEmailTemplate(session, s.getProject().getName(), host)));
                 senders.add(new SmsSender(new SessionOpenedSmsTemplate(session)));
                 break;
             case "close":
+                session = PlanningPokerSession.fromJson(content);
                 senders.add(new EmailSender(new SessionClosedEmailTemplate(session)));
                 senders.add(new SmsSender(new SessionClosedSmsTemplate(session)));
                 break;
+            case "test":
+                testUser = User.fromJSON(content);
+                INotificationSender sender = new SmsSender(new SmsTestTemplate(testUser));
+                sender.send(testUser);
+                return "success";
             default:
                 throw new NotFoundException("There is no " + string + " notification.");
         }
@@ -106,7 +116,7 @@ public class NotificationEntityManager implements EntityManager<AbstractModel> {
 
         return "success";
     }
-    
+
     /*
      * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPut(edu.wpi.cs.wpisuitetng.Session, java.lang.String[], java.lang.String)
      */
