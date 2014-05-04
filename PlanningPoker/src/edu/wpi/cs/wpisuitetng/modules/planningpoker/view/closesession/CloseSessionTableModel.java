@@ -9,7 +9,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
-import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
@@ -86,7 +85,7 @@ public class CloseSessionTableModel extends AbstractTableModel {
      */
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return isEditable && columnIndex == 5;
+        return false;
     }
 
     /*

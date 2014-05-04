@@ -40,8 +40,8 @@ public class VotingPanelTest {
         final List<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
         listEst.add(testReq);
         final PlanningPokerSession session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
-                        listEst, SessionType.DISTRIBUTED, false, false, "aGuy", "deck");    
-        vp = new VotingPanel(session1);
+                        listEst, SessionType.DISTRIBUTED, false, false, "aGuy", "-None-");    
+        vp = new VotingPanel(session1, null);
     }
 
     @Test

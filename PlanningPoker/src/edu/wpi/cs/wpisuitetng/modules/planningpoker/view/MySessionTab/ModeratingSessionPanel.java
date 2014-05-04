@@ -52,7 +52,9 @@ public class ModeratingSessionPanel extends JPanel {
         table.getColumnModel().getColumn(1).setMinWidth(50);
         table.getColumnModel().getColumn(1).setPreferredWidth(200);
         table.getColumnModel().getColumn(2).setMinWidth(70);
-        table.getColumnModel().getColumn(3).setMinWidth(70);
+        table.getColumnModel().getColumn(2).setPreferredWidth(140);
+        table.getColumnModel().getColumn(3).setMinWidth(40);
+        table.getColumnModel().getColumn(3).setPreferredWidth(40);        
         table.setRowSorter(null);
 
         this.setLayout(new BorderLayout());
@@ -89,6 +91,9 @@ public class ModeratingSessionPanel extends JPanel {
                                     .Update(0, isActive);
                     parentView.getToolbarView().GetCloseButtonPanel().getCloseButton()
                                     .Update(0, isActive);
+                } else {
+                	parentView.getToolbarView().GetCloseButtonPanel().getCloseButton().setVisible(false);
+                	parentView.getToolbarView().GetSuperButtonPanel().getSuperButton().setVisible(false);
                 }
             }
         });

@@ -13,7 +13,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSelectionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * Description
@@ -26,8 +28,8 @@ public class CardPanelTest {
     
     @Before
     public void setUp(){
-        final RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
-        CP = new CardPanel("-NULL-", testReq, false);
+        final RequirementEstimate testReq = new RequirementEstimate(new Requirement());
+        CP = new CardPanel( new int[]{0, 1, 1, 2, 3, 5, 8, 13, 21}, testReq, false, DeckSelectionType.MULTI);
     }
     
     @Test

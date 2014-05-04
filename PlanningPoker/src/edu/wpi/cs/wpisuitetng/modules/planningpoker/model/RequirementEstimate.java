@@ -17,11 +17,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JOptionPane;
-
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementPriority;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementType;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.TransactionHistory;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
  * A RequirementEstimate represents the estimates associated with one requirement.
@@ -231,21 +233,39 @@ public class RequirementEstimate {
     }
     
     public boolean isEqual(Requirement r) {
-        /*
         if (this.id != r.getId()) {
             return false;
         }
-        */
         if (!this.name.equals(r.getName())) {
             return false;
         }
-        /*
         if (this.type != r.getType()) {
             return false;
         }
         if (this.priority != r.getPriority()) {
             return false;
-        }*/
+        }
         return true;
+    }
+    
+    /**
+     *   
+     * Updates the estimate feild in the requirement in the DB, along with a note
+     * Uses the finalEstimate field here and goes to accociated requirement
+     *
+     */
+    public void exportToRequirementManager() {
+        if (!isExported) {
+            isExported = true;
+            Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.POST); // POST == update
+            Requirement newRequirement = new Requirement(this.id, this.name, this.description);
+            String message = ("Estimated updated from Planning Poker Game"); // TODO: Add name of game to Transaction History Message
+            TransactionHistory requirementHistory = newRequirement.getHistory();
+            requirementHistory.add(message);
+            newRequirement.setHistory(requirementHistory);        
+            newRequirement.setEstimate(this.finalEstimate);
+            request.setBody(newRequirement.toJSON()); // put the new requirement in the body of the request
+            request.send(); 
+        }
     }
 }

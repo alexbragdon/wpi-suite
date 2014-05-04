@@ -115,7 +115,8 @@ public class Janeway {
 			inFile.close();
 		}
 		catch (FileNotFoundException fe) {
-			System.out.println("Could not find module config file!");
+			fe.printStackTrace();
+		    System.out.println("Could not find module config file!");
 			System.exit(1);
 		}
 		catch (IOException e) {

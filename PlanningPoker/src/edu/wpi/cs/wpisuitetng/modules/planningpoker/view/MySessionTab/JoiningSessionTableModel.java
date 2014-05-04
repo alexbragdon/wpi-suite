@@ -15,7 +15,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;

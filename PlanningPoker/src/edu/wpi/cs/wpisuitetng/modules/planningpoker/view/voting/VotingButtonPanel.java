@@ -31,7 +31,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import net.miginfocom.swing.MigLayout;
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewMode;
 
 /**
@@ -92,7 +91,6 @@ public class VotingButtonPanel extends JPanel{
 	}
 	
 	private void buildLayoutWithoutDeck() {
-		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("Enter estimate  ");
 		final JLabel blankLabel = new JLabel("            ");
 		estimateField = new JTextField("0");
@@ -198,7 +196,6 @@ public class VotingButtonPanel extends JPanel{
 	}
 
 	private void buildLayoutWithDeck() {
-		// TODO Auto-generated method stub
 		final JLabel infoLabel = new JLabel("Total selected");
 		estimateLabel = new JLabel("--");
 		clearButton = new JButton("<html>Clear<br />Selection</html>");
@@ -223,6 +220,8 @@ public class VotingButtonPanel extends JPanel{
 			public void actionPerformed(ActionEvent m) {
 				cards.clearCardSelection();
 				clearButton.setEnabled(false);
+				voteButton.setEnabled(false);
+				estimateLabel.setText("--");
 			}
 		});
 
@@ -234,7 +233,7 @@ public class VotingButtonPanel extends JPanel{
 				}
 
 				else{
-					voteButton.setEnabled(true);
+					//voteButton.setEnabled(true);
 				}
 			}
 		};
@@ -249,6 +248,7 @@ public class VotingButtonPanel extends JPanel{
 		add(votePanel,"span 1 2,wrap");
 		add(estimateLabel);
 		
+		voteButton.setEnabled(false);
 	}
 
 	/**
@@ -343,7 +343,6 @@ public class VotingButtonPanel extends JPanel{
 		try { 
 			Integer.parseInt(s); 
 		} catch(NumberFormatException e) { 
-		    e.printStackTrace();
 			return false; 
 		}
 		// only got here if we didn't return false
@@ -367,5 +366,9 @@ public class VotingButtonPanel extends JPanel{
 	
 	public JButton getDontKnowButton() {
 		return dontKnowButton;
+	}
+	
+	public VotingPanel getVoting() {
+		return parentPanel;
 	}
 }

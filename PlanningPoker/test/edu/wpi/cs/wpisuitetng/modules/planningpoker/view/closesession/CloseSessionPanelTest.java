@@ -7,7 +7,7 @@
  * 
  * Contributors: Team Romulus
  ******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession;
 
 import static org.junit.Assert.*;
 
@@ -18,6 +18,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionButtonsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.closesession.CloseSessionTableModel;

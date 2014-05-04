@@ -26,6 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.TransactionHistory;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.Iteration;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.IterationModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.export.ExportRequirement;
 
 /**
  * Basic Requirement class that contains the data to be stored for a Requirement
@@ -185,6 +186,32 @@ public class Requirement extends AbstractModel {
 		return parser.fromJson(json, Requirement.class);
 	}
 
+	/**
+	 * Constructs a Requirement from a ExportRequirement.
+	 *
+	 * @param requirement the ExportRequirement to import from
+	 */
+	public Requirement(ExportRequirement requirement) {
+        name = requirement.getName();
+        description = requirement.getDescription();
+        notes = requirement.getNotes();
+        history = requirement.getTransactions();
+        tests = requirement.getTests();
+        type = requirement.getType();
+        
+        status = RequirementStatus.NEW;
+        iteration = "Backlog";
+        release = "";
+        estimate = actualEffort = 0;
+        priority = RequirementPriority.BLANK;
+        
+        this.parentID = -1;
+        tasks = new ArrayList<DevelopmentTask>();
+        attachments = new ArrayList<Attachment>();
+        
+        history.add("Requirement imported");
+	}
+	
 	/**
 	 * /**Getter for the id
 	 * 
@@ -356,7 +383,7 @@ public class Requirement extends AbstractModel {
 			int originalEstimate = this.estimate;
 			int newEstimate = estimate;
 			String message = ("Estimate changed from '" + originalEstimate + "' to '" + newEstimate + "'");
-			this.history.add(message);
+            this.history.add(message);
 			this.setEstimateEdited(true);
 		}	
 		

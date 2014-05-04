@@ -13,7 +13,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab;
 import java.awt.GridLayout;
 import java.util.Date;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -23,6 +22,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetPlanningPokerS
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -403,6 +403,10 @@ public class MySessionPanel extends JPanel {
      */
     public PlanningPokerSession[] getSessions() {
         return sessions;
+    }
+    
+    public ToolbarView getToolbar() {
+    	return parentView.getToolbarView();
     }
 
 }

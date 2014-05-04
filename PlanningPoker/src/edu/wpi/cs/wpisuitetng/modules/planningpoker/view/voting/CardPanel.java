@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Card;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSelectionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.UserEstimate;
 
@@ -51,13 +52,15 @@ public class CardPanel extends JPanel {
 	private List<Card> cards = new ArrayList<Card>();
 
 	private boolean zeroSelected = false;
+	
+	private DeckSelectionType deckSelectionType;
 
-	public CardPanel(String deckName, RequirementEstimate r, boolean isEditable){
+	public CardPanel(int[] deckList, RequirementEstimate r, boolean isEditable, DeckSelectionType deckSelectionType){
 		this.selectedCardsIndices = new ArrayList<Integer>();
+		this.deckSelectionType = deckSelectionType;
 		this.setLayout(new BorderLayout());
-
-		// TODO: Create decks in the database
-		viewDeck = new int[]{0, 1, 1, 2, 3, 5, 8, 13, 21};
+		
+		viewDeck = deckList;
 
 		// Set up panel and layout
 		JPanel cardsPanel = new JPanel();
@@ -234,5 +237,16 @@ public class CardPanel extends JPanel {
 				card.disableSelection();
 			} else {card.enableSelection();}
 		}
+	}
+	
+	public VotingButtonPanel getButtons() {
+		return buttons;
+	}
+	
+	/**
+	 * @return the deckSelectionType
+	 */
+	public DeckSelectionType getDeckSelectionType() {
+		return deckSelectionType;
 	}
 }
