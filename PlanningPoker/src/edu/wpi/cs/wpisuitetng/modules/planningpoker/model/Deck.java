@@ -169,16 +169,24 @@ public class Deck extends AbstractModel {
 		String cardsString = "";
 
 		int cardCount = 0;
+		int length = 0;
+		final StringBuilder sb = new StringBuilder();
 		for(int i : cards){
 			cardCount++;
-			
-			if(cardCount == cards.length){
-				cardsString += Integer.toString(i);
-			} else{
-				cardsString += Integer.toString(i) + ", ";
+			sb.append(i);
+			sb.append(", ");
+			if(i % 10 >= 1){
+				length += 4;
+			}else{
+				length += 3;
+			}
+			if(length >= 23){
+				sb.setLength(sb.length() - 2); //Trim off last ", "
+				sb.append("....");
+				break;
 			}
 		}
 
-		return cardsString;
+		return sb.toString();
 	}
 }

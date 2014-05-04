@@ -308,6 +308,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         
         deckChooser.setSelectedItem(selectedDeck); //default to the "-None-" deck
         chosenSequence = new JLabel(decks.deckToString(selectedDeck));
+        chosenSequence.setFont(new Font("Courier New", Font.BOLD, 12));
 
         buttonPanel = new SessionButtonPanel(this, viewMode, displaySession);
         requirementsPanel = new SessionRequirementPanel(this, viewMode, displaySession);
