@@ -337,13 +337,13 @@ public class EmailButtonPanel extends ToolbarGroupView {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 SMSSubmitButton.setEnabled(canValidateSMS());
-                SMSTestButton.setEnabled(canValidateSMS());
+                SMSTestButton.setEnabled(canValidateSMSWithoutChange());
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
                 SMSSubmitButton.setEnabled(canValidateSMS());
-                SMSTestButton.setEnabled(canValidateSMS());
+                SMSTestButton.setEnabled(canValidateSMSWithoutChange());
             }
         });
 
@@ -408,6 +408,12 @@ public class EmailButtonPanel extends ToolbarGroupView {
         EditUserController.getInstance().setEmail(u);
     }
 
+    /**
+     * 
+     * Set SMS Address for a given user
+     * 
+     * @param u User to set SMS address for
+     */
     public void setSMSSettings(User u) {
         u.setCarrier((String) CarrierChooser.getSelectedItem());
         u.setSmsEnabled(SMSCheckBox.isSelected());
@@ -449,6 +455,12 @@ public class EmailButtonPanel extends ToolbarGroupView {
         return valid && changes;
     }
 
+    /**
+     * 
+     * Checks if SMS is valid
+     * 
+     * @return True if SMS is valid
+     */
     public boolean canValidateSMS() {
         boolean valid = false;
 
@@ -477,7 +489,38 @@ public class EmailButtonPanel extends ToolbarGroupView {
         }
         return valid && changes;
     }
+    
+    /**
+     * 
+     * Checks if SMS is valid without considering the changes.
+     * 
+     * @return True if SMS is valid
+     */
+    public boolean canValidateSMSWithoutChange() {
+        boolean valid = false;
 
+        if (SMSField.getText().length() == 0) {
+            SMSInfoLabel.setText("*Please enter your phone number");
+            valid = false;
+        } else if (SMSField.getText().length() > 0 && SMSField.getText().charAt(0) == ' ') {
+            SMSInfoLabel.setText("*Phone number cannot start with space");
+            valid = false;
+        } else if (!containTenDigit(SMSField.getText())) {
+            SMSInfoLabel.setText("*Invalid phone number length");
+            valid = false;
+        } else {
+            SMSInfoLabel.setText("");
+            valid = true;
+        }
+        return valid;
+    }
+
+    /**
+     * 
+     * Checks if SMS field contains 10 digits
+     * 
+     * @return True SMS field contains 10 digits
+     */
     public boolean containTenDigit(String string) {
         int count = 0;
         for (int i = 0; i < string.length(); i++) {
@@ -489,6 +532,12 @@ public class EmailButtonPanel extends ToolbarGroupView {
         return count == 10;
     }
 
+    /**
+     * 
+     * Checks if the input string is a integer
+     * 
+     * @return True if the input string is a integer
+     */
     private boolean isInteger(char s) {
         String numbers = "0123456789";
         for (int i = 0; i < numbers.length(); i++) {
@@ -525,6 +574,11 @@ public class EmailButtonPanel extends ToolbarGroupView {
         emailSubmitButton.setEnabled(canValidateEmail());
     }
 
+    /**
+     * 
+     * Change Panel mode to Edit
+     * 
+     */
     public void switchToEditSMS() {
 
         CarrierChooser.setSelectedItem(displayUser.getCarrier());
