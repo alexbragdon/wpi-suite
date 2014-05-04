@@ -205,6 +205,7 @@ public class CloseSessionPanel extends JPanel {
 	        buttomPanel.add(rightPanel, c3);
 	        
 	        add(buttomPanel, c);
+	        exportButton.setToolTipText("Send these estimates to the Requirement Manager");
 	        
 	        exportButton.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {
