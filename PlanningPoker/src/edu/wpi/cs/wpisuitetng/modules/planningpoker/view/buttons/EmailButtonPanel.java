@@ -18,6 +18,8 @@ import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -182,12 +184,23 @@ public class EmailButtonPanel extends ToolbarGroupView {
 		SMSPanel.add(SMSInfoLabel, "height 20px,wrap");
 		SMSPanel.add(SMSButtonPanel, "height 18px");
 		
-		
+		CarrierChooser.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent event) {
+				Object item = event.getItem();
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					if (!item.toString().equals(displayUser.getCarrier())
+							&& canValidateSMS()) {
+						SMSSubmitButton.setEnabled(true);
+					} else {
+						SMSSubmitButton.setEnabled(false);
+					}
+				}
+			}
+		});
 		
 		SMSButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	canValidateSMS();
                 if(displayUser == null){
                     new GetAllUsersController().requestAllUsers(EmailButtonPanel.this, 
                                     ConfigManager.getConfig().getUserName()); 
@@ -312,6 +325,13 @@ public class EmailButtonPanel extends ToolbarGroupView {
                 emailSubmitButton.setEnabled(canValidateEmail());
             }
         });
+        
+        SMSCheckBox.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                SMSSubmitButton.setEnabled(canValidateSMS());
+            }
+        });
 
         emailPanel.setOpaque(false);
         SMSPanel.setOpaque(false);
@@ -387,6 +407,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
     
     public boolean canValidateSMS() {
         boolean valid = false;
+        boolean changes = false;
         
         if (SMSField.getText().length() == 0) {
             SMSInfoLabel.setText("*Please enter your phone number");
@@ -401,7 +422,15 @@ public class EmailButtonPanel extends ToolbarGroupView {
             SMSInfoLabel.setText("");
             valid = true;
         }
-        return valid;
+        
+        if (!SMSField.getText().equals(displayUser.getPhoneNumber())){
+            changes = true;
+        } else if (SMSCheckBox.isSelected() != displayUser.hasSmsEnabled()){
+            changes = true;
+        } else if (!CarrierChooser.getSelectedItem().equals(displayUser.getCarrier())){
+        	changes = true;
+        }
+        return valid && changes;
     }
     
     public boolean containTenDigit(String string){
@@ -457,6 +486,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
     	SMSCheckBox.setSelected(displayUser.hasSmsEnabled());
     	SMSField.setText(displayUser.getPhoneNumber());
     	emailScrollPanel.setVisible(false);
+    	SMSSubmitButton.setEnabled(canValidateSMS());
         SMSPanel.setVisible(true);
     }
 }
