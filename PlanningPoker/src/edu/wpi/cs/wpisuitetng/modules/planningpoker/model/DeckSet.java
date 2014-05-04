@@ -21,7 +21,6 @@ import java.util.Map;
  * @version Iteration-3
  */
 public class DeckSet {
-
 	/**
 	 * The instance of the deck set.
 	 */
@@ -130,5 +129,13 @@ public class DeckSet {
 	
 	public void addDeck(Deck newDeck){
 		decks.put(newDeck.getName(), newDeck);
+	}
+	
+
+	/**
+	 * @return the decks
+	 */
+	public Map<String, Deck> getDecks() {
+		return decks;
 	}
 }
