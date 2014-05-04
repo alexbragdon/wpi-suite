@@ -96,7 +96,13 @@ public class CustomCardValuePanel extends JPanel {
 					parent.passCardValue(" ");
 				}
             	parent.checkCreateRemoveCard();
-				
+            	
+            	if(parent.allCardValid()){
+					parent.notifyParentValid();
+				}else{
+					parent.notifyParentInvalid();
+				}
+            	parent.checkDeletion();
 			}
 
 			@Override
