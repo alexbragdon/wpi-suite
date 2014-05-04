@@ -131,8 +131,10 @@ public class VotingPanel extends JPanel {
 			add(cards, c);
 			 */
 
-			final boolean isEditable = !session.getRequirements().get(0).getVotes()
-					.containsKey(ConfigManager.getConfig().getUserName());
+			boolean isEditable;
+			if (!session.isComplete()) {
+            	isEditable = true;
+			} else isEditable = false;
 
 			// Pass list of integers of card values in here
 			if(session.getDeck().equals("Default")){
@@ -327,9 +329,6 @@ public class VotingPanel extends JPanel {
 		EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
 
 		buttons.setFieldsEnabled(false);
-		if (this.hasDeck) {
-			cards.disableEditing(true);
-		}
 
 		// Find the next row to select
 		final int row = overview.getTable().getSelectedRow();

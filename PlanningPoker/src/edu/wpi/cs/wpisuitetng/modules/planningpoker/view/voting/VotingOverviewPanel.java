@@ -62,7 +62,7 @@ public class VotingOverviewPanel extends JPanel {
      * @param user the currently logged in user
      */
     public VotingOverviewPanel(List<RequirementEstimate> requirements, int teamCount,
-                    final String user, final VotingPanel parent, PlanningPokerSession session) {
+                    final String user, final VotingPanel parent, final PlanningPokerSession session) {
         this.requirements = requirements;
         this.session = session;
         this.user = user;
@@ -86,10 +86,7 @@ public class VotingOverviewPanel extends JPanel {
             public void valueChanged(ListSelectionEvent e) {
                 parent.updateSelectedRequirement(getSelectedRequirement());
 
-                if (getSelectedRequirement().getVotes().containsKey(user)) {
-                    //parent.getCards().disableEditing(true);
-                } else {
-                    parent.getCards().disableEditing(false);
+                if (!getSelectedRequirement().getVotes().containsKey(user)) {
                     parent.getButtonPanel().getVoteButton().setEnabled(false);
                 }
             }
