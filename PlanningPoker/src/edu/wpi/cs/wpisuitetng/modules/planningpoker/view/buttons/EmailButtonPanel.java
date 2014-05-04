@@ -29,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
@@ -68,8 +69,6 @@ public class EmailButtonPanel extends ToolbarGroupView {
     private final JButton emailSubmitButton;
 
     private final JButton emailCancelButton;
-
-    private final JButton emailTestButton;
 
     private final JLabel emailInfoLabel;
 
@@ -140,11 +139,11 @@ public class EmailButtonPanel extends ToolbarGroupView {
         // Button for submitting new email
         emailSubmitButton = new JButton("Submit");
         emailSubmitButton.setEnabled(false);
-        emailTestButton = new JButton("Test");
 
         SMSSubmitButton = new JButton("Submit");
         SMSSubmitButton.setEnabled(false);
         SMSTestButton = new JButton("Test");
+        SMSTestButton.setToolTipText("Sends a test SMS message to the number entered.");
         SMSTestButton.setEnabled(false);
 
         // Button for canceling an email address
@@ -168,7 +167,6 @@ public class EmailButtonPanel extends ToolbarGroupView {
         emailButtonPanel.add(checkPanel);
         emailButtonPanel.add(emailSubmitButton);
         emailButtonPanel.add(emailCancelButton);
-        emailButtonPanel.add(emailTestButton);
 
         SMSButtonPanel.setLayout(new MigLayout("insets 0 0 0 0"));
         JPanel SMScheckPanel = new JPanel();
@@ -327,19 +325,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
                 } else {
                     SMSInfoLabel.setText("*SMS format incorrect");
                 }
-            }
-
-        });
-
-        emailTestButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //                Request request = Network.getInstance().makeRequest(
-                //                                "Advanced/planningpoker/notify/test", HttpMethod.POST);
-                //                request.setBody(displayUser.toJSON());
-                //                request.send();
-                //                
+                JOptionPane.showMessageDialog(null, "Test message sent.");
             }
 
         });
