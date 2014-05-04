@@ -302,6 +302,9 @@ public class CloseSessionPanel extends JPanel {
         table.repaint();
     }
     
+    /**
+     * Export requirement to requirement manager.
+     */
     public void exportPressed() {
         for (RequirementEstimate re : this.session.getRequirements()) {
             if (!re.isExported() && (re.getFinalEstimate() != 0)) {
@@ -317,6 +320,9 @@ public class CloseSessionPanel extends JPanel {
         ViewEventController.getInstance().removeTab(this);
     }
 
+    /**
+     * return the session.
+     */
     public PlanningPokerSession getSession() {
         return session;
     }
