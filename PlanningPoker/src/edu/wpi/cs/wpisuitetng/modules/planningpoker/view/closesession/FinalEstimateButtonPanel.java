@@ -72,6 +72,7 @@ public class FinalEstimateButtonPanel extends JPanel {
         errorLabel.setForeground(Color.RED);
         submitButton = new JButton("Submit");
         submitButton.setEnabled(false);
+        submitButton.setToolTipText("Submit this estimate to the selected requirement");
         submitButton.setPreferredSize(new Dimension(120, 100));
         estimateField = new JTextField("--");
         estimateField.setPreferredSize(new Dimension(120, 100));
