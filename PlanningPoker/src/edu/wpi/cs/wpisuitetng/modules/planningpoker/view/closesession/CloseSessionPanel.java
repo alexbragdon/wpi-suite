@@ -16,8 +16,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -64,7 +67,7 @@ public class CloseSessionPanel extends JPanel {
     RequirementEstimate currentRequirement;
     
     private JButton exportButton = new JButton(
-            "<html>Send to<br />requirement<br />manager</html>");
+            "<html>Send to<br />requirements<br />manager</html>");
 
     /**
      * Creates a new panel to enter estimates while closing the given session.
@@ -84,6 +87,13 @@ public class CloseSessionPanel extends JPanel {
     }
 
     private void buildLayout() {
+        try {
+            ImageIcon img = new ImageIcon(ImageIO.read(getClass().getResource("send-requirements.png")));
+            exportButton.setIcon(img);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
         setLayout(new GridBagLayout());
         final GridBagConstraints c = new GridBagConstraints();
 
