@@ -8,38 +8,28 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.sms;
 
-import java.text.SimpleDateFormat;
-
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.INotificationTemplate;
 
 /**
- * Template for SMS notifications as sessions are closed.
+ * Description
  *
  * @author Team Romulus
- * @version Apr 25, 2014
+ * @version May 1, 2014
  */
-public class SessionClosedSmsTemplate implements INotificationTemplate<SmsMessage> {
-    /**
-     * The session that was closed.
-     */
-    private final PlanningPokerSession session;
-    
-    public SessionClosedSmsTemplate(PlanningPokerSession session) {
-        this.session = session;
-    }
+public class SmsTestTemplate implements INotificationTemplate<SmsMessage> {
+    private User user;
 
+    public SmsTestTemplate(User user) {
+        this.user = user;
+    }
     /*
      * @see edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.INotificationTemplate#shouldReceiveNotifications(edu.wpi.cs.wpisuitetng.modules.core.models.User)
      */
     @Override
     public boolean shouldReceiveNotifications(User user) {
-        return user.hasSmsEnabled() &&
-                    user.getPhoneNumber() != null &&
-                    !user.getPhoneNumber().equals("") &&
-                    user.getCarrier() != null &&
-                    !user.getCarrier().equals("");
+        System.out.println(this.user.equals(user));
+        return this.user.equals(user);
     }
 
     /*
@@ -47,17 +37,12 @@ public class SessionClosedSmsTemplate implements INotificationTemplate<SmsMessag
      */
     @Override
     public SmsMessage generateMessage(User user) {
-        // TODO use the actual phone number
-        StringBuilder body = new StringBuilder();
-        body.append("Planning poker game \"");
-        body.append(session.getName());
-        body.append("\", created by ");
-        body.append(session.getModerator());
-        body.append(", closed on ");
-        body.append(new SimpleDateFormat("EEEE, MMMM d 'at' HH:mm").
-                        format(session.getCompletionTime()));
-        body.append('.');
-        
+        String body = "Hello " + user.getName()+
+                        ":\nThis is the test message.\n"
+                        + "Thank your for joinning in Planning poker game."+
+                        "\n- The planning poker team";
+
         return new SmsMessage(user.getCarrier(), user.getPhoneNumber(), body.toString());
     }
+
 }

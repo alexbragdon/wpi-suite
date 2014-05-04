@@ -63,7 +63,29 @@ public class DeckSet {
 	 * @return An array of the names of the decks
 	 */
 	public String[] getNames() {
-		return decks.keySet().toArray(new String[decks.size()]);
+		String[] sorted = decks.keySet().toArray(new String[decks.size()]);
+		String tempNone;
+		String tempDef;
+		int none = 0;
+		int def = 0;
+		
+		for (int i = 0; i < sorted.length; i++) {
+			if(sorted[i].equals("-None-")){
+				none = i;
+			}
+			if(sorted[i].equals("Default")){
+				def = i;
+			}
+		}
+		
+		tempNone = sorted[0];
+		tempDef = sorted[1];
+		sorted[0] = sorted[none];
+		sorted[1] = sorted[def];
+		sorted[none] = tempNone;
+		sorted[def] = tempDef;
+		
+		return sorted;
 	}
 
 	/**
