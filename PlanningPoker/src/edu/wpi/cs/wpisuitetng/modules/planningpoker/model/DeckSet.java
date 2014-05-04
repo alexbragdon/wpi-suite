@@ -17,6 +17,7 @@ import java.util.Map;
 /**
  * The set of all decks available for use with a Planning Poker session. This
  * class is a singleton
+ * 
  * @author Romulus
  * @version Iteration-3
  */
@@ -31,8 +32,8 @@ public class DeckSet {
 	 */
 	private final Map<String, Deck> decks = new HashMap<String, Deck>();
 
-	//private final int[] empty = {};
-	//private final int[] fibonacci = {0, 1, 1, 2, 3, 5, 8, 13, 21};
+	// private final int[] empty = {};
+	// private final int[] fibonacci = {0, 1, 1, 2, 3, 5, 8, 13, 21};
 	private final Deck empty;
 	private final Deck fibonacci;
 
@@ -41,16 +42,18 @@ public class DeckSet {
 	 */
 	private DeckSet() {
 		int[] emptyList = {};
-		int[] fibonacciList = {0, 1, 1, 2, 3, 5, 8, 13, 21};
+		int[] fibonacciList = { 0, 1, 1, 2, 3, 5, 8, 13, 21 };
 		empty = new Deck("Empty", emptyList, DeckSelectionType.SINGLE);
-		fibonacci = new Deck("Fibonacci", fibonacciList, DeckSelectionType.MULTI);
+		fibonacci = new Deck("Fibonacci", fibonacciList,
+				DeckSelectionType.MULTI);
 
-		decks.put("-None-", empty); //"none" deck is empty
+		decks.put("-None-", empty); // "none" deck is empty
 		decks.put("Default", fibonacci);
 	}
 
 	/**
 	 * Get the singleton instance of the DeckSet
+	 * 
 	 * @return The sole DeckSet instance
 	 */
 	public static DeckSet getInstance() {
@@ -59,6 +62,7 @@ public class DeckSet {
 
 	/**
 	 * Get the valid deck names
+	 * 
 	 * @return An array of the names of the decks
 	 */
 	public String[] getNames() {
@@ -67,32 +71,35 @@ public class DeckSet {
 		String tempDef;
 		int none = 0;
 		int def = 0;
-		
+
 		for (int i = 0; i < sorted.length; i++) {
-			if(sorted[i].equals("-None-")){
+			if (sorted[i].equals("-None-")) {
 				none = i;
 			}
-			if(sorted[i].equals("Default")){
+			if (sorted[i].equals("Default")) {
 				def = i;
 			}
 		}
-		
+
 		tempNone = sorted[0];
 		tempDef = sorted[1];
 		sorted[0] = sorted[none];
 		sorted[1] = sorted[def];
 		sorted[none] = tempNone;
 		sorted[def] = tempDef;
-		
+
 		return sorted;
 	}
 
 	/**
 	 * Convert the deck's contents to a comma-separated String
-	 * @param forName The name of the deck whose contents to get
+	 * 
+	 * @param forName
+	 *            The name of the deck whose contents to get
 	 * @return A comma-separated string of the given values in the deck
 	 */
-	public String deckToString(String forName) { // $codepro.audit.disable multipleReturns
+	public String deckToString(String forName) { // $codepro.audit.disable
+													// multipleReturns
 		if (forName == null) {
 			return "";
 		}
@@ -100,37 +107,38 @@ public class DeckSet {
 		final StringBuilder sb = new StringBuilder();
 		final Deck cards = getDeck(forName);
 		if (cards.getCards().length == 0) {
-			return ""; //If no deck is selected. display nothing
+			return ""; // If no deck is selected. display nothing
 		}
 
 		for (int i : cards.getCards()) {
 			sb.append(i);
 			sb.append(", ");
 		}
-		sb.setLength(sb.length() - 2); //Trim off last ", "
+		sb.setLength(sb.length() - 2); // Trim off last ", "
 		return sb.toString();
 	}
 
 	/**
 	 * Get the contents of the given deck.
-	 * @param forName The name of the deck whose contents to get
+	 * 
+	 * @param forName
+	 *            The name of the deck whose contents to get
 	 * @return An integer array of the contents of the deck
 	 */
-	public Deck getDeck(String forName) { // $codepro.audit.disable multipleReturns
+	public Deck getDeck(String forName) { // $codepro.audit.disable
+											// multipleReturns
 		if (forName == null) {
 			return empty;
 		}
 
 		final Deck tempDeck = decks.get(forName);
-		return new Deck(tempDeck.getName(), 
-				Arrays.copyOf(tempDeck.getCards(), 
-						tempDeck.getCards().length), tempDeck.getType());
+		return new Deck(tempDeck.getName(), Arrays.copyOf(tempDeck.getCards(),
+				tempDeck.getCards().length), tempDeck.getType());
 	}
-	
-	public void addDeck(Deck newDeck){
+
+	public void addDeck(Deck newDeck) {
 		decks.put(newDeck.getName(), newDeck);
 	}
-	
 
 	/**
 	 * @return the decks

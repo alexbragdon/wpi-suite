@@ -103,7 +103,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 	private JLabel chosenSequence;
 
 	/**
-	 * All pre-defined decks available for use.    
+	 * All pre-defined decks available for use.
 	 */
 	private final DeckSet decks = DeckSet.getInstance();
 
@@ -147,12 +147,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 	// TODO replace JPanel with something real
 	private SessionButtonPanel buttonPanel;
 
-
-
 	/**
 	 * Constructor for editing a session
 	 * 
-	 * @param session session to edit
+	 * @param session
+	 *            session to edit
 	 */
 	public SessionPanel(PlanningPokerSession session) {
 		displaySession = session;
@@ -164,7 +163,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 	/**
 	 * Constructor for creating a requirement
 	 * 
-	 * @param parentID the parent id, or -1 if no parent.
+	 * @param parentID
+	 *            the parent id, or -1 if no parent.
 	 */
 	public SessionPanel() {
 		displaySession = new PlanningPokerSession();
@@ -181,7 +181,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 	}
 
 	/**
-	 * Validates the name and description fields and sets the error message accordingly.
+	 * Validates the name and description fields and sets the error message
+	 * accordingly.
 	 * 
 	 * @param display
 	 * 
@@ -200,7 +201,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
 		if (nameField.getText().length() > nameCharLimit) {
 			if (display) {
-				infoLabel.setText("*The name has to be less than one million characters.");
+				infoLabel
+						.setText("*The name has to be less than one million characters.");
 			}
 			isNameValid = false;
 		} else if (nameField.getText().length() == 0) {
@@ -208,7 +210,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				infoLabel.setText("*Please enter a name.");
 			}
 			isNameValid = false;
-		} else if (nameField.getText().length() > 0 && nameField.getText().charAt(0) == ' ') {
+		} else if (nameField.getText().length() > 0
+				&& nameField.getText().charAt(0) == ' ') {
 			if (display) {
 				infoLabel.setText("*Name cannot start with a space.");
 			}
@@ -222,7 +225,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
 		if (desField.getText().length() > desCharLimit) {
 			if (display && isNameValid) {
-				infoLabel.setText("*The description has to be less than one million characters.");
+				infoLabel
+						.setText("*The description has to be less than one million characters.");
 			}
 			isDescriptionValid = false;
 		} else if (desField.getText().length() == 0) {
@@ -230,7 +234,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				infoLabel.setText("*Please enter a description.");
 			}
 			isDescriptionValid = false;
-		} else if (desField.getText().length() > 0 && desField.getText().charAt(0) == ' ') {
+		} else if (desField.getText().length() > 0
+				&& desField.getText().charAt(0) == ' ') {
 			if (display && isNameValid) {
 				infoLabel.setText("*Description cannot start with a space.");
 			}
@@ -243,7 +248,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		}
 
 		if (timeEnable.isSelected()) {
-			//Get the selected date and set the time to the value set by the spinners
+			// Get the selected date and set the time to the value set by the
+			// spinners
 			final Calendar selected = dateToCalendar(dateChooser.getDate());
 			selected.set(Calendar.HOUR_OF_DAY, (Integer) hourSpin.getValue());
 			selected.set(Calendar.MINUTE, (Integer) minuteSpin.getValue());
@@ -267,14 +273,17 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			infoLabel.setText("*Cannot update an open session.");
 		}
 
-		return isNameValid && isDescriptionValid && isDateValid && isReqsValid && !isOpen;
+		return isNameValid && isDescriptionValid && isDateValid && isReqsValid
+				&& !isOpen;
 	}
 
 	/**
 	 * Check if the first date is before the second
 	 * 
-	 * @param first The first date
-	 * @param second The second date
+	 * @param first
+	 *            The first date
+	 * @param second
+	 *            The second date
 	 * @return True if first is before second, false otherwise
 	 */
 	private boolean isBefore(Calendar first, Calendar second) {
@@ -284,7 +293,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 	/**
 	 * Translate the given Date to a Calendar instance
 	 * 
-	 * @param d The date
+	 * @param d
+	 *            The date
 	 * @return A Calendar object containing the specified date
 	 */
 	private Calendar dateToCalendar(Date d) {
@@ -302,26 +312,28 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 	 */
 	private void buildLayout() {
 
-		if(viewMode == ViewMode.EDIT || viewMode == ViewMode.OPENED){
+		if (viewMode == ViewMode.EDIT || viewMode == ViewMode.OPENED) {
 			selectedDeck = displaySession.getDeck();
 		}
 
 		deckChooser = new JComboBox<String>(decks.getNames());
-		deckChooser.setSelectedItem(selectedDeck); //default to the "-None-" deck
+		deckChooser.setSelectedItem(selectedDeck); // default to the "-None-"
+													// deck
 		chosenSequence = new JLabel(decks.deckToString(selectedDeck));
 
 		buttonPanel = new SessionButtonPanel(this, viewMode, displaySession);
-		requirementsPanel = new SessionRequirementPanel(this, viewMode, displaySession);
+		requirementsPanel = new SessionRequirementPanel(this, viewMode,
+				displaySession);
 		infoPanel = new ScrollablePanel();
 		infoPanel.setLayout(new MigLayout("", "", "shrink"));
 
-		contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, infoPanel,
-				requirementsPanel);
+		contentPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true,
+				infoPanel, requirementsPanel);
 		// Change the info string to add info. Delete the second string
 		final JLabel nameLabel = new JLabel("Name *");
 		final JLabel desLabel = new JLabel("Description *");
-		final Font boardFont = new Font(infoLabel.getFont().getName(), Font.BOLD, 
-				infoLabel.getFont().getSize());
+		final Font boardFont = new Font(infoLabel.getFont().getName(),
+				Font.BOLD, infoLabel.getFont().getSize());
 
 		final Calendar calendar = Calendar.getInstance();
 		Date dt = new Date();
@@ -338,7 +350,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 					if (currentHour >= 24) {
 						currentHour = 0;
 						calendar.set(Calendar.MONTH, 3);
-						calendar.set(Calendar.DAY_OF_MONTH, 1); // Next day is MAR 1st
+						calendar.set(Calendar.DAY_OF_MONTH, 1); // Next day is
+																// MAR 1st
 					}
 				} else {// Not last day
 					if (currentHour >= 24) {
@@ -351,7 +364,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 					if (currentHour >= 24) {
 						currentHour = 0;
 						calendar.set(Calendar.MONTH, 3);
-						calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is MAR 1st
+						calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is
+																// MAR 1st
 					}
 				} else {// Not last day
 					if (currentHour >= 24) {
@@ -364,9 +378,13 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			if (currentDay == 31) {// Last day of the year
 				if (currentHour >= 24) {
 					currentHour = 0;
-					calendar.set(Calendar.YEAR, currentYear + 1 + 1900);// To the next year
+					calendar.set(Calendar.YEAR, currentYear + 1 + 1900);// To
+																		// the
+																		// next
+																		// year
 					calendar.set(Calendar.MONTH, 1);
-					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is JAN 1st
+					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is JAN
+															// 1st
 				}
 			} else {
 				if (currentHour >= 24) {
@@ -379,7 +397,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			if (currentDay == 30) {// Last day of the current month
 				if (currentHour >= 24) {
 					currentHour = 0;
-					calendar.set(Calendar.MONTH, currentMonth + 1);// To the next month
+					calendar.set(Calendar.MONTH, currentMonth + 1);// To the
+																	// next
+																	// month
 					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is 1st
 				}
 			} else {
@@ -392,7 +412,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			if (currentDay == 31) {// Last day of the current month
 				if (currentHour >= 24) {
 					currentHour = 0;
-					calendar.set(Calendar.MONTH, currentMonth + 1);// To the next month
+					calendar.set(Calendar.MONTH, currentMonth + 1);// To the
+																	// next
+																	// month
 					calendar.set(Calendar.DAY_OF_MONTH, 1);// Next day is 1st
 				}
 			} else {
@@ -404,20 +426,21 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		}
 
 		dt = calendar.getTime();
-		dateChooser = new JCalendar(dt); //Create new JCalendar with now default selected
+		dateChooser = new JCalendar(dt); // Create new JCalendar with now
+											// default selected
 
 		hourSpin = new JSpinner(new SpinnerNumberModel(currentHour, 0, 23, 1));
-		final JFormattedTextField hourf = ((JSpinner.NumberEditor) 
-				hourSpin.getEditor()).getTextField();
+		final JFormattedTextField hourf = ((JSpinner.NumberEditor) hourSpin
+				.getEditor()).getTextField();
 		((NumberFormatter) hourf.getFormatter()).setAllowsInvalid(false);
 		hourf.setEditable(true);
 
-		minuteSpin = new JSpinner(new SpinnerNumberModel(currentMinute, 0, 59, 1));
-		final JFormattedTextField minf = 
-				((JSpinner.NumberEditor) minuteSpin.getEditor()).getTextField();
+		minuteSpin = new JSpinner(new SpinnerNumberModel(currentMinute, 0, 59,
+				1));
+		final JFormattedTextField minf = ((JSpinner.NumberEditor) minuteSpin
+				.getEditor()).getTextField();
 		((NumberFormatter) minf.getFormatter()).setAllowsInvalid(false);
 		minf.setEditable(true);
-
 
 		nameField.setPreferredSize(new Dimension(300, 30));
 
@@ -429,17 +452,16 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		infoPanel.add(nameLabel, "wrap");
 		infoPanel.add(nameField, "growx, pushx, shrinkx, span, wrap");
 		infoPanel.add(desLabel, "wrap");
-		infoPanel.add(desFieldContainer, "growx, pushx, shrinkx, span, " + 
-				"height 200px, wmin 10, wrap");
+		infoPanel.add(desFieldContainer, "growx, pushx, shrinkx, span, "
+				+ "height 200px, wmin 10, wrap");
 		infoPanel.add(timeEnable);
 
 		final JPanel deckChooserPanel = new JPanel(new BorderLayout());
 		deckChooserPanel.add(new JLabel("Deck: "), BorderLayout.WEST);
 		deckChooserPanel.add(deckChooser, BorderLayout.CENTER);
-		//Show contents of currently selected deck
-		deckChooserPanel.add(chosenSequence, 
-				BorderLayout.EAST); 
-		infoPanel.add(deckChooserPanel,"wrap");
+		// Show contents of currently selected deck
+		deckChooserPanel.add(chosenSequence, BorderLayout.EAST);
+		infoPanel.add(deckChooserPanel, "wrap");
 
 		final JPanel timeCheck = new JPanel();
 
@@ -448,7 +470,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			public void mouseClicked(MouseEvent e) {
 				if (timeEnable.isSelected()) {
 					timeEnable.setSelected(false);
-				} else {timeEnable.setSelected(true);}
+				} else {
+					timeEnable.setSelected(true);
+				}
 
 				if (timeEnable.isSelected()) {
 					dateChooser.setEnabled(true);
@@ -461,36 +485,38 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				}
 				updateButtonPanel();
 			}
+
 			@Override
-			public void mousePressed(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {
+			}
+
 			@Override
-			public void mouseReleased(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {
+			}
+
 			@Override
-			public void mouseEntered(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {
+			}
+
 			@Override
-			public void mouseExited(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {
+			}
 		});
 		timeCheck.setLayout(new BorderLayout());
 		timeCheck.setMinimumSize(new Dimension(360, 20));
-		timeCheck.setMaximumSize(new Dimension(1000,30));
-		timeCheck.add(timeEnable,BorderLayout.WEST);
-		timeCheck.add(new JLabel("Set an end time?"),BorderLayout.CENTER);
+		timeCheck.setMaximumSize(new Dimension(1000, 30));
+		timeCheck.add(timeEnable, BorderLayout.WEST);
+		timeCheck.add(new JLabel("Set an end time?"), BorderLayout.CENTER);
 		timeCheck.add(showDeck, BorderLayout.EAST);
 
 		/*
-		 * Want this button to be visible by default
-        if (!(selectedDeck.equals("-None-")))
-        {
-            showDeck.setVisible(true);
-        }
-        else
-        {
-            showDeck.setVisible(false);
-        }
+		 * Want this button to be visible by default if
+		 * (!(selectedDeck.equals("-None-"))) { showDeck.setVisible(true); }
+		 * else { showDeck.setVisible(false); }
 		 */
 
-		infoPanel.add(timeCheck,"wrap");
-		//infoPanel.add(showDeck, "wrap");
+		infoPanel.add(timeCheck, "wrap");
+		// infoPanel.add(showDeck, "wrap");
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		infoLabel.setText("");
 		infoLabel.setForeground(Color.red);
@@ -501,18 +527,20 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		dateChooser.setPreferredSize(new Dimension(300, 300));
 		final JPanel calendarPanel = new JPanel(new BorderLayout());
 		calendarPanel.add(dateChooser, BorderLayout.CENTER);
-		calendarPanel.add(new JLabel("Choose Ending Date:"), BorderLayout.NORTH);
+		calendarPanel
+				.add(new JLabel("Choose Ending Date:"), BorderLayout.NORTH);
 
-		final JPanel timePanel = new JPanel(); //holds the time spinners
+		final JPanel timePanel = new JPanel(); // holds the time spinners
 
 		final JPanel hourPanel = new JPanel(new BorderLayout());
 		final JPanel minutePanel = new JPanel(new BorderLayout());
 
 		hourPanel.add(hourSpin, BorderLayout.CENTER);
-		hourPanel.add(new JLabel("Choose the ending Hour:"), BorderLayout.NORTH);
+		hourPanel
+				.add(new JLabel("Choose the ending Hour:"), BorderLayout.NORTH);
 		minutePanel.add(minuteSpin, BorderLayout.CENTER);
-		minutePanel.add(new JLabel("Choose the ending minute."), BorderLayout.NORTH);
-
+		minutePanel.add(new JLabel("Choose the ending minute."),
+				BorderLayout.NORTH);
 
 		timePanel.add(hourPanel, BorderLayout.WEST);
 		timePanel.add(minutePanel, BorderLayout.EAST);
@@ -566,9 +594,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			}
 			break;
 		case CREATE:
-			nameField.setText(new SimpleDateFormat("MMddyy-HHmm").format(new Date())
-					+ " Planning Poker");
-			break;   
+			nameField.setText(new SimpleDateFormat("MMddyy-HHmm")
+					.format(new Date()) + " Planning Poker");
+			break;
 		case OPENED:
 			isOpen = displaySession.isActive();
 			nameField.setText(displaySession.getName());
@@ -588,7 +616,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
 		}
 
-
 		updateButtonPanel();
 	}
 
@@ -596,39 +623,40 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		new GetDeckController(this).requestAllDecks();
 	}
 
-	public void addDecksToList(Deck[] decks){
+	public void addDecksToList(Deck[] decks) {
 		// Return early if the lists are the same size.
 		// Else, do more work as shown in the for loop
 		System.out.println("Decks in DB size = " + decks.length);
 		System.out.println("Decks in Session size = " + decksInDatabase.size());
-		if(decks.length == deckChooser.getItemCount()){
+		if (decks.length == deckChooser.getItemCount()) {
 			return;
 		}
 
 		ArrayList<String> deckNamesInComboBox = new ArrayList<String>();
 
 		// Initialize array list. Don't want to add none and default
-		for(int i = 0; i < deckChooser.getItemCount(); i++){
-			if(!deckChooser.getItemAt(i).equals("-None-") &&
-					!deckChooser.getItemAt(i).equals("Default")){
+		for (int i = 0; i < deckChooser.getItemCount(); i++) {
+			if (!deckChooser.getItemAt(i).equals("-None-")
+					&& !deckChooser.getItemAt(i).equals("Default")) {
 				deckNamesInComboBox.add(deckChooser.getItemAt(i));
 			}
 		}
 
 		// System.out.println(deckNamesInComboBox.size());
-		System.out.println("DeckSet size = " + DeckSet.getInstance().getDecks().size());
-		
-		for(Deck d : decks){
+		System.out.println("DeckSet size = "
+				+ DeckSet.getInstance().getDecks().size());
+
+		for (Deck d : decks) {
 			// Getting decks from the database
-			if(!DeckSet.getInstance().getDecks().containsKey(d.getName())){
+			if (!DeckSet.getInstance().getDecks().containsKey(d.getName())) {
 				DeckSet.getInstance().addDeck(d);
 				decksInDatabase.put(d.getName(), d);
 				deckChooser.addItem(d.getName());
 				repaint();
 			}
-			
+
 			// For newly created decks
-			else if(!decksInDatabase.containsKey(d.getName())){
+			else if (!decksInDatabase.containsKey(d.getName())) {
 				decksInDatabase.put(d.getName(), d);
 				deckChooser.addItem(d.getName());
 				repaint();
@@ -647,22 +675,20 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
 					/*
 					 * Using the show deck now for create custom deck
-                    selectedDeckChanged = !selectedDeckChanged;
-                    if (!(selectedDeck.equals("-None-")))
-                    {
-                        showDeck.setVisible(true);
-                    }
-                    else
-                    {
-                        showDeck.setVisible(false);
-                    }
+					 * selectedDeckChanged = !selectedDeckChanged; if
+					 * (!(selectedDeck.equals("-None-"))) {
+					 * showDeck.setVisible(true); } else {
+					 * showDeck.setVisible(false); }
 					 */
 
 					// Add space for better display
-					if(selectedDeck == "Default" || selectedDeck == "-None-"){
-						chosenSequence.setText("  " + decks.deckToString(selectedDeck));
-					} else{
-						chosenSequence.setText("  " + DeckSet.getInstance().getDecks().get(selectedDeck).cardsToString());
+					if (selectedDeck == "Default" || selectedDeck == "-None-") {
+						chosenSequence.setText("  "
+								+ decks.deckToString(selectedDeck));
+					} else {
+						chosenSequence.setText("  "
+								+ DeckSet.getInstance().getDecks()
+										.get(selectedDeck).cardsToString());
 					}
 
 					updateButtonPanel();
@@ -670,7 +696,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			}
 		});
 
-		showDeck.addActionListener(new ActionListener(){
+		showDeck.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO: Have it open the custom deck panel
@@ -679,7 +705,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			}
 		});
 
-		timeEnable.addActionListener(new ActionListener(){
+		timeEnable.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (timeEnable.isSelected()) {
@@ -694,7 +720,6 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				updateButtonPanel();
 			}
 		});
-
 
 		final ChangeListener buttonsChangeListener = new ChangeListener() {
 			@Override
@@ -739,9 +764,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				updateButtonPanel();
 				requirementsPanel.tableUpdated();
 			}
-		});   
+		});
 	}
-
 
 	/**
 	 * Updates the bottom buttons to reflect validation and change state.
@@ -768,7 +792,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 
 	/**
 	 * Returns true if the UI state is different from displaySession.
-	 *
+	 * 
 	 * @return true if the user has made changes
 	 */
 	public boolean hasChanges() {
@@ -782,17 +806,17 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			final PlanningPokerSession session = createSessionFromFields();
 			session.setDeck(selectedDeck);
 
-			System.out.println("Selected deck is: " + selectedDeck + ": " + 
-					decks.getDeck(selectedDeck));
+			System.out.println("Selected deck is: " + selectedDeck + ": "
+					+ decks.getDeck(selectedDeck));
 
 			switch (viewMode) {
-			case CREATE: 
-				AddPlanningPokerSessionController.getInstance(
-						).addPlanningPokerSession(session); 
+			case CREATE:
+				AddPlanningPokerSessionController.getInstance()
+						.addPlanningPokerSession(session);
 				break;
-			case EDIT: 
-				EditPlanningPokerSessionController.getInstance(
-						).editPlanningPokerSession(session); 
+			case EDIT:
+				EditPlanningPokerSessionController.getInstance()
+						.editPlanningPokerSession(session);
 				break;
 			}
 
@@ -800,12 +824,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		}
 	}
 
-
-
 	/**
 	 * 
 	 * Description goes here.
-	 *
+	 * 
 	 */
 	public void openPressed() {
 		if (canValidateFields(true)) {
@@ -817,12 +839,12 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			try {
 				switch (viewMode) {
 				case CREATE:
-					AddPlanningPokerSessionController.getInstance(
-							).addPlanningPokerSession(session);
+					AddPlanningPokerSessionController.getInstance()
+							.addPlanningPokerSession(session);
 					break;
 				case EDIT:
-					EditPlanningPokerSessionController.getInstance(
-							).editPlanningPokerSession(session);
+					EditPlanningPokerSessionController.getInstance()
+							.editPlanningPokerSession(session);
 					break;
 				}
 			} catch (RuntimeException e) {
@@ -838,11 +860,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 	/**
 	 * 
 	 * Description goes here.
-	 *
+	 * 
 	 * @return PlanningPokerSession
 	 */
 	public PlanningPokerSession createSessionFromFields() {
-		final SessionType type = timeEnable.isSelected() ? SessionType.DISTRIBUTED 
+		final SessionType type = timeEnable.isSelected() ? SessionType.DISTRIBUTED
 				: SessionType.REALTIME;
 		final PlanningPokerSession session = new PlanningPokerSession(
 				displaySession.getID(), nameField.getText(),
@@ -886,8 +908,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 			}
 			buttonPanel.getButtonSave().setEnabled(false);
 			buttonPanel.getButtonClear().setEnabled(false);
-		}
-		else {
+		} else {
 			buttonPanel.getButtonClear().setVisible(false);
 		}
 
@@ -896,16 +917,16 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 	/**
 	 * 
 	 */
-	 public void cancelPressed() {
+	public void cancelPressed() {
 		ViewEventController.getInstance().removeTab(this);
 	}
 
 	/**
 	 * 
 	 * Description goes here.
-	 *
+	 * 
 	 */
-	 public void textChanged() {
+	public void textChanged() {
 		if (canValidateFields(true) && hasChanges()) {
 			buttonPanel.getButtonSave().setEnabled(true);
 			buttonPanel.getButtonClear().setEnabled(true);
@@ -914,7 +935,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 		else {
 			buttonPanel.getButtonSave().setEnabled(false);
 
-			if (nameField.getText().length() == 0 && desField.getText().length() == 0) {
+			if (nameField.getText().length() == 0
+					&& desField.getText().length() == 0) {
 				buttonPanel.getButtonClear().setEnabled(false);
 			}
 
@@ -922,155 +944,154 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
 				buttonPanel.getButtonClear().setEnabled(true);
 			}
 		}
-	 }
+	}
 
-	 /**
-	  * 
-	  * Description goes here.
-	  *
-	  * @param text
-	  */
-	 public void setNameField(String text) {
-		 nameField.setText(text);
-	 }
+	/**
+	 * 
+	 * Description goes here.
+	 * 
+	 * @param text
+	 */
+	public void setNameField(String text) {
+		nameField.setText(text);
+	}
 
-	 /**
-	  * 
-	  * Description goes here.
-	  *
-	  * @param text
-	  */
-	 public void setDesField(String text) {
-		 desField.setText(text);
-	 }
+	/**
+	 * 
+	 * Description goes here.
+	 * 
+	 * @param text
+	 */
+	public void setDesField(String text) {
+		desField.setText(text);
+	}
 
-	 /**
-	  * 
-	  * Description goes here.
-	  *
-	  */
-	 public void makeTimeDisabled(){
-		 timeEnable.setSelected(false);
-	 }
+	/**
+	 * 
+	 * Description goes here.
+	 * 
+	 */
+	public void makeTimeDisabled() {
+		timeEnable.setSelected(false);
+	}
 
-	 /**
-	  * 
-	  * Description goes here.
-	  *
-	  */
-	 public void makeTimeEmabled(){
-		 timeEnable.setSelected(true);
-	 }
+	/**
+	 * 
+	 * Description goes here.
+	 * 
+	 */
+	public void makeTimeEmabled() {
+		timeEnable.setSelected(true);
+	}
 
-	 /**
-	  * 
-	  * Description goes here.
-	  *
-	  */
-	 public void resetSpinTime(){
-		 hourSpin.setValue(0);
-		 minuteSpin.setValue(0);
-	 }
+	/**
+	 * 
+	 * Description goes here.
+	 * 
+	 */
+	public void resetSpinTime() {
+		hourSpin.setValue(0);
+		minuteSpin.setValue(0);
+	}
 
+	public ViewMode getViewMode() {
+		return viewMode;
+	}
 
-	 public ViewMode getViewMode() {
-		 return viewMode;
-	 }
+	/**
+	 * 
+	 * Description goes here.
+	 * 
+	 * @return
+	 */
+	public String getInfoLabel() {
+		return infoLabel.getText();
+	}
 
-	 /**
-	  * 
-	  * Description goes here.
-	  *
-	  * @return
-	  */
-	 public String getInfoLabel() {
-		 return infoLabel.getText();
-	 }
+	/**
+	 * 
+	 * Description goes here.
+	 * 
+	 * @return
+	 */
+	public PlanningPokerSession getSession() {
+		return displaySession;
+	}
 
-	 /**
-	  * 
-	  * Description goes here.
-	  *
-	  * @return
-	  */
-	 public PlanningPokerSession getSession(){
-		 return displaySession;
-	 }
+	/**
+	 * 
+	 * Description goes here.
+	 * 
+	 * @param cY
+	 * @param cM
+	 * @param cD
+	 * @param cH
+	 * @param cMi
+	 */
+	public void setDateTime(int cY, int cM, int cD, int cH, int cMi) {
+		final Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dt);
+		calendar.set(Calendar.YEAR, cY + 1900);
+		calendar.set(Calendar.MONTH, cM);
+		calendar.set(Calendar.DAY_OF_MONTH, cD);
+		calendar.set(Calendar.HOUR_OF_DAY, cH);
+		calendar.set(Calendar.MINUTE, cMi);
+		dt = calendar.getTime();
+	}
 
-	 /**
-	  * 
-	  * Description goes here.
-	  *
-	  * @param cY
-	  * @param cM
-	  * @param cD
-	  * @param cH
-	  * @param cMi
-	  */
-	 public void setDateTime(int cY, int cM, int cD, int cH, int cMi){
-		 final Calendar calendar = Calendar.getInstance();
-		 calendar.setTime(dt);
-		 calendar.set(Calendar.YEAR, cY + 1900);
-		 calendar.set(Calendar.MONTH, cM);
-		 calendar.set(Calendar.DAY_OF_MONTH, cD);
-		 calendar.set(Calendar.HOUR_OF_DAY, cH);
-		 calendar.set(Calendar.MINUTE, cMi);
-		 dt = calendar.getTime();
-	 }
+	/**
+	 * 
+	 * Description goes here.
+	 * 
+	 */
+	public void buildLY() {
+		this.buildLayout();
+	}
 
-	 /**
-	  * 
-	  * Description goes here.
-	  *
-	  */
-	 public void buildLY(){
-		 this.buildLayout();
-	 }
+	/**
+	 * 
+	 * Description goes here.
+	 * 
+	 * @param session
+	 */
+	public void sendEmail(PlanningPokerSession session) {
+		try {
+			final Request request = Network.getInstance().makeRequest(
+					"Advanced/planningpoker/notify/open", HttpMethod.POST);
+			request.setBody(session.toJSON());
+			request.send();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
+	}
 
-	 /**
-	  * 
-	  * Description goes here.
-	  *
-	  * @param session
-	  */
-	 public void sendEmail(PlanningPokerSession session) {
-		 try {
-			 final Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/open", HttpMethod.POST);
-			 request.setBody(session.toJSON());
-			 request.send();
-		 } catch (RuntimeException e) {
-			 e.printStackTrace();
-		 }
-	 }
+	/**
+	 * Sets up the custom deck panel
+	 */
+	protected void createCustomDeck() {
+		showDeck.setEnabled(false);
+		customDeckPanel = new CustomDeckPanel(this);
+		contentPanel.setRightComponent(customDeckPanel);
+	}
 
-	 /**
-	  * Sets up the custom deck panel
-	  */
-	 protected void createCustomDeck() {
-		 showDeck.setEnabled(false);
-		 customDeckPanel = new CustomDeckPanel(this);
-		 contentPanel.setRightComponent(customDeckPanel);
-	 }
+	/**
+	 * @return the contentPanel
+	 */
+	public JSplitPane getContentPanel() {
+		return contentPanel;
+	}
 
-	 /**
-	  * @return the contentPanel
-	  */
-	 public JSplitPane getContentPanel() {
-		 return contentPanel;
-	 }
+	/**
+	 * @return the requirementsPanel
+	 */
+	public SessionRequirementPanel getRequirementsPanel() {
+		return requirementsPanel;
+	}
 
-	 /**
-	  * @return the requirementsPanel
-	  */
-	 public SessionRequirementPanel getRequirementsPanel() {
-		 return requirementsPanel;
-	 }
-
-	 /**
-	  * @return the showDeck
-	  */
-	 public JButton getShowDeck() {
-		 return showDeck;
-	 }
+	/**
+	 * @return the showDeck
+	 */
+	public JButton getShowDeck() {
+		return showDeck;
+	}
 }
-
