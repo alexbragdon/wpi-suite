@@ -11,7 +11,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
@@ -27,10 +30,18 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 	private static final int MAX = 1000;
 
 	private final JProgressBar progressBar;
+	
+	private static BufferedImage gradiant;
 
 	public ProgressBarTableCellRenderer() {
 		progressBar = new JProgressBar(0, MAX);
 		progressBar.setStringPainted(true);
+		
+		try {
+            gradiant = ImageIO.read(getClass().getResource("gradiant.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 	}
 
@@ -64,45 +75,52 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 	 */
 	public static Color getColor(Fraction fraction) {
 		
-		final Color INITIAL = new Color(204, 102, 102);
-		final Color MIDDLE = new Color(204, 204, 102);
-		final Color FINAL = new Color(102, 204, 102);
+	    gradiant.getHeight();
+	    int[] rgb = {0,0,0};
+	    
+	    if(fraction.isComplete()){
+	        rgb = getGradiantRGB(gradiant.getWidth());
+	        
+	    }
+	    
+	    else if ((fraction.getNumerator() == 0) || (fraction.getDenominator() == 0)) {
+            rgb = getGradiantRGB(1);;
+        }
+	    
+	    else{
+	        rgb = getGradiantRGB((int)(fraction.getValue() * gradiant.getWidth()));
+	    }
+	    
+	    return new Color(rgb[0], rgb[1], rgb[2]);
+	    
+	}
+	
+	/**
+	 * 
+	 * Gets the RGB value of the gradiant at a given x value
+	 *
+	 * @param img 
+	 * @param x
+	 * @return array of three int's: R, G, and B from 0 to 255
+	 */
+	private static int[] getGradiantRGB(int x) {
+	    
+	    if(x < 5){
+	        x = 5;
+	    }
+	    else if(x > gradiant.getWidth() - 2){
+	        x = gradiant.getWidth() - 2;
+	    }
+	    
+	    int argb = gradiant.getRGB(x, 5);
 
-		//Doing this prevents inaccuracies doing double calculations
-		if (fraction.isComplete()) {
-			return FINAL;
-		}
-
-		//Doing this prevents inaccuracies doing double calculations
-		if ((fraction.getNumerator() == 0) || (fraction.getDenominator() == 0)) {
-			return INITIAL;
-		}
-
-		/* Map the transition from red to green with yellow as an
-		 * intermediate. By doing this the color brown is avoided.
-		 */
-
-		int compareToHalf = compareToHalf(fraction);
-
-		if (compareToHalf == 0) { //Fraction is exactly one half
-			return MIDDLE;
-		}
-
-		int midpt = fraction.getDenominator() / 2;
-		if ((fraction.getDenominator() % 2) == 1) {
-			midpt++;
-		}
-		
-		double stepR = (INITIAL.getRed() - FINAL.getRed()) / ((double) midpt);
-		double stepG = (FINAL.getGreen() - INITIAL.getGreen()) / ((double) midpt);
-		if (compareToHalf < 0) { //Less than one half
-			int g = (int) stepG * fraction.getNumerator();
-			return new Color(MIDDLE.getRed(), g + INITIAL.getGreen(), INITIAL.getBlue());
-		}
-
-		//Greater than one half
-		int r = ((int) stepR * (fraction.getDenominator() - fraction.getNumerator()));
-		return new Color(FINAL.getRed() + r, FINAL.getGreen(), INITIAL.getBlue());
+	    int rgb[] = new int[] {
+	        (argb >> 16) & 0xff, //red
+	        (argb >>  8) & 0xff, //green
+	        (argb      ) & 0xff  //blue
+	    };
+	    
+	    return rgb;
 	}
 
 	/**
