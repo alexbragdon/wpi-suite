@@ -9,6 +9,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -58,7 +59,7 @@ public class TransactionHistory {
 	 * @return the transaction that was just added to the history */
 	
 	public Transaction add(String msg){
-		long time = this.TimeStamp;
+		long time = new Date().getTime();
 		String user = ConfigManager.getConfig().getUserName();
 		Transaction newTransaction = new Transaction(user, time, msg);
 		history.add(newTransaction);

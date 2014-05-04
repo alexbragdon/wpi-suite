@@ -13,7 +13,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
+import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
  * This controller responds when the user clicks the Update button by
@@ -62,6 +64,35 @@ public class AddPlanningPokerSessionController{
 
         request.setBody(newSession.toJSON()); // put the new requirement in the body of the request
         request.addObserver(observer); // add an observer to process the response
+        request.send();
+    }
+    
+    
+    /**
+     * Adds a session, then waits for the response to send a open notification.
+     *
+     * @param newSession the opened session
+     */
+    public void addPlanningPokerSessionWithNotify(PlanningPokerSession newSession) {
+        final Request request =
+                    Network.getInstance().makeRequest("planningpoker/planningpokersession",
+                                    HttpMethod.PUT);
+        request.setBody(newSession.toJSON());
+        request.addObserver(new AddPlanningPokerSessionRequestObserver(this) {
+            @Override
+            public void responseSuccess(IRequest iReq) {
+                super.responseSuccess(iReq);
+                try {
+                    final Request request =
+                                Network.getInstance().makeRequest("Advanced/planningpoker/notify/open",
+                                                HttpMethod.POST);
+                    request.setBody(iReq.getResponse().getBody());
+                    request.send();
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         request.send();
     }
 }
