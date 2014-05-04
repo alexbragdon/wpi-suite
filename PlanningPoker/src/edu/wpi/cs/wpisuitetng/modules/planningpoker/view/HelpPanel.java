@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
@@ -51,12 +52,12 @@ public class HelpPanel extends ScrollPane {
         String html = new String(encoded, StandardCharsets.UTF_8);
         label.setContentType("text/html");
         label.setEditable(false);
+        label.setMaximumSize(new Dimension(100, 1500));
+        label.setPreferredSize(new Dimension(100, 1500));
         label.setText(html);
 		
         this.add(label);
-		
-		this.setMinimumSize(new Dimension(1600, 800));
-		this.setPreferredSize(new Dimension(1550, 800));
+        this.setVisible(true);
 		
 	}
 
