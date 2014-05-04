@@ -1034,7 +1034,8 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
     protected void createCustomDeck() {
     	showDeck.setEnabled(false);
     	customDeckPanel = new CustomDeckPanel(this);
-    	contentPanel.setRightComponent(customDeckPanel);
+    	JScrollPane scrollFrame = new JScrollPane(customDeckPanel);
+    	contentPanel.setRightComponent(scrollFrame);
 	}
     
     /**
