@@ -803,18 +803,18 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 switch (viewMode) {
                     case CREATE:
                         AddPlanningPokerSessionController.getInstance(
-                                        ).addPlanningPokerSession(session);
+                                        ).addPlanningPokerSessionWithNotify(session);
                         break;
                     case EDIT:
                         EditPlanningPokerSessionController.getInstance(
                                         ).editPlanningPokerSession(session);
+
+                        sendEmail(session);
                         break;
                 }
             } catch (RuntimeException e) {
                 e.printStackTrace();
             }
-
-            sendEmail(session);
             
             ViewEventController.getInstance().removeTab(this);
         }
