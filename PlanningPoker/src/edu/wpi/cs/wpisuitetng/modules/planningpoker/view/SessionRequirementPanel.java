@@ -57,6 +57,8 @@ public class SessionRequirementPanel extends JPanel {
     final int typeColumn = 3;
     final int priorityColumn = 4;
     
+    boolean needToRefreshRequirments = true;
+    
 	private Timer timer;
 
 	PlanningPokerSession displaySession;
@@ -176,7 +178,7 @@ public class SessionRequirementPanel extends JPanel {
 		table.getTableHeader().setReorderingAllowed(false);
 
 		if (viewMode == ViewMode.EDIT || viewMode == ViewMode.OPENED) {
-			refreshRequirementSelection();
+			updateSelectedRequirments();
 		}
 		
 		
@@ -197,6 +199,14 @@ public class SessionRequirementPanel extends JPanel {
 			checkBox.getCheck().setEnabled(false);
 		}
 		
+	}
+
+	private void updateSelectedRequirments() {
+		for (int i = 0; i < requirements.size(); i++) {
+			if (displaySession.getRequirements().contains(requirements.get(i))) {
+				model.setValueAt(false, i, checkBoxColumn);
+			}
+		}	
 	}
 
 	protected String getDescription(int sessionID) {
@@ -361,6 +371,10 @@ public class SessionRequirementPanel extends JPanel {
 	            table.repaint();
 	            model.fireTableDataChanged();
 	        }
+	    }
+	    if (needToRefreshRequirments) {
+	    	refreshRequirementSelection();
+	    	needToRefreshRequirments = false;
 	    }
 	}
 
