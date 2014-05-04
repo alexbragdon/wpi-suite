@@ -88,6 +88,7 @@ public class VotingOverviewPanel extends JPanel {
 
                 if (!getSelectedRequirement().getVotes().containsKey(user)) {
                     parent.getButtonPanel().getVoteButton().setEnabled(false);
+                    parent.getCards().disableEditing(false);
                 }
             }
         });
