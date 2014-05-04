@@ -11,11 +11,23 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.ScrollPane;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 
@@ -27,128 +39,20 @@ import net.miginfocom.swing.MigLayout;
  * @version 1
  */
 
-public class HelpPanel extends JPanel{
+public class HelpPanel extends ScrollPane {
 	private Color color = UIManager.getColor ( "Panel.background" );
-	
+    private JTextPane label = new JTextPane();
+
 	public HelpPanel(){
 		
-		this.setLayout(new MigLayout());
-		JLabel title = new JLabel("Planning Poker Help");
-		title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 24));
-		JLabel title2 = new JLabel("Getting Started");
-		title2.setFont(new Font(title2.getFont().getName(), Font.PLAIN, 24));
-		JLabel title3 = new JLabel("Creating a Game");
-		title3.setFont(new Font(title3.getFont().getName(), Font.PLAIN, 24));
-		JLabel title4 = new JLabel("Voting in a Game");
-		title4.setFont(new Font(title4.getFont().getName(), Font.PLAIN, 24));
+        label.setContentType("text/html");
+        label.setEditable(false);
+        label.setMaximumSize(new Dimension(100, 1500));
+        label.setPreferredSize(new Dimension(100, 1500));
+        label.setText("<html><h1>Planning Poker Help</h1><p>Welcome to Planning Poker, a module for WPI Suite that makes estimating requirements a game! Using Planning Poker, you create games for your team, as well as play games that other members of your team have made. </p><h2>Getting Started: The Games Tab</h2><p>The Games tab is your home base. It shows you three tables summarizing all the games that you are involved in. </p><ul><li><i>Games I'm Moderating</i> displays all games that you have created which have not been closed</li><li><i>Games I’m Voting in</i> lists all games that you can vote in</li><li><i>Game History</i> displays all completed games that you have voted in or moderated</li></ul><h2>Getting Started: Notifications</h2><p>If notifications are enabled, you will receive an e-mail and/or a text when a game you can vote in is opened or closed. You can update your e-mail or disable these notifications using the Email Settings or SMS Settings buttons in the toolbar.</p><h2>Voting in a Game</h2><p>Voting on a requirement ensures your voice is heard. Your vote is hidden until the session is closed, when you will be able to see how everyone on your team voted.</p><ol><li>Go to the ‘Games’ tab. Simply double click on the game that you wish to vote in.</li><li>Doing so will open a tab in which you will see all requirements in the game, your teams progress in voting on said requirements, and the amount of time you have left to vote. </li><li>In order to vote on a requirement, click on it. It will highlight, and you should see the requirements description, as well as the cards you can use to vote on it (If any).</li><li>After reading the description, click on the cards to choose an estimate. If the deck is multi-selection, you can click on multiple cards to combine their numbers. If single selection, you can only choose a single card.</li><li>If the selected game doesn’t have a deck associated with it, you can manually input what you want your estimate to be. </li></ol><h2>Seeing the Results of a Game</h2><ul><li>In order to view the results of games you have voted in, you must once again go to the ‘Games’ tab. In the far right column, you will see a list of finished games. In order to view the results of a completed game, simply double-click on it.</li><li>Doing so will open the ‘Results’ tab. In it, you will see a table containing a list of the requirements of the game that you clicked on.</li><li>The table lists the requirement ID, Name, and the Mean and Median of all votes that it received.</li><li>When you click on a requirement, it will highlight, and display a list of cards to the right of the table.</li><li>Each of these cards represents a vote. On each card, you will see the vote itself, and underneath it you will see the person who cast said vote. </li></ul><h2>Creating a Game</h2><p>Creating a Planning Poker game will ensure that your group votes on the requirements that you want them to vote on.</p><ol><li>Click on the ‘Create Game’ Button in the ‘Games’ Tab</li><li>Input a name, description, and end date/time (if you want there to be one).</li><li>Add requirements to your game. You can do this by manually creating your own, or by importing them from the requirements manager.</li><li>Click the ‘Create Game’ button to complete the creation process.</li></ol><h2>Moderator Responsibilities</h2><p>If you create a Planning Poker game, you will be responsible for ending the game if it has no designated end time, and for inputting the final estimate for each requirement in the game.</p><ul><li>In order to set the final estimate of a requirement, you must first select which requirement you wish to set the estimate for.</li><li>Once you have clicked on it and highlighted it, you will notice that the area for inputting final estimates will appear.</li><li>Simply type in what number you believe the final estimate for the requirement should be, and it will automatically set the final estimate to what you type in.</li><li>In addition, if you have created a game that doesn’t have a pre-set time limit, you will be responsible for closing the game yourself. You can also close games that haven’t reached their time limits, but everyone has voted in anyways.</li><li>To close  game you are moderating, you must first go back to the ‘Games’ tab. In the center column, you will find all of the games you are moderating.</li><li>Double-click the game you want to close, as if you wanted to vote on it. The same tab as if you were voting will appear. In order to close this game, simply click on the ‘Close Game’ button. </li><li>Keep in mind, once you close a game it is not possible to reopen it. </li></ul><h2>Advanced Game Creation: Decks</h2><ul><li>If you want to create a custom deck, click the ‘Create new Deck’ button within the create game tab. This will bring up the deck creation window. </li><li>You can select whether you want your players to be able to select one or multiple cards during a game. You may also have a card representing 'I don't know'</li><li>You must enter a name for your deck, and it will be available for your team to use when voting or when creating games.</li><li>Add cards to the deck by filling in numbers in the next to the card preview. Delete a card by clicking the 'X' icon next to the box. A new box will automatically be added as you fill in the existing boxes. This is not added as a card unless an integer between 1 and 99 is entered. If your card if valid, a checkmark will appear next to the box.</li></ul></html>");
 		
-		JTextArea description = new JTextArea();
-		description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 12));
-		description.setPreferredSize(new Dimension(1500, 60));
-		description.setBackground(color) ;
-		description.setLineWrap(true);
-		description.setWrapStyleWord(true);
-		description.setEditable(false);
-		description.setText("Welcome to Planning Poker, a module for WPI Suite that can make estimating requirements a game!!"
-				+ " Using Planning Poker, you can create games for your group to vote on, as well as play games that other members of your group have made."
-				+ " Hopefully, this guide will present you with all the information you need to begin creating and playing Planning Poker Games.");
-		final JScrollPane scrollPanel = new JScrollPane(description);
-		scrollPanel.setBorder(new LineBorder(color));
-		
-		JTextArea description2 = new JTextArea();
-		description2.setFont(new Font(description2.getFont().getName(), Font.PLAIN, 12));
-		description2.setPreferredSize(new Dimension(1500, 200));
-		description2.setBackground(color) ;
-		description2.setLineWrap(true);
-		description2.setWrapStyleWord(true);
-		description2.setEditable(false);
-		description2.setText("Lets get started! The First thing you should have seen upon opening Planing Poker is the 'Games' tab. This will be the tab you will see more than any other."
-				+ " It will organize and display any and all games that you are going to be involved with!"
-				+ " You may have noticed the three tables that are in the center of the window. These tables are used to organize all of the games that you are involved with!"
-				+ " The first of the three tables is the 'Games I'm Moderating' table. This table will list and display all of the games that you will create, or have already created."
-				+ " As you create games, it will automatically add them to the list!"
-				+ " The Second table is the 'Games I am voting in' table. This table will list and display any games that you are allowed to vote in and haven't already."
-				+ " The Third table is the 'Game History' table. This table lists and displays any completed games that you have voted in, as well as any completed games you have moderated."
-				+ " Above the three panels, you will notice 4 buttons. One of these is the help button, which brings up this tab when clicked."
-				+ " The next two buttons are 'Email Settings' and 'SMS Settings'. Both of these buttons serve similar purposes, in that they both can control if you get notified when something happens to a game you are involved with."
-				+ " Upon clicking the 'Email Settings' button, the area near the button will change, and prompt you to enter an email address. Underneath the box in which you can"
-				+ " type in your email, there are three buttons. Submit, cancel, and test. The Submit button will remain unselectable until you type in a valid email address."
-				+ " The test button will send an email to the email that is currently in the type box, so you can check if it works before submitting it!"
-				+ " The cancel button will set the upper panel back into the 3-button standard form, and will ignore anything you typed in without submitting."
-				+ " Upon clicking the 'SMS Settings' button, the area around the button will once again change. This time, however, you will be prompted to enter a"
-				+ " Phone number, as well as a carrier. The 'Submit', 'Cancel' and 'Test' buttons all work the same way for SMS as they do for Email."
-				+ " On the far left of the screen you will notice the 'Create Game' button. This will be addressed in the next section.");
-		final JScrollPane scrollPanel2 = new JScrollPane(description2);
-		scrollPanel2.setBorder(new LineBorder(color));
-		
-
-		JTextArea description3 = new JTextArea();
-		description3.setFont(new Font(description3.getFont().getName(), Font.PLAIN, 12));
-		description3.setPreferredSize(new Dimension(1500, 200));
-		description3.setBackground(color) ;
-		description3.setLineWrap(true);
-		description3.setWrapStyleWord(true);
-		description3.setEditable(false);
-		description3.setText("Now let's begin actually making a game! If you want to be a moderator, you should pay attention to this part of the tutorial in particular."
-				+ " On the upper left hand corner of the games window, you should notice the 'Create Game' button. When clicked, you will be taken to a tab in"
-				+ " which you can begin creating a game. These games are entirely customizable, and many of the features of a Planning Poker game are entirely up to you!"
-				+ " The first things you should notice in the 'New Session' tab after clicking 'Create Game'"
-				+ " are two panels. The one on the left is used for setting up a game,"
-				+ " and the one on the right is used to insert Requirements. It is also used for creating decks. But for now, let's begin by creating a game with a premade deck."
-				+ " Begin creating your deck by clicking on the text box under 'Name', and input what you want the name of your game to be."
-				+ " After that, do the same thing with the Description of your game. After doing that, you can set a time limit if you want to."
-				+ " After toggling the 'End at' button (if you want to set a time limit), input what time of the day you want your project to end."
-				+ " Keep in mind that time is going to be interpreted in 24-hour military time. After this, you need to enter what day you want the game to end."
-				+ " You can do this by clicking the small calendar symbol next to the second text box! All that is left to complete this game is to import"
-				+ " Any requirements you think you may need. To do this, you may need to import requirements from the requirements manager. After choosing your requirements,"
-				+ " you are now able to hit the 'Create Game' button at the bottom left of the window. Note that at any time, you can clear all fields by hitting the"
-				+ " 'Clear' button, and can cancel your creation by hitting the 'Cancel' button. Now, let's talk about creating your very own custom deck."
-				+ " If you want to make a game that utilizes a custom deck, you can do so up to the point at which you choose a pre-made deck, but instead"
-				+ " Select 'Create a New Deck'. Upon doing so, the window containing the requirements will be replaced with the Deck Creation window. In order to"
-				+ " Create your new deck, first enter what you would like the name of your deck to be. Then, you must indicate wether or not you want your"
-				+ " deck to allow single selections or multiple selections, and you must indicate if you want your deck to iclude an 'I don't know' card."
-				+ " After you have done this, you can begin to input what cards you want in your deck. To do this, use the text boxes next to the large card."
-				+ " Simply fill in any positive integer, and move on to the next box. Once you have done this for as many cards as you want, hit the 'Create Deck'"
-				+ " button. Note that at any time, you can remove a card by clicking on the small 'X' next to the box that contains the cards number. In addition,"
-				+ " you can cancel the creation of your deck at any time by clicking on the 'Cancel Deck Creation' card. Once you have either finished your deck,"
-				+ " or decided to cancel it's creation, the window will revert to the requirements selection panel.");
-		
-		final JScrollPane scrollPanel3 = new JScrollPane(description3);
-		scrollPanel3.setBorder(new LineBorder(color));
-		
-		JTextArea description4 = new JTextArea();
-		description4.setFont(new Font(description.getFont().getName(), Font.PLAIN, 14));
-		description4.setPreferredSize(new Dimension(1500, 150));
-		description4.setBackground(color) ;
-		description4.setLineWrap(true);
-		description4.setWrapStyleWord(true);
-		description4.setEditable(false);
-		description4.setText("Now that you've found out how to create games, now let's find out how to vote in them! To begin with, you must return to the"
-				+ " 'My Games' tab. Now, let's focus on the center table, the 'Games I am Voting in' Table. In this table, you will see all of the"
-				+ " Planning Poker games that you have yet to vote in. In order to vote in one of the games on this table, simply double click it."
-				+ " Doing this will open a new tab. In this tab, you will be able to vote on the requirements in a game, inspect the descriptions"
-				+ " of each requirement in the game, see how much of your team has voted on each individual requirement, and see how much longer you have"
-				+ " to vote (if the game has a time deadline). Let's begin by selecting a requirement to inspect and vote on. In the center of the window,"
-				+ " you will see a table with a list of all of the requirements in the game you are playing. To select one, simply click on it. This will"
-				+ " highlight it, indicating you have selected it. Now that you have selected a requirement, you will have noticed that the bottom of the"
-				+ " window has changed somewhat, specifically in the lower left hand corner. The description of the currently highlighted requirement"
-				+ " is displayed here. Before you begin voting, it is strongly recommended that you pay close attention to the description of the requirement."
-				+ " Voting without having a detailed knowledge of what the requirement entails could result in the final estimate being skewed in either direction."
-				+ "");
-		final JScrollPane scrollPanel4 = new JScrollPane(description);
-		scrollPanel4.setBorder(new LineBorder(color));
-		
-		this.add(title, "wrap");
-		this.add(scrollPanel, "wrap");
-		this.add(title2, "wrap");
-		this.add(scrollPanel2,"wrap");
-		this.add(title3, "wrap");
-		this.add(scrollPanel3, "wrap");
-		this.add(title4, "wrap");
-		
-		
-		this.setMinimumSize(new Dimension(1550, 800));
-		this.setPreferredSize(new Dimension(1550, 800));
+        this.add(label);
+        this.setVisible(true);
 		
 	}
 
