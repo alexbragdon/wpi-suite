@@ -74,10 +74,6 @@ public class CloseSessionPanel extends JPanel {
     public CloseSessionPanel(final PlanningPokerSession session, final boolean isEditable) {
         this.session = session;
 
-        for (final RequirementEstimate req : session.getRequirements()) {
-            req.setFinalEstimate((int) Math.round(req.calculateMean()));
-        }
-
         this.isEditable = isEditable;
         table = new JTable(new CloseSessionTableModel(session, isEditable));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
