@@ -298,10 +298,7 @@ public class CloseSessionPanel extends JPanel {
         for (RequirementEstimate re : this.session.getRequirements()) {
             if (!re.isExported() && (re.getFinalEstimate() != 0)) {
                 re.exportToRequirementManager();
-                JOptionPane.showConfirmDialog(null, re.getName() + "Has been exported");
-            } else {
-                JOptionPane.showConfirmDialog(null, re.getName() + " Cannot be exported");
-            }
+            } 
         }
     }
 
