@@ -1,3 +1,4 @@
+// $codepro.audit.disable lineLength
 /*******************************************************************************
  * Copyright (c) 2013 WPI-Suite
  * All rights reserved. This program and the accompanying materials

@@ -1,4 +1,4 @@
-// $codepro.audit.disable multipleReturns
+// $codepro.audit.disable multipleReturns, lineLength
 /*******************************************************************************
  * Copyright (c) 2012-2014 -- WPI Suite
  *
