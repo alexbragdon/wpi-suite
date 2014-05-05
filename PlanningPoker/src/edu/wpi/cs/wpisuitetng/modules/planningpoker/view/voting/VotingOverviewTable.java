@@ -77,7 +77,7 @@ public class VotingOverviewTable extends JTable {
     }
     
     @Override
-    public String getToolTipText(MouseEvent event) {
+    public String getToolTipText(MouseEvent event) { // $codepro.audit.disable multipleReturns
         Point p = event.getPoint(); 
         int rowIndex = rowAtPoint(p);
         
@@ -103,7 +103,7 @@ public class VotingOverviewTable extends JTable {
 
     }
     
-    protected String getDescription(int sessionID) {
+    protected String getDescription(int sessionID) { // $codepro.audit.disable multipleReturns
         boolean found = false;
         String description = null;
         for (RequirementEstimate requirment : parent.getRequirements()) {
@@ -120,7 +120,9 @@ public class VotingOverviewTable extends JTable {
              return description.substring(0, first_after) + "...";
         }  else if (found) {
             return description;
-        }else {return "Not Found";}
+        }else {
+            return "Not Found";
+        }
         
     }
     

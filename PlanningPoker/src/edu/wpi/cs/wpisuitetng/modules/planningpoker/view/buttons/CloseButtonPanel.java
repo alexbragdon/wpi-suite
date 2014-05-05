@@ -80,7 +80,7 @@ public class CloseButtonPanel extends ToolbarGroupView {
 
     }
 
-    public void pressCloseButton() {
+    public void pressCloseButton() { // $codepro.audit.disable multipleReturns
     	final PlanningPokerSession session = getSelectedSession(parentView, 0);
         // Edit session
         if (selectedPanelIndex == 0 && !isSessionActive) {

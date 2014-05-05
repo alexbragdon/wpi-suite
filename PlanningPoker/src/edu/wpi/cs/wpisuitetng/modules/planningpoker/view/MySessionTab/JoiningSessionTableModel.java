@@ -23,6 +23,13 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.Fraction;
 
+/**
+ * 
+ * Pannel for displaying which sessions a user is part of 
+ *
+ * @author Romulus
+ * @version May 5, 2014
+ */
 public class JoiningSessionTableModel extends AbstractTableModel {
 
 	/**
@@ -74,7 +81,7 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 	}
 
 	@Override
-	public Class<?> getColumnClass(int columnIndex) {
+	public Class<?> getColumnClass(int columnIndex) { // $codepro.audit.disable multipleReturns
 		switch (columnIndex) {
 		case ID_COLUMN : return Integer.class;
 		case NAME_COLUMN : return String.class;
@@ -97,7 +104,7 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 	}
 
 	@Override
-	public Object getValueAt(int row, int col) {
+	public Object getValueAt(int row, int col) { // $codepro.audit.disable multipleReturns
 
 		//The desired session
 		PlanningPokerSession session = sessions.get(row);

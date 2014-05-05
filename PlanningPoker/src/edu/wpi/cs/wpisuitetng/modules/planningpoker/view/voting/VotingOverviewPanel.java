@@ -170,21 +170,6 @@ public class VotingOverviewPanel extends JPanel {
         overallProgress.setString("Personal voting progress: "
                         + (int) (fraction.getValue() * 100)+ "%");
     }
-    
-    /**
-     * Concatenates the double value to have the given length
-     * @param d The double
-     * @param digits The number of digits
-     * @return The double concatenated to the given number of digits
-     */
-    private static String concat(double d, int digits) {
-    	String s = Double.toString(d);
-    	if (s.length() <= digits) {
-    		return s;
-    	}
-    	
-    	return s.substring(0, digits + 1);
-    }
 
     public PlanningPokerSession getSession() {
         return session;

@@ -600,7 +600,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
      * 
      * @return True if the input string is a integer
      */
-    private boolean isInteger(char s) {
+    private boolean isInteger(char s) { // $codepro.audit.disable multipleReturns
         String numbers = "0123456789";
         for (int i = 0; i < numbers.length(); i++) {
             if (numbers.charAt(i) == s) {

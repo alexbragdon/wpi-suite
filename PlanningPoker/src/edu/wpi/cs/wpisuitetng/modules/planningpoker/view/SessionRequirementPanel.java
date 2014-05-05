@@ -209,7 +209,7 @@ public class SessionRequirementPanel extends JPanel {
 		}	
 	}
 
-	protected String getDescription(int sessionID) {
+	protected String getDescription(int sessionID) { // $codepro.audit.disable multipleReturns
 		boolean found = false;
 		String description = null;
 		for (RequirementEstimate requirment : requirements) {
@@ -226,7 +226,9 @@ public class SessionRequirementPanel extends JPanel {
 			 return description.substring(0, first_after) + "...";
 		}  else if (found) {
 			return description;
-		}else {return "Not Found";}
+		} else {
+		    return "Not Found";
+		}
 		
 	}
 

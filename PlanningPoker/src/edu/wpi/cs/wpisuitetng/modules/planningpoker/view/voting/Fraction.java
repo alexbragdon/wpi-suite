@@ -49,7 +49,7 @@ public class Fraction {
     }
     
     @Override
-    public String toString() {
+    public String toString() { // $codepro.audit.disable multipleReturns
     	if (numerator == denominator) {
     		return "Complete!";
     	}
@@ -58,7 +58,7 @@ public class Fraction {
     }
     
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o) { // $codepro.audit.disable multipleReturns
     	
     	if (o == null) {
     		return false;

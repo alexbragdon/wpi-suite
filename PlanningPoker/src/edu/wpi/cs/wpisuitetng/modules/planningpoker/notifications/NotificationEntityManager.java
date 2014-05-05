@@ -74,11 +74,11 @@ public class NotificationEntityManager implements EntityManager<AbstractModel> {
      * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPost(edu.wpi.cs.wpisuitetng.Session, java.lang.String, java.lang.String)
      */
     @Override
-    public String advancedPost(Session s, String string, String content) throws NotFoundException {
+    public String advancedPost(Session s, String string, String content) {
         throw new UnsupportedOperationException("Use advancedPostWithUri instead.");
     }
 
-    public String advancedPostWithUri(Session s, String string, String content, String url) throws NotFoundException {
+    public String advancedPostWithUri(Session s, String string, String content, String url) throws NotFoundException { // $codepro.audit.disable multipleReturns
         final String type = string.toLowerCase(Locale.US);
         final PlanningPokerSession session;
         final User testUser;

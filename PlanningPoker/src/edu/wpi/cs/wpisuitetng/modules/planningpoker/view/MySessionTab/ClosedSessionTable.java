@@ -67,7 +67,7 @@ public class ClosedSessionTable extends JTable {
 
         @SuppressWarnings("serial")
         TransferHandler dnd = new TransferHandler() {
-            public boolean canImport(TransferSupport support) {
+            public boolean canImport(TransferSupport support) { // $codepro.audit.disable multipleReturns
                 if (!support.isDrop()) {
                     return false;
                 }
@@ -79,7 +79,7 @@ public class ClosedSessionTable extends JTable {
                 return true;
             }
 
-            public boolean importData(TransferSupport support) {
+            public boolean importData(TransferSupport support) { // $codepro.audit.disable multipleReturns
                 // if we can't handle the import, say so
                 if (!canImport(support)) {
                     return false;
@@ -193,7 +193,7 @@ public class ClosedSessionTable extends JTable {
     }
 
     @Override
-    public String getToolTipText(MouseEvent event) {
+    public String getToolTipText(MouseEvent event) { // $codepro.audit.disable multipleReturns
         Point p = event.getPoint();
         int rowIndex = rowAtPoint(p);
         if (rowIndex == -1) {

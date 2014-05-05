@@ -33,10 +33,6 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author rafaelangelo
  * @version Apr 7, 2014
  */
-/**
- * @author rafaelangelo
- * 
- */
 public class MySessionPanel extends JPanel {
 
     private final ModeratingSessionPanel moderatingPanel;

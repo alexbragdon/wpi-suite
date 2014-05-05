@@ -87,7 +87,7 @@ public class CloseOpenButton extends JButton {
         }
     }
 
-    public void CloseSession(MainView parent) {
+    public void CloseSession(MainView parent) { // $codepro.audit.disable multipleReturns
         final PlanningPokerSession session = getSelectedSession(parent, 0);
         if (session == null) {
             return;
@@ -101,7 +101,7 @@ public class CloseOpenButton extends JButton {
         request.send();
     }
 
-    public void OpenSession(MainView parent) {
+    public void OpenSession(MainView parent) { // $codepro.audit.disable multipleReturns
         final PlanningPokerSession session = new PlanningPokerSession();
         final PlanningPokerSession tableSession = getSelectedSession(parent, 0);
         int index = parent.indexOfTab("Edit " + session.getName());

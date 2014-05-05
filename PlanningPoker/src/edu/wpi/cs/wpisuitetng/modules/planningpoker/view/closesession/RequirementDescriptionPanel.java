@@ -27,6 +27,13 @@ import javax.swing.border.LineBorder;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 
+/**
+ * 
+ * Pannel for Dispalying the Description of the Requirement
+ *
+ * @author Romulus
+ * @version May 5, 2014
+ */
 public class RequirementDescriptionPanel extends JPanel {
 	
 	private final JLabel titleLabel = new JLabel("Requirement Description:");

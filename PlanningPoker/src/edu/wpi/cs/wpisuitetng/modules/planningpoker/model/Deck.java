@@ -121,7 +121,7 @@ public class Deck extends AbstractModel {
 	/**
 	 * obj The object to compare against
 	 */
-	public boolean equals(Object obj){
+	public boolean equals(Object obj){ // $codepro.audit.disable multipleReturns
 		if (this == obj) {
 			return true;
 		}
