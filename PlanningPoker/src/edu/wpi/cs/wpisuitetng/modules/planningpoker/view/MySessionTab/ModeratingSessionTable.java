@@ -70,7 +70,7 @@ public class ModeratingSessionTable extends JTable {
     }
 
     public int getSelectedID() { // $codepro.audit.disable
-        //it is more easier to have multiple returns here
+        //it is easier to have multiple returns here
         if (getSelectedRow() == -1) {
             return -1;
         }
