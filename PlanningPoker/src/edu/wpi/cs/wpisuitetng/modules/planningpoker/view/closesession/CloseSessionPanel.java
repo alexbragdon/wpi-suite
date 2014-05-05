@@ -324,6 +324,8 @@ public class CloseSessionPanel extends JPanel {
                 re.exportToRequirementManager();
             } 
         }
+        submitButtons.getEstimateField().setEnabled(false);
+        submitButtons.getButton().setEnabled(false);
     }
 
     /**
