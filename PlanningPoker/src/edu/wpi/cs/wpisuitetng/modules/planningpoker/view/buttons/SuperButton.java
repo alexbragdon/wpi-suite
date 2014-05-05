@@ -107,7 +107,8 @@ public class SuperButton extends JButton {
         }
         
         if (selectedIndex == 0 && isActive) {
-            this.setEnabled(true);
+            this.setEnabled(false);
+            superButtonParent.setVisible(false);
             superButtonParent.setSelectedPanelIndex(0);
             
             this.setText("<html>Review<br />Game<br />Progress</html>");
