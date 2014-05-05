@@ -9,6 +9,8 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetAllUsersController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
@@ -22,17 +24,24 @@ public class ModeratingSessionTableModel extends AbstractTableModel {
 	private static final int END_TIME_COLUMN = 2;
 	private static final int STATUS_COLUMN = 3;
 	private List<PlanningPokerSession> sessions;
-	private ModeratingSessionPanel cellRenderer;
+	private ModeratingSessionTableCellRenderer cellRenderer;
+	boolean hasUserCount = false;
+	private int numUsers = 3;
 	
 	/**
 	 * Create a table model
 	 */
 	public ModeratingSessionTableModel() {
 		sessions = new ArrayList<PlanningPokerSession>();
+		cellRenderer = new ModeratingSessionTableCellRenderer();
 	}
 
 	public PlanningPokerSession getSession(int row) {
 		return sessions.get(row);
+	}
+	
+	public void setNumUsers(int num) {
+		numUsers = num;
 	}
 
 	
@@ -42,16 +51,21 @@ public class ModeratingSessionTableModel extends AbstractTableModel {
 	 */
 	public ModeratingSessionTableModel(List<PlanningPokerSession> sessions) {
 		this.sessions = sessions;
+		dataChanged();
+		getNumUsers();
 	}
 	
 	/**
 	 * Adds the given session to the model and then repaints it
 	 * @param session The session to add
 	 */
-	public void addSession(PlanningPokerSession session) {
+	public void addSession(PlanningPokerSession session) {		
+		if (!hasUserCount) {
+			getNumUsers();
+			hasUserCount = true;
+		}
 		sessions.add(session);
-		
-		this.fireTableDataChanged();
+		dataChanged();
 	}
 
 	@Override
@@ -70,7 +84,7 @@ public class ModeratingSessionTableModel extends AbstractTableModel {
 
 		//Display as string so the "--" can be properly rendered
 		case END_TIME_COLUMN : return String.class; 
-		case STATUS_COLUMN : return Fraction.class; //TODO What to do here??
+		case STATUS_COLUMN : return Object.class;
 		default: throw new RuntimeException(columnIndex + " is invalid");
 		}
 	}
@@ -109,21 +123,26 @@ public class ModeratingSessionTableModel extends AbstractTableModel {
 		}
 
 		//Calculate how many of these requirements the current user has voted on
-		int myVotes = 0;
+		int votesCast = 0;
 		for (RequirementEstimate requirement : session.getRequirements()) {
-			if (requirement.getVotes().containsKey(ConfigManager.getConfig().getUserName())) {
-				myVotes++;
-			}
+			votesCast += requirement.getVotes().size();
 		}
+		
+		System.out.println("Num Users: " + numUsers);
+		int votesPossible = session.getRequirements().size() * numUsers; //Assume each user votes
+		
 
 		//How many votes are necessary to be complete
 		int totalVotes = session.getRequirements().size();
 
+		Fraction fraction = new Fraction(votesCast, votesPossible);
+		System.out.println("Fraction: " + fraction.toString());
+		
 		switch (col) {
 		case ID_COLUMN : return session.getID();
 		case NAME_COLUMN : return session.getName();
 		case END_TIME_COLUMN : return dateString;
-		case STATUS_COLUMN : return new Fraction(myVotes, totalVotes);
+		case STATUS_COLUMN : return (!session.isActive() ? "New" : fraction);
 		default: throw new RuntimeException(col + " is invalid");
 		}
 	}
@@ -134,7 +153,7 @@ public class ModeratingSessionTableModel extends AbstractTableModel {
 	 */
 	public void updateModel(List<PlanningPokerSession> newModel) {
 		sessions = newModel;
-		this.fireTableDataChanged();
+		dataChanged();
 	}
 
 	/**
@@ -143,7 +162,16 @@ public class ModeratingSessionTableModel extends AbstractTableModel {
 	 */
 	public void removeRow(int row) {
 		sessions.remove(row);
+		dataChanged();
+	}
+	
+	public void getNumUsers() {
+		new GetAllUsersController().requestAllUsers(this);
+		User[] users = {};
+		numUsers = users.length;
+	}
+	
+	public void dataChanged() {
 		this.fireTableDataChanged();
 	}
-
 }

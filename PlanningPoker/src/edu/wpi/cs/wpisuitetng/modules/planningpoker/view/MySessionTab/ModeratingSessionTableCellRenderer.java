@@ -12,26 +12,19 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.Fraction;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.ProgressBarTableCellRenderer;
 
-public class ModeratingSesisonTableCellRenderer implements TableCellRenderer {
+public class ModeratingSessionTableCellRenderer implements TableCellRenderer {
 	
 	private ProgressBarTableCellRenderer renderer;
 	
-	List<PlanningPokerSession> sessions;
-	
-	public ModeratingSesisonTableCellRenderer() {
-		this.sessions = new ArrayList<PlanningPokerSession>();
+	public ModeratingSessionTableCellRenderer() {
 		renderer = new ProgressBarTableCellRenderer();
 	}
 	
-	public ModeratingSesisonTableCellRenderer(List<PlanningPokerSession> sessions) {
-		this.sessions = sessions;
+	public ModeratingSessionTableCellRenderer(List<PlanningPokerSession> sessions) {
 		renderer = new ProgressBarTableCellRenderer();
-	}
-	
-	public void setSessions(List<PlanningPokerSession> sessions) {
-		this.sessions = sessions;
 	}
 	
 	@Override
@@ -39,12 +32,9 @@ public class ModeratingSesisonTableCellRenderer implements TableCellRenderer {
 			boolean isSelected,
 			boolean hasFocus, int row, int column) {
 		
-		PlanningPokerSession session = sessions.get(row);
-		
-		 //If the status is "new" i.e. hasn't been opened yet
-		if (!session.isActive() && !session.isComplete()) {
-			return new JLabel("New");
-		}
+		 if (value instanceof String) {
+			 return new JLabel((String) value);
+		 }
 		
 		//If the session is open, render it as a normal progress bar
 		return renderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);

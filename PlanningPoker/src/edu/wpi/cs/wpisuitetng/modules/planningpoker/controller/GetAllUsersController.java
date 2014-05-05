@@ -17,6 +17,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MySessionTab.ModeratingSessionTableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.EmailButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.VotingOverviewPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.VotingOverviewTableModel;
@@ -29,6 +30,7 @@ public class GetAllUsersController {
     private static final GetAllUsersController instance = null;
     private final GetAllUsersObserver observer;
     private EmailButtonPanel ebp;
+    private ModeratingSessionTableModel mstm;
     private VotingOverviewPanel votingOverviewPanel;
 
     /**
@@ -53,6 +55,15 @@ public class GetAllUsersController {
         request.send();
     }
     
+    public void requestAllUsers(ModeratingSessionTableModel mstm) 
+    {
+        this.mstm = mstm;
+        final Request request = 
+                        Network.getInstance().makeRequest("core/user/", HttpMethod.GET);
+        request.addObserver(observer); // add an observer to process the response
+        request.send();
+    }
+    
     /**
      * Gets all users from the database
      * 
@@ -67,7 +78,7 @@ public class GetAllUsersController {
         request.addObserver(observer); // add an observer to process the response
         request.send();
     }
-
+    
     /**
      * 
      * Sends the user to the Email Button Pannel
@@ -75,6 +86,11 @@ public class GetAllUsersController {
      * @param users User to send to Pannel
      */
     public void sendToPanel(User[] users){
+    	
+        if(mstm != null){
+        	mstm.setNumUsers(users.length);
+        }
+    	
         if(ebp != null){
             ebp.setUser(users[0]);
         }

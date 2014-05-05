@@ -69,11 +69,12 @@ public class ModeratingSessionTable extends JTable {
         }
         setFillsViewportHeight(true);    
         
-        this.setDefaultRenderer(Fraction.class, new ProgressBarTableCellRenderer());
+        this.getColumnModel().getColumn(3).setCellRenderer(new ModeratingSessionTableCellRenderer());
     }
 
     public int getSelectedID() { // $codepro.audit.disable
-        //it is easier to have multiple returns here
+        
+    	//it is easier to have multiple returns here
         if (getSelectedRow() == -1) {
             return -1;
         }
