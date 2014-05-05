@@ -377,12 +377,12 @@ public class VotingPanel extends JPanel {
 	public void closeSession(){
 		session = overview.getSession(); //Force the update of the session
 		session.setComplete(true);
-		session.setCompletionTime(new Date());
-		EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
-		Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close",
-				HttpMethod.POST);
-		request.setBody(session.toJSON());
-		request.send();
+        session.setCompletionTime(new Date());
+        EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(session);
+        Request request = Network.getInstance().makeRequest("Advanced/planningpoker/notify/close",
+                        HttpMethod.POST);
+        request.setBody(session.toJSON());
+        request.send();
 	}
 	
 	public VotingOverviewPanel getOverview() {
