@@ -675,7 +675,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                      */
 
                     // Add space for better display
-                    if (selectedDeck == "Default" || selectedDeck == "-None-") {
+                    if (selectedDeck.equals("Default") || selectedDeck.equals("-None-")) {
                         chosenSequence.setText("  " + decks.deckToString(selectedDeck));
                     } else {
                         chosenSequence.setText("  "

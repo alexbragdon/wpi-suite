@@ -287,6 +287,7 @@ public class CloseSessionPanel extends JPanel {
                     submitButtons.getButton().setEnabled(true);
                 }
             } catch (NumberFormatException e) {
+                e.printStackTrace();
                 submitButtons.getButton().setEnabled(false);
             }
         }

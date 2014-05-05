@@ -84,7 +84,7 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 	    }
 	    
 	    else if ((fraction.getNumerator() == 0) || (fraction.getDenominator() == 0)) {
-            rgb = getGradiantRGB(1);;
+            rgb = getGradiantRGB(1);
         }
 	    
 	    else{

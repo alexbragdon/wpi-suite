@@ -1,3 +1,4 @@
+// $codepro.audit.disable integerDivisionInFloatingPointExpression
 /*******************************************************************************
  * Copyright (c) 2014 -- WPI Suite
  *

@@ -237,7 +237,8 @@ public class CustomCardValuePanel extends JPanel {
 		try { 
 			Integer.parseInt(s); 
 		} catch(NumberFormatException e) {
-			return false; 
+			e.printStackTrace();
+		    return false; 
 		}
 		return true;
 	}

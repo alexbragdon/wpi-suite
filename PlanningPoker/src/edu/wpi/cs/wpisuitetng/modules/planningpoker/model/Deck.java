@@ -150,6 +150,13 @@ public class Deck extends AbstractModel {
 
 		return true;
 	}
+	
+	/**
+	 * @Override
+	 */
+	public int hashCode() {
+	    return 0;
+	}
 
 	/**
 	 * Method copyFrom
@@ -176,7 +183,7 @@ public class Deck extends AbstractModel {
 			cardCount++;
 			
 			if(i == 0){
-				sb.append("?");
+				sb.append('?');
 				sb.append(", ");
 			} else {
 				sb.append(i);

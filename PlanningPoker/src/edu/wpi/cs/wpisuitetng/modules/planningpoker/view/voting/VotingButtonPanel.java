@@ -353,7 +353,8 @@ public class VotingButtonPanel extends JPanel{
 		try { 
 			Integer.parseInt(s); 
 		} catch(NumberFormatException e) { 
-			return false; 
+			e.printStackTrace();
+		    return false; 
 		}
 		// only got here if we didn't return false
 				return true;

@@ -202,6 +202,7 @@ public class FinalEstimateButtonPanel extends JPanel {
         try {
             Integer.parseInt(s);
         } catch (final NumberFormatException e) {
+            e.printStackTrace();
             return false;
         }
         return true;

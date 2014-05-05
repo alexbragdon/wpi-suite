@@ -112,7 +112,7 @@ public class DeckSet {
 
 		for (int i : cards.getCards()) {
 			if(i == 0){
-				sb.append("?");
+				sb.append('?');
 				sb.append(", ");
 			} else {
 				sb.append(i);
