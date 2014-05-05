@@ -304,7 +304,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      */
     private void buildLayout() {
 
-        showDeck.setToolTipText("Create a new custom deck of cards to play Planning Poker with");
+        showDeck.setToolTipText("Customize a new custom deck of cards to play Planning Poker with");
 
         if (viewMode == ViewMode.EDIT || viewMode == ViewMode.OPENED) {
             selectedDeck = displaySession.getDeck();

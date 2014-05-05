@@ -646,4 +646,8 @@ public class EmailButtonPanel extends ToolbarGroupView {
         SMSSubmitButton.setEnabled(canValidateSMS());
         SMSPanel.setVisible(true);
     }
+    
+    public String getSMSInfo(){
+        return SMSInfoLabel.getText();
+    }
 }

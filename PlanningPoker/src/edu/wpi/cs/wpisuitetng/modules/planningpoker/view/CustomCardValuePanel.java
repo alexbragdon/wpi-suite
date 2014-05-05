@@ -67,6 +67,8 @@ public class CustomCardValuePanel extends JPanel {
 		button.setPreferredSize(new Dimension(30, 30));
 		button.setMinimumSize(new Dimension(30, 30));
 		button.setFocusable(false);
+		button.setToolTipText("remove value from deck");
+		textField.setToolTipText("Enter a card value from 0 to 99");
 		try {
 			Image img = ImageIO.read(getClass().getResource("cancel-icon.png"));
 			button.setIcon(new ImageIcon(img));
@@ -216,6 +218,12 @@ public class CustomCardValuePanel extends JPanel {
 			validate = false;
 		}
 
+		if(validate){
+		    textField.setToolTipText("Enter a card value from 0 to 99");
+		}
+		else{
+		    textField.setToolTipText("Invalid number, please enter a value from 0 to 99");
+		}
 
 		return validate;
 	}

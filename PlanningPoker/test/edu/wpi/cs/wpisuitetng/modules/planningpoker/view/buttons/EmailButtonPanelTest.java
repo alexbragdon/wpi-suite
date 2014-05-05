@@ -49,4 +49,23 @@ public class EmailButtonPanelTest {
         EBP.switchToEditSMS();
     }
     
+    @Test
+    public void TestCanValidateSMSWithoutChange(){
+        assertFalse(EBP.canValidateSMSWithoutChange());
+        assertEquals(EBP.getSMSInfo(), "*Please enter your phone number");
+        final User user = new User("Tester Test", "test", "test", 123);
+        user.setPhoneNumber(" 7744204361");
+        EBP.setUser(user);
+        assertFalse(EBP.canValidateSMSWithoutChange());
+        assertEquals(EBP.getSMSInfo(), "*Phone number cannot start with space");
+        user.setPhoneNumber("44204361");
+        EBP.setUser(user);
+        assertFalse(EBP.canValidateSMSWithoutChange());
+        assertEquals(EBP.getSMSInfo(),"*Invalid phone number length");
+        user.setPhoneNumber("7744204361");
+        EBP.setUser(user);
+        assertTrue(EBP.canValidateSMSWithoutChange());
+        assertEquals(EBP.getSMSInfo(),"");
+    }
+    
 }

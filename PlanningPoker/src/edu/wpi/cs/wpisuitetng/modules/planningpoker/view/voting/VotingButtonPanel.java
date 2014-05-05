@@ -339,7 +339,7 @@ public class VotingButtonPanel extends JPanel{
 		return validate;
 	}
 
-	public boolean isInteger(String s) {
+	private boolean isInteger(String s) {
 		try { 
 			Integer.parseInt(s); 
 		} catch(NumberFormatException e) { 
