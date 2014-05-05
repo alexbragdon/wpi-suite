@@ -32,7 +32,7 @@ public class ExportButtonPanel extends JPanel {
     /**
      * The export button.
      */
-    private JButton exportButton = new JButton("Export");
+    private JButton exportButton = new JButton("Confirm Export");
     
     /**
      * The cancel button.
