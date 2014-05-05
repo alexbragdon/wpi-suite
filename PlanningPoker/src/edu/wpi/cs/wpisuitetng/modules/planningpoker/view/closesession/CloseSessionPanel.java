@@ -52,7 +52,14 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 @SuppressWarnings("serial")
 public class CloseSessionPanel extends JPanel {
-    private final PlanningPokerSession session;
+    /**
+	 * @return the isEditable
+	 */
+	public boolean isEditable() {
+		return isEditable;
+	}
+
+	private final PlanningPokerSession session;
 
     private final boolean isEditable;
 
@@ -87,7 +94,6 @@ public class CloseSessionPanel extends JPanel {
         table.getColumnModel().getColumn(6).setMaxWidth(60);
         buildLayout();
         updateSelectedRequirement(getSelectedRequirement());
-
     }
     
     private Boolean allEstimatesExported() {
@@ -197,6 +203,8 @@ public class CloseSessionPanel extends JPanel {
             rightPanel.add(exportButton, "wrap");
             rightPanel.add(infoLabel);
             exportButton.setEnabled(!allEstimatesExported());
+            submitButtons.getEstimateField().setEnabled(!allEstimatesExported());
+            submitButtons.getButton().setEnabled(!allEstimatesExported());
 
             c3.gridx = 0;
             c3.gridy = 0;
