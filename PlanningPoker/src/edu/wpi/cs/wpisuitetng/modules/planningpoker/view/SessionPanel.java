@@ -208,17 +208,17 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         infoLabel.setText("");
 
         if (nameField.getText().length() > nameCharLimit) {
-            if (display) {
+            if (display&& !infoLabel.getText().equals("*The name has to be less than one million characters.")) {
                 infoLabel.setText("*The name has to be less than one million characters.");
             }
             isNameValid = false;
         } else if (nameField.getText().length() == 0) {
-            if (display) {
+            if (display&& !infoLabel.getText().equals("*Please enter a name.")) {
                 infoLabel.setText("*Please enter a name.");
             }
             isNameValid = false;
         } else if (nameField.getText().length() > 0 && nameField.getText().charAt(0) == ' ') {
-            if (display) {
+            if (display&& !infoLabel.getText().equals("*Name cannot start with a space.")) {
                 infoLabel.setText("*Name cannot start with a space.");
             }
             isNameValid = false;
@@ -230,17 +230,18 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         }
 
         if (desField.getText().length() > desCharLimit) {
-            if (display && isNameValid) {
+            if (display && isNameValid&& !infoLabel.getText().
+            		equals("*The description has to be less than one million characters.")) {
                 infoLabel.setText("*The description has to be less than one million characters.");
             }
             isDescriptionValid = false;
         } else if (desField.getText().length() == 0) {
-            if (display && isNameValid) {
+            if (display && isNameValid&& !infoLabel.getText().equals("*Please enter a description.")) {
                 infoLabel.setText("*Please enter a description.");
             }
             isDescriptionValid = false;
         } else if (desField.getText().length() > 0 && desField.getText().charAt(0) == ' ') {
-            if (display && isNameValid) {
+            if (display && isNameValid&& !infoLabel.getText().equals("*Description cannot start with a space.")) {
                 infoLabel.setText("*Description cannot start with a space.");
             }
             isDescriptionValid = false;
@@ -260,7 +261,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             final Calendar now = dateToCalendar(new Date());
             System.out.println("calling");
             isDateValid = true;
-            if (isBefore(selected, now)) {
+            if (isBefore(selected, now)&& !infoLabel.getText().equals("*Date is in the past")) {
                 infoLabel.setText("*Date is in the past");
                 isDateValid = false;
             }
@@ -269,11 +270,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         }
 
         isReqsValid = requirementsPanel.getSelectedRequirements().size() > 0;
-        if (!isReqsValid && display) {
+        if (!isReqsValid && display && !infoLabel.getText().equals("*Select at least one requirement")) {
             infoLabel.setText("*Select at least one requirement");
-        }
-
-        if (isOpen && display) {
+        }else if (isOpen && display && !infoLabel.getText().equals("*Cannot update an open session.")
+        		) {
             infoLabel.setText("*Cannot update an open session.");
         }
 
