@@ -31,6 +31,8 @@ import javax.swing.table.TableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.Fraction;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting.ProgressBarTableCellRenderer;
 
 /**
  * Description
@@ -40,7 +42,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
  */
 public class ModeratingSessionTable extends JTable {
 
-    private ModeratingSessionTableModel tableModel = null;
+    private ModeratingSessionTableModel tableModel;
 
     private final Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
 
@@ -66,6 +68,8 @@ public class ModeratingSessionTable extends JTable {
             e.printStackTrace();
         }
         setFillsViewportHeight(true);    
+        
+        this.setDefaultRenderer(Fraction.class, new ProgressBarTableCellRenderer());
     }
 
     public int getSelectedID() { // $codepro.audit.disable
@@ -142,7 +146,7 @@ public class ModeratingSessionTable extends JTable {
         if (rowIndex == -1) {
             return null;
         }
-        int mouseSessIndex = Integer.parseInt((String) getValueAt(rowIndex, 0));
+        int mouseSessIndex = ((int) getValueAt(rowIndex, 0));
 
         PlanningPokerSession mouseSess = null;
 

@@ -17,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 
 /**
@@ -80,10 +81,12 @@ public class ModeratingSessionPanel extends JPanel {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (table.getSelectedRow() != -1) {
+                	
+                	PlanningPokerSession session = ((ModeratingSessionTableModel) table.getModel()).getSession(table.getSelectedRow());
+                	
                     parentView.getMySession().getJoiningPanel().getTable().clearSelection();
                     parentView.getMySession().getClosedPanel().getTable().clearSelection();
-                    final boolean isActive = ((String) getTable().getValueAt(
-                                    getTable().getSelectedRow(), 3)).equals("Active");
+                    final boolean isActive = session.isActive();
                     parentView.getToolbarView().GetSuperButtonPanel().getSuperButton()
                                     .Update(0, isActive);
                     parentView.getToolbarView().GetCloseButtonPanel().getCloseButton()

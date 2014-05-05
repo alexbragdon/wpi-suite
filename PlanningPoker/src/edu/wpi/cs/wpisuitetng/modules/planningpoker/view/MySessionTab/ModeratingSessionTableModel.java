@@ -22,7 +22,7 @@ public class ModeratingSessionTableModel extends AbstractTableModel {
 	private static final int END_TIME_COLUMN = 2;
 	private static final int STATUS_COLUMN = 3;
 	private List<PlanningPokerSession> sessions;
-	private Moderating
+	private ModeratingSessionPanel cellRenderer;
 	
 	/**
 	 * Create a table model
@@ -31,6 +31,11 @@ public class ModeratingSessionTableModel extends AbstractTableModel {
 		sessions = new ArrayList<PlanningPokerSession>();
 	}
 
+	public PlanningPokerSession getSession(int row) {
+		return sessions.get(row);
+	}
+
+	
 	/**
 	 * Create a table model given a list of sessions
 	 * @param sessions The sessions with which to populate the table

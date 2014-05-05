@@ -383,6 +383,7 @@ public class VotingPanel extends JPanel {
 				HttpMethod.POST);
 		request.setBody(session.toJSON());
 		request.send();
+		countdown.setVisible(false);
 	}
 	
 	public VotingOverviewPanel getOverview() {

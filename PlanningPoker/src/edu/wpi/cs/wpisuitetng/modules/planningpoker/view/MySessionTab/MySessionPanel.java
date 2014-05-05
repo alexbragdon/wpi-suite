@@ -183,8 +183,7 @@ public class MySessionPanel extends JPanel {
             if (row == -1) {
                 return -1;
             }
-            return Integer.parseInt((String) moderatingPanel.getTable()
-                    .getValueAt(row, 0));
+            return ((int) moderatingPanel.getTable().getValueAt(row, 0));
         case 1:
             row = joiningPanel.getTable().getSelectedRow();
             if (row == -1) {

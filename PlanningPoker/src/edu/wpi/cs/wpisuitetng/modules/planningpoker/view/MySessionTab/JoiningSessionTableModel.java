@@ -72,7 +72,7 @@ public class JoiningSessionTableModel extends AbstractTableModel {
 		//No cells in this table are editable
 		return false;
 	}
-
+	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		switch (columnIndex) {
