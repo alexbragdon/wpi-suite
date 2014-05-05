@@ -343,7 +343,7 @@ public class CloseSessionPanel extends JPanel {
         if (dialogResult == JOptionPane.YES_OPTION)
         {
             for (RequirementEstimate re : this.session.getRequirements()) {
-                if (!re.isExported() && (re.getFinalEstimate() != 0)) {
+                if (!re.isExported()) {
                     re.exportToRequirementManager();
                 }
             }
@@ -389,7 +389,7 @@ public class CloseSessionPanel extends JPanel {
 
     public String getSelectedVote() {
         if (!table.getValueAt(table.getSelectedRow(), 5).equals("--")) {
-            return (String) table.getValueAt(table.getSelectedRow(), 5);
+            return Integer.toString((Integer) table.getValueAt(table.getSelectedRow(), 5));
         } else
             return "--";
     }

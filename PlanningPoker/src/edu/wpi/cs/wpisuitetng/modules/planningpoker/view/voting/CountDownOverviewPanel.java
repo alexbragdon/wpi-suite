@@ -30,6 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 public class CountDownOverviewPanel extends JPanel {
     
     private final JLabel timingText;
+    private final JLabel label;
     boolean over;
     
     /**
@@ -42,6 +43,8 @@ public class CountDownOverviewPanel extends JPanel {
     	
         timingText = new JLabel("");
         timingText.setFont (timingText.getFont ().deriveFont (24.0f));
+        
+        label = new JLabel("Time remaining: ");
         
         FlowLayout layout = new FlowLayout();
         layout.setAlignOnBaseline(true);
@@ -75,7 +78,7 @@ public class CountDownOverviewPanel extends JPanel {
         t.setInitialDelay(0);
         t.start();
         
-        add(new JLabel("Time remaining: "));
+        add(label);
         add(timingText);
     }
     
@@ -105,5 +108,13 @@ public class CountDownOverviewPanel extends JPanel {
      */
     public boolean isOver() {
     	return over;
+    }
+    
+    /**
+     * Set everything invisible after voting finished
+     */
+    public void votingComplete(){
+    	label.setVisible(false);
+    	timingText.setVisible(false);
     }
 }
