@@ -168,11 +168,11 @@ public class CustomDeckPanel extends JPanel {
 	}
 
 	public void setupListeners(){
-		newCardScroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
-	        public void adjustmentValueChanged(AdjustmentEvent e) {  
-	            e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
-	        }
-	    });
+//		newCardScroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
+//	        public void adjustmentValueChanged(AdjustmentEvent e) {  
+//	            e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
+//	        }
+//	    });
 		
 		createDeck.addActionListener(new ActionListener(){
 			@Override
