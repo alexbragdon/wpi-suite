@@ -88,6 +88,15 @@ public class CloseSessionPanel extends JPanel {
         updateSelectedRequirement(getSelectedRequirement());
 
     }
+    
+    private Boolean allEstimatesExported() {
+        for (RequirementEstimate re : session.getRequirements()) {
+            if (!re.isExported()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     private void buildLayout() {
         try {
@@ -186,7 +195,7 @@ public class CloseSessionPanel extends JPanel {
 
             rightPanel.add(exportButton, "wrap");
             rightPanel.add(infoLabel);
-            exportButton.setEnabled(!session.getRequirements().get(0).isExported());
+            exportButton.setEnabled(!allEstimatesExported());
 
             c3.gridx = 0;
             c3.gridy = 0;
