@@ -66,9 +66,9 @@ public class CloseSessionPanel extends JPanel {
     private final JTable table;
 
     RequirementEstimate currentRequirement;
-    
+
     private JButton exportButton = new JButton(
-            "<html>Send all to<br />Requirements<br />Manager</html>");
+                    "<html>Send all to<br />Requirements<br />Manager</html>");
 
     /**
      * Creates a new panel to enter estimates while closing the given session.
@@ -91,12 +91,13 @@ public class CloseSessionPanel extends JPanel {
 
     private void buildLayout() {
         try {
-            ImageIcon img = new ImageIcon(ImageIO.read(getClass().getResource("send-requirements.png")));
+            ImageIcon img = new ImageIcon(ImageIO.read(getClass().getResource(
+                            "send-requirements.png")));
             exportButton.setIcon(img);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         setLayout(new GridBagLayout());
         final GridBagConstraints c = new GridBagConstraints();
 
@@ -138,85 +139,83 @@ public class CloseSessionPanel extends JPanel {
         c.weighty = 1.0;
         c.fill = GridBagConstraints.BOTH;
         add(panel, c);
- 
+
         description = new RequirementDescriptionPanel(session.getRequirements().get(
-        table.getSelectedRow()));
+                        table.getSelectedRow()));
         submitButtons = new FinalEstimateButtonPanel(this);
-        
-		c.gridx = 0;
-		c.gridy = 2;
-		c.gridwidth = 2;
-		c.gridheight = 1;
-		c.weightx = 0.7;
-		c.weighty = 0.0;
-		c.fill = GridBagConstraints.BOTH;
-        
+
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 2;
+        c.gridheight = 1;
+        c.weightx = 0.7;
+        c.weighty = 0.0;
+        c.fill = GridBagConstraints.BOTH;
+
         final String username = ConfigManager.getConfig().getUserName();
-        
-        
+
         if (!session.getModerator().equals(username) || !session.isComplete()) {
             submitButtons.setVisible(false);
             exportButton.setVisible(false);
         } else {
-        	submitButtons.setVisible(true);
+            submitButtons.setVisible(true);
             exportButton.setVisible(true);
         }
-        
-        
-		if (!session.getModerator().equals(username)) {
-			add(description, c);
-		}else{
-			exportButton.setMinimumSize(new Dimension(140, 100));
-			
-			JPanel buttomPanel = new JPanel();
-			buttomPanel.setLayout(new GridBagLayout());
-	        final GridBagConstraints c3 = new GridBagConstraints();
-			
-			JPanel leftPanel = new JPanel();
-			leftPanel.setLayout(new BorderLayout());
-			JPanel rightPanel = new JPanel();
-			rightPanel.setLayout(new MigLayout("insets 35 0 0 0"));
-			rightPanel.setPreferredSize(new Dimension(200,100));
-			rightPanel.setMinimumSize(new Dimension(200,100));
-			
-			final JLabel infoLabel = new JLabel("");
-			infoLabel.setForeground(new Color(102, 204, 102));
-			
-			leftPanel.add(description, BorderLayout.CENTER);
-			leftPanel.add(submitButtons, BorderLayout.EAST);
-			
-			rightPanel.add(exportButton,"wrap");
-			rightPanel.add(infoLabel);
-			exportButton.setEnabled(!session.getRequirements().get(0).isExported());
-			
-	        c3.gridx = 0;
-	        c3.gridy = 0;
-	        c3.gridwidth = 4;
-	        c3.gridheight = 1;
-	        c3.weightx = 1.0;
-	        c3.weighty = 1.0;
-	        c3.fill = GridBagConstraints.BOTH;
-	        buttomPanel.add(leftPanel, c3);
-	        c3.gridx = 4;
-	        c3.gridy = 0;
-	        c3.gridwidth = 1;
-	        c3.gridheight = 1;
-	        c3.weightx = 0.0;
-	        c3.weighty = 1.0;
-	        buttomPanel.add(rightPanel, c3);
-	        
-	        add(buttomPanel, c);
-	        exportButton.setToolTipText("Send these estimates to the Requirement Manager");
-	        
-	        exportButton.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	                exportPressed();
-	                exportButton.setEnabled(false);
-	                infoLabel.setText("Requirements exported.");
-	            }
-	        });
-			
-		}
+
+        if (!session.getModerator().equals(username)) {
+            add(description, c);
+        } else {
+            exportButton.setMinimumSize(new Dimension(140, 100));
+
+            JPanel buttomPanel = new JPanel();
+            buttomPanel.setLayout(new GridBagLayout());
+            final GridBagConstraints c3 = new GridBagConstraints();
+
+            JPanel leftPanel = new JPanel();
+            leftPanel.setLayout(new BorderLayout());
+            JPanel rightPanel = new JPanel();
+            rightPanel.setLayout(new MigLayout("insets 35 0 0 0"));
+            rightPanel.setPreferredSize(new Dimension(200, 100));
+            rightPanel.setMinimumSize(new Dimension(200, 100));
+
+            final JLabel infoLabel = new JLabel("");
+            infoLabel.setForeground(new Color(102, 204, 102));
+
+            leftPanel.add(description, BorderLayout.CENTER);
+            leftPanel.add(submitButtons, BorderLayout.EAST);
+
+            rightPanel.add(exportButton, "wrap");
+            rightPanel.add(infoLabel);
+            exportButton.setEnabled(!session.getRequirements().get(0).isExported());
+
+            c3.gridx = 0;
+            c3.gridy = 0;
+            c3.gridwidth = 4;
+            c3.gridheight = 1;
+            c3.weightx = 1.0;
+            c3.weighty = 1.0;
+            c3.fill = GridBagConstraints.BOTH;
+            buttomPanel.add(leftPanel, c3);
+            c3.gridx = 4;
+            c3.gridy = 0;
+            c3.gridwidth = 1;
+            c3.gridheight = 1;
+            c3.weightx = 0.0;
+            c3.weighty = 1.0;
+            buttomPanel.add(rightPanel, c3);
+
+            add(buttomPanel, c);
+            exportButton.setToolTipText("Send these estimates to the Requirement Manager");
+
+            exportButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    exportPressed();
+                    exportButton.setEnabled(false);
+                    infoLabel.setText("Requirements exported.");
+                }
+            });
+
+        }
     }
 
     /**
@@ -295,27 +294,29 @@ public class CloseSessionPanel extends JPanel {
      * clicked.
      */
     public void votePressed() {
-        currentRequirement.setFinalEstimate(Integer.parseInt(submitButtons.getEstimateField()
-                        .getText()));
+        if (!currentRequirement.isExported()) {
+            currentRequirement.setFinalEstimate(Integer.parseInt(submitButtons.getEstimateField()
+                            .getText()));
 
-        final PlanningPokerSession newSession = new PlanningPokerSession(session.getID(),
-                        session.getName(), session.getDescription(), session.getDate(),
-                        session.getHour(), session.getMin(), session.getRequirements(),
-                        session.getType(), false, session.isComplete(), session.getModerator(),
-                        session.getDeck());
+            final PlanningPokerSession newSession = new PlanningPokerSession(session.getID(),
+                            session.getName(), session.getDescription(), session.getDate(),
+                            session.getHour(), session.getMin(), session.getRequirements(),
+                            session.getType(), false, session.isComplete(), session.getModerator(),
+                            session.getDeck());
 
-        EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
-        submitButtons.getButton().setEnabled(false);
+            EditPlanningPokerSessionController.getInstance().editPlanningPokerSession(newSession);
+            submitButtons.getButton().setEnabled(false);
 
-        final int row = table.getSelectedRow();
-        int nextRow = row + 1;
-        if (nextRow < table.getRowCount()) {
-            table.getSelectionModel().setSelectionInterval(nextRow, nextRow);
+            final int row = table.getSelectedRow();
+            int nextRow = row + 1;
+            if (nextRow < table.getRowCount()) {
+                table.getSelectionModel().setSelectionInterval(nextRow, nextRow);
+            }
+
+            table.repaint();
         }
-
-        table.repaint();
     }
-    
+
     /**
      * Export requirement to requirement manager.
      */
@@ -323,13 +324,14 @@ public class CloseSessionPanel extends JPanel {
         for (RequirementEstimate re : this.session.getRequirements()) {
             if (!re.isExported() && (re.getFinalEstimate() != 0)) {
                 re.exportToRequirementManager();
-            } 
+            }
         }
-        
-        Request request = Network.getInstance().makeRequest("planningpoker/planningpokersession/", HttpMethod.POST); // POST == update
+
+        Request request = Network.getInstance().makeRequest("planningpoker/planningpokersession/",
+                        HttpMethod.POST); // POST == update
         request.setBody(this.session.toJSON());
         request.send();
-        
+
         submitButtons.getEstimateField().setEnabled(false);
         submitButtons.getButton().setEnabled(false);
     }
@@ -355,7 +357,7 @@ public class CloseSessionPanel extends JPanel {
     public void checkSameVote() {
         if (submitButtons.validateSpinner()
                         && Integer.parseInt(submitButtons.getEstimateField().getText()) == currentRequirement
-                        .getFinalEstimate()) {
+                                        .getFinalEstimate()) {
             submitButtons.getButton().setEnabled(false);
         }
 

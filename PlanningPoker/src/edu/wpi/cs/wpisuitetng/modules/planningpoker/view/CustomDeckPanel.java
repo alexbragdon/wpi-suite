@@ -318,5 +318,4 @@ public class CustomDeckPanel extends JPanel {
 		errorLabel.setText("*Enter at least one card to create deck.");
 		createDeck.setEnabled(false);
 	}
-
 }
