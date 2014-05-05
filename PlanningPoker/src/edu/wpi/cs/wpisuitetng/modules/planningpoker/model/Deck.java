@@ -174,8 +174,15 @@ public class Deck extends AbstractModel {
 		boolean flag = false;
 		for(int i : cards){
 			cardCount++;
-			sb.append(i);
-			sb.append(", ");
+			
+			if(i == 0){
+				sb.append("?");
+				sb.append(", ");
+			} else {
+				sb.append(i);
+				sb.append(", ");
+			}
+			
 			if(i % 10 >= 1){
 				length += 4;
 			}else{
