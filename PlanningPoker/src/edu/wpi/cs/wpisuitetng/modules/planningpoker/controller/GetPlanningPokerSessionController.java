@@ -41,7 +41,7 @@ public class GetPlanningPokerSessionController implements ActionListener {
 	 */
 	public GetPlanningPokerSessionController(MySessionPanel panel) {
 		this.panel = panel;
-		this.votingPanel = null;
+		votingPanel = null;
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class GetPlanningPokerSessionController implements ActionListener {
 	 * @param panel the parent
 	 */
 	public GetPlanningPokerSessionController(VotingOverviewPanel panel) {
-		this.votingPanel = panel;
+		votingPanel = panel;
 		this.panel = null;
 	}
 

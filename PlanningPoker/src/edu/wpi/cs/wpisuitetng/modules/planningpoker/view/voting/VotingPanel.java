@@ -72,12 +72,12 @@ public class VotingPanel extends JPanel {
 	 */
 	public VotingPanel(final PlanningPokerSession session, Deck[] decks) {
 		this.session = session;
-		this.decksInDatabase = decks;
+		decksInDatabase = decks;
 
 		if (session.getDeck().equals("-None-")) {
-			this.hasDeck = false;
+			hasDeck = false;
 		} else {
-			this.hasDeck = true;
+			hasDeck = true;
 		}
 		
 		buildLayout(session);
@@ -297,7 +297,7 @@ public class VotingPanel extends JPanel {
 			.put(ConfigManager.getConfig().getUserName(),
 					new UserEstimate(ConfigManager.getConfig()
 							.getUserName(), totalEstimate));
-		} else if (this.hasDeck) {
+		} else if (hasDeck) {
 			try {
 				totalEstimate = Integer.parseInt(buttons.getEstimateLabel().getText());
 			} catch (NumberFormatException e) {
@@ -372,7 +372,7 @@ public class VotingPanel extends JPanel {
 	}
 
 	public void setUserNum(final int users) {
-		this.UserNum = users;
+		UserNum = users;
 	}
 
 	public void closeSession(){

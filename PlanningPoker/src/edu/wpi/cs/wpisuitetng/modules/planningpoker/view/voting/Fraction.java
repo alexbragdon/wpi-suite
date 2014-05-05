@@ -73,8 +73,8 @@ public class Fraction {
     	}
     	
     	Fraction other = (Fraction) o;
-    	return (this.numerator == other.numerator) &&
-    			(this.denominator == other.denominator);
+    	return (numerator == other.numerator) &&
+    			(denominator == other.denominator);
     }
     
     @Override

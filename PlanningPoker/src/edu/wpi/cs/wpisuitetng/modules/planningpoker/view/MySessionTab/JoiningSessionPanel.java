@@ -94,7 +94,7 @@ public class JoiningSessionPanel extends JPanel {
             }
         });
 
-        this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
+        table.addMouseListener(new MySessionDoubleClickListener(parentView));
     }
 
     /**

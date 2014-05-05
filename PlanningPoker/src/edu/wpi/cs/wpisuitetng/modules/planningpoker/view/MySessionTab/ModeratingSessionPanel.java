@@ -98,7 +98,7 @@ public class ModeratingSessionPanel extends JPanel {
             }
         });
 
-        this.table.addMouseListener(new MySessionDoubleClickListener(parentView));
+        table.addMouseListener(new MySessionDoubleClickListener(parentView));
 
     }
 
