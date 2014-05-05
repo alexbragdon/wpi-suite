@@ -94,10 +94,7 @@ public class CustomCardValuePanel extends JPanel {
 			@Override
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
-            	if(parent.getCards().size() > countCard){
-            		countCard = parent.getCards().size();
-            		parent.notifyAdjust();
-            	}
+            	
 				if(validateField()){
 					parent.passCardValue(textField.getText());
 				}else{
@@ -113,6 +110,10 @@ public class CustomCardValuePanel extends JPanel {
             	parent.checkDeletion();
             	
 
+				if(parent.getCards().size() > countCard){
+            		countCard = parent.getCards().size();
+            		parent.notifyAdjust();
+            	}
 			}
 
 			@Override
@@ -197,7 +198,8 @@ public class CustomCardValuePanel extends JPanel {
 					parent.notifyParentInvalid();
 				}
 				parent.checkDeletion();
-				parent.checkCreateRemoveCard();
+				
+//				parent.focusOn();
 			}
 		});
 		

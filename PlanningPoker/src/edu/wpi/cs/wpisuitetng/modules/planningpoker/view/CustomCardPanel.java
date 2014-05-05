@@ -162,4 +162,8 @@ public class CustomCardPanel extends JPanel {
     public void notifyAdjust(){
     	parent.adjustToolBar();
     }
+    
+//    public void focusOn(){
+//    	cards.get(cards.size() -1).getTextField().requestFocus();
+//    }
 }
