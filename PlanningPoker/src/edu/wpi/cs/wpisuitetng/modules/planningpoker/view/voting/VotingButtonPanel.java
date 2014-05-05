@@ -109,6 +109,16 @@ public class VotingButtonPanel extends JPanel{
 				}
             }
         });
+		
+		estimateField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                if (voteButton.isEnabled()) {
+                    parentPanel.votePressed();
+                }
+            }
+		});
+		
 		estimateField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void changedUpdate(DocumentEvent e) {
