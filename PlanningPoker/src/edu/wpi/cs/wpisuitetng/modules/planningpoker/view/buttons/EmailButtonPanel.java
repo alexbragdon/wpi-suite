@@ -564,7 +564,11 @@ public class EmailButtonPanel extends ToolbarGroupView {
             SMSInfoLabel.setText("*Phone number cannot start with space");
             valid = false;
         } else if (!containTenDigit(SMSField.getText())) {
-            SMSInfoLabel.setText("*Invalid phone number length");
+        	if (containNoDigit(SMSField.getText())){
+        		SMSInfoLabel.setText("*Invalid phone number");
+        	}else{
+                SMSInfoLabel.setText("*Invalid phone number length");
+        	}
             valid = false;
         } else {
             SMSInfoLabel.setText("");
@@ -605,7 +609,23 @@ public class EmailButtonPanel extends ToolbarGroupView {
         }
         return false;
     }
+    
+    /**
+     * 
+     * Checks if SMS field contains digits
+     * 
+     * @return True SMS field contains digits
+     */
+    public boolean containNoDigit(String string) {
+        boolean flag = true;
+        for (int i = 0; i < string.length(); i++) {
+            if (isInteger(string.charAt(i))) {
+                flag = false;
+            }
+        }
 
+        return flag;
+    }
     /**
      * @param user
      */
