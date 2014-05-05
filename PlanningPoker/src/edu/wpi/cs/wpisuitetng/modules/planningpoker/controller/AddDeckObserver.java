@@ -21,7 +21,7 @@ public class AddDeckObserver implements RequestObserver {
 	private final AddDeckController controller;
 	
 	/**
-	 * @param getDeckController Controller to be associated with this observer
+	 * @param addDeckController Controller to be associated with this observer
 	 */
 	public AddDeckObserver(AddDeckController addDeckController) {
 		controller = addDeckController;

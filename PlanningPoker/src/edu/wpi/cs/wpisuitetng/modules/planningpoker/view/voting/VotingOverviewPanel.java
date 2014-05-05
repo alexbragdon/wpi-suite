@@ -1,3 +1,4 @@
+// $codepro.audit.disable lineLength
 /*******************************************************************************
  * Copyright (c) 2012-2014 -- WPI Suite
  *
@@ -10,7 +11,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.voting;
 
 import java.awt.BorderLayout;
-
 import java.awt.Dimension;
 import java.util.List;
 
@@ -34,9 +34,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
  */
 @SuppressWarnings("serial")
 public class VotingOverviewPanel extends JPanel {
-    private VotingOverviewTable table;
+    private final VotingOverviewTable table;
 
-    private VotingOverviewTableModel model;
+    private final VotingOverviewTableModel model;
 
     private List<RequirementEstimate> requirements;
 
@@ -46,12 +46,12 @@ public class VotingOverviewPanel extends JPanel {
 
     private PlanningPokerSession session;
 
-    private String user;
+    private final String user;
 
-    private VotingPanel parent;
+    private final VotingPanel parent;
 
     private int UserNum;
-    
+
     private boolean done = false;
 
     /**
@@ -60,8 +60,10 @@ public class VotingOverviewPanel extends JPanel {
      * @param requirements requirements to vote on
      * @param teamCount number of members on the team
      * @param user the currently logged in user
+     * @param parent
+     * @param session
      */
-    public VotingOverviewPanel(List<RequirementEstimate> requirements, int teamCount,
+    public VotingOverviewPanel(final List<RequirementEstimate> requirements, final int teamCount,
                     final String user, final VotingPanel parent, final PlanningPokerSession session) {
         this.requirements = requirements;
         this.session = session;
@@ -83,7 +85,7 @@ public class VotingOverviewPanel extends JPanel {
 
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
-            public void valueChanged(ListSelectionEvent e) {
+            public void valueChanged(final ListSelectionEvent e) {
                 parent.updateSelectedRequirement(getSelectedRequirement());
 
                 if (!getSelectedRequirement().getVotes().containsKey(user)) {
@@ -104,7 +106,7 @@ public class VotingOverviewPanel extends JPanel {
      * 
      * @return selected requirement, or null if no requirement is selected
      */
-    public RequirementEstimate getSelectedRequirement() {
+    public RequirementEstimate getSelectedRequirement() { // $codepro.audit.disable multipleReturns
         int row = table.getSelectedRow();
         if (row != -1) {
             row = table.convertRowIndexToModel(row);
@@ -117,31 +119,31 @@ public class VotingOverviewPanel extends JPanel {
     /**
      * @param sessions
      */
-    public void checkProgress(PlanningPokerSession[] sessions) {
-        for (int i = 0; i < sessions.length; i++) {
-            if (session.getID() == sessions[i].getID()) {
-                session = sessions[i];
+    public void checkProgress(final PlanningPokerSession[] sessions) {
+        for (final PlanningPokerSession session2 : sessions) {
+            if (session.getID() == session2.getID()) {
+                session = session2;
                 requirements = session.getRequirements();
                 model.updateModel(session.getRequirements());
                 updateOverallProgress();
-                
+
                 if (session.isComplete()) {
                     done = true;
                     disableAndDisplayVotingEnded();
                 }
-                
+
                 if (!done && session.hasEveryoneVoted(UserNum)) {
                     notifyParent();
                     parent.closeSession();
                 }
             }
         }
-        
+
     }
 
     /**
      * Gets the next requirement after voting a requirement.
-     * 
+     * @param parent
      */
     public void getNextSelectedRequirement(final VotingPanel parent) {
         int row = table.getSelectedRow();
@@ -159,16 +161,16 @@ public class VotingOverviewPanel extends JPanel {
      */
     private void updateOverallProgress() {
         int votes = 0;
-        for (RequirementEstimate requirement : requirements) {
+        for (final RequirementEstimate requirement : requirements) {
             if (requirement.getVotes().containsKey(user)) {
                 votes++;
             }
         }
-        Fraction fraction = new Fraction(votes, requirements.size());
+        final Fraction fraction = new Fraction(votes, requirements.size());
         overallProgress.setValue((int) (fraction.getValue() * 1000));
         overallProgress.setForeground(ProgressBarTableCellRenderer.getColor(fraction));
-        overallProgress.setString("Personal voting progress: "
-                        + (int) (fraction.getValue() * 100)+ "%");
+        overallProgress.setString("Personal voting progress: " + (int) (fraction.getValue() * 100)
+                        + "%");
     }
 
     public PlanningPokerSession getSession() {
@@ -179,9 +181,9 @@ public class VotingOverviewPanel extends JPanel {
         parent.showFinishIcon();
     }
 
-    public void passUserNum(int user) {
+    public void passUserNum(final int user) {
         parent.setUserNum(user);
-        this.UserNum = user;
+        UserNum = user; // $codepro.audit.disable multipleReturns
     }
 
     /**
@@ -197,25 +199,27 @@ public class VotingOverviewPanel extends JPanel {
     public List<RequirementEstimate> getRequirements() {
         return requirements;
     }
-    
+
     public void disableAndDisplayVotingEnded() {
-    	if (!session.getDeck().equals("-None-")) {
-    		//parent.getCards().clearCardSelection();
-    		parent.getCards().disableEditing(true);
-    		parent.getButtonPanel().getClearButton().setEnabled(false);
-    		parent.getButtonPanel().getVoteButton().setEnabled(false);
-    	} else {
-    	parent.getButtonPanel().getVoteButton().setEnabled(false);
-    	parent.getButtonPanel().getDontKnowButton().setEnabled(false);
-    	parent.getButtonPanel().getEstimateField().setEnabled(false);
-    	}
-    	parent.showFinishIcon();
+        if (!session.getDeck().equals("-None-")) {
+            //parent.getCards().clearCardSelection();
+            parent.getCards().disableEditing(true);
+            parent.getButtonPanel().getClearButton().setEnabled(false);
+            parent.getButtonPanel().getVoteButton().setEnabled(false);
+        } else {
+            parent.getButtonPanel().getVoteButton().setEnabled(false);
+            parent.getButtonPanel().getDontKnowButton().setEnabled(false);
+            parent.getButtonPanel().getEstimateField().setEnabled(false);
+        }
+        parent.showFinishIcon();
     }
-    
-    public String valueForVote() {
-    	int row = table.getSelectedRow();
-    	if (!model.getValueAt(row, 3).equals("--")) {
-    		return Integer.toString((int) model.getValueAt(row, 3));
-    	} else return "InvalidEntryNeverEnterThis23492910398290349";
+
+    public String valueForVote() { // $codepro.audit.disable multipleReturns
+        final int row = table.getSelectedRow();
+        if (!model.getValueAt(row, 3).equals("--")) {
+            return Integer.toString((int) model.getValueAt(row, 3));
+        } else {
+            return "InvalidEntryNeverEnterThis23492910398290349";
+        }
     }
 }

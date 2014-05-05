@@ -85,6 +85,12 @@ public class ViewEventController {
         main.setSelectedComponent(newSession);
     }
     
+    /**
+     * 
+     * Description goes here.
+     *
+     * @param session
+     */
     public void gameIsOpened(PlanningPokerSession session) {
               final SessionPanel sessionEditor = new SessionPanel(session, true);
               final String tabName = "Edit " + session.getName();
@@ -229,6 +235,7 @@ public class ViewEventController {
      * Opens the voting panel for the session.
      *
      * @param session the session
+     * @param decks
      */
     public void voteOnSession(PlanningPokerSession session, Deck[] decks) {
         boolean exists = false;

@@ -70,6 +70,7 @@ public class VotingPanel extends JPanel {
 	 * Makes a VotingPanel
 	 * 
 	 * @param session the session
+	 * @param decks
 	 */
 	public VotingPanel(final PlanningPokerSession session, Deck[] decks) {
 		this.session = session;
@@ -275,10 +276,20 @@ public class VotingPanel extends JPanel {
 		return session;
 	}
 
+	/**
+	 * 
+	 * Description goes here.
+	 *
+	 */
 	public void dontKnowPressed() {
 		vote(true);
 	}
 
+	/**
+	 * 
+	 * Description goes here.
+	 *
+	 */
 	public void votePressed() {
 		vote(false);
 	}
@@ -367,6 +378,11 @@ public class VotingPanel extends JPanel {
 		return buttons;
 	}
 
+	/**
+	 * 
+	 * Description goes here.
+	 *
+	 */
 	public void showFinishIcon() {
 		label.setVisible(true);
 		countdown.votingComplete();
@@ -376,6 +392,11 @@ public class VotingPanel extends JPanel {
 		UserNum = users;
 	}
 
+	/**
+	 * 
+	 * Description goes here.
+	 *
+	 */
 	public void closeSession(){
 		session = overview.getSession(); //Force the update of the session
 		session.setComplete(true);
