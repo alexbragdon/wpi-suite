@@ -33,17 +33,18 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 public class VotingOverviewPanelTest {
     private VotingOverviewPanel vop;
     private PlanningPokerSession session1;
+    private List<RequirementEstimate> listEst;
     @Before
     public void setUp(){
     	Network.initNetwork(new MockNetwork());
 		Network.getInstance().setDefaultNetworkConfiguration(
 				new NetworkConfiguration("http://wpisuitetng"));
         final RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 123, false);
-        final List<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
+        listEst = new ArrayList<RequirementEstimate>();
         listEst.add(testReq);
 
         session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
-                        listEst, SessionType.REALTIME, false, false, "aGuy", "-None-");    
+                        listEst, SessionType.DISTRIBUTED, false, false, "aGuy", "-None-");    
         vop = new VotingOverviewPanel(listEst, 1, "admin", new VotingPanel(session1, null),  session1);
     }
 
@@ -75,5 +76,10 @@ public class VotingOverviewPanelTest {
     @Test
     public void testDisableAndDisplayVotingEnded(){
         vop.disableAndDisplayVotingEnded();
+        session1 = vop.getSession();
+        session1.setDeck("Default");
+        vop = new VotingOverviewPanel(listEst, 1, "admin", new VotingPanel(session1, null),  session1);
+        vop.disableAndDisplayVotingEnded();
     }
+   
 }

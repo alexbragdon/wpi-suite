@@ -76,7 +76,7 @@ public class DeckTest {
     public void TestCardsToString(){
         int[] fibonacciList = { 0, 1, 1, 2, 3, 5, 8, 13, 21 };
         deck.setCards(fibonacciList);
-        assertEquals(deck.cardsToString(), "0, 1, 1, 2, 3, 5....");
+        assertEquals(deck.cardsToString(), "?, 1, 1, 2, 3, 5....");
         
     }
 }

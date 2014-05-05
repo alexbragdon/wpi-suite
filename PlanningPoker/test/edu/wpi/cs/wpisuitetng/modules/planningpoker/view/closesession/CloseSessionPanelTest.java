@@ -91,7 +91,7 @@ public class CloseSessionPanelTest {
 		assertEquals(0.0, cstm.getValueAt(0, 3));
 		assertEquals(0.0, cstm.getValueAt(0, 4));
 		cstm.setValueAt(3, 0, 5);
-		assertEquals("3", cstm.getValueAt(0, 5));
+		assertEquals(3, cstm.getValueAt(0, 5));
 	}
 
 }

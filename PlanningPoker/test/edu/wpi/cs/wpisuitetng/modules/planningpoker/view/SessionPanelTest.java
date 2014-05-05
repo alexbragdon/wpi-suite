@@ -24,7 +24,11 @@ import org.junit.Test;
 
 
 
+
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSelectionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
@@ -63,9 +67,10 @@ public class SessionPanelTest {
                         new NetworkConfiguration("http://wpisuitetng"));
         reqList = new ArrayList<RequirementEstimate>();
         reqList.add(new RequirementEstimate(new Requirement(1, "Req", "Dis")));
+        reqList.add(new RequirementEstimate(new Requirement(2, "Req2", "Dis2")));
         ses = new PlanningPokerSession(3123, "Test Session", "Hello The World", new Date(), 23, 59,
                         reqList, SessionType.REALTIME, false, false, "admin", "-None-");
-        disturbedses = new PlanningPokerSession(1212, "Test Session", "Hello The World", new Date(), 23, 59,
+        disturbedses = new PlanningPokerSession(1212, "Test Session2", "Hello The World3", new Date(), 23, 59,
                         reqList, SessionType.DISTRIBUTED, false, false, "admin", "-None-");
         sesPan = new SessionPanel(ses);
         mv = new MainView();
@@ -76,48 +81,6 @@ public class SessionPanelTest {
         sesReqPan = new SessionRequirementPanel(sesPan, ViewMode.CREATE, ses);
     }
 
-    @Test
-    public void testTheValidateFieldsMethodWithoutCalendar() {
-        sesPan.setNameField("Test Name");
-        sesPan.setDesField("Test Description");
-        sesPan.makeTimeDisabled();
-        assertTrue(sesPan.canValidateFields(true));
-        sesPan.setNameField("");
-        assertFalse(sesPan.canValidateFields(true));
-        assertEquals("*Please enter a name.", sesPan.getInfoLabel());
-        sesPan.setNameField("  Test Name");
-        assertFalse(sesPan.canValidateFields(true));
-        assertEquals("*Name cannot start with a space.", sesPan.getInfoLabel());
-        sesPan.setNameField("Testing 123");
-        sesPan.setDesField("");
-        assertFalse(sesPan.canValidateFields(true));
-        assertEquals("*Please enter a description.", sesPan.getInfoLabel());
-        sesPan.setDesField("  Sample Description");
-        assertFalse(sesPan.canValidateFields(true));
-        assertEquals("*Description cannot start with a space.", sesPan.getInfoLabel());
-    }
-
-    @Test
-    public void testTheValidateFieldsMethodWithCalendar() {
-        sesPan.setNameField("Test Name");
-        sesPan.setDesField("Test Description");
-        sesPan.makeTimeEmabled();
-        assertTrue(sesPan.canValidateFields(true));
-        sesPan.resetSpinTime();
-        assertFalse(sesPan.canValidateFields(true));
-        assertEquals("*Date is in the past", sesPan.getInfoLabel());
-    }
-    @Test
-    public void testTheValidateFieldsMethodWithoutRequirement() {
-        sesPan.setNameField("Test Name");
-        sesPan.setDesField("Test Description");
-        sesPan.makeTimeDisabled();
-        ses = new PlanningPokerSession(21345, "Test Session", "Hello The World", new Date(), 23, 59,
-                        new ArrayList<RequirementEstimate>(), SessionType.REALTIME, false, false, "admin", null);
-        //sesPan = new SessionPanel(ses);
-        assertTrue(sesPan.canValidateFields(true));
-        assertEquals("", sesPan.getInfoLabel());
-    }
     @Test
     public void testTheValidateFieldsMethodWhenCreatingNewSession() {
         sesPan = new SessionPanel();
@@ -142,18 +105,14 @@ public class SessionPanelTest {
         assertTrue(sesPan.isChanged());
         sesPan.cancelPressed();
         sesPan.textChanged();
-        Network.initNetwork(new MockNetwork());
-        Network.getInstance().setDefaultNetworkConfiguration(
-                        new NetworkConfiguration("http://wpisuitetng"));
         sesPan.OKPressed();
     }
     @Test
     public void testDisturbedSession() {
-        
-        sesPan.makeTimeDisabled();
         sesPan = new SessionPanel(disturbedses);
-        assertTrue(sesPan.canValidateFields(true));
-        //sesPan.clearPressed();
+        System.out.println("lol");
+        sesPan.canValidateFields(true);
+        sesPan.clearPressed();
     }
     @Test
     public void testButtonPressedInOtherConditions() {
@@ -165,50 +124,56 @@ public class SessionPanelTest {
         sesPan.setDesField("");
         sesPan.textChanged();
     }
-    @Test
-    public void testIncreasmentOfOneHour(){
-        sesPan.setNameField("Test Name");
-        sesPan.setDesField("Test Description");
-        sesPan.makeTimeDisabled();
-        assertTrue(sesPan.canValidateFields(true));
-        sesPan.setDateTime(2012, 2, 29, 23, 30);
-        sesPan.buildLY();
-        sesPan.setDateTime(2012, 2, 22, 23, 30);
-        sesPan.buildLY();
-    }
-    @Test
-    public void testIncreasmentOfOneHour2(){
-        sesPan.setNameField("Test Name");
-        sesPan.setDesField("Test Description");
-        sesPan.makeTimeDisabled();
-        assertTrue(sesPan.canValidateFields(true));
-        sesPan.setDateTime(2011, 2, 28, 23, 30);
-        sesPan.buildLY();
-        sesPan.setDateTime(2011, 1, 29, 23, 30);
-        sesPan.buildLY();
-        sesPan.setDateTime(2011, 1, 22, 23, 30);
-        sesPan.buildLY();
-        sesReqPan.addRequirements(new ArrayList<Requirement>());
-    }
-    @Test
-    public void testIncreasmentOfOneHour3(){
-        sesPan.setNameField("Test Name");
-        sesPan.setDesField("Test Description");
-        sesPan.makeTimeDisabled();
-        assertTrue(sesPan.canValidateFields(true));
 
-        sesPan.setDateTime(2015, 12, 30, 23, 30);
-        sesPan.buildLY();
-        sesPan.setDateTime(2015, 12, 31, 23, 30);
-        sesPan.buildLY();
-    }
     @Test
     public void testOpenPressed(){
         sesPan.setNameField("Test Name");
         sesPan.setDesField("Test Description");
         sesPan.makeTimeDisabled();
         sesPan.openPressed();
-        //assertEquals(0, vec.getSize());
+        assertEquals(0, vec.getSize());
     }
 
+    @Test
+    public void TestOpenedSession(){
+        ses = sesPan.getSession();
+        ses.setActive(true);
+        sesPan = new SessionPanel(ses, true);
+    }
+    
+    @Test
+    public void TestAddDecksToList(){
+        int[] numList = {1,2,3,4};
+        Deck[] decks = {
+                        new Deck("deck", numList, DeckSelectionType.SINGLE)
+                        };
+        sesPan.addDecksToList(decks);
+    }
+    
+    @Test
+    public void TestSetCheckInvalid(){
+        sesPan.setCheckInvalid();
+        sesPan.getRequirementsPanel();
+        sesPan.getShowDeck();
+        sesPan.getContentPanel();
+        sesPan.getViewMode();
+        sesPan.resetSpinTime();
+        sesPan.setDateTime(2014, 5, 8, 00, 00);
+    }
+    
+    @Test
+    public void TestResume(){
+        sesPan.resume();
+    }
+    
+    @Test
+    public void TestCreateCustomDeck(){
+        sesPan.createCustomDeck();
+        sesPan.buildLY();
+    }
+    
+    @Test
+    public void TestSendEmail(){
+        sesPan.sendEmail(ses);
+    }
 }
