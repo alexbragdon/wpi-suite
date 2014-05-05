@@ -100,7 +100,13 @@ public class VoteStatisticPanel extends JPanel{
 		listData.removeAllElements();
 		for( UserEstimate votes : selectedRequirement.getVotes().values()){
 			String user = votes.getUser();
-			String estimate = Integer.toString(votes.getTotalEstimate());
+			String estimate = "";
+			if (votes.getTotalEstimate() < 1) {
+				estimate = "?";
+			}
+			else {
+				estimate = Integer.toString(votes.getTotalEstimate());
+			}
 			listData.addElement(user + generateSpace(user, estimate) + estimate );
 		}
 		

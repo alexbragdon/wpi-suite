@@ -108,7 +108,11 @@ public class CloseSessionTableModel extends AbstractTableModel {
             case 4:
                 return session.getRequirements().get(row).calculateMedian();
             case 5:
-                return session.getRequirements().get(row).getFinalEstimate();
+                if (session.getRequirements().get(row).getFinalEstimate() < 1) {
+                	return "?";
+                } else {
+                	return Integer.toString(session.getRequirements().get(row).getFinalEstimate());
+                }
             case 6:
 //            	return session.getRequirements().get(row).isExported();
             	return session.getRequirements().get(row).isExported() ? "      \u2713" : "";
