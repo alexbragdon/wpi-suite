@@ -21,6 +21,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -375,6 +377,62 @@ public class EmailButtonPanel extends ToolbarGroupView {
                 SMSSubmitButton.setEnabled(canValidateSMS());
             }
         });
+        
+        SMScheckPanel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (SMSCheckBox.isSelected()) {
+					SMSCheckBox.setSelected(false);
+				} else {
+					SMSCheckBox.setSelected(true);
+				}
+				SMSSubmitButton.setEnabled(canValidateSMS());
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+		});
+        
+        checkPanel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (emailCheckBox.isSelected()) {
+					emailCheckBox.setSelected(false);
+				} else {
+					emailCheckBox.setSelected(true);
+				}
+				emailSubmitButton.setEnabled(canValidateEmail());
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+			}
+		});
 
         emailPanel.setOpaque(false);
         SMSPanel.setOpaque(false);
