@@ -335,7 +335,7 @@ public class CloseSessionPanel extends JPanel {
         if (dialogResult == JOptionPane.YES_OPTION)
         {
             for (RequirementEstimate re : this.session.getRequirements()) {
-                if (!re.isExported() && (re.getFinalEstimate() != 0)) {
+                if (!re.isExported()) {
                     re.exportToRequirementManager();
                 }
             }
