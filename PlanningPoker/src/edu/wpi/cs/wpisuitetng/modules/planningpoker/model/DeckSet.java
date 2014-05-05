@@ -111,8 +111,13 @@ public class DeckSet {
 		}
 
 		for (int i : cards.getCards()) {
-			sb.append(i);
-			sb.append(", ");
+			if(i == 0){
+				sb.append("?");
+				sb.append(", ");
+			} else {
+				sb.append(i);
+				sb.append(", ");
+			}
 		}
 		sb.setLength(sb.length() - 2); // Trim off last ", "
 		return sb.toString();
