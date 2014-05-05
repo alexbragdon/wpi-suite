@@ -381,7 +381,7 @@ public class CloseSessionPanel extends JPanel {
 
     public String getSelectedVote() {
         if (!table.getValueAt(table.getSelectedRow(), 5).equals("--")) {
-            return (String) table.getValueAt(table.getSelectedRow(), 5);
+            return Integer.toString((Integer) table.getValueAt(table.getSelectedRow(), 5));
         } else
             return "--";
     }
