@@ -260,6 +260,7 @@ public class RequirementEstimate {
             isExported = true;
             Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.POST); // POST == update
             Requirement newRequirement = new Requirement(this.id, this.name, this.description);
+            newRequirement.setType(this.getType());
             String message = ("Estimated updated from Planning Poker Game"); // TODO: Add name of game to Transaction History Message
             TransactionHistory requirementHistory = newRequirement.getHistory();
             requirementHistory.add(message);
