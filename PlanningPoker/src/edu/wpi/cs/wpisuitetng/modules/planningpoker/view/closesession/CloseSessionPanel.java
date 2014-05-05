@@ -22,6 +22,7 @@ import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -219,8 +220,6 @@ public class CloseSessionPanel extends JPanel {
             exportButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     exportPressed();
-                    exportButton.setEnabled(false);
-                    infoLabel.setText("Requirements exported.");
                 }
             });
 
@@ -330,19 +329,27 @@ public class CloseSessionPanel extends JPanel {
      * Export requirement to requirement manager.
      */
     public void exportPressed() {
-        for (RequirementEstimate re : this.session.getRequirements()) {
-            if (!re.isExported() && (re.getFinalEstimate() != 0)) {
-                re.exportToRequirementManager();
+        final int dialogButton = JOptionPane.YES_NO_OPTION;
+        final int dialogResult = JOptionPane.showConfirmDialog(null, 
+                "All valid final estimates will be exported to the Requirement Manager. \nAfter being exported, you cannot change the final estimate.\nAre you sure you want to export these estimates? ", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION)
+        {
+            for (RequirementEstimate re : this.session.getRequirements()) {
+                if (!re.isExported() && (re.getFinalEstimate() != 0)) {
+                    re.exportToRequirementManager();
+                }
             }
+
+            Request request = Network.getInstance().makeRequest("planningpoker/planningpokersession/",
+                            HttpMethod.POST); // POST == update
+            request.setBody(this.session.toJSON());
+            request.send();
+
+            exportButton.setEnabled(false);
+            
+            submitButtons.getEstimateField().setEnabled(false);
+            submitButtons.getButton().setEnabled(false);
         }
-
-        Request request = Network.getInstance().makeRequest("planningpoker/planningpokersession/",
-                        HttpMethod.POST); // POST == update
-        request.setBody(this.session.toJSON());
-        request.send();
-
-        submitButtons.getEstimateField().setEnabled(false);
-        submitButtons.getButton().setEnabled(false);
     }
 
     /**
