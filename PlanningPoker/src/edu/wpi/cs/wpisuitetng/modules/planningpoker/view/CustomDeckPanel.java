@@ -48,268 +48,286 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSet;
  */
 @SuppressWarnings("serial")
 public class CustomDeckPanel extends JPanel {
-	private Color color = UIManager.getColor ( "Panel.background" );
-	private JLabel deckName;
-	private JTextField deckNameTxt;
+    private Color color = UIManager.getColor("Panel.background");
 
-	private JRadioButton singleSelect;
-	private JRadioButton multiSelect;
+    private JLabel deckName;
 
-	private JCheckBox dontKnowCard;
+    private JTextField deckNameTxt;
 
-	private JButton createDeck;
-	private JButton cancelDeck;
-	private SessionPanel parent;
-	private JLabel title;
-	private final JLabel numLabel;
-	private final JLabel imgLabel;
-	private Image cardImg;
-	private JPanel deckNamePanel;
-	private JScrollPane newCardScroll;
-	private CustomCardPanel scrollPanel;
-	private JLabel errorLabel;
-	private JPanel radioButtonPanel;
+    private JRadioButton singleSelect;
 
-	TitledBorder titleBorder;
-	TitledBorder cardTitle;
+    private JRadioButton multiSelect;
 
+    private JCheckBox dontKnowCard;
 
-	public CustomDeckPanel(SessionPanel parent){
-		this.parent = parent;
+    private JButton createDeck;
 
-		this.setLayout(new MigLayout());
+    private JButton cancelDeck;
 
-		radioButtonPanel = new JPanel();
-		radioButtonPanel.setLayout(new MigLayout("insets 0 0 0 0"));
-		radioButtonPanel.setPreferredSize(new Dimension(250, 80));
-		radioButtonPanel.setMaximumSize(new Dimension(250, 80));
-		imgLabel = new JLabel();
-		imgLabel.setLayout(new BorderLayout());
-		numLabel = new JLabel("");
-		numLabel.setFont(numLabel.getFont().deriveFont(Font.PLAIN, 120));
-		numLabel.setHorizontalAlignment(JLabel.CENTER);
+    private SessionPanel parent;
 
-		JPanel emptyPanel1 = new JPanel();
-		JPanel emptyPanel2 = new JPanel();
-		emptyPanel1.setPreferredSize(new Dimension(1, 400));
-		emptyPanel2.setPreferredSize(new Dimension(50, 400));
-		emptyPanel1.setMinimumSize(new Dimension(1, 400));
-		emptyPanel2.setMinimumSize(new Dimension(50, 400));
+    private JLabel title;
 
-		title = new JLabel("Create a new deck");
-		cardTitle = BorderFactory.createTitledBorder("               Enter card values *");
-		cardTitle.setTitleFont(new Font(title.getFont().getName(), Font.PLAIN, 14));
-		cardTitle.setBorder(BorderFactory.createLineBorder(color));
-		scrollPanel = new CustomCardPanel(this);
-		newCardScroll = new JScrollPane(scrollPanel);
-		newCardScroll.setPreferredSize(new Dimension(235, 460));
-		newCardScroll.setBorder(cardTitle);
-		newCardScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
+    private final JLabel numLabel;
 
-		this.deckName = new JLabel("Deck name *  ");
-		this.deckNameTxt = new JTextField();
-		deckNameTxt.setPreferredSize(new Dimension(300, 35));
-		deckNameTxt.setText("New Deck");
-		this.singleSelect = new JRadioButton("Single selection");
-		this.multiSelect = new JRadioButton("Multiple selection");
-		this.dontKnowCard = new JCheckBox("Have an \"I don't know\" card");
-		this.createDeck = new JButton("Create Deck");
-		this.cancelDeck = new JButton("Cancel Deck Creation");
-		titleBorder = BorderFactory.createTitledBorder("Deck selection mode");
-		title.setFont(new Font(title.getFont().getName(), Font.BOLD, 15));
-		deckNamePanel = new JPanel();
-		deckNamePanel.setPreferredSize(new Dimension(450, 35));
-		deckNamePanel.setLayout(new BorderLayout());
-		singleSelect.setSelected(true);
+    private final JLabel imgLabel;
 
-		errorLabel = new JLabel(" ");
-		errorLabel.setForeground(Color.RED);
+    private Image cardImg;
 
-		createDeck.setEnabled(false);
+    private JPanel deckNamePanel;
 
-		try {
-			this.cardImg = ImageIO.read(getClass().getResource("blank-medium.png"));
-			Image image2 = ImageIO.read(getClass().getResource("cancel-icon.png"));
-			Image image1 = ImageIO.read(getClass().getResource("save-icon.png"));
-			createDeck.setIcon(new ImageIcon(image1));
-			cancelDeck.setIcon(new ImageIcon(image2));
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-		imgLabel.setIcon(new ImageIcon(this.cardImg));
-		imgLabel.add(numLabel);
+    private JScrollPane newCardScroll;
 
+    private CustomCardPanel scrollPanel;
 
-		setupListeners();
+    private JLabel errorLabel;
 
-		add(title, "wrap");
-		deckNamePanel.add(this.deckName, BorderLayout.WEST);
-		deckNamePanel.add(this.deckNameTxt, BorderLayout.CENTER);
-		add(deckNamePanel,"span x, wrap");
-		add(emptyPanel1,"span 1 4");
-		add(imgLabel);
-		add(emptyPanel2,"span 1 4");
-		add(newCardScroll,"span 1 4,wrap");
-		add(errorLabel, "span 2, wrap");
-		radioButtonPanel.add(singleSelect,"wrap");
-		radioButtonPanel.add(multiSelect);
-		radioButtonPanel.setBorder(titleBorder);
-		add(radioButtonPanel, "wrap");
-		add(this.dontKnowCard,"wrap");
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.add(new JLabel("    "));
-		buttonPanel.add(createDeck);
-		buttonPanel.add(new JLabel("              "));
-		buttonPanel.add(cancelDeck);
-		add(buttonPanel,"span 4");
+    private JPanel radioButtonPanel;
 
-		validateDeckName();
-	}
+    TitledBorder titleBorder;
 
-	public void setupListeners(){
-		newCardScroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
-	        public void adjustmentValueChanged(AdjustmentEvent e) {  
-	            e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
-	        }
-	    });
-		
-		createDeck.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Deck newDeck = createDeckFromFields();
-				AddDeckController.getInstance().addDeck(newDeck);
-				parent.getContentPanel().setRightComponent(parent.getRequirementsPanel());
-				parent.getShowDeck().setEnabled(true);
-			}
-		});
+    TitledBorder cardTitle;
 
-		cancelDeck.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				parent.getContentPanel().setRightComponent(parent.getRequirementsPanel());
-				parent.getShowDeck().setEnabled(true);
-			}
-		});
+    public CustomDeckPanel(SessionPanel parent) {
+        this.parent = parent;
 
-		singleSelect.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				multiSelect.setSelected(false);
-				if(!multiSelect.isSelected()) singleSelect.setSelected(true);
-			}
-		});
+        this.setLayout(new MigLayout());
 
-		multiSelect.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				singleSelect.setSelected(false);
-				if(!singleSelect.isSelected()) multiSelect.setSelected(true);
-			}
-		});
+        radioButtonPanel = new JPanel();
+        radioButtonPanel.setLayout(new MigLayout("insets 0 0 0 0"));
+        radioButtonPanel.setPreferredSize(new Dimension(250, 80));
+        radioButtonPanel.setMaximumSize(new Dimension(250, 80));
+        imgLabel = new JLabel();
+        imgLabel.setLayout(new BorderLayout());
+        numLabel = new JLabel("");
+        numLabel.setFont(numLabel.getFont().deriveFont(Font.PLAIN, 120));
+        numLabel.setHorizontalAlignment(JLabel.CENTER);
 
-		deckNameTxt.getDocument().addDocumentListener(new DocumentListener() {
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				validateDeckName();
-			}
+        JPanel emptyPanel1 = new JPanel();
+        JPanel emptyPanel2 = new JPanel();
+        emptyPanel1.setPreferredSize(new Dimension(1, 400));
+        emptyPanel2.setPreferredSize(new Dimension(50, 400));
+        emptyPanel1.setMinimumSize(new Dimension(1, 400));
+        emptyPanel2.setMinimumSize(new Dimension(50, 400));
 
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validateDeckName();
-			}
+        title = new JLabel("Create a new deck");
+        cardTitle = BorderFactory.createTitledBorder("               Enter card values *");
+        cardTitle.setTitleFont(new Font(title.getFont().getName(), Font.PLAIN, 14));
+        cardTitle.setBorder(BorderFactory.createLineBorder(color));
+        scrollPanel = new CustomCardPanel(this);
+        newCardScroll = new JScrollPane(scrollPanel);
+        newCardScroll.setPreferredSize(new Dimension(235, 460));
+        newCardScroll.setBorder(cardTitle);
+        newCardScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				// TODO Auto-generated method stub
-				validateDeckName();
-			}
-		});
-	}
+        this.deckName = new JLabel("Deck name *  ");
+        this.deckNameTxt = new JTextField();
+        deckNameTxt.setPreferredSize(new Dimension(300, 35));
+        deckNameTxt.setText("New Deck");
+        this.singleSelect = new JRadioButton("Single selection");
+        this.multiSelect = new JRadioButton("Multiple selection");
+        this.dontKnowCard = new JCheckBox("Have an \"I don't know\" card");
+        this.createDeck = new JButton("Create Deck");
+        this.cancelDeck = new JButton("Cancel Deck Creation");
+        titleBorder = BorderFactory.createTitledBorder("Deck selection mode");
+        title.setFont(new Font(title.getFont().getName(), Font.BOLD, 15));
+        deckNamePanel = new JPanel();
+        deckNamePanel.setPreferredSize(new Dimension(450, 35));
+        deckNamePanel.setLayout(new BorderLayout());
+        singleSelect.setSelected(true);
+        createDeck.setToolTipText("Save this new custom deck");
 
-	protected Deck createDeckFromFields() {
-		Deck newDeck = new Deck("Empty", null, DeckSelectionType.SINGLE);
-		newDeck.setName(deckNameTxt.getText());
+        errorLabel = new JLabel(" ");
+        errorLabel.setForeground(Color.RED);
 
-		if(singleSelect.isSelected()){
-			newDeck.setType(DeckSelectionType.SINGLE);
-		} else {
-			newDeck.setType(DeckSelectionType.MULTI);
-		}
+        createDeck.setEnabled(false);
 
-		int[] cardInts;
-		
-		if(dontKnowCard.isSelected()){
-			cardInts = new int[scrollPanel.getCards().size()];
-		} else {
-			cardInts = new int[scrollPanel.getCards().size() - 1];
-		}
+        try {
+            this.cardImg = ImageIO.read(getClass().getResource("blank-medium.png"));
+            Image image2 = ImageIO.read(getClass().getResource("cancel-icon.png"));
+            Image image1 = ImageIO.read(getClass().getResource("save-icon.png"));
+            createDeck.setIcon(new ImageIcon(image1));
+            cancelDeck.setIcon(new ImageIcon(image2));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        imgLabel.setIcon(new ImageIcon(this.cardImg));
+        imgLabel.add(numLabel);
 
-		if(dontKnowCard.isSelected()){
-			cardInts[0] = 0;
-			for(int i = 1; i < scrollPanel.getCards().size(); i++){
-				cardInts[i] = Integer.parseInt(scrollPanel.getCards().get(i - 1).getTextField().getText());
-			}
-		} else {
-			for(int i = 0; i < scrollPanel.getCards().size() - 1; i++){
-				cardInts[i] = Integer.parseInt(scrollPanel.getCards().get(i).getTextField().getText());
-			}
-		}
-		
-		DeckSet.getInstance().addDeck(newDeck);
+        setupListeners();
 
-		newDeck.setCards(cardInts);
-		return newDeck;
-	}
+        add(title, "wrap");
+        deckNamePanel.add(this.deckName, BorderLayout.WEST);
+        deckNamePanel.add(this.deckNameTxt, BorderLayout.CENTER);
+        add(deckNamePanel, "span x, wrap");
+        add(emptyPanel1, "span 1 4");
+        add(imgLabel);
+        add(emptyPanel2, "span 1 4");
+        add(newCardScroll, "span 1 4,wrap");
+        add(errorLabel, "span 2, wrap");
+        radioButtonPanel.add(singleSelect, "wrap");
+        radioButtonPanel.add(multiSelect);
+        radioButtonPanel.setBorder(titleBorder);
+        add(radioButtonPanel, "wrap");
+        add(this.dontKnowCard, "wrap");
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(new JLabel("    "));
+        buttonPanel.add(createDeck);
+        buttonPanel.add(new JLabel("              "));
+        buttonPanel.add(cancelDeck);
+        add(buttonPanel, "span 4");
 
-	/**
-	 * Validate the deck name.
-	 * If the deck name is valid, keeps on validating the cards.
-	 */
-	private void validateDeckName(){
-		if(deckNameTxt.getText().length() == 0){
-			errorLabel.setText("*Enter the name of this customed deck.");
-			createDeck.setEnabled(false);
-		}else if (deckNameTxt.getText().length() > 0 && deckNameTxt.getText().charAt(0) == ' '){
-			errorLabel.setText("*Deck name cannot start with a space.");
-			createDeck.setEnabled(false);
-		}else{
-			errorLabel.setText(" ");
-			createDeck.setEnabled(true);
-			scrollPanel.checkDeletion();
-		}
-	}
+        validateDeckName();
+    }
 
-	/**
-	 * Update the value of the card.
-	 * @param cardValue the card value integer in string form.
-	 */
-	public void updateCard(String cardValue){
-		numLabel.setText(cardValue);
-	}
+    public void setupListeners() {
+        newCardScroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                e.getAdjustable().setValue(e.getAdjustable().getMaximum());
+            }
+        });
 
-	/**
-	 * Show error message and disable button when notified.
-	 */
-	public void cardInvalid(){
-		errorLabel.setText("*Card deck invalid. Check entries.");
-		createDeck.setEnabled(false);
-	}
+        createDeck.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Deck newDeck = createDeckFromFields();
+                AddDeckController.getInstance().addDeck(newDeck);
+                parent.getContentPanel().setRightComponent(parent.getRequirementsPanel());
+                parent.getShowDeck().setEnabled(true);
+            }
+        });
 
-	/**
-	 * Clear error message and enable button when notified.
-	 */
-	public void cardValid(){
-		errorLabel.setText(" ");
-		createDeck.setEnabled(true);
-	}
+        cancelDeck.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                parent.getContentPanel().setRightComponent(parent.getRequirementsPanel());
+                parent.getShowDeck().setEnabled(true);
+            }
+        });
 
-	/**
-	 * Show error message and disable button when notified.
-	 */
-	public void noCardError(){
-		errorLabel.setText("*Enter at least one card to create deck.");
-		createDeck.setEnabled(false);
-	}
+        singleSelect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                multiSelect.setSelected(false);
+                if (!multiSelect.isSelected())
+                    singleSelect.setSelected(true);
+            }
+        });
+
+        multiSelect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                singleSelect.setSelected(false);
+                if (!singleSelect.isSelected())
+                    multiSelect.setSelected(true);
+            }
+        });
+
+        deckNameTxt.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validateDeckName();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                // TODO Auto-generated method stub
+                validateDeckName();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                // TODO Auto-generated method stub
+                validateDeckName();
+            }
+        });
+    }
+
+    protected Deck createDeckFromFields() {
+        Deck newDeck = new Deck("Empty", null, DeckSelectionType.SINGLE);
+        newDeck.setName(deckNameTxt.getText());
+
+        if (singleSelect.isSelected()) {
+            newDeck.setType(DeckSelectionType.SINGLE);
+        } else {
+            newDeck.setType(DeckSelectionType.MULTI);
+        }
+
+        int[] cardInts;
+
+        if (dontKnowCard.isSelected()) {
+            cardInts = new int[scrollPanel.getCards().size()];
+        } else {
+            cardInts = new int[scrollPanel.getCards().size() - 1];
+        }
+
+        if (dontKnowCard.isSelected()) {
+            cardInts[0] = 0;
+            for (int i = 1; i < scrollPanel.getCards().size(); i++) {
+                cardInts[i] = Integer.parseInt(scrollPanel.getCards().get(i - 1).getTextField()
+                                .getText());
+            }
+        } else {
+            for (int i = 0; i < scrollPanel.getCards().size() - 1; i++) {
+                cardInts[i] = Integer.parseInt(scrollPanel.getCards().get(i).getTextField()
+                                .getText());
+            }
+        }
+
+        DeckSet.getInstance().addDeck(newDeck);
+
+        newDeck.setCards(cardInts);
+        return newDeck;
+    }
+
+    /**
+     * Validate the deck name. If the deck name is valid, keeps on validating the cards.
+     */
+    private void validateDeckName() {
+        if (deckNameTxt.getText().length() == 0) {
+            errorLabel.setText("*Enter the name of this customed deck.");
+            createDeck.setEnabled(false);
+        } else if (deckNameTxt.getText().length() > 0 && deckNameTxt.getText().charAt(0) == ' ') {
+            errorLabel.setText("*Deck name cannot start with a space.");
+            createDeck.setEnabled(false);
+        } else {
+            errorLabel.setText(" ");
+            createDeck.setEnabled(true);
+            scrollPanel.checkDeletion();
+        }
+    }
+
+    /**
+     * Update the value of the card.
+     * 
+     * @param cardValue the card value integer in string form.
+     */
+    public void updateCard(String cardValue) {
+        numLabel.setText(cardValue);
+    }
+
+    /**
+     * Show error message and disable button when notified.
+     */
+    public void cardInvalid() {
+        errorLabel.setText("*Card deck invalid. Check entries.");
+        createDeck.setEnabled(false);
+    }
+
+    /**
+     * Clear error message and enable button when notified.
+     */
+    public void cardValid() {
+        errorLabel.setText(" ");
+        createDeck.setEnabled(true);
+    }
+
+    /**
+     * Show error message and disable button when notified.
+     */
+    public void noCardError() {
+        errorLabel.setText("*Enter at least one card to create deck.");
+        createDeck.setEnabled(false);
+    }
 
 }
