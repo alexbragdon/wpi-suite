@@ -123,21 +123,4 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 	    return rgb;
 	}
 
-	/**
-	 * Compare the fraction to one half
-	 * @param f The Fraction
-	 * @return return -1 if the fraction is less than one half, 0 if equal,
-	 * and one if greater
-	 */
-	private static int compareToHalf(Fraction f) {
-		if (f.getNumerator() * 2 == f.getDenominator()) {
-			return 0;
-		}
-
-		if (f.getNumerator() * 2 > f.getDenominator()) {
-			return 1;
-		}
-
-		return -1;
-	}
 }
