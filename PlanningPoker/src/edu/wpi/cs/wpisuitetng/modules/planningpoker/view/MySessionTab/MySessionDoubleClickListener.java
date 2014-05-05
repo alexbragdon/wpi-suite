@@ -32,7 +32,9 @@ public class MySessionDoubleClickListener extends MouseAdapter {
      */
     public void mousePressed(MouseEvent me) {
         if (me.getClickCount() == 2) {
-            parentView.getToolbarView().GetSuperButtonPanel().pressSuperButton();
+            if(parentView.getToolbarView().GetSuperButtonPanel().isVisible()){
+                parentView.getToolbarView().GetSuperButtonPanel().pressSuperButton();
+            }
         }
     }
 
