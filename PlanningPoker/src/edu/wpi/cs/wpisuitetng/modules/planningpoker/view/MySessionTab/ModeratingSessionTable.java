@@ -40,7 +40,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.Sessi
  */
 public class ModeratingSessionTable extends JTable {
 
-    private DefaultTableModel tableModel = null;
+    private ModeratingSessionTableModel tableModel = null;
 
     private final Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
 
@@ -52,10 +52,9 @@ public class ModeratingSessionTable extends JTable {
      * @param data Initial data to fill OverviewTable
      * @param columnNames Column headers of OverviewTable
      */
-    public ModeratingSessionTable(Object[][] data, String[] columnNames,
-                    final MySessionPanel mySessionPanel) {
+    public ModeratingSessionTable(final MySessionPanel mySessionPanel) {
         this.mySessionPanel = mySessionPanel;
-        tableModel = new DefaultTableModel(data, columnNames);
+        tableModel = new ModeratingSessionTableModel();
         this.setModel(tableModel);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setDropMode(DropMode.ON);
@@ -133,24 +132,7 @@ public class ModeratingSessionTable extends JTable {
      * @param session PlanningPokerSession
      */
     public void addSessions(PlanningPokerSession session) {
-        Date date = new Date(session.getDate().getTime());
-        String dateString = "--";
-        if (session.getType() == SessionType.DISTRIBUTED) {
-            final Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            calendar.set(Calendar.HOUR_OF_DAY, session.getHour());
-            calendar.set(Calendar.MINUTE, session.getMin());
-            date = calendar.getTime();
-            dateString = new SimpleDateFormat("MM/dd/yyyy HH:mm").format(date);
-        }
-
-        String statusString = "New";
-        if (session.isActive()) {
-            statusString = "Active";
-        }
-        tableModel.addRow(new String[] { String.valueOf(session.getID()), session.getName(),
-                        dateString, statusString });
-
+    	tableModel.addSession(session);
     }
 
     @Override

@@ -39,11 +39,8 @@ public class ModeratingSessionPanel extends JPanel {
      */
     public ModeratingSessionPanel(MainView mainView, final MySessionPanel mySessionPanel) {
         parentView = mainView;
-        final String[] columnNames = { "ID", "Name", "End Time", "Status" };
 
-        final Object[][] data = {};
-
-        table = new ModeratingSessionTable(data, columnNames, mySessionPanel);
+        table = new ModeratingSessionTable(mySessionPanel);
 
         final JScrollPane tablePanel = new JScrollPane(table);
 
