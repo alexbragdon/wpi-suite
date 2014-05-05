@@ -368,6 +368,7 @@ public class VotingPanel extends JPanel {
 
 	public void showFinishIcon() {
 		label.setVisible(true);
+		countdown.votingComplete();
 	}
 
 	public void setUserNum(final int users) {
