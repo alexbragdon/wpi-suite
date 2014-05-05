@@ -233,7 +233,7 @@ public class CustomCardValuePanel extends JPanel {
 	 * @param s the string for testing
 	 * @return true if the string is a number, false otherwise
 	 */
-	public boolean isInteger(String s) {
+	private boolean isInteger(String s) {
 		try { 
 			Integer.parseInt(s); 
 		} catch(NumberFormatException e) {

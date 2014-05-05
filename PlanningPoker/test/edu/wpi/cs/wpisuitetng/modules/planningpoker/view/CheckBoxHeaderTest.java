@@ -9,13 +9,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
-
-
-
-
-
-
-
 import javax.swing.JButton;
 import javax.swing.JTable;
 
@@ -40,13 +33,19 @@ public class CheckBoxHeaderTest {
 	public void setUp() throws Exception {
 		cbh = new CheckBoxHeader(new JTableHeader());
 	}
+	
 	@Test
 	public void testSetGetColumn(){
 		cbh.setCheck(true, new JTableHeader());
 	}
+	
 	@Test
 	public void testCheckBox(){
 		cbh.getTableCellRendererComponent(new JTable(), new JButton(), true, true, 0, 0);
 	}
-
+	
+	@Test
+	public void testGetCheck(){
+	    cbh.getCheck();
+	}
 }

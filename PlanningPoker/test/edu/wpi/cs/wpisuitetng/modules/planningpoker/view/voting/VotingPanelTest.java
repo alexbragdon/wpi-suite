@@ -16,9 +16,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.DeckSelectionType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.PlanningPokerSession;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.RequirementEstimate;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.characteristics.SessionType;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -36,12 +39,20 @@ public class VotingPanelTest {
     	Network.initNetwork(new MockNetwork());
 		Network.getInstance().setDefaultNetworkConfiguration(
 				new NetworkConfiguration("http://wpisuitetng"));
-        final RequirementEstimate testReq = new RequirementEstimate(10, "I oh so love tests", 13, false);
+        final RequirementEstimate testReq = new RequirementEstimate( new Requirement(10, "I oh so love tests", "Test"));
         final List<RequirementEstimate> listEst = new ArrayList<RequirementEstimate>();
         listEst.add(testReq);
         final PlanningPokerSession session1 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
-                        listEst, SessionType.DISTRIBUTED, false, false, "aGuy", "-None-");    
+                        listEst, SessionType.DISTRIBUTED, false, false, "aGuy", "-None-");
+        final PlanningPokerSession session2 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
+                        listEst, SessionType.DISTRIBUTED, false, false, "aGuy", "Default");
+        final PlanningPokerSession session3 = new PlanningPokerSession(6, "DummySession", "HonkHonk", new Date(), 23, 59,
+                        listEst, SessionType.DISTRIBUTED, false, false, "aGuy", "Test");
+        int[] fibonacciList = { 0, 1, 1, 2, 3, 5, 8, 13, 21 };
+        Deck[] decks ={ new Deck("Test", fibonacciList, DeckSelectionType.MULTI)};
         vp = new VotingPanel(session1, null);
+        vp = new VotingPanel(session2, decks);
+        vp = new VotingPanel(session3, decks);
     }
 
     @Test
