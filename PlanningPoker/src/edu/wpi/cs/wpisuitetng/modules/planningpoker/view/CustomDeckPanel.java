@@ -16,6 +16,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -160,13 +162,17 @@ public class CustomDeckPanel extends JPanel {
 		buttonPanel.add(new JLabel("              "));
 		buttonPanel.add(cancelDeck);
 		add(buttonPanel,"span 4");
-//		add(this.createDeck);
-//		add(this.cancelDeck);
 
 		validateDeckName();
 	}
 
 	public void setupListeners(){
+		newCardScroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
+	        public void adjustmentValueChanged(AdjustmentEvent e) {  
+	            e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
+	        }
+	    });
+		
 		createDeck.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {

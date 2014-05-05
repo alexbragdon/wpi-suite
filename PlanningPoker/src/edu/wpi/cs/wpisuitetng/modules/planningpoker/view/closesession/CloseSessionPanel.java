@@ -67,7 +67,7 @@ public class CloseSessionPanel extends JPanel {
     RequirementEstimate currentRequirement;
     
     private JButton exportButton = new JButton(
-            "<html>Send to<br />requirements<br />manager</html>");
+            "<html>Send all to<br />Requirements<br />Manager</html>");
 
     /**
      * Creates a new panel to enter estimates while closing the given session.
@@ -324,6 +324,8 @@ public class CloseSessionPanel extends JPanel {
                 re.exportToRequirementManager();
             } 
         }
+        submitButtons.getEstimateField().setEnabled(false);
+        submitButtons.getButton().setEnabled(false);
     }
 
     /**

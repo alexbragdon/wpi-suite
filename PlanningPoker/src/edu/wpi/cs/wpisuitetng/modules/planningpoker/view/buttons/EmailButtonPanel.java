@@ -313,7 +313,7 @@ public class EmailButtonPanel extends ToolbarGroupView {
         SMSTestButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (canValidateSMS()) {
+                if (canValidateSMSWithoutChange()) {
                     User tmpuser = displayUser;
                     tmpuser.setCarrier((String) CarrierChooser.getSelectedItem());
                     tmpuser.setPhoneNumber(SMSField.getText().replaceAll("[^\\d]", ""));
