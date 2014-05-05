@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -164,13 +165,15 @@ public class CustomDeckPanel extends JPanel {
 		buttonPanel.add(cancelDeck);
 		add(buttonPanel,"span 4");
 
+
 		validateDeckName();
 	}
 
 	public void setupListeners(){
 //		newCardScroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
 //	        public void adjustmentValueChanged(AdjustmentEvent e) {  
-//	            e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
+//	        	scrollPanel.scrollRectToVisible(
+//	        			  new Rectangle(0,scrollPanel.getHeight()-2,1,1));
 //	        }
 //	    });
 		
@@ -317,5 +320,13 @@ public class CustomDeckPanel extends JPanel {
 	public void noCardError(){
 		errorLabel.setText("*Enter at least one card to create deck.");
 		createDeck.setEnabled(false);
+	}
+	
+	/**
+	 * Adjust the scroll bar.
+	 */
+	public void adjustToolBar(){
+		scrollPanel.scrollRectToVisible(
+  			  new Rectangle(0,scrollPanel.getHeight()-2,1,1));
 	}
 }

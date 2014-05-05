@@ -156,4 +156,10 @@ public class CustomCardPanel extends JPanel {
     public void notifyParentNoCard(){
 		parent.noCardError();
 	}
+    /**
+     * Notify parent to adjust scroll bar
+     */
+    public void notifyAdjust(){
+    	parent.adjustToolBar();
+    }
 }

@@ -44,6 +44,7 @@ public class CustomCardValuePanel extends JPanel {
 	private JTextField textField;
 	private JButton button;
 	private CustomCardPanel parent;
+	private int countCard;
 
 	Color green = new Color(102, 204, 102);
 
@@ -56,6 +57,7 @@ public class CustomCardValuePanel extends JPanel {
 		this.setMaximumSize(new Dimension(200, 35));
 		this.setMinimumSize(new Dimension(200, 35));
 		
+		countCard = parent.getCards().size();
 		label = new JLabel("  ");
 		label.setPreferredSize(new Dimension(45, 35));
 		label.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -92,6 +94,10 @@ public class CustomCardValuePanel extends JPanel {
 			@Override
 			public void focusGained(FocusEvent e) {
 				// TODO Auto-generated method stub
+            	if(parent.getCards().size() > countCard){
+            		countCard = parent.getCards().size();
+            		parent.notifyAdjust();
+            	}
 				if(validateField()){
 					parent.passCardValue(textField.getText());
 				}else{
@@ -105,6 +111,8 @@ public class CustomCardValuePanel extends JPanel {
 					parent.notifyParentInvalid();
 				}
             	parent.checkDeletion();
+            	
+
 			}
 
 			@Override
@@ -189,6 +197,7 @@ public class CustomCardValuePanel extends JPanel {
 					parent.notifyParentInvalid();
 				}
 				parent.checkDeletion();
+				parent.checkCreateRemoveCard();
 			}
 		});
 		
