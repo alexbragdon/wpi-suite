@@ -75,6 +75,7 @@ public class CustomDeckPanel extends JPanel {
 
 
 	public CustomDeckPanel(SessionPanel parent){
+		parent.pause();
 		this.parent = parent;
 
 		this.setLayout(new MigLayout());
@@ -180,6 +181,9 @@ public class CustomDeckPanel extends JPanel {
 				AddDeckController.getInstance().addDeck(newDeck);
 				parent.getContentPanel().setRightComponent(parent.getRequirementsPanel());
 				parent.getShowDeck().setEnabled(true);
+				parent.setCheckInvalid();
+				parent.canValidateFields(true);
+				parent.resume();
 			}
 		});
 
@@ -188,6 +192,9 @@ public class CustomDeckPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				parent.getContentPanel().setRightComponent(parent.getRequirementsPanel());
 				parent.getShowDeck().setEnabled(true);
+				parent.setCheckInvalid();
+				parent.canValidateFields(true);
+				parent.resume();
 			}
 		});
 
@@ -311,5 +318,4 @@ public class CustomDeckPanel extends JPanel {
 		errorLabel.setText("*Enter at least one card to create deck.");
 		createDeck.setEnabled(false);
 	}
-
 }

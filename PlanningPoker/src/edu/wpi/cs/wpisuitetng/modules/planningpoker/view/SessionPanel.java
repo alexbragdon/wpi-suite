@@ -143,6 +143,10 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      * Date chooser to select when session ends
      */
     JCalendar dateChooser;
+    
+    Timer getDecks;
+    
+    boolean checkInvalid;
 
     /**
      * Create, reset, cancel buttons at the bottom.
@@ -160,6 +164,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         viewMode = ViewMode.EDIT;
         dt = new Date();
         this.buildLayout();
+        checkInvalid = true;
     }
 
     /**
@@ -172,6 +177,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         viewMode = ViewMode.CREATE;
         dt = new Date();
         this.buildLayout();
+        checkInvalid = true;
     }
 
     public SessionPanel(PlanningPokerSession session, boolean opened) {
@@ -179,6 +185,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         viewMode = ViewMode.OPENED;
         dt = new Date();
         this.buildLayout();
+        checkInvalid = true;
     }
 
     /**
@@ -189,6 +196,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      * @return true if all fields are valid
      */
     public boolean canValidateFields(boolean display) {
+    	display = display && checkInvalid;
         boolean isNameValid;
         boolean isDescriptionValid;
         boolean isDateValid;
@@ -261,11 +269,11 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
         }
 
         isReqsValid = requirementsPanel.getSelectedRequirements().size() > 0;
-        if (!isReqsValid) {
+        if (!isReqsValid && display) {
             infoLabel.setText("*Select at least one requirement");
         }
 
-        if (isOpen) {
+        if (isOpen && display) {
             infoLabel.setText("*Cannot update an open session.");
         }
 
@@ -304,7 +312,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      */
     private void buildLayout() {
 
-        showDeck.setToolTipText("Create a new custom deck of cards to play Planning Poker with");
+        showDeck.setToolTipText("Customize a new custom deck of cards to play Planning Poker with");
 
         if (viewMode == ViewMode.EDIT || viewMode == ViewMode.OPENED) {
             selectedDeck = displaySession.getDeck();
@@ -550,7 +558,7 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
             }
         };
 
-        Timer getDecks = new Timer(true);
+        getDecks = new Timer();
         getDecks.scheduleAtFixedRate(refreshDecks, 0, 1000);
 
         setupListeners();
@@ -686,6 +694,9 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
                 // TODO: Have it open the custom deck panel
                 // ViewEventController.getInstance().viewDeck();
                 createCustomDeck();
+                pause();
+                infoLabel.setText(" ");
+                
             }
         });
 
@@ -1076,5 +1087,39 @@ public class SessionPanel extends JPanel implements SessionButtonListener {
      */
     public JButton getShowDeck() {
         return showDeck;
+    }
+    
+    /**
+     * Pause the timer
+     * Do this by cancel the current running timer.
+     */
+    public void pause() {
+    	checkInvalid = false;
+        getDecks.cancel();
+    }
+
+    /**
+     * Resume the timer
+     * Do this by creating a new time and do the same task
+     */
+    public void resume() {
+        getDecks = new Timer();
+        TimerTask refreshDecks = new TimerTask() {
+            public void run() {
+                try {
+                    getAllDecks();
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        getDecks.schedule( refreshDecks, 0, 1000 );
+    }
+    
+    /**
+     * Set the check invalid to true so that the validator can start.
+     */
+    public void setCheckInvalid(){
+    	checkInvalid = true;
     }
 }
