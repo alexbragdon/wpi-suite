@@ -92,6 +92,22 @@ public class CloseSessionPanel extends JPanel {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.getColumnModel().getColumn(6).setMinWidth(60);
         table.getColumnModel().getColumn(6).setMaxWidth(60);
+        
+        table.getColumnModel().getColumn(0).setMinWidth(80);
+        table.getColumnModel().getColumn(0).setPreferredWidth(300);
+        table.getColumnModel().getColumn(1).setMinWidth(50);
+        table.getColumnModel().getColumn(1).setPreferredWidth(70);
+        table.getColumnModel().getColumn(2).setMinWidth(0);
+        table.getColumnModel().getColumn(2).setPreferredWidth(0);
+        table.getColumnModel().getColumn(2).setMaxWidth(0);
+        table.getColumnModel().getColumn(3).setMinWidth(50);
+        table.getColumnModel().getColumn(3).setPreferredWidth(50);
+        table.getColumnModel().getColumn(4).setMinWidth(50);
+        table.getColumnModel().getColumn(4).setPreferredWidth(50);
+        table.getColumnModel().getColumn(5).setMinWidth(50);
+        table.getColumnModel().getColumn(5).setPreferredWidth(50);
+        
+        
         buildLayout();
         updateSelectedRequirement(getSelectedRequirement());
     }
