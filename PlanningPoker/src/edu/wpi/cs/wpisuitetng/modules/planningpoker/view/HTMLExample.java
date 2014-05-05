@@ -8,22 +8,22 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+
+
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 
-import net.miginfocom.swing.MigLayout;
+
 
 /**
  * Demos using HTML for formatting.

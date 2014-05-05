@@ -11,28 +11,28 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
+
 import java.awt.ScrollPane;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
-import javax.swing.JLabel;
+
+
+
+
+
+
+
+
+
+
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
 
-import net.miginfocom.swing.MigLayout;
+
+import javax.swing.JTextPane;
+
+import javax.swing.UIManager;
+
+
+
 
 /**
  * The functionality of buttons and lists , etc goes here.

@@ -8,7 +8,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.email;
 
-import java.text.SimpleDateFormat;
+
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.INotificationTemplate;
