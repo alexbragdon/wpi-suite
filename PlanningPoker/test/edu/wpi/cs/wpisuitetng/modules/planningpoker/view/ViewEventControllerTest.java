@@ -89,10 +89,6 @@ public class ViewEventControllerTest {
 		
 	}
 	@Test
-	public void TestHelpSession(){
-	    vec.helpSession();
-	}
-	@Test
 	public void TestGetSize(){
 	    vec.getSize();
 	}
