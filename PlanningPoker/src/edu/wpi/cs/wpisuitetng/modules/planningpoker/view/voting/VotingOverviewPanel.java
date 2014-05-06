@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -98,7 +99,11 @@ public class VotingOverviewPanel extends JPanel {
         timer.setInitialDelay(1000);
         timer.start();
 
-        new GetAllUsersController().requestAllUsers(this);
+        try {
+            new GetAllUsersController().requestAllUsers(this);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
