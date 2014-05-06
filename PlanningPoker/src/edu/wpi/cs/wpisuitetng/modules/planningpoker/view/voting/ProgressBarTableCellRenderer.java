@@ -75,6 +75,13 @@ public class ProgressBarTableCellRenderer implements TableCellRenderer {
 	 */
 	public static Color getColor(Fraction fraction) {
 		
+	    if (gradiant == null) {
+	        try {
+	            gradiant = ImageIO.read(ProgressBarTableCellRenderer.class.getResource("gradiant.png"));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	    gradiant.getHeight();
 	    int[] rgb = {0,0,0};
 	    
